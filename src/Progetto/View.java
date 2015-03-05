@@ -1,7 +1,5 @@
 package Progetto;
 
-import it.unibo.oop.lab08.ex04.Form;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -20,19 +18,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class View extends JFrame{
+public class View extends JFrame implements IView{
 
 	private static final long serialVersionUID = 1L;	
 	
 	private final IconBuilder build = new IconBuilder();
 	
 	private final JButton bNew = build.buildButton("res/np24.png"); 
+
 	
-	private final Form form = new Form(this);
+	private IController controller;
 	
 	public View(){
 		super();
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationByPlatform(true);
 		
 		/* Set window dimension to the screen */
 		/* Se si salva sempre sullo stesso pc funziona anche usando le dimensioni dello schermo,
@@ -49,19 +49,7 @@ public class View extends JFrame{
 		setHandlers();
 		
 		this.setVisible(true);
-	}
-
-	private void setHandlers() {
-		
-		bNew.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				form.reinit();
-				form.setVisible(true);				
-			}			
-		});
-		
-	}
+	}	
 
 	private void buildLayout() {
 		
@@ -108,9 +96,29 @@ public class View extends JFrame{
 		
 	}
 	
+	private Form form;
+	
+	private void setHandlers() {
+		
+		bNew.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				form = new Form();
+				form.setVisible(true);			
+				
+			}			
+		});
+		
+	}
+	
 	
 	public static void main(String[] argv){
 		new View();
+	}
+
+	@Override
+	public void attachViewObserver(IController listener) {
+		this.controller = listener;
 	}
 
 }
