@@ -1,12 +1,17 @@
 package Progetto;
 
+import it.unibo.oop.lab08.ex04.Form;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +27,8 @@ public class View extends JFrame{
 	private final IconBuilder build = new IconBuilder();
 	
 	private final JButton bNew = build.buildButton("res/np24.png"); 
+	
+	private final Form form = new Form(this);
 	
 	public View(){
 		super();
@@ -39,8 +46,21 @@ public class View extends JFrame{
 		this.setResizable(true);
 			
 		buildLayout();			
+		setHandlers();
 		
 		this.setVisible(true);
+	}
+
+	private void setHandlers() {
+		
+		bNew.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				form.reinit();
+				form.setVisible(true);				
+			}			
+		});
+		
 	}
 
 	private void buildLayout() {
