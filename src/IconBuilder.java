@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  * 
  * */
 
-public class IconBuilder {
+public class IconBuilder implements IIconBuilder{
 	
 	//private Default def = new Default();
 	
@@ -28,42 +28,28 @@ public class IconBuilder {
 		return this.p;
 	}
 	
-	public JLabel buildLabel(String name){
-		if (name == null){
+	public JLabel buildLabel(String str){
+		if (str == null){
 			throw new NullPointerException();
 		}
 		try{
-			BufferedImage myPicture = ImageIO.read(new File(name));
+			BufferedImage myPicture = ImageIO.read(new File(str));
 			JLabel picLabel = new JLabel(new ImageIcon(myPicture));	
 			return picLabel;
 		}catch(IOException e){
 			throw new IllegalArgumentException();
 		}
-	}	
+	}		
 	
-	public JButton buildButton(String name, String s){
-		if (name == null){
+	public JButton buildButton(String str){
+		if (str == null){
 			throw new NullPointerException();
 		}
 		try{
-			BufferedImage myPicture = ImageIO.read(new File(name));
+			BufferedImage myPicture = ImageIO.read(new File(str));
 			JButton picButton = new JButton(new ImageIcon(myPicture));
 			picButton.setBackground(Color.WHITE);
 			picButton.setBorderPainted(false);
-			return picButton;
-		}catch(IOException e){
-			throw new IllegalArgumentException();
-		}
-	}	
-	
-	public JButton buildButton(String name){
-		if (name == null){
-			throw new NullPointerException();
-		}
-		try{
-			BufferedImage myPicture = ImageIO.read(new File(name));
-			JButton picButton = new JButton(new ImageIcon(myPicture));
-			picButton.setBackground(Color.WHITE);
 			return picButton;
 		}catch(IOException e){
 			throw new IllegalArgumentException();
