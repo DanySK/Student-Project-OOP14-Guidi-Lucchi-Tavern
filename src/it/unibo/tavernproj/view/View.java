@@ -1,7 +1,11 @@
-package src;
+package it.unibo.tavernproj.view;
+import it.unibo.tavernproj.controller.IController;
+
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -14,14 +18,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
+//per adattare l'immagine allo sfondo! http://www.hwupgrade.it/forum/archive/index.php/t-2060553.html
+
 public class View extends JFrame implements IView{
 
 	private static final long serialVersionUID = 1L;	
 	
 	private final IconBuilder build = new IconBuilder();
 	
-	private final JButton bNew = build.buildButton("res/np24.png"); 
-
+	private final JButton bNew = new JButton("Nuova Prenotazione"); 
 	
 	private IController controller;
 	
@@ -41,7 +47,14 @@ public class View extends JFrame implements IView{
 		this.setSize(sw, sh);
 		this.setResizable(true);
 			
-		buildLayout();			
+		buildLayout();	
+		
+		/*Fare metodi a parte per cambiare lo stile dei bottoni 
+		 *e anche degli altri componenti che si rovano in icon builder
+		 *(tipo il pannello si può rendere bianco di là)*/
+		bNew.setFont(new Font("Arial", Font.BOLD, 18));
+		bNew.setBackground(Color.white);
+		
 		setHandlers();
 		
 		this.setVisible(true);
@@ -61,8 +74,8 @@ public class View extends JFrame implements IView{
 		 * 
 		 * System.getProperty("user.home")+System.getProperty("file.separator")+
 		 * */
-		JButton one = build.buildButton("res/1s.png", "icon");
-		JButton two = build.buildButton("res/2s.png", "icon");
+		JButton one = build.buildButton("res/1s.png");
+		JButton two = build.buildButton("res/2s.png");
 		tablesButtons.add(one);
 		tablesButtons.add(two);	
 		
@@ -100,21 +113,21 @@ public class View extends JFrame implements IView{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				form = new Form();
-				form.setVisible(true);			
+				form.setVisible(true);	
+				
 				
 			}			
 		});
 		
 	}
 	
-	
-	public static void main(String[] argv){
-		new View();
-	}
-
 	@Override
 	public void attachViewObserver(IController listener) {
 		this.controller = listener;
+	}
+	
+	public static void main(String[] argv){
+		new View();
 	}
 
 }

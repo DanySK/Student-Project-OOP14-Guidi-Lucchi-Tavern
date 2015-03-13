@@ -1,4 +1,5 @@
-package src;
+package it.unibo.tavernproj.view;
+import it.unibo.tavernproj.controller.*;
 
 public interface IView {
 	

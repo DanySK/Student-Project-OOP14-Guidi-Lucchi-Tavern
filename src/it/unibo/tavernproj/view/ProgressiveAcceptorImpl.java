@@ -1,4 +1,4 @@
-package src;
+package it.unibo.tavernproj.view;
 
 //presa dall'esame 2015 primo appello b
 //implementata da me

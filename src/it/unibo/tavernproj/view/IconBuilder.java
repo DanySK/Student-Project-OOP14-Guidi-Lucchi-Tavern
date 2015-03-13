@@ -1,4 +1,4 @@
-package src;
+package it.unibo.tavernproj.view;
 
 import java.awt.Color;
 import java.awt.LayoutManager;

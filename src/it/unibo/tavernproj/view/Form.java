@@ -1,4 +1,4 @@
-package src;
+package it.unibo.tavernproj.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -96,6 +96,10 @@ public class Form extends JFrame{
 				
 				System.out.print("a");
 				map.get("Menu fisso").setVisible(true);
+				
+				//devo aggirnare la view per mostrare la textbox credo
+				//controller.resend();
+				
 				System.out.print("b");
 			}			
 		});

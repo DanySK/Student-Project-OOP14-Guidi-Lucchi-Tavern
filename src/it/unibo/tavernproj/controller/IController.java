@@ -1,4 +1,5 @@
-package src;
+package it.unibo.tavernproj.controller;
+import it.unibo.tavernproj.view.*;
 
 /**
  * @author Eleonora Guidi
@@ -76,10 +77,5 @@ public interface IController {
 	 *      the view to remove
 	 */
 	void removeView(IView v);
-	
-	/**
-	 * Clear all the data.
-	 */
-	void commandClear();
 
 }
