@@ -1,5 +1,8 @@
 package it.unibo.tavernproj.view;
 
+import it.unibo.tavernproj.controller.Controller;
+import it.unibo.tavernproj.controller.IController;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -11,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -19,17 +23,25 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+/**
+ * @author Eleonora Guidi
+ *
+ */
+
+//vedere se fare un'interfaccia per la form
+
 public class Form extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-	//numero massimo di campi per al form
+	//numero massimo di campi per il form
 	public static final int MAX = 100;
 	
 	private final JButton okButton = new JButton("OK");
 	
 	private final static ProgressiveAcceptor<JPanel> panelAggregator = new ProgressiveAcceptorImpl<>();
 	private final Map<String, JComponent> map = new HashMap<>();
-
+	
+	private IController controller = new Controller();
 	
 	/*Usare l'esame 01b del 2015 per fare la form!*/
 	public Form(){
@@ -39,7 +51,34 @@ public class Form extends JFrame{
 		final int sh = (int) screen.getHeight() * 1/2;
 		this.setSize(sw, sh);
 		this.setResizable(true);
+	
+		
+		buildLayout();
+		setHandlers();	
+		
+		this.setVisible(true);		
+	}
+	
+	private void setHandlers() {
+		((JRadioButton) map.get("Menu")).addActionListener(new ActionListener(){			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				map.get("Menu fisso").setVisible(true);
+				Form.this.validate();
+			}			
+		});		
+		
+		this.okButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Form.this.setVisible(false);
+				controller.tableAdd();
+			}			
+		});
+		
+	}
 
+	private void buildLayout() {
 		this.getContentPane().setLayout(new BorderLayout());
 		this.getContentPane().add(BorderLayout.SOUTH, okButton);
 		panelAggregator.setProgressiveFilter(new ProgressiveFilter<JPanel>(){
@@ -68,6 +107,7 @@ public class Form extends JFrame{
 		// Pannello centrale, ossia una griglia a due colonne
 		final JPanel center = new JPanel(new GridLayout(0,2));
 		
+		/*fare un metodo per mettere insieme sti accept!!*/
 		acceptPanel(new JLabel("Nome"),FlowLayout.RIGHT, 0);
 		acceptPanel(new JLabel("Data"),FlowLayout.RIGHT, 1);		
 		acceptPanel(new JLabel("Orario"),FlowLayout.RIGHT, 2);
@@ -87,28 +127,12 @@ public class Form extends JFrame{
 		acceptPanel(addTextField("Menu fisso"), FlowLayout.CENTER, 6);
 		map.get("Menu fisso").setVisible(false);
 		
-		center.add(panelAggregator.aggregateAll());		
-		
-		((JRadioButton) map.get("Menu")).addActionListener(new ActionListener(){			
-			@Override
-			public void actionPerformed(ActionEvent e) {					
-				//PERCHèèèèè NON VAAAAAAA?!!!!!!
-				
-				System.out.print("a");
-				map.get("Menu fisso").setVisible(true);
-				
-				//devo aggirnare la view per mostrare la textbox credo
-				//controller.resend();
-				
-				System.out.print("b");
-			}			
-		});
+		center.add(panelAggregator.aggregateAll());	
 		
 		this.getContentPane().add(BorderLayout.CENTER,center);
 		
-		this.setVisible(true);		
 	}
-	
+
 	private JTextField addTextField(final String string) {
 		final JTextField t = new JTextField(20);		
 		t.setName(string);	
@@ -129,5 +153,4 @@ public class Form extends JFrame{
 		panel.add(component);	
 		panelAggregator.accept(pos, panel);	
 	}
-
 }

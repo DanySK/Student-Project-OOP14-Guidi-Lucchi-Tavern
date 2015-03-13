@@ -12,6 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * @author Eleonora Guidi
+ *
+ */
+
 /* Mi sono basata su questo http://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
  * 
  * */
@@ -29,9 +34,6 @@ public class IconBuilder implements IIconBuilder{
 	}
 	
 	public JLabel buildLabel(String str){
-		if (str == null){
-			throw new NullPointerException();
-		}
 		try{
 			BufferedImage myPicture = ImageIO.read(new File(str));
 			JLabel picLabel = new JLabel(new ImageIcon(myPicture));	
@@ -42,9 +44,6 @@ public class IconBuilder implements IIconBuilder{
 	}		
 	
 	public JButton buildButton(String str){
-		if (str == null){
-			throw new NullPointerException();
-		}
 		try{
 			BufferedImage myPicture = ImageIO.read(new File(str));
 			JButton picButton = new JButton(new ImageIcon(myPicture));

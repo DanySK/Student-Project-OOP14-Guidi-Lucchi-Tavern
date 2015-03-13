@@ -1,4 +1,5 @@
 package it.unibo.tavernproj.view;
+import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
 
 import java.awt.BorderLayout;
@@ -12,12 +13,19 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * @author Eleonora Guidi
+ *
+ */
 
 //per adattare l'immagine allo sfondo! http://www.hwupgrade.it/forum/archive/index.php/t-2060553.html
 
@@ -25,10 +33,9 @@ public class View extends JFrame implements IView{
 
 	private static final long serialVersionUID = 1L;	
 	
-	private final IconBuilder build = new IconBuilder();
-	
+	private final IconBuilder build = new IconBuilder();	
 	private final JButton bNew = new JButton("Nuova Prenotazione"); 
-	
+	private final LinkedList<JButton> table = new LinkedList<>();
 	private IController controller;
 	
 	public View(){
@@ -59,27 +66,20 @@ public class View extends JFrame implements IView{
 		
 		this.setVisible(true);
 	}	
+	
+JPanel tablesButtons = build.buildPanel(new FlowLayout());	
 
 	private void buildLayout() {
 		
-		JLabel map = build.buildLabel("res/map.png");
+		final JLabel map = build.buildLabel("res/map.png");	
+		final JPanel dx = build.buildPanel(new BorderLayout());		
+		final JPanel pNew = build.buildPanel(new GridBagLayout());			
+		final JLabel logo = build.buildLabel("res/logo.jpg");
 		
-		JPanel dx = build.buildPanel(new BorderLayout());
+		for (JButton b: table){
+			tablesButtons.add(b);
+		}			
 		
-		JPanel pNew = build.buildPanel(new GridBagLayout());		
-		
-		JPanel tablesButtons = build.buildPanel(new FlowLayout());
-		/* vedere se mettere i bottoni in un vettore (se sono un numero finito)
-		 * o linked list di bottoni aggiungo in fondo e ricavo gli indici
-		 * 
-		 * System.getProperty("user.home")+System.getProperty("file.separator")+
-		 * */
-		JButton one = build.buildButton("res/1s.png");
-		JButton two = build.buildButton("res/2s.png");
-		tablesButtons.add(one);
-		tablesButtons.add(two);	
-		
-		JLabel logo = build.buildLabel("res/logo.jpg");
 		
 		GridBagConstraints gap = new GridBagConstraints();		
 		gap.gridy = 0;
@@ -93,11 +93,11 @@ public class View extends JFrame implements IView{
 		dx.add(pNew, BorderLayout.CENTER);
 		dx.add(logo, BorderLayout.NORTH);
 		
-		JPanel center = build.buildPanel(new BorderLayout());
+		final JPanel center = build.buildPanel(new BorderLayout());
 		center.add(map, BorderLayout.CENTER);
 		center.add(tablesButtons, BorderLayout.SOUTH);
 		
-		JPanel main = build.buildPanel(new BorderLayout(5, 5));		
+		final JPanel main = build.buildPanel(new BorderLayout(5, 5));		
 		main.add(center, BorderLayout.CENTER);
 		main.add(dx, BorderLayout.EAST);
 		
@@ -113,9 +113,7 @@ public class View extends JFrame implements IView{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				form = new Form();
-				form.setVisible(true);	
-				
-				
+				form.setVisible(true);					
 			}			
 		});
 		
@@ -125,9 +123,30 @@ public class View extends JFrame implements IView{
 	public void attachViewObserver(IController listener) {
 		this.controller = listener;
 	}
+
+	@Override
+	public void addTable() {
+		/* System.getProperty("user.home")+System.getProperty("file.separator")+
+				*/ 
+		
+		//NON VAAAAAAAAAAAAAAAA! 
+		//non mostra i bottoni, non so più come fare!!
+		
+		int i = 0;
+		
+		JButton b = build.buildButton("res" + System.getProperty("file.separator") + i + "s.png");
+		
+		i++;
+
+		table.addLast(b);	
+		this.validate();
+
+	}
+	
 	
 	public static void main(String[] argv){
-		new View();
+		final Controller c = new Controller();
+		final View v = new View();		
+		c.addView(v);
 	}
-
 }

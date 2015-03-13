@@ -21,14 +21,10 @@ public interface IController {
 	void tablesSave();
 
 	/**
-	 * Aggiunge un nuovo bottone per il tavolo sotto la cartina.
+	 * Aggiunge incrementalmente un nuovo bottone per il tavolo sotto la cartina.
 	 * Adds a new table icon.
-	 * 
-	 * @param number
-	 * 		il numero del tavolo
-	 *      the number of the table
 	 */
-	void tableAdd(int number);
+	void tableAdd();
 	
 	/**
 	 * Rimuove il bottone per un tavolo precedentemente immesso e il tavolo sulla cartina.
