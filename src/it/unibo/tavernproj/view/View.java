@@ -22,6 +22,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.toedter.calendar.JCalendar;
+
 /**
  * @author Eleonora Guidi
  *
@@ -112,8 +114,14 @@ JPanel tablesButtons = build.buildPanel(new FlowLayout());
 		bNew.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				form = new Form();
-				form.setVisible(true);					
+				JFrame frame = new JFrame("JCalendar");
+
+				JCalendar jcalendar = new JCalendar();
+				frame.getContentPane().add(jcalendar);
+				frame.pack();
+				frame.setVisible(true);
+//				form = new Form();
+//				form.setVisible(true);					
 			}			
 		});
 		
