@@ -131,7 +131,7 @@ public class JDateChooser extends JPanel implements ActionListener,
 	 */
 	public JDateChooser(Date date, String dateFormatString,
 			IDateEditor dateEditor) {
-		this(null, date, dateFormatString, dateEditor);
+ 		this(null, date, dateFormatString, dateEditor);
 	}
 
 	/**

@@ -20,6 +20,8 @@
  */
 package com.toedter.calendar;
 
+import it.unibo.tavernproj.view.Form;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -104,6 +106,8 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
 	protected List dateEvaluators;
 	
 	protected MinMaxDateEvaluator minMaxDateEvaluator;
+	
+	private Form form;
 
 	/**
 	 * Default JDayChooser constructor.
@@ -580,6 +584,8 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
 		String buttonText = button.getText();
 		int day = new Integer(buttonText).intValue();
 		setDay(day);
+		form = new Form();
+		form.setVisible(true);		
 	}
 
 	/**
