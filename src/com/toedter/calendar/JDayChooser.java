@@ -576,9 +576,12 @@ public class JDayChooser extends JPanel implements ActionListener, KeyListener,
 	/**
 	 * JDayChooser is the ActionListener for all day buttons.
 	 * 
+	 * @author Giulia Lucchi
 	 * @param e
 	 *            the ActionEvent
+	 *            
 	 */
+	 
 	public void actionPerformed(ActionEvent e) {
 		JButton button = (JButton) e.getSource();
 		String buttonText = button.getText();

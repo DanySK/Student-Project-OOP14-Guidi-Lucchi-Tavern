@@ -106,9 +106,11 @@ JPanel tablesButtons = build.buildPanel(new FlowLayout());
 		this.getContentPane().add(main);
 		
 	}
-	
-	private Form form;
-	
+		
+	/**
+	 * @author Giulia Lucchi
+	 *
+	 */
 	private void setHandlers() {
 		
 		bNew.addActionListener(new ActionListener(){
@@ -120,8 +122,7 @@ JPanel tablesButtons = build.buildPanel(new FlowLayout());
 				frame.getContentPane().add(jcalendar);
 				frame.pack();
 				frame.setVisible(true);
-//				form = new Form();
-//				form.setVisible(true);					
+	
 			}			
 		});
 		
