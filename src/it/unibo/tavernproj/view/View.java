@@ -1,4 +1,5 @@
 package it.unibo.tavernproj.view;
+import it.unibo.tavernproj.calendar.Calendar;
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
 
@@ -21,8 +22,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import com.toedter.calendar.JCalendar;
 
 /**
  * @author Eleonora Guidi
@@ -116,13 +115,8 @@ JPanel tablesButtons = build.buildPanel(new FlowLayout());
 		bNew.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame frame = new JFrame("JCalendar");
-
-				JCalendar jcalendar = new JCalendar();
-				frame.getContentPane().add(jcalendar);
-				frame.pack();
-				frame.setVisible(true);
-	
+				JFrame frame = new JFrame("Calendar");
+				Calendar calendar = new Calendar(frame);
 			}			
 		});
 		

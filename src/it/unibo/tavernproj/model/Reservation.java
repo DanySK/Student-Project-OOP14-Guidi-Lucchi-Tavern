@@ -89,4 +89,6 @@ public class Reservation implements Serializable{
 	public boolean isMenù() {
 		return menù;
 	}
+	
+	
 }
