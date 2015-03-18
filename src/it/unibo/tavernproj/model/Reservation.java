@@ -15,7 +15,7 @@ public class Reservation implements Serializable{
 	private final String h;
 	private final String tel;
 	private final int numPers;
-	private final boolean menù;
+	private final boolean menu;
 	
 	/**
 	 *
@@ -29,10 +29,10 @@ public class Reservation implements Serializable{
 	 *            the number of telephone
 	 * @param numPers
 	 *            the number of person
-	 * @param menù
-	 *            true if there is a fixed menù
+	 * @param menï¿½
+	 *            true if there is a fixed menï¿½
 	 */
-	public Reservation(final String name, final String date, final String h, final String tel, final int numPers, final boolean menù) {
+	public Reservation(final String name, final String date, final String h, final String tel, final int numPers, final boolean menu) {
 		Objects.requireNonNull(name);
 		this.name = name;
 		Objects.requireNonNull(date);
@@ -43,8 +43,8 @@ public class Reservation implements Serializable{
 		this.tel = tel;
 		Objects.requireNonNull(numPers);
 		this.numPers = numPers;
-		Objects.requireNonNull(menù);
-		this.menù = menù;
+		Objects.requireNonNull(menu);
+		this.menu = menu;
 	}
 
 	/**
@@ -84,9 +84,9 @@ public class Reservation implements Serializable{
 
 
 	/**
-	 * @return true if there is a fixed menù
+	 * @return true if there is a fixed menï¿½
 	 */
-	public boolean isMenù() {
-		return menù;
+	public boolean isMenu() {
+		return menu;
 	}
 }

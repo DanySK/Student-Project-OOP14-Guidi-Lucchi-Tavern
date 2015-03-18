@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 public class ProgressiveAcceptorImpl<X> implements ProgressiveAcceptor<X>{
 	
-	private ProgressiveFilter<X> filter = null;
-	private Aggregator<X> aggregator = null;
-	private int size = 0;
+	private ProgressiveFilter<X> filter;
+	private Aggregator<X> aggregator;
+	private int size;
 	private List<X> list;
 
 	@Override

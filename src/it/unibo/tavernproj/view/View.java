@@ -1,4 +1,5 @@
 package it.unibo.tavernproj.view;
+
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
 
@@ -13,9 +14,9 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashSet;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.LinkedList;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,9 +24,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDayChooser;
 
 /**
- * @author Eleonora Guidi
+ *  @author Eleonora Guidi
  *
  */
 
@@ -33,15 +35,16 @@ import com.toedter.calendar.JCalendar;
 
 public class View extends JFrame implements IView{
 
-	private static final long serialVersionUID = 1L;	
-	
+	private static final long serialVersionUID = 1L;
 	private final IconBuilder build = new IconBuilder();	
-	private final JButton bNew = new JButton("Nuova Prenotazione"); 
+	private final JButton buttonNew = new JButton("Nuova Prenotazione"); 
 	private final LinkedList<JButton> table = new LinkedList<>();
 	private IController controller;
+	private Form form = new Form();
 	
 	public View(){
 		super();
+		form.setVisible(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationByPlatform(true);
 		
@@ -61,36 +64,31 @@ public class View extends JFrame implements IView{
 		/*Fare metodi a parte per cambiare lo stile dei bottoni 
 		 *e anche degli altri componenti che si rovano in icon builder
 		 *(tipo il pannello si può rendere bianco di là)*/
-		bNew.setFont(new Font("Arial", Font.BOLD, 18));
-		bNew.setBackground(Color.white);
+		buttonNew.setFont(new Font("Arial", Font.BOLD, 18));
+		buttonNew.setBackground(Color.white);
 		
 		setHandlers();
 		
 		this.setVisible(true);
 	}	
 	
-JPanel tablesButtons = build.buildPanel(new FlowLayout());	
-
+		JPanel tablesButtons = build.buildPanel(new FlowLayout());
+		
 	private void buildLayout() {
 		
 		final JLabel map = build.buildLabel("res/map.png");	
 		final JPanel dx = build.buildPanel(new BorderLayout());		
 		final JPanel pNew = build.buildPanel(new GridBagLayout());			
-		final JLabel logo = build.buildLabel("res/logo.jpg");
+		final JLabel logo = build.buildLabel("res/logo.jpg");		
 		
-		for (JButton b: table){
-			tablesButtons.add(b);
-		}			
-		
-		
-		GridBagConstraints gap = new GridBagConstraints();		
+		final GridBagConstraints gap = new GridBagConstraints();		
 		gap.gridy = 0;
 		gap.insets = new Insets(10, 10, 20, 10);
 		gap.fill = GridBagConstraints.HORIZONTAL;
-		bNew.setSize(pNew.getWidth(), pNew.getHeight()*1/10);
-		pNew.add(bNew, gap);
-		gap.gridy++;
-		//pNew.add(bWarehouse, gap);
+		buttonNew.setSize(pNew.getWidth(), pNew.getHeight()*1/10);
+		pNew.add(buttonNew, gap);
+		//gap.gridy++;
+		//pNew.add(new JButton("hhh"), gap);
 		
 		dx.add(pNew, BorderLayout.CENTER);
 		dx.add(logo, BorderLayout.NORTH);
@@ -106,33 +104,44 @@ JPanel tablesButtons = build.buildPanel(new FlowLayout());
 		this.getContentPane().add(main);
 		
 	}
-		
-	/**
-	 * @author Giulia Lucchi
-	 *
-	 */
+	
+	JFrame frame = new JFrame("JCalendar");
+	JDayChooser day = new JDayChooser();
+	
 	private void setHandlers() {
 		
-		bNew.addActionListener(new ActionListener(){
+		this.buttonNew.addActionListener(new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JFrame frame = new JFrame("JCalendar");
-
+			public void actionPerformed(final ActionEvent arg0) {
+				//form = new Form();
+				
 				JCalendar jcalendar = new JCalendar();
 				frame.getContentPane().add(jcalendar);
 				frame.pack();
 				frame.setVisible(true);
-	
+				//form.setVisible(true);					
 			}			
+		});
+		
+		this.form.addComponentListener(new ComponentAdapter(){
+			@Override
+			public void componentHidden(final ComponentEvent e) {
+				if (form.isOkState()) {
+					/*NON ENTRA QUIIII!*/
+					controller.tableAdd();
+				}
+			}
 		});
 		
 	}
 	
 	@Override
-	public void attachViewObserver(IController listener) {
+	public void attachViewObserver(final IController listener) {
 		this.controller = listener;
 	}
-
+	
+	private int i = 1;
+	
 	@Override
 	public void addTable() {
 		/* System.getProperty("user.home")+System.getProperty("file.separator")+
@@ -140,16 +149,14 @@ JPanel tablesButtons = build.buildPanel(new FlowLayout());
 		
 		//NON VAAAAAAAAAAAAAAAA! 
 		//non mostra i bottoni, non so più come fare!!
-		
-		int i = 0;
-		
-		JButton b = build.buildButton("res" + System.getProperty("file.separator") + i + "s.png");
-		
+		//int i = 1;			
+		//for ( int i = 1; i <= 20; i++){
+			final JButton b = build.buildButton("res" + System.getProperty("file.separator") + i + "s.png");
+			//table.addLast(b);
+			tablesButtons.add(b);
+		//}
 		i++;
-
-		table.addLast(b);	
-		this.validate();
-
+		View.this.validate();
 	}
 	
 	
@@ -157,5 +164,11 @@ JPanel tablesButtons = build.buildPanel(new FlowLayout());
 		final Controller c = new Controller();
 		final View v = new View();		
 		c.addView(v);
+	}
+
+	@Override
+	public void disableCalendar() {
+		this.form.setVisible(false);
+		
 	}
 }

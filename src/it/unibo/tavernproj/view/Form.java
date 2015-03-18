@@ -38,20 +38,21 @@ public class Form extends JFrame{
 	
 	private final JButton okButton = new JButton("OK");
 	
-	private final static ProgressiveAcceptor<JPanel> panelAggregator = new ProgressiveAcceptorImpl<>();
+	private final ProgressiveAcceptor<JPanel> panelAggregator = new ProgressiveAcceptorImpl<>();
 	private final Map<String, JComponent> map = new HashMap<>();
 	
-	private IController controller = new Controller();
+	private boolean okState = false;
+	private final IController ctrl = new Controller();
 	
 	/*Usare l'esame 01b del 2015 per fare la form!*/
 	public Form(){
+		super();
 		setLocationByPlatform(true);
 		final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		final int sw = (int) screen.getWidth() * 1/2;
 		final int sh = (int) screen.getHeight() * 1/2;
 		this.setSize(sw, sh);
-		this.setResizable(true);
-	
+		this.setResizable(true);	
 		
 		buildLayout();
 		setHandlers();	
@@ -62,17 +63,25 @@ public class Form extends JFrame{
 	private void setHandlers() {
 		((JRadioButton) map.get("Menu")).addActionListener(new ActionListener(){			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				map.get("Menu fisso").setVisible(true);
-				Form.this.validate();
+			public void actionPerformed(final ActionEvent e) {
+				if (((JRadioButton) map.get("Menu")).isSelected()){
+					map.get("Menu fisso").setVisible(true);
+					Form.this.validate();
+				}
+				else{
+					map.get("Menu fisso").setVisible(false);
+					Form.this.validate();
+				}				
 			}			
 		});		
 		
 		this.okButton.addActionListener(new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(final ActionEvent arg0) {
 				Form.this.setVisible(false);
-				controller.tableAdd();
+				ctrl.disableCalendar();
+				okState = true;
+				//controller.tableAdd();
 			}			
 		});
 		
@@ -83,15 +92,15 @@ public class Form extends JFrame{
 		this.getContentPane().add(BorderLayout.SOUTH, okButton);
 		panelAggregator.setProgressiveFilter(new ProgressiveFilter<JPanel>(){
 			@Override
-			public boolean isNextOK(JPanel previous, JPanel next) {
+			public boolean isNextOK(final JPanel previous, final JPanel next) {
 				return true;
 			}			
 		});
 		
 		panelAggregator.setAggregator(new Aggregator<JPanel>(){
 			@Override
-			public JPanel aggregate(JPanel one, JPanel two) {
-				JPanel temp = new JPanel(new GridBagLayout());
+			public JPanel aggregate(final JPanel one, final JPanel two) {
+				final JPanel temp = new JPanel(new GridBagLayout());
 				GridBagConstraints gap = new GridBagConstraints();
 				gap.gridy = 0;
 				temp.add(one, gap);
@@ -152,5 +161,14 @@ public class Form extends JFrame{
 		final JPanel panel = new JPanel(new FlowLayout(orientation));
 		panel.add(component);	
 		panelAggregator.accept(pos, panel);	
+	}
+	
+	/**
+	 * @return se il bottone è stato premuto.
+	 * 
+	 * @return true if "OK" has been selected
+	 */
+	public boolean isOkState(){
+		return this.okState;
 	}
 }
