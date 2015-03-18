@@ -23,30 +23,25 @@ import javax.swing.JPanel;
 
 public class IconBuilder implements IIconBuilder{
 	
-	//private Default def = new Default();
-	
-	private JPanel p;
-	
-	public JPanel buildPanel(LayoutManager lm){
-		p = new JPanel(lm);
+	public JPanel buildPanel(final LayoutManager lm){
+		final JPanel p = new JPanel(lm);
 		p.setBackground(Color.WHITE);
-		return this.p;
+		return p;
 	}
 	
-	public JLabel buildLabel(String str){
+	public JLabel buildLabel(final String str){
 		try{
-			BufferedImage myPicture = ImageIO.read(new File(str));
-			JLabel picLabel = new JLabel(new ImageIcon(myPicture));	
-			return picLabel;
+			final BufferedImage myPicture = ImageIO.read(new File(str));	
+			return new JLabel(new ImageIcon(myPicture));
 		}catch(IOException e){
 			throw new IllegalArgumentException();
 		}
 	}		
 	
-	public JButton buildButton(String str){
+	public JButton buildButton(final String str){
 		try{
-			BufferedImage myPicture = ImageIO.read(new File(str));
-			JButton picButton = new JButton(new ImageIcon(myPicture));
+			final BufferedImage myPicture = ImageIO.read(new File(str));
+			final JButton picButton = new JButton(new ImageIcon(myPicture));
 			picButton.setBackground(Color.WHITE);
 			picButton.setBorderPainted(false);
 			return picButton;

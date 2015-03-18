@@ -36,7 +36,7 @@ public interface IReservation {
 
 
 	/**
-	 * @return true if there is a fixed menù
+	 * @return true if there is a fixed menï¿½
 	 */
-	public boolean isMenù();
+	public boolean isMenu();
 }
