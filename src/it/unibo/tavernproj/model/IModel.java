@@ -1,10 +1,12 @@
 package it.unibo.tavernproj.model;
 
+import java.util.Map;
+
 /**
  * @author Giulia Lucchi
  */
 
-public interface IModel {
+public interface IModel{
 	
 	/**
 	 * Adds a new reservation.
@@ -19,4 +21,6 @@ public interface IModel {
 	 */
 	void remove(final Reservation pren);
 
+	Map<String, Reservation> getMap();
+	
 }

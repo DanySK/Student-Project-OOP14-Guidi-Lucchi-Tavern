@@ -41,6 +41,7 @@ public class View extends JFrame implements IView{
 	private final LinkedList<JButton> table = new LinkedList<>();
 	private IController controller;
 	//private Form form = new Form();
+	private Calendar calendar;
 	
 	public View(){
 		super();
@@ -70,6 +71,7 @@ public class View extends JFrame implements IView{
 		setHandlers();
 		
 		this.setVisible(true);
+		this.pack();
 	}	
 	
 		JPanel tablesButtons = build.buildPanel(new FlowLayout());
@@ -113,7 +115,9 @@ public class View extends JFrame implements IView{
 						
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame frame = new JFrame("Calendar");
-				Calendar calendar = new Calendar(frame);
+				calendar = new Calendar(frame);
+			//sbagliato anche se funziona!!
+				//	it.unibo.tavernproj.view.Form.date.setText(calendar.setPickedDate());
 			}			
 		});
 		
@@ -161,5 +165,9 @@ public class View extends JFrame implements IView{
 		//final Form f = new Form();
 		c.addView(v);
 		//fc.addView(f);
+	}
+	
+	public Calendar getCalendar(){
+		return this.calendar;
 	}
 }

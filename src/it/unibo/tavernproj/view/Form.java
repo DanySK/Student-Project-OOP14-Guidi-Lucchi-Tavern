@@ -1,9 +1,13 @@
 package it.unibo.tavernproj.view;
 
+import it.unibo.tavernproj.calendar.Calendar;
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
+import it.unibo.tavernproj.controller.ControllerCalendar;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.controller.IFormController;
+import it.unibo.tavernproj.model.IModel;
+import it.unibo.tavernproj.model.Model;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -39,9 +43,14 @@ public class Form extends JFrame implements IForm{
 	public static final int MAX = 100;
 	
 	private final JButton okButton = new JButton("OK");
+	public final JLabel date = new JLabel();
+	private final JLabel reserv = new JLabel();
 	
 	private final ProgressiveAcceptor<JPanel> panelAggregator = new ProgressiveAcceptorImpl<>();
 	private final Map<String, JComponent> map = new HashMap<>();
+	//private final IModel model = new Model();
+	private final ControllerCalendar contrCal= new ControllerCalendar();
+	private final View view = new View();
 	
 	//private boolean okState = false;
 	private IFormController ctrl;
@@ -120,27 +129,35 @@ public class Form extends JFrame implements IForm{
 		
 		/*fare un metodo per mettere insieme sti accept!!*/
 		acceptPanel(new JLabel("Nome"),FlowLayout.RIGHT, 0);
-		acceptPanel(new JLabel("Data"),FlowLayout.RIGHT, 1);		
-		acceptPanel(new JLabel("Orario"),FlowLayout.RIGHT, 2);
-		acceptPanel(new JLabel("Numero Persone"),FlowLayout.RIGHT, 3);
-		acceptPanel(new JLabel("Telefono"),FlowLayout.RIGHT, 4);
-		acceptPanel(new JLabel("Menu' fisso"),FlowLayout.RIGHT, 5);
-		acceptPanel(new JLabel(""),FlowLayout.RIGHT, 6);
+		acceptPanel(new JLabel("Orario"),FlowLayout.RIGHT, 1);
+		acceptPanel(new JLabel("Numero Persone"),FlowLayout.RIGHT, 2);
+		acceptPanel(new JLabel("Telefono"),FlowLayout.RIGHT, 3);
+		acceptPanel(new JLabel("Menu' fisso"),FlowLayout.RIGHT, 4);
+		acceptPanel(new JLabel(""),FlowLayout.RIGHT, 5);
 		
 		center.add(panelAggregator.aggregateAll());
 		
 		acceptPanel(addTextField("Nome"), FlowLayout.CENTER, 0);
-		acceptPanel(addTextField("Data"), FlowLayout.CENTER, 1);
-		acceptPanel(addTextField("Ora"), FlowLayout.CENTER, 2);
-		acceptPanel(addTextField("Num"), FlowLayout.CENTER, 3);
-		acceptPanel(addTextField("Tel"), FlowLayout.CENTER, 4);
-		acceptPanel(addRadioButton("Menu"), FlowLayout.CENTER, 5);
-		acceptPanel(addTextField("Menu fisso"), FlowLayout.CENTER, 6);
+		acceptPanel(addTextField("Ora"), FlowLayout.CENTER, 1);
+		acceptPanel(addTextField("Num"), FlowLayout.CENTER, 2);
+		acceptPanel(addTextField("Tel"), FlowLayout.CENTER, 3);
+		acceptPanel(addRadioButton("Menu"), FlowLayout.CENTER, 4);
+		acceptPanel(addTextField("Menu fisso"), FlowLayout.CENTER, 5);
 		map.get("Menu fisso").setVisible(false);
 		
-		center.add(panelAggregator.aggregateAll());	
+		center.add(panelAggregator.aggregateAll());
 		
-		this.getContentPane().add(BorderLayout.CENTER,center);
+		this.add(date, BorderLayout.NORTH);
+		
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(this.reserv, BorderLayout.NORTH);
+		panel.add(center, BorderLayout.CENTER);
+		
+		this.date.setText(this.contrCal.dateCurrent(view));
+		
+		this.reserv.setText(String.valueOf(this.contrCal.reservations(view)));
+		
+		this.getContentPane().add(BorderLayout.CENTER,panel);
 		
 	}
 
