@@ -51,10 +51,11 @@ public class Calendar {
 			if (x > 6){				
 				button[x].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent ae) {
-						Form form = new Form();
-						form.setVisible(true);
+						
 						day = button[selection].getActionCommand();
 						d.dispose();
+						Form form = new Form();
+						form.setVisible(true);
 						
 											}
 				});
