@@ -73,11 +73,4 @@ public interface IController {
 	 *      the view to remove
 	 */
 	void removeView(IView v);
-
-	/**
-	 * Nasconde il calendario dalla view
-	 * It turns the JCalendar invisible
-	 * */
-	void disableCalendar();
-
 }

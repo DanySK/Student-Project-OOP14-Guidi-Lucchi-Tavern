@@ -1,7 +1,9 @@
 package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.controller.Controller;
+import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
+import it.unibo.tavernproj.controller.IFormController;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -30,7 +32,7 @@ import javax.swing.JTextField;
 
 //vedere se fare un'interfaccia per la form
 
-public class Form extends JFrame{
+public class Form extends JFrame implements IForm{
 
 	private static final long serialVersionUID = 1L;
 	//numero massimo di campi per il form
@@ -41,8 +43,8 @@ public class Form extends JFrame{
 	private final ProgressiveAcceptor<JPanel> panelAggregator = new ProgressiveAcceptorImpl<>();
 	private final Map<String, JComponent> map = new HashMap<>();
 	
-	private boolean okState = false;
-	//private final IController controller = new Controller();
+	//private boolean okState = false;
+	private IFormController ctrl;
 	
 	/*Usare l'esame 01b del 2015 per fare la form!*/
 	public Form(){
@@ -79,8 +81,9 @@ public class Form extends JFrame{
 			@Override
 			public void actionPerformed(final ActionEvent arg0) {
 				Form.this.setVisible(false);
-				okState = true;
-				//controller.tableAdd();
+				//okState = true;
+				System.out.print("a");
+				ctrl.tableAdd();
 			}			
 		});
 		
@@ -167,7 +170,12 @@ public class Form extends JFrame{
 	 * 
 	 * @return true if "OK" has been selected
 	 */
-	public boolean isOkState(){
-		return this.okState;
+	//public boolean isOkState(){
+	//	return this.okState;
+	//}
+
+	@Override
+	public void attachViewObserver(IFormController listener) {
+		this.ctrl = listener;		
 	}
 }

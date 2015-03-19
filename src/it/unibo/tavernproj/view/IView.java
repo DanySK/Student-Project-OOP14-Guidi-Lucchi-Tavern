@@ -22,11 +22,6 @@ public interface IView {
 	 */
 	void addTable();
 	
-	/**Nasconde il frame del calendario.
-	 * It makes the Calendar invisible.
-	 * */
-	void disableCalendar();
-	
 	
 
 }

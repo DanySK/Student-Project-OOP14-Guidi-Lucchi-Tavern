@@ -27,10 +27,13 @@ public class Controller implements IController{
 
 	@Override
 	public void tableAdd() {
-		this.reservationAdd();
+		//this.reservationAdd();
+		System.out.print(view.size());
 		for (final IView v: view){
 			//magicamente la lunghezza di view diventa 0 -.-'''''''''
 			//quindi non entra qui!
+			System.out.print("d");
+			
 			v.addTable();
 		}
 		
@@ -66,18 +69,12 @@ public class Controller implements IController{
 	public void addView(final IView v) {
 		v.attachViewObserver(this);
 		view.add(v);
+		System.out.print(view.size());
 	}
 
 	@Override
 	public void removeView(final IView v) {
-		view.remove(v);		
-	}
-
-	@Override
-	public void disableCalendar() {
-		for (final IView v: view){
-			v.disableCalendar();
-		}
+		view.remove(v);	
 	}
 
 

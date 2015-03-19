@@ -2,6 +2,7 @@ package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.calendar.Calendar;
 import it.unibo.tavernproj.controller.Controller;
+import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
 
 import java.awt.BorderLayout;
@@ -39,11 +40,11 @@ public class View extends JFrame implements IView{
 	private final JButton buttonNew = new JButton("Nuova Prenotazione"); 
 	private final LinkedList<JButton> table = new LinkedList<>();
 	private IController controller;
-	private Form form = new Form();
+	//private Form form = new Form();
 	
 	public View(){
 		super();
-		form.setVisible(false);
+		//form.setVisible(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationByPlatform(true);
 		
@@ -116,15 +117,15 @@ public class View extends JFrame implements IView{
 			}			
 		});
 		
-		this.form.addComponentListener(new ComponentAdapter(){
+		/*this.form.addComponentListener(new ComponentAdapter(){
 			@Override
 			public void componentHidden(final ComponentEvent e) {
-				if (form.isOkState()) {
-					/*NON ENTRA QUIIII!*/
+				//if (form.isOkState()) {
+					//NON ENTRA QUIIII!
 					controller.tableAdd();
-				}
+				//}
 			}
-		});
+		});*/
 		
 	}
 	
@@ -155,13 +156,10 @@ public class View extends JFrame implements IView{
 	
 	public static void main(String[] argv){
 		final Controller c = new Controller();
-		final View v = new View();		
+		//final FormController fc = new FormController();
+		final View v = new View();	
+		//final Form f = new Form();
 		c.addView(v);
-	}
-
-	@Override
-	public void disableCalendar() {
-		this.form.setVisible(false);
-		
+		//fc.addView(f);
 	}
 }

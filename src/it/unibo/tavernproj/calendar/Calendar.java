@@ -1,4 +1,6 @@
 package it.unibo.tavernproj.calendar;
+import it.unibo.tavernproj.controller.Controller;
+import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.view.Form;
 
 import java.awt.BorderLayout;
@@ -54,10 +56,14 @@ public class Calendar {
 						
 						day = button[selection].getActionCommand();
 						d.dispose();
-						Form form = new Form();
-						form.setVisible(true);
+						//Form form = ;						
+						//form.setVisible(true);
 						
-											}
+						
+						final FormController fc = new FormController();
+						fc.addView(new Form());
+
+					}
 				});
 			}
 			
