@@ -1,6 +1,7 @@
 package it.unibo.tavernproj.model;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
@@ -22,5 +23,10 @@ public class Model implements IModel {
 		map.remove(pren);
 	}
 
+	@Override
+	public Map<String,Reservation> getMap() {
+		return map;
+	}
 
+	
 }
