@@ -1,9 +1,9 @@
 package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.calendar.Calendar;
+import it.unibo.tavernproj.calendar.CalendarController;
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
-import it.unibo.tavernproj.controller.ControllerCalendar;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.controller.IFormController;
 import it.unibo.tavernproj.model.IModel;
@@ -36,7 +36,7 @@ import javax.swing.JTextField;
 
 //vedere se fare un'interfaccia per la form
 
-public class Form extends JFrame implements IForm{
+public class Form extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	//numero massimo di campi per il form
@@ -49,14 +49,15 @@ public class Form extends JFrame implements IForm{
 	private final ProgressiveAcceptor<JPanel> panelAggregator = new ProgressiveAcceptorImpl<>();
 	private final Map<String, JComponent> map = new HashMap<>();
 	//private final IModel model = new Model();
-	private final ControllerCalendar contrCal= new ControllerCalendar();
-	private final View view = new View();
+	//private final CalendarController contrCal = new CalendarController();
 	
 	//private boolean okState = false;
 	private IFormController ctrl;
 	
+	private String currentDate;
+	
 	/*Usare l'esame 01b del 2015 per fare la form!*/
-	public Form(){
+	public Form(String date){
 		super();
 		setLocationByPlatform(true);
 		final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -67,6 +68,8 @@ public class Form extends JFrame implements IForm{
 		
 		buildLayout();
 		setHandlers();	
+		
+		this.currentDate = date;
 		
 		this.setVisible(true);		
 	}
@@ -153,9 +156,9 @@ public class Form extends JFrame implements IForm{
 		panel.add(this.reserv, BorderLayout.NORTH);
 		panel.add(center, BorderLayout.CENTER);
 		
-		this.date.setText(this.contrCal.dateCurrent(view));
+		this.date.setText(this.currentDate);
 		
-		this.reserv.setText(String.valueOf(this.contrCal.reservations(view)));
+		this.reserv.setText(this.currentDate);
 		
 		this.getContentPane().add(BorderLayout.CENTER,panel);
 		
@@ -190,9 +193,4 @@ public class Form extends JFrame implements IForm{
 	//public boolean isOkState(){
 	//	return this.okState;
 	//}
-
-	@Override
-	public void attachViewObserver(IFormController listener) {
-		this.ctrl = listener;		
-	}
 }

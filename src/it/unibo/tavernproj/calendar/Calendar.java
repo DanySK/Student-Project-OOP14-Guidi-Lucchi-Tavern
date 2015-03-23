@@ -2,6 +2,7 @@ package it.unibo.tavernproj.calendar;
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.view.Form;
+import it.unibo.tavernproj.view.FormFrame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,6 +33,8 @@ public class Calendar {
 	JDialog d;
 	JButton[] button = new JButton[49];
 	
+	private ICalendarController ctrl;
+	
 	
 	public Calendar(JFrame frame) {
 		d = new JDialog();
@@ -60,10 +63,13 @@ public class Calendar {
 						//form.setVisible(true);
 						
 						
+						//NON SALVA LA DATA NEL CONTROLLER!
+						//CONTROLLARE!
+						
+						FormFrame frame = new FormFrame(new Form(""));//new Form(ctrl.getCurrentDate()));
 						final FormController fc = new FormController();
-						fc.addView(new Form());
-
-					}
+						fc.addView(frame);	
+						
 					}
 				});
 			}
@@ -129,6 +135,13 @@ public class Calendar {
 		
 		return sdf.format(cal.getTime());
 		}
+
+
+
+	public void attachViewObserver(ICalendarController calendarController) {
+		// TODO Auto-generated method stub
+		this.ctrl = calendarController;
+	}
 	
 }
 

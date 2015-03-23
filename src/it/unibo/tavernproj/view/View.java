@@ -1,6 +1,7 @@
 package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.calendar.Calendar;
+import it.unibo.tavernproj.calendar.CalendarController;
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
@@ -116,6 +117,8 @@ public class View extends JFrame implements IView{
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame frame = new JFrame("Calendar");
 				calendar = new Calendar(frame);
+				CalendarController ctrl = new CalendarController(calendar);
+				ctrl.addView(calendar);
 			//sbagliato anche se funziona!!
 				//	it.unibo.tavernproj.view.Form.date.setText(calendar.setPickedDate());
 			}			
