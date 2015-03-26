@@ -162,7 +162,7 @@ public class View extends JFrame implements IView{
 	
 	
 	public static void main(String[] argv){
-		final Controller c = new Controller();
+		final IController c = new Controller();
 		//final FormController fc = new FormController();
 		final View v = new View();	
 		//final Form f = new Form();

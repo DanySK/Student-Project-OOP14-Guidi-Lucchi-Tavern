@@ -49,7 +49,6 @@ public class Form extends JFrame{
 	private final ProgressiveAcceptor<JPanel> panelAggregator = new ProgressiveAcceptorImpl<>();
 	private final Map<String, JComponent> map = new HashMap<>();
 	//private final IModel model = new Model();
-	//private final CalendarController contrCal = new CalendarController();
 	
 	//private boolean okState = false;
 	private IFormController ctrl;
@@ -127,6 +126,12 @@ public class Form extends JFrame{
 		
 		panelAggregator.setSize(MAX);
 		
+		/**
+		 * modify the form's structure
+		 * @author Giulia Lucchi
+		 *
+		 */
+		
 		// Pannello centrale, ossia una griglia a due colonne
 		final JPanel center = new JPanel(new GridLayout(0,2));
 		
@@ -155,10 +160,10 @@ public class Form extends JFrame{
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(this.reserv, BorderLayout.NORTH);
 		panel.add(center, BorderLayout.CENTER);
-		
+				
 		this.date.setText(this.currentDate);
 		
-		this.reserv.setText(this.currentDate);
+		this.reserv.setText("  ");
 		
 		this.getContentPane().add(BorderLayout.CENTER,panel);
 		

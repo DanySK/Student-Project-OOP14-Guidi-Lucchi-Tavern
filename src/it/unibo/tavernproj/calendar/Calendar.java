@@ -1,6 +1,7 @@
 package it.unibo.tavernproj.calendar;
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
+import it.unibo.tavernproj.controller.IFormController;
 import it.unibo.tavernproj.view.Form;
 import it.unibo.tavernproj.view.FormFrame;
 
@@ -37,6 +38,7 @@ public class Calendar {
 	
 	
 	public Calendar(JFrame frame) {
+		this.ctrl= new CalendarController(this);
 		d = new JDialog();
 		d.setModal(true);
 		String[] header = { "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat" };
@@ -59,17 +61,16 @@ public class Calendar {
 						
 						day = button[selection].getActionCommand();
 						d.dispose();
-						//Form form = ;						
-						//form.setVisible(true);
+						if(day.equals("")){
+							
+						}else{
+							//NON SALVA LA DATA NEL CONTROLLER!
+							//CONTROLLARE!
 						
-						
-						//NON SALVA LA DATA NEL CONTROLLER!
-						//CONTROLLARE!
-						
-						FormFrame frame = new FormFrame(new Form(""));//new Form(ctrl.getCurrentDate()));
-						final FormController fc = new FormController();
-						fc.addView(frame);	
-						
+							FormFrame frame = new FormFrame(new Form(ctrl.getCurrentDate()));
+							final IFormController fc = new FormController();
+							fc.addView(frame);	
+						}
 					}
 				});
 			}
