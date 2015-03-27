@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-
 /**
  * @author Giulia Lucchi
  */
@@ -12,6 +11,7 @@ import java.util.Map;
 public class Model implements IModel {
 	
 	private Map<String, Reservation> map = new HashMap<>();
+	private String currentDate;
 
 	@Override
 	public void add(final Reservation pren) {
@@ -27,6 +27,5 @@ public class Model implements IModel {
 	public Map<String,Reservation> getMap() {
 		return map;
 	}
-
 	
 }

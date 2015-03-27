@@ -1,15 +1,9 @@
 package it.unibo.tavernproj.controller;
 
 import it.unibo.tavernproj.view.Form;
-import it.unibo.tavernproj.view.FormFrame;
 
 public interface IFormController {
 
-	/**
-	 * Add a table button on the main view
-	 * */
-	void tableAdd();
-	
 	/**
 	 * Aggiunge una nuova view al controller
 	 * Adds a view to this controller
@@ -18,7 +12,7 @@ public interface IFormController {
 	 * 		la view da aggiungere
 	 * 		the view to add
 	 */
-	void addView(FormFrame f);
+	void addView(Form f);
 
 	/**
 	 * Elimina una view dal controller
@@ -28,7 +22,10 @@ public interface IFormController {
 	 * 		la view da eliminare
 	 *      the view to remove
 	 */
-	void removeView(FormFrame f);
+	void removeView(Form f);
 
-	String getDate();
+
+	//String getDate();
+	
+	//void setDate(String date);
 }

@@ -24,7 +24,7 @@ public interface IController {
 	 * Aggiunge incrementalmente un nuovo bottone per il tavolo sotto la cartina.
 	 * Adds a new table icon.
 	 */
-	void tableAdd();
+	void addTable();
 	
 	/**
 	 * Rimuove il bottone per un tavolo precedentemente immesso e il tavolo sulla cartina.
@@ -34,7 +34,7 @@ public interface IController {
 	 * 		il numero del tavolo
 	 *      the number of the table
 	 */
-	void tableRemove(int number);
+	void removeTable(int number);
 	
 	/**
 	 * Aggiunge una nuova prenotazione.

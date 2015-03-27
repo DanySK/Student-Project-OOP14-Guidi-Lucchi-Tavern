@@ -14,42 +14,33 @@ import javax.swing.JFrame;
 public class CalendarController implements ICalendarController{
 
 	private final IModel model = new Model();
-	private Calendar calendar;
 	private Set<Calendar> view = new HashSet<>();
 	
-	public CalendarController(Calendar c){
-		this.calendar = c;
-	}
 	
-	public String getCurrentDate(){
-		return this.calendar.setPickedDate();
-	}
-	
-	public Set<Reservation> reservations(View v){
+	/*public Set<Reservation> reservations(View v){
 		
 		Set<Reservation> set = new HashSet<>();
 		
 		for(String s : model.getMap().keySet()){
-			if(s.equals(this.getCurrentDate())){
+			if(s.equals(this.getDate())){
 				Reservation r = model.getMap().get(s);
 				set.add(r);	
 				
 			}
 		}
 		return set;		
-	}
+	}*/
 	
 	@Override
 	public void addView(final Calendar c) {
 		c.attachViewObserver(this);
 		view.add(c);
-		System.out.print(view.size());
 	}
 
 	@Override
 	public void removeView(final Calendar c) {
 		view.remove(c);	
-	}
-	
+	}	
 	
 }
+

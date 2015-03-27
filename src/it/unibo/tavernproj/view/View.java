@@ -5,6 +5,7 @@ import it.unibo.tavernproj.calendar.CalendarController;
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
+import it.unibo.tavernproj.controller.IFormController;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -42,7 +43,7 @@ public class View extends JFrame implements IView{
 	private final LinkedList<JButton> table = new LinkedList<>();
 	private IController controller;
 	//private Form form = new Form();
-	private Calendar calendar;
+	//private Calendar calendar;
 	
 	public View(){
 		super();
@@ -72,10 +73,10 @@ public class View extends JFrame implements IView{
 		setHandlers();
 		
 		this.setVisible(true);
-		this.pack();
+		//this.pack();
 	}	
 	
-		JPanel tablesButtons = build.buildPanel(new FlowLayout());
+	JPanel tablesButtons = build.buildPanel(new FlowLayout());
 		
 	private void buildLayout() {
 		
@@ -116,23 +117,32 @@ public class View extends JFrame implements IView{
 						
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame frame = new JFrame("Calendar");
-				calendar = new Calendar(frame);
-				CalendarController ctrl = new CalendarController(calendar);
-				ctrl.addView(calendar);
-			//sbagliato anche se funziona!!
-				//	it.unibo.tavernproj.view.Form.date.setText(calendar.setPickedDate());
+
+				Calendar calendar = new Calendar(frame);
+				CalendarController ctrl = new CalendarController();
+				ctrl.addView(calendar);			
+				
+				while (!calendar.getPickedDate().equals("Error") && !calendar.isRight()){
+					//FARE una finestra al posto del messaggio stampato
+					System.out.println("Selezionare una data utile");
+					calendar = new Calendar(frame);
+					ctrl.addView(calendar);
+				}
+				
+				
+				//GESTIRE DIVERSAMENTE
+				if (!calendar.getPickedDate().equals("Error")){
+					Form form = new Form(calendar.getPickedDate());
+					final IFormController fc = new FormController();
+					fc.addView(form);
+					
+					//fare un metodo nella form che tira fuori una finestra se la voglio chiudere senza salvare!!					
+					controller.addTable();
+				}
+				
+				
 			}			
 		});
-		
-		/*this.form.addComponentListener(new ComponentAdapter(){
-			@Override
-			public void componentHidden(final ComponentEvent e) {
-				//if (form.isOkState()) {
-					//NON ENTRA QUIIII!
-					controller.tableAdd();
-				//}
-			}
-		});*/
 		
 	}
 	
@@ -147,15 +157,8 @@ public class View extends JFrame implements IView{
 	public void addTable() {
 		/* System.getProperty("user.home")+System.getProperty("file.separator")+
 				*/ 
-		
-		//NON VAAAAAAAAAAAAAAAA! 
-		//non mostra i bottoni, non so più come fare!!
-		//int i = 1;			
-		//for ( int i = 1; i <= 20; i++){
-			final JButton b = build.buildButton("res" + System.getProperty("file.separator") + i + "s.png");
-			//table.addLast(b);
-			tablesButtons.add(b);
-		//}
+		final JButton b = build.buildButton("res" + System.getProperty("file.separator") + i + "s.png");
+		tablesButtons.add(b);
 		i++;
 		View.this.validate();
 	}
@@ -163,14 +166,11 @@ public class View extends JFrame implements IView{
 	
 	public static void main(String[] argv){
 		final IController c = new Controller();
-		//final FormController fc = new FormController();
-		final View v = new View();	
-		//final Form f = new Form();
+		final View v = new View();
 		c.addView(v);
-		//fc.addView(f);
 	}
 	
-	public Calendar getCalendar(){
+	/*public Calendar getCalendar(){
 		return this.calendar;
-	}
+	}*/
 }

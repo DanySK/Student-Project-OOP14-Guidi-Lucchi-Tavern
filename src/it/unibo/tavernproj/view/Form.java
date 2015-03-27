@@ -1,6 +1,5 @@
 package it.unibo.tavernproj.view;
 
-import it.unibo.tavernproj.calendar.Calendar;
 import it.unibo.tavernproj.calendar.CalendarController;
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
@@ -43,17 +42,15 @@ public class Form extends JFrame{
 	public static final int MAX = 100;
 	
 	private final JButton okButton = new JButton("OK");
-	public final JLabel date = new JLabel();
+	public JLabel date;
 	private final JLabel reserv = new JLabel();
 	
 	private final ProgressiveAcceptor<JPanel> panelAggregator = new ProgressiveAcceptorImpl<>();
 	private final Map<String, JComponent> map = new HashMap<>();
 	//private final IModel model = new Model();
 	
-	//private boolean okState = false;
+	private boolean okState = false;
 	private IFormController ctrl;
-	
-	private String currentDate;
 	
 	/*Usare l'esame 01b del 2015 per fare la form!*/
 	public Form(String date){
@@ -65,10 +62,10 @@ public class Form extends JFrame{
 		this.setSize(sw, sh);
 		this.setResizable(true);	
 		
+		this.date = new JLabel(date);
+		
 		buildLayout();
 		setHandlers();	
-		
-		this.currentDate = date;
 		
 		this.setVisible(true);		
 	}
@@ -91,10 +88,9 @@ public class Form extends JFrame{
 		this.okButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(final ActionEvent arg0) {
-				Form.this.setVisible(false);
+				//Form.this.setVisible(false);
 				//okState = true;
-				System.out.print("a");
-				ctrl.tableAdd();
+				Form.this.dispose();
 			}			
 		});
 		
@@ -160,8 +156,6 @@ public class Form extends JFrame{
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(this.reserv, BorderLayout.NORTH);
 		panel.add(center, BorderLayout.CENTER);
-				
-		this.date.setText(this.currentDate);
 		
 		this.reserv.setText("  ");
 		
@@ -189,13 +183,9 @@ public class Form extends JFrame{
 		panel.add(component);	
 		panelAggregator.accept(pos, panel);	
 	}
+
+	public void attachViewObserver(FormController formController) {
+		this.ctrl = formController;		
+	}
 	
-	/**
-	 * @return se il bottone è stato premuto.
-	 * 
-	 * @return true if "OK" has been selected
-	 */
-	//public boolean isOkState(){
-	//	return this.okState;
-	//}
 }

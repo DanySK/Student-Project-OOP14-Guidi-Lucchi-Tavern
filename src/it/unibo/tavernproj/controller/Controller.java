@@ -26,21 +26,16 @@ public class Controller implements IController{
 	}
 
 	@Override
-	public void tableAdd() {
+	public void addTable() {
 		//this.reservationAdd();
-		System.out.print(view.size());
-		for (final IView v: view){
-			//magicamente la lunghezza di view diventa 0 -.-'''''''''
-			//quindi non entra qui!
-			System.out.print("d");
-			
+		for (final IView v: view){	
 			v.addTable();
 		}
 		
 	}
 
 	@Override
-	public void tableRemove(final int number) {
+	public void removeTable(final int number) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -69,7 +64,6 @@ public class Controller implements IController{
 	public void addView(final IView v) {
 		v.attachViewObserver(this);
 		view.add(v);
-		System.out.print(view.size());
 	}
 
 	@Override
