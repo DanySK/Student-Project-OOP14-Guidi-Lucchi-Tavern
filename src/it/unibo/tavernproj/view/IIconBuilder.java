@@ -45,7 +45,9 @@ public interface IIconBuilder {
 	 * 		la JLabel creata.
 	 * 		the JLabel created.
 	 */
-	JLabel buildLabel(String str);
+	JLabel buildLogo(String str);
+	
+	JLabel buildMap(String str);
 	
 	/**
 	 * Crea un bottne usando come sfondo l'immagine al percorso passato,

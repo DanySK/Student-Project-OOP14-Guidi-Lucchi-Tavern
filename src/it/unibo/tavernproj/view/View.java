@@ -42,12 +42,10 @@ public class View extends JFrame implements IView{
 	private final JButton buttonNew = new JButton("Nuova Prenotazione"); 
 	private final LinkedList<JButton> table = new LinkedList<>();
 	private IController controller;
-	//private Form form = new Form();
-	//private Calendar calendar;
+	
 	
 	public View(){
 		super();
-		//form.setVisible(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationByPlatform(true);
 		
@@ -59,8 +57,9 @@ public class View extends JFrame implements IView{
 		final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		final int sw = (int) screen.getWidth() * 3/4;
 		final int sh = (int) screen.getHeight() * 3/4;
+		
 		this.setSize(sw, sh);
-		this.setResizable(true);
+		this.setResizable(false);
 			
 		buildLayout();	
 		
@@ -73,17 +72,16 @@ public class View extends JFrame implements IView{
 		setHandlers();
 		
 		this.setVisible(true);
-		//this.pack();
 	}	
 	
 	JPanel tablesButtons = build.buildPanel(new FlowLayout());
 		
 	private void buildLayout() {
 		
-		final JLabel map = build.buildLabel("res/map.png");	
+		final JLabel map = build.buildMap("res/map.png");	
 		final JPanel dx = build.buildPanel(new BorderLayout());		
 		final JPanel pNew = build.buildPanel(new GridBagLayout());			
-		final JLabel logo = build.buildLabel("res/logo.jpg");		
+		final JLabel logo = build.buildLogo("res/logo.jpg");		
 		
 		final GridBagConstraints gap = new GridBagConstraints();		
 		gap.gridy = 0;
@@ -92,7 +90,7 @@ public class View extends JFrame implements IView{
 		buttonNew.setSize(pNew.getWidth(), pNew.getHeight()*1/10);
 		pNew.add(buttonNew, gap);
 		//gap.gridy++;
-		//pNew.add(new JButton("hhh"), gap);
+		
 		
 		dx.add(pNew, BorderLayout.CENTER);
 		dx.add(logo, BorderLayout.NORTH);
@@ -170,7 +168,4 @@ public class View extends JFrame implements IView{
 		c.addView(v);
 	}
 	
-	/*public Calendar getCalendar(){
-		return this.calendar;
-	}*/
 }
