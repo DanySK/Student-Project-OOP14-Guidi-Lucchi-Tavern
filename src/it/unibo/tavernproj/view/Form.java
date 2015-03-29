@@ -60,6 +60,8 @@ public class Form extends JFrame{
 		this.setSize(sw, sh);
 		this.setResizable(true);	
 		
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
 		this.date = new JLabel(date);
 		//ctrl.setDate(date);
 		
@@ -192,42 +194,42 @@ public class Form extends JFrame{
 	}	
 	
 	public String getTable() {
-		if (((JTextField) map.get("Tav")).getText() == null){
-			throw new NullPointerException();
+		if (((JTextField) map.get("Tav")).getText().equals("")){
+			throw new NumberFormatException();
 		}
 		return ((JTextField) map.get("Tav")).getText();
 	}
 
 	public String getNome() {
-		if (((JTextField)map.get("Nome")).getText() == null){
+		if (((JTextField)map.get("Nome")).getText().equals("")){
 			throw new NullPointerException();
 		}
 		return ((JTextField)map.get("Nome")).getText();
 	}
 
 	public String getH() {
-		if (((JTextField) map.get("Ora")).getText() == null){
+		if (((JTextField) map.get("Ora")).getText().equals("")){
 			throw new NullPointerException();
 		}
 		return ((JTextField) map.get("Ora")).getText();
 	}
 
 	public String getTel() {
-		if (((JTextField) map.get("Tel")).getText() == null){
+		if (((JTextField) map.get("Tel")).getText().equals("")){
 			throw new NullPointerException();
 		}
 		return ((JTextField)map.get("Tel")).getText();
 	}
 
 	public String getNum() {
-		if (((JTextField) map.get("Num")).getText() == null){
-			throw new NullPointerException();
+		if (((JTextField) map.get("Num")).getText().equals("")){
+			throw new NumberFormatException();
 		}
 		return ((JTextField) map.get("Num")).getText();
 	}
 
 	public String getMenu() {
-		if (((JTextField) map.get("Menu Fisso")).getText() == null){
+		if (((JTextField) map.get("Menu Fisso")).getText().equals("")){
 			throw new NullPointerException();
 		}
 		return ((JTextField)map.get("Menu Fisso")).getText();

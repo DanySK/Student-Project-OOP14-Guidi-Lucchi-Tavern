@@ -46,7 +46,7 @@ public class Calendar {
 	private ICalendarController ctrl;
 	
 	
-	public Calendar(JFrame frame) {
+	public Calendar(JFrame frame) {	
 		d = new JDialog();
 		d.setModal(true);
 		String[] header = { "D", "L", "Ma", "Me", "G", "V", "S" };
@@ -140,8 +140,10 @@ public class Calendar {
 	}
 	
 	public boolean isRight(){
-		if (currentMonth == this.month){
-			return Integer.parseInt(this.day) >= this.currentDay; 
+		if (!this.day.equals("")){			
+			if (currentMonth == this.month){
+				return Integer.parseInt(this.day) >= this.currentDay; 
+			}
 		}
 		if (currentMonth < this.month){
 			return true;

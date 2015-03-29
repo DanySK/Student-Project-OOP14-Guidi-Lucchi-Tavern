@@ -60,7 +60,7 @@ public class View extends JFrame implements IView{
 		final int sh = (int) screen.getHeight() * 3/4;
 		
 		this.setSize(sw, sh);
-		this.setResizable(false);
+		this.setResizable(true);
 			
 		buildLayout();	
 		
@@ -71,6 +71,15 @@ public class View extends JFrame implements IView{
 		buttonNew.setBackground(Color.white);
 		
 		setHandlers();
+		
+		this.getContentPane().addComponentListener(new ComponentAdapter(){
+			
+			@Override
+			public void componentResized(ComponentEvent e){
+				View.this.validate();
+			}
+			
+		});
 		
 		this.setVisible(true);
 	}	
@@ -129,7 +138,7 @@ public class View extends JFrame implements IView{
 				}				
 				
 				//GESTIRE DIVERSAMENTE
-				//if (!calendar.getPickedDate().equals("Error")){
+				if (!calendar.getPickedDate().equals("Error")){
 				
 					Form form = new Form(calendar.getPickedDate());
 					final IFormController fc = new FormController();
@@ -146,8 +155,12 @@ public class View extends JFrame implements IView{
 								}
 								else
 									fc.save(form.getTable(), form.getNome(), form.getH(), form.getTel(), form.getNum());
-							}catch (Exception e){
+							}catch (NullPointerException e){
 								System.out.print("Riempire la form!");
+								form.setVisible(true);
+							}
+							catch (NumberFormatException e1){
+								System.out.print("Riempire la form con dei numeri!");
 								form.setVisible(true);
 							}
 						}
@@ -156,7 +169,7 @@ public class View extends JFrame implements IView{
 					
 					//fare un metodo nella form che tira fuori una finestra se la voglio chiudere senza salvare!!					
 					//controller.addTable();
-				//}
+				}
 				
 				
 			}			
