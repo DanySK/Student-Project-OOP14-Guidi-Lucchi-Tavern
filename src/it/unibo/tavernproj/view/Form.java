@@ -1,12 +1,8 @@
 package it.unibo.tavernproj.view;
 
-import it.unibo.tavernproj.calendar.CalendarController;
-import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
-import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.controller.IFormController;
-import it.unibo.tavernproj.model.IModel;
-import it.unibo.tavernproj.model.Model;
+import it.unibo.tavernproj.model.IReservation;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -19,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -30,8 +27,11 @@ import javax.swing.JTextField;
 
 /**
  * @author Eleonora Guidi
+ * 
+ * modified by @author Giulia Lucchi
  *
  */
+
 
 //vedere se fare un'interfaccia per la form
 
@@ -47,9 +47,7 @@ public class Form extends JFrame{
 	
 	private final ProgressiveAcceptor<JPanel> panelAggregator = new ProgressiveAcceptorImpl<>();
 	private final Map<String, JComponent> map = new HashMap<>();
-	//private final IModel model = new Model();
-	
-	private boolean okState = false;
+
 	private IFormController ctrl;
 	
 	/*Usare l'esame 01b del 2015 per fare la form!*/
@@ -63,6 +61,9 @@ public class Form extends JFrame{
 		this.setResizable(true);	
 		
 		this.date = new JLabel(date);
+		//ctrl.setDate(date);
+		
+		loadReservation();
 		
 		buildLayout();
 		setHandlers();	
@@ -70,6 +71,13 @@ public class Form extends JFrame{
 		this.setVisible(true);		
 	}
 	
+	private void loadReservation() {
+		//scaricare da un file le prentazioni in base alla data
+		
+		reserv.setText(""); //stampare il set con le prenotazioni nel file di sopra
+		this.validate();
+	}
+
 	private void setHandlers() {
 		((JRadioButton) map.get("Menu")).addActionListener(new ActionListener(){			
 			@Override
@@ -88,9 +96,7 @@ public class Form extends JFrame{
 		this.okButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(final ActionEvent arg0) {
-				//Form.this.setVisible(false);
-				//okState = true;
-				Form.this.dispose();
+				Form.this.setVisible(false);
 			}			
 		});
 		
@@ -121,45 +127,42 @@ public class Form extends JFrame{
 		});
 		
 		panelAggregator.setSize(MAX);
-		
-		/**
-		 * modify the form's structure
-		 * @author Giulia Lucchi
-		 *
-		 */
+
 		
 		// Pannello centrale, ossia una griglia a due colonne
 		final JPanel center = new JPanel(new GridLayout(0,2));
 		
 		/*fare un metodo per mettere insieme sti accept!!*/
-		acceptPanel(new JLabel("Nome"),FlowLayout.RIGHT, 0);
-		acceptPanel(new JLabel("Orario"),FlowLayout.RIGHT, 1);
-		acceptPanel(new JLabel("Numero Persone"),FlowLayout.RIGHT, 2);
-		acceptPanel(new JLabel("Telefono"),FlowLayout.RIGHT, 3);
-		acceptPanel(new JLabel("Menu' fisso"),FlowLayout.RIGHT, 4);
-		acceptPanel(new JLabel(""),FlowLayout.RIGHT, 5);
+		acceptPanel(new JLabel("Tavolo"), FlowLayout.RIGHT, 0);
+		acceptPanel(new JLabel("Nome"),FlowLayout.RIGHT, 1);
+		acceptPanel(new JLabel("Orario"),FlowLayout.RIGHT, 2);
+		acceptPanel(new JLabel("Numero Persone"),FlowLayout.RIGHT, 3);
+		acceptPanel(new JLabel("Telefono"),FlowLayout.RIGHT, 4);
+		acceptPanel(new JLabel("Menu' fisso"),FlowLayout.RIGHT, 5);
+		acceptPanel(new JLabel(""),FlowLayout.RIGHT, 6);
 		
 		center.add(panelAggregator.aggregateAll());
 		
-		acceptPanel(addTextField("Nome"), FlowLayout.CENTER, 0);
-		acceptPanel(addTextField("Ora"), FlowLayout.CENTER, 1);
-		acceptPanel(addTextField("Num"), FlowLayout.CENTER, 2);
-		acceptPanel(addTextField("Tel"), FlowLayout.CENTER, 3);
-		acceptPanel(addRadioButton("Menu"), FlowLayout.CENTER, 4);
-		acceptPanel(addTextField("Menu fisso"), FlowLayout.CENTER, 5);
+		acceptPanel(addTextField("Tav"), FlowLayout.CENTER, 0);
+		acceptPanel(addTextField("Nome"), FlowLayout.CENTER, 1);
+		acceptPanel(addTextField("Ora"), FlowLayout.CENTER, 2);
+		acceptPanel(addTextField("Num"), FlowLayout.CENTER, 3);
+		acceptPanel(addTextField("Tel"), FlowLayout.CENTER, 4);
+		acceptPanel(addRadioButton("Menu"), FlowLayout.CENTER, 5);
+		acceptPanel(addTextField("Menu fisso"), FlowLayout.CENTER, 6);
 		map.get("Menu fisso").setVisible(false);
 		
 		center.add(panelAggregator.aggregateAll());
 		
-		this.add(date, BorderLayout.NORTH);
+		//Set<IReservation> res = ctrl.getRes();
+		//reserv.setText(res.toString());
 		
-		JPanel panel = new JPanel(new BorderLayout());
-		panel.add(this.reserv, BorderLayout.NORTH);
-		panel.add(center, BorderLayout.CENTER);
+		final JPanel north = new JPanel(new BorderLayout());
+		north.add(date, BorderLayout.NORTH);
+		north.add(reserv, BorderLayout.CENTER);
+		this.getContentPane().add(north, BorderLayout.NORTH);
 		
-		this.reserv.setText("  ");
-		
-		this.getContentPane().add(BorderLayout.CENTER,panel);
+		this.getContentPane().add(center, BorderLayout.CENTER);
 		
 	}
 
@@ -186,6 +189,54 @@ public class Form extends JFrame{
 
 	public void attachViewObserver(FormController formController) {
 		this.ctrl = formController;		
+	}	
+	
+	public String getTable() {
+		if (((JTextField) map.get("Tav")).getText() == null){
+			throw new NullPointerException();
+		}
+		return ((JTextField) map.get("Tav")).getText();
 	}
+
+	public String getNome() {
+		if (((JTextField)map.get("Nome")).getText() == null){
+			throw new NullPointerException();
+		}
+		return ((JTextField)map.get("Nome")).getText();
+	}
+
+	public String getH() {
+		if (((JTextField) map.get("Ora")).getText() == null){
+			throw new NullPointerException();
+		}
+		return ((JTextField) map.get("Ora")).getText();
+	}
+
+	public String getTel() {
+		if (((JTextField) map.get("Tel")).getText() == null){
+			throw new NullPointerException();
+		}
+		return ((JTextField)map.get("Tel")).getText();
+	}
+
+	public String getNum() {
+		if (((JTextField) map.get("Num")).getText() == null){
+			throw new NullPointerException();
+		}
+		return ((JTextField) map.get("Num")).getText();
+	}
+
+	public String getMenu() {
+		if (((JTextField) map.get("Menu Fisso")).getText() == null){
+			throw new NullPointerException();
+		}
+		return ((JTextField)map.get("Menu Fisso")).getText();
+	}
+
+	public boolean isMenuSelected() {
+		return ((JRadioButton) map.get("Menu")).isSelected();
+	}
+	
+	
 	
 }

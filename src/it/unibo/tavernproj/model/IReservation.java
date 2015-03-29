@@ -8,6 +8,11 @@ import java.util.Objects;
  */
 
 public interface IReservation {
+	
+	/**
+	 * @return the table
+	 */
+	public String getTable();
 
 	/**
 	 * @return the name
@@ -17,7 +22,7 @@ public interface IReservation {
 	/**
 	 * @return the date
 	 */
-	public String getDate();
+	//public String getDate();
 
 	/**
 	 * @return h
@@ -30,13 +35,12 @@ public interface IReservation {
 	public String getTel();
 	
 	/**
-	 * @return the number of person
+	 * @return the number of people
 	 */
 	public int getNumPers();
-
-
+	
 	/**
-	 * @return true if there is a fixed men�
-	 */
-	public boolean isMenu();
+	 * @return the menu, if selected and added
+	 * */
+	public String getMenu();
 }

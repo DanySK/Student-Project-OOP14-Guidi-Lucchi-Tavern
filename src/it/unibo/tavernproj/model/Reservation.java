@@ -2,23 +2,28 @@ package it.unibo.tavernproj.model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Giulia Lucchi
+ * 
+ * modified by @author Eleonora Guidi
  *
  */
-public class Reservation implements Serializable{
+public class Reservation implements Serializable, IReservation{
 	
 	private static final long serialVersionUID = -5126256178520079481L;
+	private final String table;
 	private final String name;
-	private final String date;
+	//private final String date;
 	private final String h;
 	private final String tel;
 	private final int numPers;
-	private final boolean menu;
+	private final Optional<String> menu;
 	
 	/**
-	 *
+	 * @param table
+	 *            the table
 	 * @param name
 	 *            the name
 	 * @param date
@@ -28,66 +33,61 @@ public class Reservation implements Serializable{
 	 * @param tel
 	 *            the number of telephone
 	 * @param numPers
-	 *            the number of person
-	 * @param men�
-	 *            true if there is a fixed men�
+	 *            the number of people
+	 * @param menu
+	 *            an Optional containing the selected menu, if added.
+	 *            Else an empty Optional.
 	 */
-	public Reservation(final String name, final String date, final String h, final String tel, final int numPers, final boolean menu) {
+	public Reservation(final String table, final String name, /*final String date, */
+			final String h, final String tel, final int numPers, final Optional<String> menu) {
+		Objects.requireNonNull(table);
+		this.table = table;
 		Objects.requireNonNull(name);
 		this.name = name;
-		Objects.requireNonNull(date);
-		this.date = date;
+		/*Objects.requireNonNull(date);
+		this.date = date;*/
 		Objects.requireNonNull(h);
 		this.h = h;
 		Objects.requireNonNull(tel);
 		this.tel = tel;
 		Objects.requireNonNull(numPers);
 		this.numPers = numPers;
-		Objects.requireNonNull(menu);
 		this.menu = menu;
 	}
+	
+	@Override
+	public String getTable() {
+		return table;
+	}
 
-	/**
-	 * @return the name
-	 */
+	@Override
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @return the date
-	 */
+	/*@Override
 	public String getDate() {
 		return date;
-	}
+	}*/
 
-	/**
-	 * @return h
-	 */
+	@Override
 	public String getHours() {
 		return h;
 	}
 
-	/**
-	 * @return the number of telephone
-	 */
+	@Override
 	public String getTel() {
 		return tel;
 	}
 	
-	/**
-	 * @return the number of person
-	 */
+	@Override
 	public int getNumPers() {
 		return numPers;
 	}
-
-
-	/**
-	 * @return true if there is a fixed men�
-	 */
-	public boolean isMenu() {
-		return menu;
+	
+	@Override 
+	public String getMenu(){
+		return menu.get();
 	}
 	
 	

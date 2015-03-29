@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -118,25 +119,44 @@ public class View extends JFrame implements IView{
 
 				Calendar calendar = new Calendar(frame);
 				CalendarController ctrl = new CalendarController();
-				ctrl.addView(calendar);			
+				ctrl.addView(calendar);	
 				
 				while (!calendar.getPickedDate().equals("Error") && !calendar.isRight()){
 					//FARE una finestra al posto del messaggio stampato
 					System.out.println("Selezionare una data utile");
 					calendar = new Calendar(frame);
 					ctrl.addView(calendar);
-				}
-				
+				}				
 				
 				//GESTIRE DIVERSAMENTE
-				if (!calendar.getPickedDate().equals("Error")){
+				//if (!calendar.getPickedDate().equals("Error")){
+				
 					Form form = new Form(calendar.getPickedDate());
 					final IFormController fc = new FormController();
 					fc.addView(form);
+				
+					fc.setDate(calendar.getPickedDate());
+					System.out.print(fc.getDate());
+					form.addComponentListener(new ComponentAdapter() {
+						@Override
+						public void componentHidden(final ComponentEvent ce) {
+							try {
+								if (form.isMenuSelected()){
+									fc.save(form.getTable(), form.getNome(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
+								}
+								else
+									fc.save(form.getTable(), form.getNome(), form.getH(), form.getTel(), form.getNum());
+							}catch (Exception e){
+								System.out.print("Riempire la form!");
+								form.setVisible(true);
+							}
+						}
+					});		
+					
 					
 					//fare un metodo nella form che tira fuori una finestra se la voglio chiudere senza salvare!!					
-					controller.addTable();
-				}
+					//controller.addTable();
+				//}
 				
 				
 			}			
