@@ -2,6 +2,7 @@ package it.unibo.tavernproj.controller;
 import java.util.HashSet;
 import java.util.Set;
 
+import it.unibo.tavernproj.view.Form;
 import it.unibo.tavernproj.view.IView;
 
 /**
@@ -26,10 +27,10 @@ public class Controller implements IController{
 	}
 
 	@Override
-	public void addTable() {
+	public void addTable(String table) {
 		//this.reservationAdd();
 		for (final IView v: view){	
-			v.addTable();
+			v.addTable(table);
 		}
 		
 	}
@@ -41,7 +42,7 @@ public class Controller implements IController{
 	}
 
 	@Override
-	public void reservationAdd() {
+	public void addReservation() {
 		// TODO Auto-generated method stub
 		
 		//parte di modello: salvare la prenotazione sul file system
@@ -49,7 +50,7 @@ public class Controller implements IController{
 	}
 
 	@Override
-	public void reservationRemove() {
+	public void removeReservation() {
 		// TODO Auto-generated method stub
 		
 	}

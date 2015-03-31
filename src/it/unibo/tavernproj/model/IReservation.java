@@ -1,5 +1,7 @@
 package it.unibo.tavernproj.model;
 
+import it.unibo.tavernproj.view.Form;
+
 import java.util.Objects;
 
 /**
@@ -43,4 +45,6 @@ public interface IReservation {
 	 * @return the menu, if selected and added
 	 * */
 	public String getMenu();
+	
+	public Form getReservation();
 }

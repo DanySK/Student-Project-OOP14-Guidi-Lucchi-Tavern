@@ -1,6 +1,7 @@
 package it.unibo.tavernproj.controller;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.tavernproj.model.IReservation;
@@ -48,22 +49,7 @@ public interface IFormController {
 	 * @param menu
 	 *            the selected menu.
 	 */
-	void save(String table, String name, String h, String tel, String numPers,String menu);
-
-	/**
-	 * Saves the reservation without a selected menu
-	 * @param table
-	 *            the table
-	 * @param name
-	 *            the name
-	 * @param h
-	 *            the hours
-	 * @param tel
-	 *            the number of telephone
-	 * @param numPers
-	 *            the number of people
-	 */
-	void save(String table, String name, String h, String tel, String numPers);
+	void save(String table, String name, String h, String tel, String numPers, Optional<String> menu);
 
 	Set<IReservation> getRes(String date);
 }

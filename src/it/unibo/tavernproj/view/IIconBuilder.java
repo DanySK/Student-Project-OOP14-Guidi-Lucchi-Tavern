@@ -33,7 +33,7 @@ public interface IIconBuilder {
 	 * Crea una JLabel usando come sfondo l'immagine al percorso passato.
 	 * It creates a new JLabel with the image passed as background.
 	 *
-	 * @param str
+	 * @param srt
 	 * 		il path dell'immagine.
 	 * 		the image path.
 	 * 
@@ -45,9 +45,9 @@ public interface IIconBuilder {
 	 * 		la JLabel creata.
 	 * 		the JLabel created.
 	 */
-	JLabel buildLogo(String str);
+	JLabel buildLogo(String srt);
 	
-	JLabel buildMap(String str);
+	JLabel buildMap(String srt);
 	
 	/**
 	 * Crea un bottne usando come sfondo l'immagine al percorso passato,
@@ -55,7 +55,7 @@ public interface IIconBuilder {
 	 * It creates a new JButton with the image passed as background, 
 	 * white background base and no border.
 	 *
-	 * @param str
+	 * @param srt
 	 * 		il path dell'immagine.
 	 * 		the image path.
 	 * 
@@ -67,6 +67,6 @@ public interface IIconBuilder {
 	 * 		il JButton creato.
 	 * 		the JButton created.
 	 */
-	JButton buildButton(String str);	
+	JButton buildButton(String srt);	
 
 }

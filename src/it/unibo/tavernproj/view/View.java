@@ -6,6 +6,7 @@ import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.controller.IFormController;
+import it.unibo.tavernproj.model.Reservation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,8 +22,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.Optional;
+import java.util.TimeZone;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,8 +49,7 @@ public class View extends JFrame implements IView{
 	private final IconBuilder build = new IconBuilder();	
 	private final JButton buttonNew = new JButton("Nuova Prenotazione"); 
 	private final LinkedList<JButton> table = new LinkedList<>();
-	private IController controller;
-	
+	private IController controller;	
 	
 	public View(){
 		super();
@@ -60,7 +66,7 @@ public class View extends JFrame implements IView{
 		final int sh = (int) screen.getHeight() * 3/4;
 		
 		this.setSize(sw, sh);
-		this.setResizable(true);
+		this.setResizable(false);
 			
 		buildLayout();	
 		
@@ -72,26 +78,16 @@ public class View extends JFrame implements IView{
 		
 		setHandlers();
 		
-		this.getContentPane().addComponentListener(new ComponentAdapter(){
-			
-			@Override
-			public void componentResized(ComponentEvent e){
-				View.this.validate();
-			}
-			
-		});
-		
 		this.setVisible(true);
 	}	
 	
 	JPanel tablesButtons = build.buildPanel(new FlowLayout());
 		
 	private void buildLayout() {
-		
-		final JLabel map = build.buildMap("res/map.png");	
+		final JLabel map = build.buildMap("res" + System.getProperty("file.separator") + "map.png");	
 		final JPanel dx = build.buildPanel(new BorderLayout());		
-		final JPanel pNew = build.buildPanel(new GridBagLayout());			
-		final JLabel logo = build.buildLogo("res/logo.jpg");		
+		final JPanel pNew = build.buildPanel(new GridBagLayout());	
+		final JLabel logo = build.buildLogo("res" + System.getProperty("file.separator") + "logo.jpg");		
 		
 		final GridBagConstraints gap = new GridBagConstraints();		
 		gap.gridy = 0;
@@ -105,9 +101,24 @@ public class View extends JFrame implements IView{
 		dx.add(pNew, BorderLayout.CENTER);
 		dx.add(logo, BorderLayout.NORTH);
 		
+		/*SISTEMARE IN ALTRO MODO!!!*/
+		final JPanel north = build.buildPanel(new GridBagLayout());
+		java.util.Calendar localCalendar = java.util.Calendar.getInstance();
+		int month = localCalendar.get(java.util.Calendar.MONTH);
+		int year = localCalendar.get(java.util.Calendar.YEAR);
+		int day = localCalendar.get(java.util.Calendar.DATE);		
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+		localCalendar.set(year, month, day);		
+		JLabel date = new JLabel(sdf.format(localCalendar.getTime()));
+		date.setFont(new Font("Arial", Font.BOLD, 18));
+		north.add(date, gap);
+		
+		
+		
 		final JPanel center = build.buildPanel(new BorderLayout());
 		center.add(map, BorderLayout.CENTER);
 		center.add(tablesButtons, BorderLayout.SOUTH);
+		center.add(north, BorderLayout.NORTH);
 		
 		final JPanel main = build.buildPanel(new BorderLayout(5, 5));		
 		main.add(center, BorderLayout.CENTER);
@@ -145,16 +156,11 @@ public class View extends JFrame implements IView{
 					fc.addView(form);
 				
 					fc.setDate(calendar.getPickedDate());
-					System.out.print(fc.getDate());
 					form.addComponentListener(new ComponentAdapter() {
 						@Override
 						public void componentHidden(final ComponentEvent ce) {
 							try {
-								if (form.isMenuSelected()){
-									fc.save(form.getTable(), form.getNome(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
-								}
-								else
-									fc.save(form.getTable(), form.getNome(), form.getH(), form.getTel(), form.getNum());
+								fc.save(form.getTable(), form.getName(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
 							}catch (NullPointerException e){
 								System.out.print("Riempire la form!");
 								form.setVisible(true);
@@ -163,12 +169,14 @@ public class View extends JFrame implements IView{
 								System.out.print("Riempire la form con dei numeri!");
 								form.setVisible(true);
 							}
+							
+							controller.addTable(form.getTable());
 						}
 					});		
 					
 					
 					//fare un metodo nella form che tira fuori una finestra se la voglio chiudere senza salvare!!					
-					//controller.addTable();
+					
 				}
 				
 				
@@ -182,15 +190,25 @@ public class View extends JFrame implements IView{
 		this.controller = listener;
 	}
 	
-	private int i = 1;
 	
 	@Override
-	public void addTable() {
+	public void addTable(String number) {
 		/* System.getProperty("user.home")+System.getProperty("file.separator")+
-				*/ 
-		final JButton b = build.buildButton("res" + System.getProperty("file.separator") + i + "s.png");
+				*/ 		
+		final JButton b = build.buildButton("res" + System.getProperty("file.separator") + number + "s.png");
+		b.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				/* ATTACCARE LA PRENOTAZIONE
+				 * 
+				 * prenderla dalla mappa del modello in cui c'è la data giusta e il numero del tavolo
+				 * fare una form a parte ReservaionForm che sia modificabile!
+				 * 
+				 */	
+				
+			}			
+		});
 		tablesButtons.add(b);
-		i++;
 		View.this.validate();
 	}
 	

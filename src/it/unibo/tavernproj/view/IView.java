@@ -8,19 +8,19 @@ import it.unibo.tavernproj.controller.*;
 
 public interface IView {
 	
-	/**Cambia {@link IController} corrente.
-	 * Change current {@link IController}
+	/**Change current {@link IController}
 	 * 
 	 * @param listener
-	 * 		nuovo {@link IController}.
 	 *      new {@link IController}.
 	 */
 	void attachViewObserver(IController listener);
 	
-	/**Aggiunge un nuovo bottone per il tavolo.
-	 * Adds a new table button. 
+	/**Adds a new table button. 
+	 * 
+	 * @param number
+	 * 		the table number
 	 */
-	void addTable();
+	void addTable(String number);
 	
 	
 

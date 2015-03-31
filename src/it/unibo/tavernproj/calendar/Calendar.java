@@ -26,8 +26,7 @@ import javax.swing.JPanel;
 * @author Seahawks
 * @version 1.0
 */
-public class Calendar {
-	
+public class Calendar {	
 	
 	/*http://javarevisited.blogspot.it/2012/12/how-to-get-current-date-month-year-dayoweek-dayofmonth-java-example.html*/
 	java.util.Calendar localCalendar = java.util.Calendar.getInstance(TimeZone.getDefault());
@@ -134,8 +133,7 @@ public class Calendar {
 		}
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
 		java.util.Calendar cal = java.util.Calendar.getInstance();
-		cal.set(year, month, Integer.parseInt(day));
-		
+		cal.set(year, month, Integer.parseInt(day));		
 		return sdf.format(cal.getTime());
 	}
 	

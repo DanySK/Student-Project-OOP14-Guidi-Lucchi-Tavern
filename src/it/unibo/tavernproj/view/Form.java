@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -35,7 +36,7 @@ import javax.swing.JTextField;
 
 //vedere se fare un'interfaccia per la form
 
-public class Form extends JFrame{
+public class Form extends JFrame implements IForm{
 
 	private static final long serialVersionUID = 1L;
 	//numero massimo di campi per il form
@@ -189,7 +190,7 @@ public class Form extends JFrame{
 		panelAggregator.accept(pos, panel);	
 	}
 
-	public void attachViewObserver(FormController formController) {
+	public void attachViewObserver(IFormController formController) {
 		this.ctrl = formController;		
 	}	
 	
@@ -200,7 +201,7 @@ public class Form extends JFrame{
 		return ((JTextField) map.get("Tav")).getText();
 	}
 
-	public String getNome() {
+	public String getName() {
 		if (((JTextField)map.get("Nome")).getText().equals("")){
 			throw new NullPointerException();
 		}
@@ -228,16 +229,71 @@ public class Form extends JFrame{
 		return ((JTextField) map.get("Num")).getText();
 	}
 
-	public String getMenu() {
-		if (((JTextField) map.get("Menu Fisso")).getText().equals("")){
-			throw new NullPointerException();
-		}
-		return ((JTextField)map.get("Menu Fisso")).getText();
+	public Optional<String> getMenu() {
+		return Optional.ofNullable(((JTextField)map.get("Menu fisso")).getText());
 	}
 
 	public boolean isMenuSelected() {
 		return ((JRadioButton) map.get("Menu")).isSelected();
 	}
+	
+	
+/*
+	@Override
+	public void disableAll() {
+		for (JComponent c: map.values()){
+			c.setEnabled(false);
+		}		
+	}
+
+	@Override
+	public void enableAll() {
+		for (JComponent c: map.values()){
+			c.setEnabled(true);
+		}		
+	}
+	
+	boolean modified = false;
+	
+	@Override
+	public void setModified(){
+		this.modified = true;
+	}
+
+	@Override
+	public boolean isBeenModified() {
+		return this.modified;
+	}
+
+	@Override
+	public void setTable(String srt) {
+		((JTextField) map.get("Tav")).setText(srt);		
+	}
+	
+	@Override
+	public void setName(String srt) {
+		((JTextField) map.get("Nome")).setText(srt);		
+	}
+
+	@Override
+	public void setH(String srt) {
+		((JTextField) map.get("Ora")).setText(srt);		
+	}
+
+	@Override
+	public void setTel(String srt) {
+		((JTextField) map.get("Tel")).setText(srt);
+	}
+
+	@Override
+	public void setNum(String srt) {
+		((JTextField) map.get("Num")).setText(srt);
+	}
+
+	@Override
+	public void setMenu(String srt) {
+		((JTextField) map.get("Menu fisso")).setText(srt);
+	}	*/
 	
 	
 	

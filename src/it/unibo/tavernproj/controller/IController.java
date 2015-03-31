@@ -23,8 +23,11 @@ public interface IController {
 	/**
 	 * Aggiunge incrementalmente un nuovo bottone per il tavolo sotto la cartina.
 	 * Adds a new table icon.
+	 * 
+	 * @param table
+	 * 		the table number
 	 */
-	void addTable();
+	void addTable(String table);
 	
 	/**
 	 * Rimuove il bottone per un tavolo precedentemente immesso e il tavolo sulla cartina.
@@ -40,13 +43,13 @@ public interface IController {
 	 * Aggiunge una nuova prenotazione.
 	 * Adds a new reservation.
 	 */
-	void reservationAdd();
+	void addReservation();
 	
 	/**
 	 * Cancella una prenotazione precedente.
 	 * Remove a reservation.
 	 */
-	void reservationRemove();
+	void removeReservation();
 
 	/**
 	 * Aggiorna lo stato di ogni view attaccata.

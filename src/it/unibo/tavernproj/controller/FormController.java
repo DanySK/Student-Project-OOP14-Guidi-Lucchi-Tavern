@@ -31,7 +31,7 @@ public class FormController implements IFormController {
 		form.remove(f);		
 	}
 
-	//@Override
+	@Override
 	public String getDate() {
 		return this.date;
 	}
@@ -42,14 +42,8 @@ public class FormController implements IFormController {
 	}	
 
 	@Override
-	public void save(String table, String name, String h, String tel, String numPers, String menu) {
-		res = new Reservation(table, name, h, tel, Integer.parseInt(numPers), Optional.of(menu));
-		model.add(this.date, res);
-	}
-
-	@Override
-	public void save(String table, String name, String h, String tel, String numPers) {
-		res = new Reservation(table, name, h, tel, Integer.parseInt(numPers), Optional.empty());
+	public void save(String table, String name, String h, String tel, String numPers, Optional<String> menu) {
+		res = new Reservation(table, name, this.date, h, tel, Integer.parseInt(numPers), menu);
 		model.add(this.date, res);
 	}
 

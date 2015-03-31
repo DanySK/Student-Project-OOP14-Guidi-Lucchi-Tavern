@@ -36,9 +36,10 @@ public class IconBuilder implements IIconBuilder{
 		return p;
 	}
 	
-	public JLabel buildLogo(final String str){
+	public JLabel buildLogo(final String srt){
 		try{
-			final BufferedImage myPicture = ImageIO.read(new File(str));
+			//final BufferedImage myPicture = ImageIO.read(getClass().getResourceAsStream("/"+srt));
+			final BufferedImage myPicture = ImageIO.read(new File(srt));
 			ImageIcon img = new ImageIcon(myPicture);
 			Image temp = img.getImage().getScaledInstance(sw*1/4, sh*1/4, Image.SCALE_DEFAULT);
 			img.setImage(temp);
@@ -48,9 +49,10 @@ public class IconBuilder implements IIconBuilder{
 		}
 	}		
 	
-	public JLabel buildMap(final String str){
+	public JLabel buildMap(final String srt){
 		try{
-			final BufferedImage myPicture = ImageIO.read(new File(str));
+			//final BufferedImage myPicture = ImageIO.read(getClass().getResourceAsStream(srt));
+			final BufferedImage myPicture = ImageIO.read(new File(srt));
 			ImageIcon img = new ImageIcon(myPicture);
 			Image temp = img.getImage().getScaledInstance(sw*25/40, sh*25/40, Image.SCALE_SMOOTH);
 			img.setImage(temp);
@@ -60,9 +62,9 @@ public class IconBuilder implements IIconBuilder{
 		}
 	}
 	
-	public JButton buildButton(final String str){
+	public JButton buildButton(final String srt){
 		try{
-			final BufferedImage myPicture = ImageIO.read(new File(str));
+			final BufferedImage myPicture = ImageIO.read(new File(srt));
 			final JButton picButton = new JButton(new ImageIcon(myPicture));
 			picButton.setBackground(Color.WHITE);
 			picButton.setBorderPainted(false);
