@@ -17,8 +17,7 @@ public class FormController implements IFormController {
 	/*da creare*/
 	private final IModel model = new Model();
 	private String date;
-	private IReservation res = null;
-	
+	private IReservation res = null;	
 	
 	@Override
 	public void addView(Form f) {
@@ -42,14 +41,15 @@ public class FormController implements IFormController {
 	}	
 
 	@Override
-	public void save(String table, String name, String h, String tel, String numPers, Optional<String> menu) {
-		res = new Reservation(table, name, this.date, h, tel, Integer.parseInt(numPers), menu);
-		model.add(this.date, res);
+	public Set<IReservation> getRes(String date) {
+		return model.getRes(date);
 	}
 
 	@Override
-	public Set<IReservation> getRes(String date) {
-		return model.getRes(date);
+	public void save(String table, String name, String h, String tel,
+			String numPers, Optional<String> menu) {
+		Reservation pren = new Reservation(table, name, this.date, h, tel, Integer.parseInt(numPers), menu);
+		model.add(this.date, pren);
 	}
 
 

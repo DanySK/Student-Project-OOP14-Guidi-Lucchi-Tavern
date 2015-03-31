@@ -65,7 +65,10 @@ public class IconBuilder implements IIconBuilder{
 	public JButton buildButton(final String srt){
 		try{
 			final BufferedImage myPicture = ImageIO.read(new File(srt));
-			final JButton picButton = new JButton(new ImageIcon(myPicture));
+			ImageIcon img = new ImageIcon(myPicture);
+			Image temp = img.getImage().getScaledInstance(sh*1/8, sh*1/8, Image.SCALE_SMOOTH);
+			img.setImage(temp);
+			final JButton picButton = new JButton(img);
 			picButton.setBackground(Color.WHITE);
 			picButton.setBorderPainted(false);
 			return picButton;
