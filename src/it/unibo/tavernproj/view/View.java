@@ -6,7 +6,7 @@ import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.controller.IFormController;
-import it.unibo.tavernproj.model.Reservation;
+import it.unibo.tavernproj.disegno.DrawPosition;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,15 +21,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Date;
 import java.util.LinkedList;
-import java.util.Optional;
-import java.util.TimeZone;
 
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -76,8 +69,8 @@ public class View extends JFrame implements IView{
 		buttonNew.setFont(new Font("Arial", Font.BOLD, 18));
 		buttonNew.setBackground(Color.white);
 		
-		setHandlers();
-		
+				setHandlers();
+		this.setResizable(true); 
 		this.setVisible(true);
 	}	
 	
@@ -89,6 +82,9 @@ public class View extends JFrame implements IView{
 		final JPanel pNew = build.buildPanel(new GridBagLayout());	
 		final JLabel logo = build.buildLogo("res" + System.getProperty("file.separator") + "logo.jpg");		
 		
+		
+		map.addMouseListener(new DrawPosition(map));
+						
 		final GridBagConstraints gap = new GridBagConstraints();		
 		gap.gridy = 0;
 		gap.insets = new Insets(10, 10, 20, 10);
