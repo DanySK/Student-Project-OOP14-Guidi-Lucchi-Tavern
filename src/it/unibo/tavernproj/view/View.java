@@ -6,6 +6,7 @@ import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.controller.IFormController;
+import it.unibo.tavernproj.disegno.DrawCancel;
 import it.unibo.tavernproj.disegno.DrawPosition;
 
 import java.awt.BorderLayout;
@@ -15,6 +16,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -23,6 +25,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.LinkedList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,6 +44,8 @@ public class View extends JFrame implements IView{
 	private static final long serialVersionUID = 1L;
 	private final IconBuilder build = new IconBuilder();	
 	private final JButton buttonNew = new JButton("Nuova Prenotazione"); 
+	private final JButton cancelTable = new JButton("Cancella Tavolo");
+	private final JButton drawTable = new JButton("Disegna Tavolo");
 	private final LinkedList<JButton> table = new LinkedList<>();
 	private IController controller;	
 	
@@ -55,7 +60,7 @@ public class View extends JFrame implements IView{
 		 * non va, serve settare le dimensioni fisse o fare apposite funzioni per ricalcolare le posizioni.
 		 */ 
 		final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-		final int sw = (int) screen.getWidth() * 3/4;
+		final int sw = (int) screen.getWidth() * 4/5;
 		final int sh = (int) screen.getHeight() * 3/4;
 		
 		this.setSize(sw, sh);
@@ -69,7 +74,7 @@ public class View extends JFrame implements IView{
 		buttonNew.setFont(new Font("Arial", Font.BOLD, 18));
 		buttonNew.setBackground(Color.white);
 		
-				setHandlers();
+		this.setHandlers();
 		this.setResizable(true); 
 		this.setVisible(true);
 	}	
@@ -82,8 +87,9 @@ public class View extends JFrame implements IView{
 		final JPanel pNew = build.buildPanel(new GridBagLayout());	
 		final JLabel logo = build.buildLogo("res" + System.getProperty("file.separator") + "logo.jpg");		
 		
+
 		
-		map.addMouseListener(new DrawPosition(map));
+			
 						
 		final GridBagConstraints gap = new GridBagConstraints();		
 		gap.gridy = 0;
@@ -115,6 +121,26 @@ public class View extends JFrame implements IView{
 		center.add(map, BorderLayout.CENTER);
 		center.add(tablesButtons, BorderLayout.SOUTH);
 		center.add(north, BorderLayout.NORTH);
+		//aggiunta pannello
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.white);
+		center.add(panel,BorderLayout.WEST);
+		panel.setLayout(new BoxLayout(panel, day));
+		panel.add(drawTable);
+		drawTable.setSize(10, 30);
+		panel.add(cancelTable);
+		cancelTable.setSize(10, 30);
+		cancelTable.addActionListener(e->{
+			map.addMouseListener(new DrawCancel(map));
+
+			
+		});
+		drawTable.addActionListener(e->{
+			map.addMouseListener(new DrawPosition(map));
+		});
+		
+		
+
 		
 		final JPanel main = build.buildPanel(new BorderLayout(5, 5));		
 		main.add(center, BorderLayout.CENTER);

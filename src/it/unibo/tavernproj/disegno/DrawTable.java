@@ -24,6 +24,11 @@ public class DrawTable implements IDrawTable{
 		g.setColor(Color.black); 
 	}
 	
+	
+	public void calcel(Graphics g1, int x1, int x2){
+		g1.clearRect(x1, x2, 70, 70);
+		
+	}
 	public int getX(){
 		return this.x;
 	}
