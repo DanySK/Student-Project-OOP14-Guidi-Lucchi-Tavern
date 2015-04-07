@@ -45,7 +45,7 @@ public class View extends JFrame implements IView{
 	private final IconBuilder build = new IconBuilder();	
 	private final JButton buttonNew = new JButton("Nuova Prenotazione"); 
 	private final JButton cancelTable = new JButton("Cancella Tavolo");
-	private final JButton drawTable = new JButton("Disegna Tavolo");
+	private final JButton drawTable = new JButton("Disegna Tavolo ");
 	private final LinkedList<JButton> table = new LinkedList<>();
 	private IController controller;	
 	
@@ -87,16 +87,13 @@ public class View extends JFrame implements IView{
 		final JPanel pNew = build.buildPanel(new GridBagLayout());	
 		final JLabel logo = build.buildLogo("res" + System.getProperty("file.separator") + "logo.jpg");		
 		
-
-		
-			
-						
 		final GridBagConstraints gap = new GridBagConstraints();		
 		gap.gridy = 0;
 		gap.insets = new Insets(10, 10, 20, 10);
 		gap.fill = GridBagConstraints.HORIZONTAL;
 		buttonNew.setSize(pNew.getWidth(), pNew.getHeight()*1/10);
 		pNew.add(buttonNew, gap);
+		
 		//gap.gridy++;
 		
 		
@@ -124,17 +121,23 @@ public class View extends JFrame implements IView{
 		//aggiunta pannello
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.white);
-		center.add(panel,BorderLayout.WEST);
-		panel.setLayout(new BoxLayout(panel, day));
+		pNew.add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(drawTable);
-		drawTable.setSize(10, 30);
+		drawTable.setFont(new Font("Arial", Font.BOLD, 12));
+		drawTable.setBackground(Color.white);
+		drawTable.setBorderPainted(false);
+		drawTable.setSize(10, 40);
 		panel.add(cancelTable);
-		cancelTable.setSize(10, 30);
+		cancelTable.setFont(new Font("Arial", Font.BOLD, 12));
+		cancelTable.setBackground(Color.white);
+		cancelTable.setSize(10, 40);
+		cancelTable.setBorderPainted(false);
 		cancelTable.addActionListener(e->{
 			map.addMouseListener(new DrawCancel(map));
 
-			
 		});
+		
 		drawTable.addActionListener(e->{
 			map.addMouseListener(new DrawPosition(map));
 		});

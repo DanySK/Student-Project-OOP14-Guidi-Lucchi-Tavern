@@ -1,6 +1,5 @@
 package it.unibo.tavernproj.disegno;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 public interface IDrawTable {
@@ -9,6 +8,8 @@ public interface IDrawTable {
 	
 	int getX();
 	int getY();
+
+	void calcel(Graphics g1, int x1, int x2);
 	
 
 }

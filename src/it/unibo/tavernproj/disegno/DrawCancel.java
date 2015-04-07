@@ -1,5 +1,6 @@
 package it.unibo.tavernproj.disegno;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -22,6 +23,7 @@ public class DrawCancel implements MouseListener {
 		this.y0=e.getY(); 
 		table= new DrawTable(x0, y0);
 		table.calcel(label.getGraphics(), e.getX(), e.getY());
+		label.setBackground(Color.white); // per far cancellare con il colore bianco
 	}
 
 
