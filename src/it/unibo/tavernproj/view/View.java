@@ -6,6 +6,7 @@ import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.controller.IFormController;
+import it.unibo.tavernproj.disegno.DrawButton;
 import it.unibo.tavernproj.disegno.DrawCancel;
 import it.unibo.tavernproj.disegno.DrawPosition;
 
@@ -16,7 +17,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -48,6 +48,7 @@ public class View extends JFrame implements IView{
 	private final JButton drawTable = new JButton("Disegna Tavolo ");
 	private final LinkedList<JButton> table = new LinkedList<>();
 	private IController controller;	
+	
 	
 	public View(){
 		super();
@@ -120,27 +121,19 @@ public class View extends JFrame implements IView{
 		center.add(north, BorderLayout.NORTH);
 		//aggiunta pannello
 		JPanel panel = new JPanel();
+		
 		panel.setBackground(Color.white);
+		
 		pNew.add(panel);
+		
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(drawTable);
-		drawTable.setFont(new Font("Arial", Font.BOLD, 12));
-		drawTable.setBackground(Color.white);
-		drawTable.setBorderPainted(false);
-		drawTable.setSize(10, 40);
 		panel.add(cancelTable);
-		cancelTable.setFont(new Font("Arial", Font.BOLD, 12));
-		cancelTable.setBackground(Color.white);
-		cancelTable.setSize(10, 40);
-		cancelTable.setBorderPainted(false);
-		cancelTable.addActionListener(e->{
-			map.addMouseListener(new DrawCancel(map));
-
-		});
 		
-		drawTable.addActionListener(e->{
-			map.addMouseListener(new DrawPosition(map));
-		});
+		final DrawButton dDrawTable = new DrawButton(this.drawTable,map,new DrawPosition(map)) ;
+		dDrawTable.setting();
+		final DrawButton dCancelTable = new DrawButton(this.cancelTable,map,new DrawCancel(map)) ;
+		dCancelTable.setting();
 		
 		
 
