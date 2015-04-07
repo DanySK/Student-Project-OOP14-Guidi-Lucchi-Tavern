@@ -6,6 +6,11 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 
+/**
+ *  @author Giulia Lucchi
+ *
+ */
+
 public class DrawCancel implements MouseListener {
 
 	private final JLabel label;
@@ -21,9 +26,10 @@ public class DrawCancel implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		this.x0=e.getX();
 		this.y0=e.getY(); 
-		table= new DrawTable(x0, y0);
+		label.setBackground(Color.white);
+		table= new DrawTable(x0, y0, label);
 		table.calcel(label.getGraphics(), e.getX(), e.getY());
-		label.setBackground(Color.white); // per settare il colore della cancellazione del 
+		
 	}
 
 

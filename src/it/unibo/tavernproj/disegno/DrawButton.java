@@ -7,6 +7,11 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+/**
+ *  @author Giulia Lucchi
+ *
+ */
+
 public class DrawButton {
 	
 	private final JButton button;
@@ -16,6 +21,7 @@ public class DrawButton {
 	public DrawButton(final JButton button, JLabel label, MouseListener m){
 		this.button=button;
 		this.label=label;
+		this.label.setBackground(Color.white);
 		this.mouse=m;
 	}
 	
@@ -26,7 +32,6 @@ public class DrawButton {
 		this.button.setSize(10, 40);
 		this.button.addActionListener(e->{
 			label.addMouseListener(this.mouse);
-
 		});
 	}
 }

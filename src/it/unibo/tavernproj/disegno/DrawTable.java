@@ -2,6 +2,9 @@ package it.unibo.tavernproj.disegno;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Shape;
+
+import javax.swing.JLabel;
 
 /**
  *  @author Giulia Lucchi
@@ -10,13 +13,15 @@ import java.awt.Graphics;
 
 public class DrawTable implements IDrawTable{
 	
+	private final JLabel label;
 	private int x;
 	private int y;
 	
 	
-	public DrawTable(int x, int y){
+	public DrawTable(int x, int y, final JLabel label){
 		this.x=x;
 		this.y=y;
+		this.label=label;
 	}
 	
 	@Override
@@ -27,9 +32,8 @@ public class DrawTable implements IDrawTable{
 	
 	@Override
 	public void calcel(Graphics g1, int x1, int x2){
-		g1.clearRect(x1, x2, 70, 70);
-		g1.setColor(Color.WHITE);
-		
+		g1.setColor(label.getBackground());
+		g1.fillRect(x1, x2, 50, 50);	
 	}
 	
 	@Override
