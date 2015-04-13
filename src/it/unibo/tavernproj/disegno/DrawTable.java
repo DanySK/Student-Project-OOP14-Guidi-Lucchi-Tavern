@@ -2,7 +2,6 @@ package it.unibo.tavernproj.disegno;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Shape;
 
 import javax.swing.JLabel;
 
@@ -16,6 +15,7 @@ public class DrawTable implements IDrawTable{
 	private final JLabel label;
 	private int x;
 	private int y;
+	private int table=0;
 	
 	
 	public DrawTable(int x, int y, final JLabel label){
@@ -33,7 +33,7 @@ public class DrawTable implements IDrawTable{
 	@Override
 	public void calcel(Graphics g1, int x1, int x2){
 		g1.setColor(label.getBackground());
-		g1.fillRect(x1, x2, 50, 50);	
+		g1.fillRect(x1, x2, 50, 50);
 	}
 	
 	@Override
@@ -46,4 +46,7 @@ public class DrawTable implements IDrawTable{
 		return this.y;
 	}
 	
+	public int getTable(){
+		return this.table;
+	}
 }

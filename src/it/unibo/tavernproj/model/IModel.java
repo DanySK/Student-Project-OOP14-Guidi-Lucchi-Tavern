@@ -1,6 +1,5 @@
 package it.unibo.tavernproj.model;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -20,11 +19,22 @@ public interface IModel{
 	
 	/**
 	 * Removes the reservation.
+	 * 
+	 * @param pren
+	 *            the reservation
+	 * @param date
+	 * 			  the date of the reservation to remove
 	 */
 	void remove(final String date,final IReservation pren);
 
-	Map<String, Set<IReservation>> getMap();
+	/**
+	 * Create a Set of the reservations of the specific date.
+	 *
+	 * @param date
+	 *            the date
+	 */
+	Set<IReservation> getRes(final String date);
 
-	Set<IReservation> getRes(String date);
+	
 	
 }
