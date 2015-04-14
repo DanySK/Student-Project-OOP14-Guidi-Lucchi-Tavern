@@ -5,7 +5,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.tavernproj.model.IReservation;
-import it.unibo.tavernproj.view.Form;
+import it.unibo.tavernproj.view.IReservationForm;
+import it.unibo.tavernproj.view.NewReservationForm;
 
 public interface IFormController {
 
@@ -15,7 +16,7 @@ public interface IFormController {
 	 * @param f
 	 * 		the view to add
 	 */
-	void addView(Form f);
+	void addView(IReservationForm f);
 
 	/**
 	 * Removes a view from this controller
@@ -23,7 +24,7 @@ public interface IFormController {
 	 * @param f
 	 *      the view to remove
 	 */
-	void removeView(Form f);
+	void removeView(NewReservationForm f);
 
 
 	String getDate();

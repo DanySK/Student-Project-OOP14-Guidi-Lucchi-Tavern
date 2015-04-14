@@ -1,6 +1,6 @@
 package it.unibo.tavernproj.model;
 
-import it.unibo.tavernproj.view.Form;
+import it.unibo.tavernproj.view.NewReservationForm;
 
 import java.util.Objects;
 
@@ -14,7 +14,7 @@ public interface IReservation {
 	/**
 	 * @return the table
 	 */
-	public String getTable();
+	public int getTable();
 
 	/**
 	 * @return the name
@@ -46,5 +46,5 @@ public interface IReservation {
 	 * */
 	public String getMenu();
 	
-	public Form getReservation();
+	
 }

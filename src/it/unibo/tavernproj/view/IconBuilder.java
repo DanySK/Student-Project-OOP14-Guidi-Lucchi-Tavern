@@ -63,18 +63,22 @@ public class IconBuilder implements IIconBuilder{
 	}
 	
 	public JButton buildButton(final String srt){
+		final JButton picButton = new JButton(this.getButtonIcon(srt));
+		picButton.setBackground(Color.WHITE);
+		picButton.setBorderPainted(false);
+		return picButton;
+	}
+	
+	public ImageIcon getButtonIcon(final String srt){
 		try{
-			final BufferedImage myPicture = ImageIO.read(new File(srt));
+			final BufferedImage myPicture = ImageIO.read(getClass().getResourceAsStream("/"+srt));
+			//final BufferedImage myPicture = ImageIO.read(new File(srt));
 			ImageIcon img = new ImageIcon(myPicture);
 			Image temp = img.getImage().getScaledInstance(sh*1/8, sh*1/8, Image.SCALE_SMOOTH);
 			img.setImage(temp);
-			final JButton picButton = new JButton(img);
-			picButton.setBackground(Color.WHITE);
-			picButton.setBorderPainted(false);
-			return picButton;
+			return img;
 		}catch(IOException e){
 			throw new IllegalArgumentException();
 		}
 	}
-
 }

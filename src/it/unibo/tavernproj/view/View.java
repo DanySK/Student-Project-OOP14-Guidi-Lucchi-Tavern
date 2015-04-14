@@ -9,6 +9,8 @@ import it.unibo.tavernproj.controller.IFormController;
 import it.unibo.tavernproj.disegno.DrawButton;
 import it.unibo.tavernproj.disegno.DrawCancel;
 import it.unibo.tavernproj.disegno.DrawPosition;
+import it.unibo.tavernproj.model.IReservation;
+import it.unibo.tavernproj.model.Reservation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.LinkedList;
+import java.util.Optional;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -169,7 +172,7 @@ public class View extends JFrame implements IView{
 				//GESTIRE DIVERSAMENTE
 				if (!calendar.getPickedDate().equals("Error")){
 				
-					Form form = new Form(calendar.getPickedDate());
+					NewReservationForm form = new NewReservationForm(calendar.getPickedDate());
 					final IFormController fc = new FormController();
 					fc.addView(form);
 				
@@ -179,6 +182,7 @@ public class View extends JFrame implements IView{
 						public void componentHidden(final ComponentEvent ce) {
 							try {
 								fc.save(form.getTable(), form.getName(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
+								controller.addTable(form.getTable(), fc.getDate());
 							}catch (NullPointerException e){
 								System.out.print("Riempire la form!");
 								form.setVisible(true);
@@ -186,9 +190,8 @@ public class View extends JFrame implements IView{
 							catch (NumberFormatException e1){
 								System.out.print("Riempire la form con dei numeri!");
 								form.setVisible(true);
-							}
+							}							
 							
-							controller.addTable(form.getTable());
 						}
 					});		
 					
@@ -210,10 +213,11 @@ public class View extends JFrame implements IView{
 	
 	
 	@Override
-	public void addTable(String number) {
+	public void addTable(String number, String date) {
 		/* System.getProperty("user.home")+System.getProperty("file.separator")+
 				*/ 		
-		final JButton b = build.buildButton("res" + System.getProperty("file.separator") + number + "s.png");
+		
+		final JButton b = build.buildButton(number + "s.png");
 		b.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -224,7 +228,47 @@ public class View extends JFrame implements IView{
 				 * 
 				 */	
 				
-			}			
+				final IReservation res;
+				
+				try {
+					res = View.this.controller.getReservation(Integer.parseInt(number), date);
+					
+					//res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
+					
+					final TableReservationForm form = new TableReservationForm(date, res);
+					final IFormController fc = new FormController();
+					fc.addView(form);
+				
+					fc.setDate(date);
+					form.addComponentListener(new ComponentAdapter() {
+						@Override
+						public void componentHidden(final ComponentEvent ce) {
+							if (form.isBeenModified()){
+								try {
+									fc.save(form.getTable(), form.getName(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
+									b.setIcon(build.getButtonIcon(form.getTable() + "s.png"));
+								}catch (NullPointerException e){
+									System.out.print("Riempire la form!");
+									form.setVisible(true);
+								}
+								catch (NumberFormatException e1){
+									System.out.print("Riempire la form con dei numeri!");
+									form.setVisible(true);
+								}	
+								catch (IllegalArgumentException e2){
+									System.out.print("il numero del tavolo è sbagliato!");
+									form.setVisible(true);
+								}
+							}												
+						}				
+					});
+				}
+				catch (NumberFormatException e1){
+					System.out.print("Prenotazione non disponibile!");
+				}
+				
+				
+			}
 		});
 		tablesButtons.add(b);
 		View.this.validate();

@@ -2,7 +2,7 @@ package it.unibo.tavernproj.calendar;
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IFormController;
-import it.unibo.tavernproj.view.Form;
+import it.unibo.tavernproj.view.NewReservationForm;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

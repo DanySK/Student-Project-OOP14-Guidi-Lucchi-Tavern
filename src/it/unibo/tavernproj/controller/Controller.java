@@ -2,7 +2,11 @@ package it.unibo.tavernproj.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import it.unibo.tavernproj.view.Form;
+import it.unibo.tavernproj.model.IModel;
+import it.unibo.tavernproj.model.IReservation;
+import it.unibo.tavernproj.model.Model;
+import it.unibo.tavernproj.model.Reservation;
+import it.unibo.tavernproj.view.NewReservationForm;
 import it.unibo.tavernproj.view.IView;
 
 /**
@@ -13,6 +17,7 @@ import it.unibo.tavernproj.view.IView;
 public class Controller implements IController{
 	
 	private final Set<IView> view = new HashSet<>();
+	private final IModel model = new Model();
 
 	@Override
 	public void tablesLoad() {
@@ -27,10 +32,10 @@ public class Controller implements IController{
 	}
 
 	@Override
-	public void addTable(String table) {
+	public void addTable(String table, String date) {
 		//this.reservationAdd();
 		for (final IView v: view){	
-			v.addTable(table);
+			v.addTable(table, date);
 		}
 		
 	}
@@ -39,6 +44,17 @@ public class Controller implements IController{
 	public void removeTable(final int number) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+
+	@Override
+	public IReservation getReservation(int table, String date) {
+		for (IReservation r: model.getRes(date)){
+			if (r.getTable() == table){
+				return r;
+			}
+		}
+		throw new NumberFormatException();
 	}
 
 	@Override
@@ -71,6 +87,8 @@ public class Controller implements IController{
 	public void removeView(final IView v) {
 		view.remove(v);	
 	}
+
+
 
 
 }

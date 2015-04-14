@@ -20,7 +20,7 @@ public interface IView {
 	 * @param number
 	 * 		the table number
 	 */
-	void addTable(String number);
+	void addTable(String number, String date);
 	
 	
 

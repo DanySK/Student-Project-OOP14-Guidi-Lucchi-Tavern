@@ -9,24 +9,25 @@ import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.model.Reservation;
-import it.unibo.tavernproj.view.Form;
+import it.unibo.tavernproj.view.IReservationForm;
+import it.unibo.tavernproj.view.NewReservationForm;
 
 public class FormController implements IFormController {
 	
-	private final Set<Form> form = new HashSet<>();
+	private final Set<IReservationForm> form = new HashSet<>();
 	/*da creare*/
 	private final IModel model = new Model();
 	private String date;
 	private IReservation res = null;	
 	
 	@Override
-	public void addView(Form f) {
+	public void addView(IReservationForm f) {
 		f.attachViewObserver(this);
 		form.add(f);
 	}
 
 	@Override
-	public void removeView(Form f) {
+	public void removeView(NewReservationForm f) {
 		form.remove(f);		
 	}
 

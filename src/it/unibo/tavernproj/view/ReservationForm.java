@@ -1,10 +1,9 @@
 package it.unibo.tavernproj.view;
 
-import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IFormController;
-import it.unibo.tavernproj.model.IReservation;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -16,7 +15,6 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -26,33 +24,20 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-/**
- * @author Eleonora Guidi
- * 
- * modified by @author Giulia Lucchi
- *
- */
-
-
-//vedere se fare un'interfaccia per la form
-
-public class Form extends JFrame implements IForm{
-
+public class ReservationForm extends JFrame implements IReservationForm{
+	
 	private static final long serialVersionUID = 1L;
 	//numero massimo di campi per il form
 	public static final int MAX = 100;
 	
-	private final JButton okButton = new JButton("OK");
-	public JLabel date;
-	private final JLabel reserv = new JLabel();
-	
 	private final ProgressiveAcceptor<JPanel> panelAggregator = new ProgressiveAcceptorImpl<>();
 	private final Map<String, JComponent> map = new HashMap<>();
 
+	private final JButton okButton = new JButton("OK");
+	
 	private IFormController ctrl;
 	
-	/*Usare l'esame 01b del 2015 per fare la form!*/
-	public Form(String date){
+	public ReservationForm(){
 		super();
 		setLocationByPlatform(true);
 		final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -63,51 +48,42 @@ public class Form extends JFrame implements IForm{
 		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
-		this.date = new JLabel(date);
-		//ctrl.setDate(date);
-		
-		loadReservation();
-		
 		buildLayout();
 		setHandlers();	
 		
-		this.setVisible(true);		
+		this.setVisible(true);				
 	}
 	
-	private void loadReservation() {
-		//scaricare da un file le prentazioni in base alla data
-		
-		reserv.setText(""); //stampare il set con le prenotazioni nel file di sopra
-		this.validate();
-	}
-
 	private void setHandlers() {
 		((JRadioButton) map.get("Menu")).addActionListener(new ActionListener(){			
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				if (((JRadioButton) map.get("Menu")).isSelected()){
 					map.get("Menu fisso").setVisible(true);
-					Form.this.validate();
+					ReservationForm.this.validate();
 				}
 				else{
 					map.get("Menu fisso").setVisible(false);
-					Form.this.validate();
+					ReservationForm.this.validate();
 				}				
 			}			
-		});		
+		});	
 		
 		this.okButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(final ActionEvent arg0) {
-				Form.this.setVisible(false);
+				ReservationForm.this.setVisible(false);
 			}			
-		});
-		
+		});	
+	}
+	
+	private void buildLayout() {
+		this.getContentPane().setLayout(new BorderLayout());		
+		buildForm();		
 	}
 
-	private void buildLayout() {
-		this.getContentPane().setLayout(new BorderLayout());
-		this.getContentPane().add(BorderLayout.SOUTH, okButton);
+	private void buildForm() {
+
 		panelAggregator.setProgressiveFilter(new ProgressiveFilter<JPanel>(){
 			@Override
 			public boolean isNextOK(final JPanel previous, final JPanel next) {
@@ -125,8 +101,7 @@ public class Form extends JFrame implements IForm{
 				gap.gridy++;
 				temp.add(two, gap);
 				return temp;
-			}
-			
+			}			
 		});
 		
 		panelAggregator.setSize(MAX);
@@ -157,18 +132,11 @@ public class Form extends JFrame implements IForm{
 		
 		center.add(panelAggregator.aggregateAll());
 		
-		//Set<IReservation> res = ctrl.getRes();
-		//reserv.setText(res.toString());
-		
-		final JPanel north = new JPanel(new BorderLayout());
-		north.add(date, BorderLayout.NORTH);
-		north.add(reserv, BorderLayout.CENTER);
-		this.getContentPane().add(north, BorderLayout.NORTH);
-		
 		this.getContentPane().add(center, BorderLayout.CENTER);
+		this.getContentPane().add(okButton, BorderLayout.SOUTH);		 
 		
 	}
-
+	
 	private JTextField addTextField(final String string) {
 		final JTextField t = new JTextField(20);		
 		t.setName(string);	
@@ -190,10 +158,6 @@ public class Form extends JFrame implements IForm{
 		panelAggregator.accept(pos, panel);	
 	}
 
-	public void attachViewObserver(IFormController formController) {
-		this.ctrl = formController;		
-	}	
-	
 	public String getTable() {
 		if (((JTextField) map.get("Tav")).getText().equals("")){
 			throw new NumberFormatException();
@@ -236,48 +200,38 @@ public class Form extends JFrame implements IForm{
 	public boolean isMenuSelected() {
 		return ((JRadioButton) map.get("Menu")).isSelected();
 	}
-	
-	
-/*
+
+	public void attachViewObserver(IFormController formController) {
+		this.ctrl = formController;		
+	}
+
 	@Override
 	public void disableAll() {
-		for (JComponent c: map.values()){
-			c.setEnabled(false);
-		}		
+		for (String s: map.keySet()){
+			map.get(s).setEnabled(false);
+		}
 	}
 
 	@Override
 	public void enableAll() {
-		for (JComponent c: map.values()){
-			c.setEnabled(true);
+		for (String s: map.keySet()){
+			map.get(s).setEnabled(true);
 		}		
 	}
-	
-	boolean modified = false;
-	
-	@Override
-	public void setModified(){
-		this.modified = true;
-	}
 
 	@Override
-	public boolean isBeenModified() {
-		return this.modified;
+	public void setTable(int srt) {
+		((JTextField) map.get("Tav")).setText("" + srt);
 	}
 
-	@Override
-	public void setTable(String srt) {
-		((JTextField) map.get("Tav")).setText(srt);		
-	}
-	
 	@Override
 	public void setName(String srt) {
-		((JTextField) map.get("Nome")).setText(srt);		
-	}
-
+		((JTextField) map.get("Nome")).setText(srt);
+	}	
+	
 	@Override
-	public void setH(String srt) {
-		((JTextField) map.get("Ora")).setText(srt);		
+	public void setH(String srt) {	
+		((JTextField) map.get("Ora")).setText(srt);
 	}
 
 	@Override
@@ -286,15 +240,17 @@ public class Form extends JFrame implements IForm{
 	}
 
 	@Override
-	public void setNum(String srt) {
-		((JTextField) map.get("Num")).setText(srt);
+	public void setNum(int srt) {
+		((JTextField) map.get("Num")).setText("" + srt);
 	}
 
 	@Override
 	public void setMenu(String srt) {
 		((JTextField) map.get("Menu fisso")).setText(srt);
-	}	*/
-	
-	
-	
+	}
+
+	@Override
+	public void setMenuVisible() {
+		map.get("Menu fisso").setVisible(true);
+	}	
 }

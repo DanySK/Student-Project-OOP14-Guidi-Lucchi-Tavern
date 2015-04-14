@@ -13,16 +13,16 @@ import java.util.Set;
 
 public class Model implements IModel {
 	
-	private Map<String, Map<String,IReservation>> map = new HashMap<>();
+	private Map<String, Map <Integer, IReservation>> map = new HashMap<>();
 
 	@Override
 	public void add(final String date, final IReservation pren) {
 		//FARE ANCHE IL SALVATAGGIO SU FILE!
 		//Mi servono il salvataggio e un metodo per ricavare la reservation dandogli la data
-		Map<String, IReservation> temp=new HashMap<>();
+		Map<Integer, IReservation> temp=new HashMap<>();
 		
 		if(map.containsKey(date)){
-			temp= map.get(date);
+			temp = map.get(date);
 			temp.put(pren.getTable(),pren);
 		}
 		
@@ -58,10 +58,10 @@ public class Model implements IModel {
 	@Override
 	public void remove(final String date, final IReservation pren) {
 		if (map.containsKey(date)) {
-			Map<String,IReservation> temp=map.get(date);
-			for(String s : temp.keySet()){
-				if(temp.get(s).equals(pren)){
-					map.remove(s);
+			Map<Integer,IReservation> temp = map.get(date);
+			for(Integer i: temp.keySet()){
+				if(temp.get(i).equals(pren)){
+					map.remove(i);
 				}
 			}
 		}
@@ -71,12 +71,11 @@ public class Model implements IModel {
 	public Set<IReservation> getRes(final String date) {
 		Set<IReservation> res = new HashSet<>();
 		if (map.containsKey(date)) {
-			Map<String,IReservation> temp=map.get(date);
-			for(String s : temp.keySet()){
-				res.add(temp.get(s));
+			Map<Integer,IReservation> temp = map.get(date);
+			for(Integer i : temp.keySet()){
+				res.add(temp.get(i));
 			}
-		}
-		
+		}		
 		return res;
 	}
 

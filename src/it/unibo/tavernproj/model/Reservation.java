@@ -1,6 +1,6 @@
 package it.unibo.tavernproj.model;
 
-import it.unibo.tavernproj.view.Form;
+import it.unibo.tavernproj.view.NewReservationForm;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class Reservation implements Serializable, IReservation{
 	
 	private static final long serialVersionUID = -5126256178520079481L;
-	private final String table;
+	private final int table;
 	private final String name;
 	private final String date;
 	private final String h;
@@ -43,7 +43,7 @@ public class Reservation implements Serializable, IReservation{
 	public Reservation(final String table, final String name, final String date, 
 			final String h, final String tel, final int numPers, final Optional<String> menu) {
 		Objects.requireNonNull(table);
-		this.table = table;
+		this.table = Integer.parseInt(table);
 		Objects.requireNonNull(name);
 		this.name = name;
 		Objects.requireNonNull(date);
@@ -58,7 +58,7 @@ public class Reservation implements Serializable, IReservation{
 	}
 	
 	@Override
-	public String getTable() {
+	public int getTable() {
 		return table;
 	}
 
@@ -90,13 +90,6 @@ public class Reservation implements Serializable, IReservation{
 	@Override 
 	public String getMenu(){
 		return menu.get();
-	}
-
-	@Override
-	public Form getReservation() {
-		Form form = new Form(this.date);
-		return null;
-	}
-	
+	}	
 	
 }

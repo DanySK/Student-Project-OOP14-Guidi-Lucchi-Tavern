@@ -1,10 +1,10 @@
 package it.unibo.tavernproj.view;
 
-import java.util.Optional;
-
 import it.unibo.tavernproj.controller.IFormController;
 
-public interface IForm {
+import java.util.Optional;
+
+public interface IReservationForm {
 	
 	/**Change current {@link IFormController}
 	 * 
@@ -26,5 +26,22 @@ public interface IForm {
 	Optional<String> getMenu();
 	
 	boolean isMenuSelected();
+
+	void disableAll();
+
+	void enableAll();
+
+	void setTable(int srt);
 	
+	void setName(String srt);
+
+	void setH(String srt);
+
+	void setTel(String srt);
+
+	void setNum(int srt);
+
+	void setMenu(String srt);
+
+	void setMenuVisible();
 }

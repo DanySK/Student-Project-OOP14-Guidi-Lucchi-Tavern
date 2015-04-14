@@ -1,4 +1,6 @@
 package it.unibo.tavernproj.controller;
+import it.unibo.tavernproj.model.IReservation;
+import it.unibo.tavernproj.model.Reservation;
 import it.unibo.tavernproj.view.*;
 
 /**
@@ -9,70 +11,72 @@ import it.unibo.tavernproj.view.*;
 public interface IController {
 	
 	/**
-	 * Ricarica la lista dei tavoli in cartina dal file system. 
 	 * Loads the list of tables in the map from the local file system. 
 	 */
 	void tablesLoad();
 
 	/**
-	 * Salva lo stato dei tavoli, che si trovano in cartina, nel file system.
 	 * Saves the tables status of the map to the local file system.
 	 */
 	void tablesSave();
 
 	/**
-	 * Aggiunge incrementalmente un nuovo bottone per il tavolo sotto la cartina.
 	 * Adds a new table icon.
 	 * 
 	 * @param table
 	 * 		the table number
 	 */
-	void addTable(String table);
+	void addTable(String table, String date);
 	
 	/**
-	 * Rimuove il bottone per un tavolo precedentemente immesso e il tavolo sulla cartina.
 	 * Remove a table previously added both as a button and from the map.
 	 * 
 	 * @param number
-	 * 		il numero del tavolo
-	 *      the number of the table
+	 *     table number
 	 */
 	void removeTable(int number);
 	
 	/**
-	 * Aggiunge una nuova prenotazione.
+	 * @param table
+	 * 		table number
+	 * @param date
+	 * 		reservation date
+	 * @return IReservation 
+	 * 		the reservation we want
+	 * 
+	 * @throws NumberFormatException 
+	 * 		if the table number is incorrect
+	 */
+	
+	IReservation getReservation(int table, String date);
+	
+	/**
 	 * Adds a new reservation.
 	 */
 	void addReservation();
 	
 	/**
-	 * Cancella una prenotazione precedente.
 	 * Remove a reservation.
 	 */
 	void removeReservation();
 
 	/**
-	 * Aggiorna lo stato di ogni view attaccata.
 	 * Refreshes the status of each attached view.
 	 */
 	void resend();
 
 	/**
-	 * Aggiunge una nuova view al controller
 	 * Adds a view to this controller
 	 * 
 	 * @param v
-	 * 		la view da aggiungere
 	 * 		the view to add
 	 */
 	void addView(IView v);
 
 	/**
-	 * Elimina una view dal controller
 	 * Removes a view from this controller
 	 * 
 	 * @param v
-	 * 		la view da eliminare
 	 *      the view to remove
 	 */
 	void removeView(IView v);

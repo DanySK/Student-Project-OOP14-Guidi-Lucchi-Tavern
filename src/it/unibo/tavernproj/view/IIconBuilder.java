@@ -2,6 +2,7 @@ package it.unibo.tavernproj.view;
 
 import java.awt.LayoutManager;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -68,5 +69,7 @@ public interface IIconBuilder {
 	 * 		the JButton created.
 	 */
 	JButton buildButton(String srt);	
+	
+	ImageIcon getButtonIcon(final String srt);
 
 }
