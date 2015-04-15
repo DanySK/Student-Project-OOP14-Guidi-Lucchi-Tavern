@@ -8,7 +8,6 @@ import java.util.Set;
 /**
  * @author Giulia Lucchi
  * 
- * 	modified by @author Eleonora Guidi
  */
 
 public class Model implements IModel {
@@ -77,6 +76,11 @@ public class Model implements IModel {
 			}
 		}		
 		return res;
+	}
+	
+	@Override
+	public  Map<String, Map <Integer, IReservation>> getMap(){
+		return this.map;
 	}
 
 

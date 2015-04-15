@@ -1,5 +1,6 @@
 package it.unibo.tavernproj.model;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -34,6 +35,12 @@ public interface IModel{
 	 *            the date
 	 */
 	Set<IReservation> getRes(final String date);
+
+	/**
+	 * @return
+	 * 			the main Map 
+	 */
+	Map<String, Map<Integer, IReservation>> getMap();
 
 	
 	

@@ -1,6 +1,5 @@
 package it.unibo.tavernproj.controller;
 import it.unibo.tavernproj.model.IReservation;
-import it.unibo.tavernproj.model.Reservation;
 import it.unibo.tavernproj.view.*;
 
 /**

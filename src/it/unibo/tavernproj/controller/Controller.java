@@ -4,13 +4,17 @@ import java.util.Set;
 
 import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
+import it.unibo.tavernproj.model.ISaveReservation;
 import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.model.Reservation;
+import it.unibo.tavernproj.model.SaveReservation;
 import it.unibo.tavernproj.view.NewReservationForm;
 import it.unibo.tavernproj.view.IView;
 
 /**
  * @author Eleonora Guidi
+ * 
+ * modify by @author Giulia Lucchi
  *
  */
 
@@ -18,17 +22,17 @@ public class Controller implements IController{
 	
 	private final Set<IView> view = new HashSet<>();
 	private final IModel model = new Model();
+	private final ISaveReservation res = new SaveReservation();
 
 	@Override
 	public void tablesLoad() {
-		// TODO Auto-generated method stub
+		res.load();
 		
 	}
 
 	@Override
 	public void tablesSave() {
-		// TODO Auto-generated method stub
-		
+		res.save();
 	}
 
 	@Override
