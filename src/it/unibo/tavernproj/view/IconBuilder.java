@@ -2,6 +2,7 @@ package it.unibo.tavernproj.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
@@ -60,6 +61,18 @@ public class IconBuilder implements IIconBuilder{
 		}catch(IOException e){
 			throw new IllegalArgumentException();
 		}
+	}
+	
+	public JLabel dateLabel(){
+	  java.util.Calendar localCalendar = java.util.Calendar.getInstance();
+    int month = localCalendar.get(java.util.Calendar.MONTH);
+    int year = localCalendar.get(java.util.Calendar.YEAR);
+    int day = localCalendar.get(java.util.Calendar.DATE);   
+    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+    localCalendar.set(year, month, day);    
+    JLabel date = new JLabel(sdf.format(localCalendar.getTime()));
+    date.setFont(new Font("Arial", Font.BOLD, 18));
+    return date;	  
 	}
 	
 	public JButton buildButton(final String srt){

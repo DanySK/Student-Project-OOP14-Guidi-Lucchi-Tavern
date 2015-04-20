@@ -71,5 +71,7 @@ public interface IIconBuilder {
 	JButton buildButton(String srt);	
 	
 	ImageIcon getButtonIcon(final String srt);
+	
+	JLabel dateLabel();
 
 }
