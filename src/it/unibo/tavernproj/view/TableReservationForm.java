@@ -44,7 +44,6 @@ public class TableReservationForm extends ReservationForm{
 		if (!res.getMenu().equals(Optional.empty())){
 			super.setMenuVisible();
 			super.setMenu(res.getMenu());
-			//FARE ANCHE IL PALLINO PIENO DEL MENU FISSO
 		}				
 	}
 

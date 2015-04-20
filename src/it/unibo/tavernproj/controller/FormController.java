@@ -1,9 +1,5 @@
 package it.unibo.tavernproj.controller;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
 import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
@@ -11,13 +7,28 @@ import it.unibo.tavernproj.model.Reservation;
 import it.unibo.tavernproj.view.IReservationForm;
 import it.unibo.tavernproj.view.NewReservationForm;
 
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+
+// PATTERN SINGLETON
+
 public class FormController implements IFormController {
+  
+  private static final FormController SINGLETON = new FormController();
 	
 	private final Set<IReservationForm> form = new HashSet<>();
 	/*da creare*/
 	private final IModel model = new Model();
 	private String date;
 	private IReservation res = null;	
+	
+	 private FormController(){};
+	  
+	  public static FormController getController(){
+	    return SINGLETON;
+	  }
 	
 	@Override
 	public void addView(IReservationForm f) {

@@ -18,11 +18,21 @@ import it.unibo.tavernproj.view.IView;
  *
  */
 
+//HO USATO IL PATTERN SINGLETON
+
 public class Controller implements IController{
+  
+	private static final Controller SINGLETON = new Controller();  
 	
 	private final Set<IView> view = new HashSet<>();
 	private final IModel model = new Model();
 	private final ISaveReservation res = new SaveReservation();
+
+	private Controller(){};
+	
+	public static Controller getController(){
+	  return SINGLETON;
+	}
 
 	@Override
 	public void tablesLoad() {

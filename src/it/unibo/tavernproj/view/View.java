@@ -155,7 +155,7 @@ public class View extends JFrame implements IView{
         if (!calendar.getPickedDate().equals("Error")) {
 
           NewReservationForm form = new NewReservationForm(calendar.getPickedDate());
-          final IFormController fc = new FormController();
+          final IFormController fc = FormController.getController();
           fc.addView(form);
 
           fc.setDate(calendar.getPickedDate());
@@ -211,7 +211,7 @@ public class View extends JFrame implements IView{
             res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
 
             final TableReservationForm form = new TableReservationForm(date, res);
-            final IFormController fc = new FormController();
+            final IFormController fc = FormController.getController();
             fc.addView(form);
             fc.setDate(date);
             form.addComponentListener(new ComponentAdapter() {
@@ -244,7 +244,7 @@ public class View extends JFrame implements IView{
   }
 
   public static void main(final String[] argv) {
-    final IController c = new Controller();
+    final IController c = Controller.getController();
     final View v = new View();
     c.addView(v);
   }

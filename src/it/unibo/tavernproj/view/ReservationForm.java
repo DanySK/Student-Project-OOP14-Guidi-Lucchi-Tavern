@@ -247,6 +247,7 @@ public class ReservationForm extends JFrame implements IReservationForm{
 	@Override
 	public void setMenu(String srt) {
 		((JTextField) map.get("Menu fisso")).setText(srt);
+		((JRadioButton) map.get("Menu")).setSelected(true);
 	}
 
 	@Override
