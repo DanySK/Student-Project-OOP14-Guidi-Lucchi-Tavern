@@ -42,6 +42,10 @@ public interface IModel{
 	 */
 	Map<String, Map<Integer, IReservation>> getMap();
 
+	Map<Integer, IReservation> getTableRes(String date);
+
+	int getSize();
+
 	
 	
 }

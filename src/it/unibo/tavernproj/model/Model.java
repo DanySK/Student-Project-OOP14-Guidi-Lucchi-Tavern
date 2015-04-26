@@ -2,7 +2,9 @@ package it.unibo.tavernproj.model;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -16,31 +18,18 @@ public class Model implements IModel {
 
 	@Override
 	public void add(final String date, final IReservation pren) {
-		//FARE ANCHE IL SALVATAGGIO SU FILE!
-		//Mi servono il salvataggio e un metodo per ricavare la reservation dandogli la data
-		Map<Integer, IReservation> temp=new HashMap<>();
+		
+		Map<Integer, IReservation> temp;
 		
 		if(map.containsKey(date)){
-			temp = map.get(date);
-			temp.put(pren.getTable(),pren);
+			temp= map.get(date); 
+		}else{
+			temp=new HashMap<>();
+			map.put(date,temp);
 		}
-		
 		temp.put(pren.getTable(), pren);
-		map.put(date,temp);
+
 		
-//		if (map.containsKey(date)){
-//			for (IReservation r: map.get(date)){
-//				if (r.getTable().equals(pren.getTable())){
-//					map.get(date).remove(r);
-//				}
-//			}
-//			map.get(date).add(pren);
-//		}
-//		else{
-//			Set<IReservation> temp = new HashSet<>();
-//			temp.add(pren);
-//			map.put(date, temp);
-//		}
 	}
 		/*
 		 * Fare un file per giorno
@@ -56,14 +45,23 @@ public class Model implements IModel {
 	
 	@Override
 	public void remove(final String date, final IReservation pren) {
+	//ho dovuto utilizzare l'iterator altrimenti mi dava il CurrentModificationException
+	//http://stackoverflow.com/questions/602636/concurrentmodificationexception-and-a-hashmap
 		if (map.containsKey(date)) {
 			Map<Integer,IReservation> temp = map.get(date);
-			for(Integer i: temp.keySet()){
-				if(temp.get(i).equals(pren)){
-					map.remove(i);
-				}
+			Iterator<Entry<Integer, IReservation>> it = temp.entrySet().iterator();
+			   while (it.hasNext()){
+			      Entry item = it.next();
+			      if( item.getValue().equals(pren)){
+			    	  it.remove();
+			    	  if(temp.size()==0){
+			    		  map.remove(date);
+			    	  }
+			      }
+			      
+			   }
 			}
-		}
+			
 	}
 	
 	@Override
@@ -79,8 +77,18 @@ public class Model implements IModel {
 	}
 	
 	@Override
+	public Map<Integer,IReservation> getTableRes(String date){
+		return map.get(date);
+		
+	}
+	
+	@Override
 	public  Map<String, Map <Integer, IReservation>> getMap(){
 		return this.map;
+	}
+	
+	public int getSize(){
+		return map.size();
 	}
 
 

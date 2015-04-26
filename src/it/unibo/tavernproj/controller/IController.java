@@ -1,4 +1,6 @@
 package it.unibo.tavernproj.controller;
+import java.util.Map;
+
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.view.*;
 
@@ -79,4 +81,8 @@ public interface IController {
 	 *      the view to remove
 	 */
 	void removeView(IView v);
+
+	void save();
+
+	Map<Integer, IReservation> load(String date);
 }

@@ -67,10 +67,10 @@ public class Reservation implements Serializable, IReservation{
 		return name;
 	}
 
-	/*@Override
+	@Override
 	public String getDate() {
 		return date;
-	}*/
+	}
 
 	@Override
 	public String getHours() {
