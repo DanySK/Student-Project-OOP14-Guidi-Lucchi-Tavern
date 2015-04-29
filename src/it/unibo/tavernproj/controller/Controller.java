@@ -108,13 +108,12 @@ public class Controller implements IController{
 			files[i]=date;
 			try{
 				out = new ObjectOutputStream(new FileOutputStream(date));
-				System.out.println("creo file");
-				//out.writeUTF(date); c'è già il nome del file con la data non gli scriverei anche la data
 				Map<Integer, IReservation> temp = map.get(date);
 				
 				for(Integer table : temp.keySet()){
 					out.writeObject(temp.get(table));
 				}
+				out.writeObject(1);
 				out.close();
 			}catch (Exception e){
 				
@@ -131,7 +130,11 @@ public class Controller implements IController{
   for(String date : files){
 			try{
 				in = new ObjectInputStream(new FileInputStream(date));
-				model.add(date,(IReservation) in.readObject());
+				IReservation r = (IReservation) in.readObject();
+				while(!r.equals(1)){
+				  model.add(date,(IReservation) r);
+				  r=(IReservation) in.readObject();
+				}
 				in.close();
 			}catch(Exception e){
 				
