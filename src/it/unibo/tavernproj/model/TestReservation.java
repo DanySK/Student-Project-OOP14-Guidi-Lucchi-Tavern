@@ -10,7 +10,7 @@ import it.unibo.tavernproj.controller.IController;
 public class TestReservation {
 	
 	private final IModel model = new Model();
-	private final IController ctr = new Controller();
+	private final IController ctr = Controller.getController();
 	
 	@org.junit.Test
 	public void test(){
@@ -40,7 +40,9 @@ public class TestReservation {
 		model.remove(r1.getDate(), r1);
 		assertEquals(mapP.size(),1);
 	
-		ctr.save();		
+		ctr.setTables();		
+		
+		
 	}
 	
 }

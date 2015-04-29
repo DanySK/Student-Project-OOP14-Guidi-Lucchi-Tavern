@@ -12,14 +12,14 @@ import it.unibo.tavernproj.view.*;
 public interface IController {
 	
 	/**
-	 * Loads the list of tables in the map from the local file system. 
+	 * Loads the map of reservations from the local file system. 
 	 */
-	void tablesLoad();
+  Map<Integer,IReservation> getTables(String date);
 
 	/**
-	 * Saves the tables status of the map to the local file system.
+	 * Saves the reservations map in the local file system.
 	 */
-	void tablesSave();
+	void setTables();
 
 	/**
 	 * Adds a new table icon.
@@ -50,21 +50,6 @@ public interface IController {
 	 */
 	
 	IReservation getReservation(int table, String date);
-	
-	/**
-	 * Adds a new reservation.
-	 */
-	void addReservation();
-	
-	/**
-	 * Remove a reservation.
-	 */
-	void removeReservation();
-
-	/**
-	 * Refreshes the status of each attached view.
-	 */
-	void resend();
 
 	/**
 	 * Adds a view to this controller
@@ -82,7 +67,4 @@ public interface IController {
 	 */
 	void removeView(IView v);
 
-	void save();
-
-	Map<Integer, IReservation> load(String date);
 }

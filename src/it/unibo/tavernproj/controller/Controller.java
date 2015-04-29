@@ -44,23 +44,10 @@ public class Controller implements IController{
 	}
 
 	@Override
-	public void tablesLoad( ) {
-		this.load(null);//PER ORA HO MESSO NULL CAMBIARE!!!!
-		
-	}
-
-	@Override
-	public void tablesSave() {
-		this.save();
-	}
-
-	@Override
 	public void addTable(String table, String date) {
-		//this.reservationAdd();
 		for (final IView v: view){	
 			v.addTable(table, date);
 		}
-		
 	}
 
 	@Override
@@ -78,26 +65,6 @@ public class Controller implements IController{
 			}
 		}
 		throw new NumberFormatException();
-	}
-
-	@Override
-	public void addReservation() {
-		// TODO Auto-generated method stub
-		
-		//parte di modello: salvare la prenotazione sul file system
-		//poi vedremo se cavare tutti e metterli direttamente in tableAdd!!
-	}
-
-	@Override
-	public void removeReservation() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void resend() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -119,13 +86,13 @@ public class Controller implements IController{
 	 */
 	
 	@Override
-	public void save(){
+	public void setTables(){
 		int i = 0;
 		for(String date : model.getMap().keySet()){
 			files[i]=date;
 			try{
 				out = new ObjectOutputStream(new FileOutputStream(System.getProperty("user.home")+System.getProperty("file.separator")+date));
-				//out.writeUTF(date); c'è già il nome del file con la data non gli scriverei anche la data
+				//out.writeUTF(date); c'ï¿½ giï¿½ il nome del file con la data non gli scriverei anche la data
 				Map<Integer, IReservation> temp = model.getMap().get(date);
 				for(Integer table : temp.keySet()){
 					out.writeObject(temp.get(table));
@@ -143,7 +110,7 @@ public class Controller implements IController{
 	
 	//CARICO UN GIORNO ALLA VOLTA (quello della data presa come parametro)
 	@Override
-	public Map<Integer,IReservation> load(final String date){
+	public Map<Integer,IReservation> getTables(final String date){
 		
 			try{
 				in = new ObjectInputStream(new FileInputStream(date));
