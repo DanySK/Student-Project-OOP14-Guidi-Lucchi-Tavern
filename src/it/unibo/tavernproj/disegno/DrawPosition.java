@@ -1,8 +1,11 @@
 package it.unibo.tavernproj.disegno;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 /**
@@ -24,17 +27,22 @@ public class DrawPosition implements MouseListener {
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		this.x0=e.getX();
-		this.y0=e.getY(); 
-		table= new DrawTable(x0, y0,label);
-		table.paintComponent(label.getGraphics());
+		
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {
+			}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {
+		this.x0=e.getX();
+		this.y0=e.getY();
+		table= new DrawTable(x0, y0,label);
+	//	table.paintComponent((Graphics2D)label.getGraphics(),x,y);
+		System.out.println(x0);
+		System.out.println(y0);
+	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {}

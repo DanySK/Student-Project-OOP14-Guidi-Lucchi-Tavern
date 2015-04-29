@@ -39,10 +39,11 @@ public class TestReservation {
 		assertEquals(mapP.size(),2);
 		model.remove(r1.getDate(), r1);
 		assertEquals(mapP.size(),1);
-	
-		ctr.setTables();		
 		
+		ctr.setTables(model.getMap());		
 		
+		ctr.getTables(model);
+
 	}
 	
 }

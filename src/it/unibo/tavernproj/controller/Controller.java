@@ -1,4 +1,9 @@
 package it.unibo.tavernproj.controller;
+import it.unibo.tavernproj.model.IModel;
+import it.unibo.tavernproj.model.IReservation;
+import it.unibo.tavernproj.model.Model;
+import it.unibo.tavernproj.view.IView;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInput;
@@ -9,12 +14,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import it.unibo.tavernproj.model.IModel;
-import it.unibo.tavernproj.model.IReservation;
-import it.unibo.tavernproj.model.Model;
-import it.unibo.tavernproj.model.Reservation;
-import it.unibo.tavernproj.view.NewReservationForm;
-import it.unibo.tavernproj.view.IView;
+import javax.swing.Icon;
+import javax.swing.JLabel;
 
 /**
  * @author Eleonora Guidi
@@ -32,15 +33,20 @@ public class Controller implements IController{
 	
 	private final Set<IView> view = new HashSet<>();
 	private final IModel model = new Model();
-	private String[] files;
+	private String[] files= new String[2000];
 	private ObjectOutput out;
 	private ObjectInput  in;
+	private ObjectOutput outMap;
+	private ObjectInput  inMap; 
 	
+
+
 
 	private Controller(){};
 	
 	public static Controller getController(){
 	  return SINGLETON;
+
 	}
 
 	@Override
@@ -86,19 +92,30 @@ public class Controller implements IController{
 	 */
 	
 	@Override
-	public void setTables(){
+	public void setTables(Map<String,Map<Integer,IReservation>> map){
 		int i = 0;
-		for(String date : model.getMap().keySet()){
+//		try {
+//			outMap = new ObjectOutputStream(new FileOutputStream("map"));
+//			outMap.writeObject(label.getIcon());
+//			outMap.close();
+//			
+//		} catch (Exception e1) {
+//		// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		
+		for(String date : map.keySet()){
 			files[i]=date;
 			try{
-				out = new ObjectOutputStream(new FileOutputStream(System.getProperty("user.home")+System.getProperty("file.separator")+date));
-				//out.writeUTF(date); c'ï¿½ giï¿½ il nome del file con la data non gli scriverei anche la data
-				Map<Integer, IReservation> temp = model.getMap().get(date);
+				out = new ObjectOutputStream(new FileOutputStream(date));
+				System.out.println("creo file");
+				//out.writeUTF(date); c'è già il nome del file con la data non gli scriverei anche la data
+				Map<Integer, IReservation> temp = map.get(date);
+				
 				for(Integer table : temp.keySet()){
 					out.writeObject(temp.get(table));
 				}
 				out.close();
-				
 			}catch (Exception e){
 				
 			}
@@ -108,10 +125,10 @@ public class Controller implements IController{
 		
 	}
 	
-	//CARICO UN GIORNO ALLA VOLTA (quello della data presa come parametro)
+	
 	@Override
-	public Map<Integer,IReservation> getTables(final String date){
-		
+	public void getTables(final IModel model){
+  for(String date : files){
 			try{
 				in = new ObjectInputStream(new FileInputStream(date));
 				model.add(date,(IReservation) in.readObject());
@@ -119,8 +136,29 @@ public class Controller implements IController{
 			}catch(Exception e){
 				
 			}
-		return model.getTableRes(date);
+
+			
+		}
+		
 	}
+	
+	@Override
+	public Icon loadMap(JLabel label){
+		Icon map=null;
+		try{
+			inMap = new ObjectInputStream(new FileInputStream("mappa"));
+			map = (Icon) inMap.readObject();
+			inMap.close();
+		}catch(Exception e){
+			
+		}
+		
+		return map;
+	}
+
+
+
+
 	
 }
 

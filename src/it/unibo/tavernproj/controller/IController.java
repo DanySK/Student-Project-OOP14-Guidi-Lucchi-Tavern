@@ -1,7 +1,12 @@
 package it.unibo.tavernproj.controller;
 import java.util.Map;
 
+import javax.swing.Icon;
+import javax.swing.JLabel;
+
+import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
+import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.view.*;
 
 /**
@@ -14,12 +19,12 @@ public interface IController {
 	/**
 	 * Loads the map of reservations from the local file system. 
 	 */
-  Map<Integer,IReservation> getTables(String date);
+  void getTables(IModel  model);
 
 	/**
 	 * Saves the reservations map in the local file system.
 	 */
-	void setTables();
+	void setTables(Map<String,Map<Integer,IReservation>> map);
 
 	/**
 	 * Adds a new table icon.
@@ -66,5 +71,12 @@ public interface IController {
 	 *      the view to remove
 	 */
 	void removeView(IView v);
+
+
+
+
+
+	Icon loadMap(JLabel label);
+
 
 }

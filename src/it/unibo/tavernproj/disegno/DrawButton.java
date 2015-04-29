@@ -3,6 +3,7 @@ package it.unibo.tavernproj.disegno;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,13 +17,13 @@ public class DrawButton {
 	
 	private final JButton button;
 	private final JLabel label;
-	private final MouseListener mouse;
+	private final ProvaDraw mouse;
 	
-	public DrawButton(final JButton button, JLabel label, MouseListener m){
+	public DrawButton(final JButton button, JLabel label, ProvaDraw drawPosition){
 		this.button=button;
 		this.label=label;
 		this.label.setBackground(Color.white);
-		this.mouse=m;
+		this.mouse=drawPosition;
 	}
 	
 	public void setting(){
@@ -31,7 +32,7 @@ public class DrawButton {
 		this.button.setBorderPainted(false);
 		this.button.setSize(10, 40);
 		this.button.addActionListener(e->{
-			label.addMouseListener(this.mouse);
+			label.addMouseMotionListener(this.mouse);
 		});
 	}
 }
