@@ -1,7 +1,6 @@
 package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.calendar.Calendar;
-import it.unibo.tavernproj.calendar.CalendarController;
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
@@ -11,6 +10,7 @@ import it.unibo.tavernproj.disegno.DrawCancel;
 import it.unibo.tavernproj.disegno.DrawPosition;
 import it.unibo.tavernproj.disegno.ProvaDraw;
 import it.unibo.tavernproj.model.IReservation;
+import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.model.Reservation;
 
 import java.awt.BorderLayout;
@@ -61,6 +61,7 @@ public class View extends JFrame implements IView{
   private final JButton cancelTable = new JButton("Cancella Tavolo");
   private final JButton drawTable = new JButton("Disegna Tavolo ");
   private JPanel tablesButtons = build.buildPanel(new FlowLayout());
+  private final JLabel date = build.dateLabel();
   private IController controller;  
 
   public View() {
@@ -112,9 +113,16 @@ public class View extends JFrame implements IView{
     dx.add(pNew, BorderLayout.CENTER);
     dx.add(logo, BorderLayout.NORTH);
 
-    final JPanel north = build.buildPanel(new GridBagLayout());
-    final JLabel date = build.dateLabel();
+    final JPanel north = build.buildPanel(new GridBagLayout());    
     north.add(date, gap);
+    
+    /*if (!Controller.getController().getRes(date.getText()).keySet().isEmpty()){
+      for (Integer i: Controller.getController().getRes(date.getText()).keySet()){
+        this.addTable(i, date.getText());
+      }    
+    }
+    
+    System.out.print("non c'è la prenotazione per quel giorno");*/
 
     final JPanel center = build.buildPanel(new BorderLayout());
     center.add(map, BorderLayout.CENTER);
@@ -152,15 +160,11 @@ public class View extends JFrame implements IView{
 
       public void actionPerformed(ActionEvent arg0) {
         JFrame frame = new JFrame("Calendar");
-
         Calendar calendar = new Calendar(frame);
-        CalendarController ctrl = new CalendarController();
-        ctrl.addView(calendar);
         while (!calendar.getPickedDate().equals("Error") && !calendar.isRight()) {
           //FARE una finestra al posto del messaggio stampato
           System.out.println("Selezionare una data utile");
           calendar = new Calendar(frame);
-          ctrl.addView(calendar);
         }
 
          //GESTIRE DIVERSAMENTE
@@ -176,7 +180,9 @@ public class View extends JFrame implements IView{
             public void componentHidden(final ComponentEvent ce) {
               try {
                 fc.save(form.getTable(), form.getName(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
-                controller.addTable(form.getTable(), fc.getDate());
+                if (fc.getDate().equals(View.this.date.getText())){
+                  controller.addTable(Integer.parseInt(form.getTable()), fc.getDate());
+                }
               } catch (NullPointerException e) {
                 System.out.print("Riempire la form!");
                 form.setVisible(true);
@@ -200,11 +206,11 @@ public class View extends JFrame implements IView{
   }
 
   @Override
-  public void addTable(String number, String date) {
+  public void addTable(Integer table, String date) {
     /* System.getProperty("user.home")+System.getProperty("file.separator")+
      */
 
-    final JButton b = build.buildButton(number + "s.png");
+    final JButton b = build.buildButton(table + "s.png");
     b.addActionListener(new ActionListener(){
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -218,9 +224,9 @@ public class View extends JFrame implements IView{
         final IReservation res;
 
           try {
-            res = View.this.controller.getReservation(Integer.parseInt(number), date);
+            //res = View.this.controller.getReservation(number, date);
 
-            //res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
+            res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
 
             final TableReservationForm form = new TableReservationForm(date, res);
             final IFormController fc = FormController.getController();
@@ -255,9 +261,20 @@ public class View extends JFrame implements IView{
     View.this.validate();
   }
 
+
   public static void main(final String[] argv) {
     final IController c = Controller.getController();
+    c.setModel();
     final View v = new View();
     c.addView(v);
+    
+    
+    java.util.Calendar localCalendar = java.util.Calendar.getInstance();
+    int month = localCalendar.get(java.util.Calendar.MONTH);
+    int year = localCalendar.get(java.util.Calendar.YEAR);
+    int day = localCalendar.get(java.util.Calendar.DATE);   
+    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+    localCalendar.set(year, month, day);        
+    c.loadTables(sdf.format(localCalendar.getTime()));
   }
 }

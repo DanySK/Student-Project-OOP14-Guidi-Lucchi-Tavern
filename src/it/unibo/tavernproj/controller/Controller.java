@@ -6,6 +6,7 @@ import it.unibo.tavernproj.view.IView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -33,7 +34,7 @@ public class Controller implements IController{
 	
 	
 	private final Set<IView> view = new HashSet<>();
-	private IModel model;// = new Model();
+	private IModel model = new Model();
 	private String[] files= new String[2000];
 	private ObjectOutput out;
 	private ObjectInput  in;
@@ -53,11 +54,10 @@ public class Controller implements IController{
 	
 	public static Controller getController(){
 	  return SINGLETON;
-
 	}
 
 	@Override
-	public void addTable(String table, String date) {
+	public void addTable(Integer table, String date) {
 		for (final IView v: view){	
 			v.addTable(table, date);
 		}
@@ -68,6 +68,24 @@ public class Controller implements IController{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	  public void loadTables(String date) {
+	    if (!model.getTableRes(date).isEmpty()){
+	      for (Integer i: model.getTableRes(date).keySet()){
+    	    for (final IView v: view){  
+    	      v.addTable(i, date);
+    	    }
+  	     }
+	    }	    
+	  }
+	
+	 @Override
+	  public Map<Integer,IReservation> getRes(final String date) {	
+	   if (model.getRes(date).isEmpty()){
+	     return new HashMap<>();
+	   }
+     return model.getTableRes(date);
+	  } 
 	
 
 	@Override
@@ -135,7 +153,7 @@ public class Controller implements IController{
 	
 	/*per caricare il modello da file system all'accensione*/
 	 @Override
-	  public void setModel(){
+	  public void setModel(){	   
 	    //Map<String, Map <Integer, IReservation>> map = new HashMap<>();
 	    for(String date : files){
 	        try{
@@ -151,7 +169,7 @@ public class Controller implements IController{
 	          //}
 	          in.close();
 	        }catch(Exception e){
-	          
+	          //this.model = new Model();
 	        }
 	    }
 	    

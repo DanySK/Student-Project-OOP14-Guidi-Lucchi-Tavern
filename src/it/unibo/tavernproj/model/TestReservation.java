@@ -12,7 +12,6 @@ public class TestReservation {
 	
 	private final IModel model = new Model();
 	private final IController ctr = Controller.getController();
-	//private Map<String,Map<Integer,IReservation>> map = new HashMap<>();
 	
 	@org.junit.Test
 	public void test(){

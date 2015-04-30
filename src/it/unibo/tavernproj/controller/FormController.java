@@ -7,7 +7,14 @@ import it.unibo.tavernproj.model.Reservation;
 import it.unibo.tavernproj.view.IReservationForm;
 import it.unibo.tavernproj.view.NewReservationForm;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,16 +27,18 @@ public class FormController implements IFormController {
 	
 	private final Set<IReservationForm> form = new HashSet<>();
 	/*da creare*/
-	private final IModel model = new Model();
+	private IModel model = new Model();
 	private String date;
 	private IReservation res = null;	
+	private ObjectOutput out;
+	private ObjectInput  in;
 	
 	 private FormController(){};
 	  
 	  public static FormController getController(){
 	    return SINGLETON;
 	  }
-	
+
 	@Override
 	public void addView(IReservationForm f) {
 		f.attachViewObserver(this);
@@ -60,9 +69,22 @@ public class FormController implements IFormController {
 	public void save(String table, String name, String h, String tel,
 			String numPers, Optional<String> menu) {
 		Reservation pren = new Reservation(table, name, this.date, h, tel, Integer.parseInt(numPers), menu);
+		try{
+      in = new ObjectInputStream(new FileInputStream("map.txt"));
+        model.setModel((Map<String, Map <Integer, IReservation>>) in.readObject());
+      in.close();
+    }catch(Exception e){
+      
+    }
 		model.add(this.date, pren);
+		
+		try{
+	        out = new ObjectOutputStream(new FileOutputStream("map.txt"));
+	        out.writeObject(this.model.getMap());
+	        out.close();
+	      }catch (Exception e){
+	        
+	  }
 	}
-
-
 	
 }

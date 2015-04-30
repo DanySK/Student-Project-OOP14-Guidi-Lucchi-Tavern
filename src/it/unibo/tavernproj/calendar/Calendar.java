@@ -42,7 +42,7 @@ public class Calendar {
 	JDialog d;
 	JButton[] button = new JButton[49];
 	
-	private ICalendarController ctrl;
+	//private ICalendarController ctrl;
 	
 	
 	public Calendar(JFrame frame) {	
@@ -149,9 +149,9 @@ public class Calendar {
 		return false;
 	}
 
-	public void attachViewObserver(ICalendarController calendarController) {
+	/*public void attachViewObserver(ICalendarController calendarController) {
 		this.ctrl = calendarController;
 	}
-	
+	*/
 }
 

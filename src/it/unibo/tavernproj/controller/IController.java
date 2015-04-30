@@ -1,5 +1,6 @@
 package it.unibo.tavernproj.controller;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -35,7 +36,7 @@ public interface IController {
 	 * @param table
 	 * 		the table number
 	 */
-	void addTable(String table, String date);
+	void addTable(Integer table, String date);
 	
 	/**
 	 * Remove a table previously added both as a button and from the map.
@@ -76,6 +77,10 @@ public interface IController {
 	void removeView(IView v);
 	
 	Icon loadMap(JLabel label);
+
+	Map<Integer,IReservation> getRes(final String date);
+
+  void loadTables(String format);
 
 
 }
