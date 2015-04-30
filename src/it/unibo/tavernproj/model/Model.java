@@ -14,7 +14,17 @@ import java.util.Set;
 
 public class Model implements IModel {
 	
-	private Map<String, Map <Integer, IReservation>> map = new HashMap<>();
+	private Map<String, Map <Integer, IReservation>> map; // = new HashMap<>();
+	
+	public Model(){
+	  this.map = new HashMap<>();
+	}
+	
+	/*usato nel test junit*/
+	@Override
+	public void setModel(Map<String, Map <Integer, IReservation>> map){
+	  this.map = map;
+	}
 
 	@Override
 	public void add(final String date, final IReservation pren) {

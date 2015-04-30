@@ -10,6 +10,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +33,7 @@ public class Controller implements IController{
 	
 	
 	private final Set<IView> view = new HashSet<>();
-	private final IModel model = new Model();
+	private IModel model;// = new Model();
 	private String[] files= new String[2000];
 	private ObjectOutput out;
 	private ObjectInput  in;
@@ -43,6 +44,12 @@ public class Controller implements IController{
 
 
 	private Controller(){};
+	
+	
+	/*usato nel test junit per caricare un modello a piacere*/
+	public void setModel(IModel model){
+	  this.model = model;
+	}
 	
 	public static Controller getController(){
 	  return SINGLETON;
@@ -92,8 +99,8 @@ public class Controller implements IController{
 	 */
 	
 	@Override
-	public void setTables(Map<String,Map<Integer,IReservation>> map){
-		int i = 0;
+	public void saveModel(){
+		//int i = 0;
 //		try {
 //			outMap = new ObjectOutputStream(new FileOutputStream("map"));
 //			outMap.writeObject(label.getIcon());
@@ -104,45 +111,51 @@ public class Controller implements IController{
 //			e1.printStackTrace();
 //		}
 		
-		for(String date : map.keySet()){
-			files[i]=date;
+		//for(String date : this.model.getMap().keySet()){
+			//files[i]=date;
 			try{
-				out = new ObjectOutputStream(new FileOutputStream(date));
-				Map<Integer, IReservation> temp = map.get(date);
+				out = new ObjectOutputStream(new FileOutputStream("map.txt"));//date));
+				/*Map<Integer, IReservation> temp = this.model.getMap().get(date);
 				
 				for(Integer table : temp.keySet()){
 					out.writeObject(temp.get(table));
 				}
-				out.writeObject(1);
+				*/
+				out.writeObject(this.model.getMap());
+				
+				//out.writeObject(1);
 				out.close();
 			}catch (Exception e){
 				
 			}
-			i++;
-		}
-		
+			//i++;
+		//}		
 		
 	}
 	
-	
-	@Override
-	public void getTables(final IModel model){
-    for(String date : files){
-  			try{
-  				in = new ObjectInputStream(new FileInputStream(date));
-  				IReservation r = (IReservation) in.readObject();
-  				while(!r.equals(1)){
-  				  model.add(date,(IReservation) r);
-  				  r=(IReservation) in.readObject();
-  				}
-  				in.close();
-  			}catch(Exception e){
-  				
-  			}
-  		
-  	}
-	}
-	
+	/*per caricare il modello da file system all'accensione*/
+	 @Override
+	  public void setModel(){
+	    //Map<String, Map <Integer, IReservation>> map = new HashMap<>();
+	    for(String date : files){
+	        try{
+	          in = new ObjectInputStream(new FileInputStream("map.txt"));//date));
+	          //IReservation r = (IReservation) in.readObject();
+	          //while(!r.equals(1)){
+	            /*Map<Integer, IReservation> temp = new HashMap<>();
+	            temp.put(r.getTable(), r);
+	            map.put(date, temp);
+	            r = (IReservation) in.readObject();*/
+	            //this.model.setModel((Map<String, Map <Integer, IReservation>>)in.readObject());
+	            model.setModel((Map<String, Map <Integer, IReservation>>) in.readObject());
+	          //}
+	          in.close();
+	        }catch(Exception e){
+	          
+	        }
+	    }
+	    
+	  }
 	//SALVARE TUTTO IL MODELLO SU FILESYSTEM (QUINDI LA MAPPA PRINCIPALE) E RISETTARLO AL CARICAMENTO
 
 	

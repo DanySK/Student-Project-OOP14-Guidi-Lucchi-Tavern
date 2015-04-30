@@ -12,10 +12,12 @@ public class TestReservation {
 	
 	private final IModel model = new Model();
 	private final IController ctr = Controller.getController();
-	private Map<String,Map<Integer,IReservation>> map = new HashMap<>();
+	//private Map<String,Map<Integer,IReservation>> map = new HashMap<>();
 	
 	@org.junit.Test
 	public void test(){
+	  
+	  ctr.setModel(model);
 		
 		final IReservation r1 = new Reservation("1", "Giulia", "30-04-2015", "21.30","054751083" , 5, null);
 		final IReservation r2 = new Reservation("3", "Andrea", "30-04-2015", "21.30","054751042" , 5, null);
@@ -40,9 +42,9 @@ public class TestReservation {
 		model.remove(r1.getDate(), r1);
 		assertEquals(model.getTableRes(r1.getDate()).size(),1);
 		
-		ctr.setTables(model.getMap());		
+		ctr.saveModel();		
 
-		map.putAll(model.getMap());
+		//map.putAll(model.getMap());
 		model.getMap().clear();
 		
 		/*
@@ -50,14 +52,14 @@ public class TestReservation {
 		 * Controllo che la mappa di confronto alla quale gli ho aggiunto le prenotazioni non sia vuota.
 		 */
     assertTrue(model.getMap().isEmpty());
-    assertFalse(map.isEmpty());
+    //assertFalse(map.isEmpty());
     
-		ctr.getTables(model);
+		ctr.setModel();
 		
-		//Controllo se il caricamento è avvenuto correttamente
-		assertEquals(model.getTableRes("14-06-2015").get(2).getName(),map.get("14-06-2015").get(2).getName());
-    assertEquals(model.getTableRes("3-07-2015").get(1).getName(),map.get("3-07-2015").get(1).getName());
-    assertEquals(model.getTableRes("30-04-2015").get(3).getTel(),map.get("30-04-2015").get(3).getTel());
+		//Controllo se il caricamento ï¿½ avvenuto correttamente
+		assertEquals(model.getTableRes("14-06-2015").get(2).getName(), "Pirlo");
+    assertEquals(model.getTableRes("3-07-2015").get(1).getName(), "Enrico");
+    assertEquals(model.getTableRes("30-04-2015").get(3).getTel(), "054751042");
 		
 
 	}

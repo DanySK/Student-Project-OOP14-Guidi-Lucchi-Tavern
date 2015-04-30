@@ -9,6 +9,8 @@ import java.util.Set;
 
 
 public interface IModel{
+  
+  void setModel(Map<String, Map <Integer, IReservation>> map);
 	
 	/**
 	 * Adds a new reservation.

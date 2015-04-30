@@ -15,16 +15,19 @@ import it.unibo.tavernproj.view.*;
  */
 
 public interface IController {
+  
+  void setModel();
 	
 	/**
 	 * Loads the map of reservations from the local file system. 
 	 */
-  void getTables(IModel  model);
+
+  void setModel(IModel model);
 
 	/**
 	 * Saves the reservations map in the local file system.
 	 */
-	void setTables(Map<String,Map<Integer,IReservation>> map);
+	void saveModel();
 
 	/**
 	 * Adds a new table icon.
@@ -73,5 +76,6 @@ public interface IController {
 	void removeView(IView v);
 	
 	Icon loadMap(JLabel label);
+
 
 }
