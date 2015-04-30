@@ -82,7 +82,7 @@ public class View extends JFrame implements IView{
     this.setSize(sw, sh);
     this.setResizable(false);
 
-    controller.loadTables(date.getText());
+    //controller.loadTables(date.getText());
     
     buildLayout();
 
@@ -266,10 +266,11 @@ public class View extends JFrame implements IView{
 
   public static void main(final String[] argv) {
     final IController c = Controller.getController();
-    c.setModel();
+    
     final View v = new View();
     c.addView(v);
     
+    c.setModel();
     
     java.util.Calendar localCalendar = java.util.Calendar.getInstance();
     int month = localCalendar.get(java.util.Calendar.MONTH);
@@ -278,5 +279,6 @@ public class View extends JFrame implements IView{
     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
     localCalendar.set(year, month, day);        
     c.loadTables(sdf.format(localCalendar.getTime()));
+    
   }
 }
