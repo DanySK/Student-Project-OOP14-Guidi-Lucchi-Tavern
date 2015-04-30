@@ -20,6 +20,10 @@ public class Model implements IModel {
 	  this.map = new HashMap<>();
 	}
 	
+	public boolean isEmpty(){
+	  return this.map.size() == 0;
+	}
+	
 	/*usato nel test junit*/
 	@Override
 	public void setModel(Map<String, Map <Integer, IReservation>> map){

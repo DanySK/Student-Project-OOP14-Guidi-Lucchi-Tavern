@@ -71,13 +71,13 @@ public class Controller implements IController{
 	
 	
 	 public void loadTables(String date) {
-      //if (!model.getTableRes(date).isEmpty()){
+      if (!model.isEmpty()){
 	      for (Integer i: model.getTableRes(date).keySet()){
     	    for (final IView v: view){  
     	      v.addTable(i, date);
     	    }
   	     }
-	   // }	
+	    }	
     }
 
 

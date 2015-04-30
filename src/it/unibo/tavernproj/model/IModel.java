@@ -48,6 +48,8 @@ public interface IModel{
 
 	int getSize();
 
+  boolean isEmpty();
+
 	
 	
 }
