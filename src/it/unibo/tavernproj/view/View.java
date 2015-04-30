@@ -82,6 +82,8 @@ public class View extends JFrame implements IView{
     this.setSize(sw, sh);
     this.setResizable(false);
 
+    controller.loadTables(date.getText());
+    
     buildLayout();
 
   /*Fare metodi a parte per cambiare lo stile dei bottoni 
@@ -224,9 +226,9 @@ public class View extends JFrame implements IView{
         final IReservation res;
 
           try {
-            //res = View.this.controller.getReservation(number, date);
+            res = View.this.controller.getReservation(table, date);
 
-            res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
+            //res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
 
             final TableReservationForm form = new TableReservationForm(date, res);
             final IFormController fc = FormController.getController();

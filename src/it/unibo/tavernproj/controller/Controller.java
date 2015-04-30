@@ -69,17 +69,29 @@ public class Controller implements IController{
 		
 	}
 	
-	  public void loadTables(String date) {
-	    if (!model.getTableRes(date).isEmpty()){
+	  public void loadTables(String date) {	    
+	    try {
+	      in = new ObjectInputStream(new FileInputStream("map.txt"));
+	      model.setModel((Map<String, Map <Integer, IReservation>>) in.readObject());
+	      in.close();
+	      this.reSendAll(date);
+	    } catch (Exception e) {
+	      //displayException(e);
+	    }
+	  }
+	
+	 private void reSendAll(String date) {
+      if (!model.getTableRes(date).isEmpty()){
 	      for (Integer i: model.getTableRes(date).keySet()){
     	    for (final IView v: view){  
     	      v.addTable(i, date);
     	    }
   	     }
-	    }	    
-	  }
-	
-	 @Override
+	    }	
+    }
+
+
+  @Override
 	  public Map<Integer,IReservation> getRes(final String date) {	
 	   if (model.getRes(date).isEmpty()){
 	     return new HashMap<>();
