@@ -127,23 +127,24 @@ public class Controller implements IController{
 	
 	@Override
 	public void getTables(final IModel model){
-  for(String date : files){
-			try{
-				in = new ObjectInputStream(new FileInputStream(date));
-				IReservation r = (IReservation) in.readObject();
-				while(!r.equals(1)){
-				  model.add(date,(IReservation) r);
-				  r=(IReservation) in.readObject();
-				}
-				in.close();
-			}catch(Exception e){
-				
-			}
-
-			
-		}
-		
+    for(String date : files){
+  			try{
+  				in = new ObjectInputStream(new FileInputStream(date));
+  				IReservation r = (IReservation) in.readObject();
+  				while(!r.equals(1)){
+  				  model.add(date,(IReservation) r);
+  				  r=(IReservation) in.readObject();
+  				}
+  				in.close();
+  			}catch(Exception e){
+  				
+  			}
+  		
+  	}
 	}
+	
+	//SALVARE TUTTO IL MODELLO SU FILESYSTEM (QUINDI LA MAPPA PRINCIPALE) E RISETTARLO AL CARICAMENTO
+
 	
 	@Override
 	public Icon loadMap(JLabel label){

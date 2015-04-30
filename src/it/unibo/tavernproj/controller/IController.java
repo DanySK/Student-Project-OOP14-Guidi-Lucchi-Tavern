@@ -71,12 +71,7 @@ public interface IController {
 	 *      the view to remove
 	 */
 	void removeView(IView v);
-
-
-
-
-
+	
 	Icon loadMap(JLabel label);
-
 
 }

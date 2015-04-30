@@ -7,9 +7,9 @@ import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.controller.IFormController;
 import it.unibo.tavernproj.disegno.DrawButton;
+import it.unibo.tavernproj.disegno.DrawCancel;
 import it.unibo.tavernproj.disegno.DrawPosition;
 import it.unibo.tavernproj.disegno.ProvaDraw;
-import it.unibo.tavernproj.disegno.ProvaDraw1;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Reservation;
 
@@ -36,10 +36,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-
-
 /**
  *  @author Eleonora Guidi
+ *
+ */
+
+/*  aggiungere: pulsante per consularte le prenotazioni in base al nome dei clienti
+ *              pulsante per consultare le prenotazioni scegliendo la data dal calendario
+ *          
+ *              in entrambi gli elenchi aggungere un pulsante per eliminare le prenotazioni
+ *              
+ *              (oppure fare un pulsantee unico elimina prenotazione e da lì, inserendo il nome del cliente
+ *              fare scegliere qual'è quello giusto da cancellare e rimuovere dal sistema.)
  *
  */
 
@@ -47,106 +55,96 @@ import javax.swing.JPanel;
 
 public class View extends JFrame implements IView{
 
+  private static final long serialVersionUID = 1L;
+  private final IconBuilder build = new IconBuilder();
+  private final JButton buttonNew = new JButton("Nuova Prenotazione"); 
+  private final JButton cancelTable = new JButton("Cancella Tavolo");
+  private final JButton drawTable = new JButton("Disegna Tavolo ");
+  private JPanel tablesButtons = build.buildPanel(new FlowLayout());
+  private IController controller;  
 
-	private static final long serialVersionUID = 1L;
-	private final IconBuilder build = new IconBuilder();	
-	private final JButton buttonNew = new JButton("Nuova Prenotazione"); 
-	private final JButton cancelTable = new JButton("Cancella Tavolo");
-	private final JButton drawTable = new JButton("Disegna Tavolo ");
-	private final LinkedList<JButton> table = new LinkedList<>();
-	private IController controller;	
-	
-	
-	public View(){
-		super();
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLocationByPlatform(true);
-		
-		/* Set window dimension to the screen */
-		/* Se si salva sempre sullo stesso pc funziona anche usando le dimensioni dello schermo,
-		 * se invece si apre il programma su un altro computer e le informazioni di salvataggio non sono lì
-		 * non va, serve settare le dimensioni fisse o fare apposite funzioni per ricalcolare le posizioni.
-		 */ 
-		final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-		final int sw = (int) screen.getWidth() * 4/5;
-		final int sh = (int) screen.getHeight() * 3/4;
-		
-		this.setSize(sw, sh);
-		this.setResizable(false);
-			
-		buildLayout();	
-		
-		/*Fare metodi a parte per cambiare lo stile dei bottoni 
-		 *e anche degli altri componenti che si rovano in icon builder
-		 *(tipo il pannello si può rendere bianco di là)*/
-		buttonNew.setFont(new Font("Arial", Font.BOLD, 18));
-		buttonNew.setBackground(Color.white);
-		
-		this.setHandlers();
-		this.setResizable(true); 
-		this.setVisible(true);
-	}	
-	
-	JPanel tablesButtons = build.buildPanel(new FlowLayout());
-		
-	private void buildLayout() {
-		final JLabel map = build.buildMap("res" + System.getProperty("file.separator") + "map.png");	
-		final JPanel dx = build.buildPanel(new BorderLayout());		
-		final JPanel pNew = build.buildPanel(new GridBagLayout());	
-		final JLabel logo = build.buildLogo("res" + System.getProperty("file.separator") + "logo.jpg");	
-		
-	
-			
-		final GridBagConstraints gap = new GridBagConstraints();		
-		gap.gridy = 0;
-		gap.insets = new Insets(10, 10, 20, 10);
-		gap.fill = GridBagConstraints.HORIZONTAL;
-		buttonNew.setSize(pNew.getWidth(), pNew.getHeight()*1/10);
-		pNew.add(buttonNew, gap);
-		
-		//gap.gridy++;
-		
-		
-		dx.add(pNew, BorderLayout.CENTER);
-		dx.add(logo, BorderLayout.NORTH);
-		
-		/*SISTEMARE IN ALTRO MODO!!!*/
-		final JPanel north = build.buildPanel(new GridBagLayout());
-		java.util.Calendar localCalendar = java.util.Calendar.getInstance();
-		int month = localCalendar.get(java.util.Calendar.MONTH);
-		int year = localCalendar.get(java.util.Calendar.YEAR);
-		int day = localCalendar.get(java.util.Calendar.DATE);		
-		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
-		localCalendar.set(year, month, day);		
-		JLabel date = new JLabel(sdf.format(localCalendar.getTime()));
-		date.setFont(new Font("Arial", Font.BOLD, 18));
-		north.add(date, gap);
-		
-		
-		
-		final JPanel center = build.buildPanel(new BorderLayout());
-		center.add(map, BorderLayout.CENTER);
-		center.add(tablesButtons, BorderLayout.SOUTH);
-		center.add(north, BorderLayout.NORTH);
-		//aggiunta pannello
-		JPanel panel = new JPanel();
-		
-		panel.setBackground(Color.white);
-		
-		pNew.add(panel);
-		
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.add(drawTable);
-		panel.add(cancelTable);
-		
-		final DrawButton dDrawTable = new DrawButton(this.drawTable,map,new ProvaDraw(map));
-		
-		dDrawTable.setting();
-//		final DrawButton dCancelTable = new DrawButton(this.cancelTable,map,new DrawCancel(map)) ;
-//		dCancelTable.setting();
-}		
-		
+  public View() {
+    super();
+    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    setLocationByPlatform(true);
 
+  /* Set window dimension to the screen */
+  /* Se si salva sempre sullo stesso pc funziona anche usando le dimensioni dello schermo,
+   * se invece si apre il programma su un altro computer e le informazioni di salvataggio
+   * non sono lì non va, serve settare le dimensioni fisse o fare apposite funzioni per
+   * ricalcolare le posizioni.
+   */ 
+    final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+    final int sw = (int) screen.getWidth() * 4 / 5;
+    final int sh = (int) screen.getHeight() * 3 / 4;
+
+    this.setSize(sw, sh);
+    this.setResizable(false);
+
+    buildLayout();
+
+  /*Fare metodi a parte per cambiare lo stile dei bottoni 
+   *e anche degli altri componenti che si rovano in icon builder
+   *(tipo il pannello si può rendere bianco di là)*/
+    buttonNew.setFont(new Font("Arial", Font.BOLD, 18));
+    buttonNew.setBackground(Color.white);
+
+    this.setHandlers();
+    this.setResizable(true); 
+    this.setVisible(true);
+  }
+
+
+  private void buildLayout() {
+    final JLabel map = build.buildMap("res" + System.getProperty("file.separator") + "map.png");
+    final JPanel dx = build.buildPanel(new BorderLayout());
+    final JPanel pNew = build.buildPanel(new GridBagLayout());
+    final JLabel logo = build.buildLogo("res" + System.getProperty("file.separator") + "logo.jpg");
+
+    final GridBagConstraints gap = new GridBagConstraints();
+    gap.gridy = 0;
+    gap.insets = new Insets(10, 10, 20, 10);
+    gap.fill = GridBagConstraints.HORIZONTAL;
+    buttonNew.setSize(pNew.getWidth(), pNew.getHeight() * 1 / 10);
+    pNew.add(buttonNew, gap);
+    //gap.gridy++;
+
+    dx.add(pNew, BorderLayout.CENTER);
+    dx.add(logo, BorderLayout.NORTH);
+
+    final JPanel north = build.buildPanel(new GridBagLayout());
+    final JLabel date = build.dateLabel();
+    north.add(date, gap);
+
+    final JPanel center = build.buildPanel(new BorderLayout());
+    center.add(map, BorderLayout.CENTER);
+    center.add(tablesButtons, BorderLayout.SOUTH);
+    center.add(north, BorderLayout.NORTH);
+    //aggiunta pannello
+    JPanel panel = new JPanel();
+
+    panel.setBackground(Color.white);
+
+    pNew.add(panel);
+    
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    panel.add(drawTable);
+    panel.add(cancelTable);
+
+    final DrawButton dDrawTable = new DrawButton(this.drawTable,map,new ProvaDraw(map));
+    
+    dDrawTable.setting();
+//    final DrawButton dCancelTable = new DrawButton(this.cancelTable,map,new DrawCancel(map)) ;
+//    dCancelTable.setting();
+
+    
+    final JPanel main = build.buildPanel(new BorderLayout(5, 5));
+    main.add(center, BorderLayout.CENTER);
+    main.add(dx, BorderLayout.EAST);
+
+    this.getContentPane().add(main);
+
+  }
   
   private void setHandlers() {
 
@@ -220,8 +218,9 @@ public class View extends JFrame implements IView{
         final IReservation res;
 
           try {
-            //res = View.this.controller.getReservation(Integer.parseInt(number), date);
-            res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
+            res = View.this.controller.getReservation(Integer.parseInt(number), date);
+
+            //res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
 
             final TableReservationForm form = new TableReservationForm(date, res);
             final IFormController fc = FormController.getController();
