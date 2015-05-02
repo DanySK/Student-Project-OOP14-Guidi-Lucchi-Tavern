@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.Map;
 
 import javax.swing.JLabel;
 
@@ -31,18 +32,30 @@ public class DrawTable implements IDrawTable{
 	}
 	
 	
-	public Rectangle paintComponent(Graphics2D g,int x, int y) {
-	//	super.paintComponent(g);
-		Rectangle rect = new Rectangle(x, y, 50,50);
-		g.draw(rect);
+	public void paint(Graphics g) {
+//		super.paint(g);
+		g.drawRect(x, y, 50, 50);;
 		g.setColor(Color.black); 
-		return rect;
+		
 	}
 	
 	@Override
-	public void calcel(Graphics g1, int x1, int x2){
-		g1.setColor(label.getBackground());
-		g1.fillRect(x1, x2, 50, 50);
+	public void cancel(Graphics g1){
+//  Map<Integer,Pair<Integer,Integer>> map = draw.getMap();
+	//  	  System.out.println(map);
+//	  Pair<Integer, Integer> p = map.get(draw.maxKey());
+//	  System.out.println(p);
+//		g1.clearRect(0,0, 50, 50);
+//		g1.setColor(Color.white);
+	}
+	
+	public void cancelAll(Graphics g1){
+//	  Map<Integer,Pair<Integer,Integer>> map = draw.getMap();
+//	  for(int i : map.keySet()){
+//	    Pair<Integer, Integer> p = map.get(i);
+//	    g1.fillRect(p.getX(),p.getY(), 50, 50);
+//	    g1.setColor(label.getBackground());
+//	  }
 	}
 	
 	@Override
@@ -58,6 +71,8 @@ public class DrawTable implements IDrawTable{
 	public int getTable(){
 		return this.table;
 	}
+
+
 
 
 	

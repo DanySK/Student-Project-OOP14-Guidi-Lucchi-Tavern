@@ -11,13 +11,13 @@ import java.awt.Rectangle;
 
 public interface IDrawTable {
 	
-	void calcel(Graphics g1, int x1, int x2);
-	
 	int getX();
 	int getY();
 
 
-	Rectangle paintComponent(Graphics2D g, int x, int y);
+	void paint(Graphics g);
+
+  void cancel(Graphics g1);
 
 	
 	

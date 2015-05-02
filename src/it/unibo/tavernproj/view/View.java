@@ -6,9 +6,8 @@ import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.controller.IFormController;
 import it.unibo.tavernproj.disegno.DrawButton;
-import it.unibo.tavernproj.disegno.DrawCancel;
 import it.unibo.tavernproj.disegno.DrawPosition;
-import it.unibo.tavernproj.disegno.ProvaDraw;
+import it.unibo.tavernproj.disegno.DrawTable;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.model.Reservation;
@@ -18,6 +17,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -141,9 +141,25 @@ public class View extends JFrame implements IView{
     panel.add(drawTable);
     panel.add(cancelTable);
 
-    final DrawButton dDrawTable = new DrawButton(this.drawTable,map,new ProvaDraw(map));
+    final DrawButton dDrawTable = new DrawButton(this.drawTable,map,new DrawPosition(map));
     
     dDrawTable.setting();
+    
+    
+    
+    final DrawPosition cancel = new DrawPosition(map);
+    final JButton cancelPrev = new JButton("Cancella tavolo");
+    final JButton cancelAll = new JButton("Cancella Tutto");
+    panel.add(cancelAll);
+    panel.add(cancelPrev);
+    cancelPrev.addActionListener(e->{
+      cancel.cancel(map.getGraphics());
+    });
+    
+    cancelAll.addActionListener(e->{
+       System.out.println(cancel.getMap());
+    });
+    
 //    final DrawButton dCancelTable = new DrawButton(this.cancelTable,map,new DrawCancel(map)) ;
 //    dCancelTable.setting();
 

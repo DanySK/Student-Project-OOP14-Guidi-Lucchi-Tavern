@@ -1,9 +1,13 @@
 package it.unibo.tavernproj.disegno;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,6 +18,8 @@ import javax.swing.JLabel;
  */
 
 public class DrawPosition implements MouseListener {
+  private final Map<Integer,Pair<Integer,Integer>> disegno = new HashMap<>();
+  private int index=0;
 	
 	private final JLabel label;
 	private DrawTable table;
@@ -38,10 +44,9 @@ public class DrawPosition implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		this.x0=e.getX();
 		this.y0=e.getY();
-		table= new DrawTable(x0, y0,label);
-	//	table.paintComponent((Graphics2D)label.getGraphics(),x,y);
-		System.out.println(x0);
-		System.out.println(y0);
+	//	table= new DrawTable(x0, y0,label);
+		this.paint(label.getGraphics());
+		this.setMap(x0, y0);
 	}
 
 	@Override
@@ -49,5 +54,41 @@ public class DrawPosition implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {}
+	
+
+ 
+  
+  public void setMap(int x, int y){
+    index++;
+    disegno.put(index, new Pair<>(x,y));
+  }
+  
+  public void paint(Graphics g) {
+//  super.paint(g);
+  g.drawRect(x0, y0, 50, 50);;
+  g.setColor(Color.black); 
+  
+}
+  
+	 public void cancel(Graphics g1){
+     System.out.println(disegno);
+// Pair<Integer, Integer> p = map.get(draw.maxKey());
+// System.out.println(p);
+ g1.clearRect(0,0, 50, 50);
+ g1.setColor(Color.white);
+}
+
+public void cancelAll(Graphics g1){
+// Map<Integer,Pair<Integer,Integer>> map = draw.getMap();
+// for(int i : map.keySet()){
+//   Pair<Integer, Integer> p = map.get(i);
+//   g1.fillRect(p.getX(),p.getY(), 50, 50);
+//   g1.setColor(label.getBackground());
+// }
+}
+
+public Map<Integer,Pair<Integer,Integer>> getMap(){
+  return disegno;
+}
 	
 }
