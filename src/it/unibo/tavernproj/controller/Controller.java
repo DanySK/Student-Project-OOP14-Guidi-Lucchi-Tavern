@@ -1,4 +1,7 @@
 package it.unibo.tavernproj.controller;
+import it.unibo.tavernproj.disegno.DrawMap;
+import it.unibo.tavernproj.disegno.DrawPosition;
+import it.unibo.tavernproj.disegno.Pair;
 import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
@@ -6,7 +9,6 @@ import it.unibo.tavernproj.view.IView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -15,9 +17,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import javax.swing.Icon;
-import javax.swing.JLabel;
 
 /**
  * @author Eleonora Guidi
@@ -34,6 +33,7 @@ public class Controller implements IController{
 	
 	
 	private final Set<IView> view = new HashSet<>();
+	private DrawMap draw = new DrawMap();
 	private IModel model = new Model();
 	private String[] files= new String[2000];
 	private ObjectOutput out;
@@ -179,20 +179,27 @@ public class Controller implements IController{
 	//SALVARE TUTTO IL MODELLO SU FILESYSTEM (QUINDI LA MAPPA PRINCIPALE) E RISETTARLO AL CARICAMENTO
 
 	
-	@Override
-	public Icon loadMap(JLabel label){
-		Icon map=null;
-		try{
-			inMap = new ObjectInputStream(new FileInputStream("mappa"));
-			map = (Icon) inMap.readObject();
-			inMap.close();
-		}catch(Exception e){
-			
-		}
-		
-		return map;
+	public void saveDisegno(){
+	  try{
+      outMap = new ObjectOutputStream(new FileOutputStream("disegno.txt"));
+      outMap.writeObject(draw.getMap());
+      out.close();
+    }catch (Exception e){
+      
+    }
 	}
-
+	
+	public void LoadDisegno(){
+    Map<Integer,Pair<Integer,Integer>> map = null;
+	    try{
+        inMap = new ObjectInputStream(new FileInputStream("map.txt"));
+        map=((Map<Integer,Pair<Integer,Integer>>)inMap.readObject());
+        inMap.close();
+      }catch(Exception e){
+        
+      }
+      
+	}
 
 
 

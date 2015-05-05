@@ -7,7 +7,6 @@ import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.controller.IFormController;
 import it.unibo.tavernproj.disegno.DrawButton;
 import it.unibo.tavernproj.disegno.DrawPosition;
-import it.unibo.tavernproj.disegno.DrawTable;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.model.Reservation;

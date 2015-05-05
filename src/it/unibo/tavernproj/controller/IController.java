@@ -76,7 +76,6 @@ public interface IController {
 	 */
 	void removeView(IView v);
 	
-	Icon loadMap(JLabel label);
 
 	Map<Integer,IReservation> getRes(final String date);
 
