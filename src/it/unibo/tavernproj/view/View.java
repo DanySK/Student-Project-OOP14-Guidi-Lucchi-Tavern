@@ -139,8 +139,7 @@ public class View extends JFrame implements IView{
     
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.add(drawTable);
-    panel.add(cancelTable);
-
+    
     final DrawButton dDrawTable = new DrawButton(this.drawTable,map,new DrawPosition(map));
     
     dDrawTable.setting();

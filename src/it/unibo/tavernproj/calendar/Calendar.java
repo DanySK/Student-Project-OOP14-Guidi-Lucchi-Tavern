@@ -149,9 +149,5 @@ public class Calendar {
 		return false;
 	}
 
-	/*public void attachViewObserver(ICalendarController calendarController) {
-		this.ctrl = calendarController;
-	}
-	*/
 }
 

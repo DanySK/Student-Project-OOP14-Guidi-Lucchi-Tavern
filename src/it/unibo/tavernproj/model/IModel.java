@@ -50,6 +50,8 @@ public interface IModel{
 
   boolean isEmpty();
 
+  Set<IReservation> getNameRes(String name);
+
 	
 	
 }

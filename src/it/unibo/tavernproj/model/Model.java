@@ -12,6 +12,8 @@ import java.util.Set;
  * 
  */
 
+//fare un metodo per ricavare un Set di prenotazioni avendo il nome 
+
 public class Model implements IModel {
 	
 	private Map<String, Map <Integer, IReservation>> map; // = new HashMap<>();
@@ -101,8 +103,25 @@ public class Model implements IModel {
 		return this.map;
 	}
 	
+	@Override
 	public int getSize(){
 		return map.size();
+	}
+	
+	@Override
+	public Set<IReservation> getNameRes( final String name){
+	  
+	  Set<IReservation> res = new HashSet<>();
+	  for(String date : map.keySet()){
+	    Map<Integer,IReservation> mapRes = this.getTableRes(date);
+	    for(Integer i : mapRes.keySet()){
+	      IReservation temp = mapRes.get(i);
+	      if(temp.getName().equals(name)){
+	        res.add(temp);
+	     }
+	    }  
+	   }
+    return res;
 	}
 
 

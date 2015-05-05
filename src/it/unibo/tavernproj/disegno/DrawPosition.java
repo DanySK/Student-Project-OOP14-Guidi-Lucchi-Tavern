@@ -61,21 +61,21 @@ public class DrawPosition implements MouseListener {
   public void setMap(int x, int y){
     index++;
     disegno.put(index, new Pair<>(x,y));
+    System.out.println(disegno);
   }
   
   public void paint(Graphics g) {
-//  super.paint(g);
-  g.drawRect(x0, y0, 50, 50);;
+  g.drawRect(x0, y0, 50, 50);
   g.setColor(Color.black); 
   
 }
   
 	 public void cancel(Graphics g1){
      System.out.println(disegno);
-// Pair<Integer, Integer> p = map.get(draw.maxKey());
+ Pair<Integer, Integer> p = disegno.get(index);
 // System.out.println(p);
- g1.clearRect(0,0, 50, 50);
- g1.setColor(Color.white);
+// g1.clearRect(p.getX(),p.getY(), 50, 50);
+// g1.setColor(Color.white);
 }
 
 public void cancelAll(Graphics g1){
