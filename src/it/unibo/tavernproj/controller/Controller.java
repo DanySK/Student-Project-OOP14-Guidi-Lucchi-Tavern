@@ -9,6 +9,7 @@ import it.unibo.tavernproj.view.IView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -35,14 +36,10 @@ public class Controller implements IController{
 	private final Set<IView> view = new HashSet<>();
 	private DrawMap draw = new DrawMap();
 	private IModel model = new Model();
-	private String[] files= new String[2000];
-	private ObjectOutput out;
-	private ObjectInput  in;
 	private ObjectOutput outMap;
 	private ObjectInput  inMap; 
 	
-
-
+	private String fileName = "file.txt";
 
 	private Controller(){};
 	
@@ -71,13 +68,20 @@ public class Controller implements IController{
 	
 	
 	 public void loadTables(String date) {
+	   this.setModel();
       if (!model.isEmpty()){
+
+	   //try{
 	      for (Integer i: model.getTableRes(date).keySet()){
-    	    for (final IView v: view){  
-    	      v.addTable(i, date);
-    	    }
+    	    this.addTable(i, date);
   	     }
+	   /*}catch(NullPointerException e){
+	     System.out.print("non ci sono tavoli quel giorno");
+	   }*/
 	    }	
+      else {
+        System.out.print("sticazzi è vuoto il model");
+      }
     }
 
 
@@ -120,61 +124,28 @@ public class Controller implements IController{
 	
 	@Override
 	public void saveModel(){
-		//int i = 0;
-//		try {
-//			outMap = new ObjectOutputStream(new FileOutputStream("map"));
-//			outMap.writeObject(label.getIcon());
-//			outMap.close();
-//			
-//		} catch (Exception e1) {
-//		// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-		
-		//for(String date : this.model.getMap().keySet()){
-			//files[i]=date;
 			try{
-				out = new ObjectOutputStream(new FileOutputStream("map.txt"));//date));
-				/*Map<Integer, IReservation> temp = this.model.getMap().get(date);
-				
-				for(Integer table : temp.keySet()){
-					out.writeObject(temp.get(table));
-				}
-				*/
+			  final ObjectOutput out = new ObjectOutputStream(new FileOutputStream("map.txt"));
 				out.writeObject(this.model.getMap());
-				
-				//out.writeObject(1);
 				out.close();
-			}catch (Exception e){
-				
+			}catch (IOException e){
+			  System.out.print("non salva  sul file");
 			}
-			//i++;
-		//}		
-		
 	}
 	
 	/*per caricare il modello da file system all'accensione*/
 	 @Override
-	  public void setModel(){	   
-	    //Map<String, Map <Integer, IReservation>> map = new HashMap<>();
-	    for(String date : files){
-	        try{
-	          in = new ObjectInputStream(new FileInputStream("map.txt"));//date));
-	          //IReservation r = (IReservation) in.readObject();
-	          //while(!r.equals(1)){
-	            /*Map<Integer, IReservation> temp = new HashMap<>();
-	            temp.put(r.getTable(), r);
-	            map.put(date, temp);
-	            r = (IReservation) in.readObject();*/
-	            //this.model.setModel((Map<String, Map <Integer, IReservation>>)in.readObject());
-	            model.setModel((Map<String, Map <Integer, IReservation>>) in.readObject());
-	          //}
-	          in.close();
-	        }catch(Exception e){
-	          //this.model = new Model();
-	        }
-	    }
-	    
+	  public void setModel(){
+      try{
+         final ObjectInput in = new ObjectInputStream(new FileInputStream("map.txt"));
+         model.setModel((Map<String, Map <Integer, IReservation>>) in.readObject());
+         in.close();
+      }catch(IOException e){
+        System.out.print("non prende il file");
+      
+      } catch (ClassNotFoundException e) {
+        System.out.print("non carica il modello");
+      }
 	  }
 	//SALVARE TUTTO IL MODELLO SU FILESYSTEM (QUINDI LA MAPPA PRINCIPALE) E RISETTARLO AL CARICAMENTO
 
@@ -183,7 +154,7 @@ public class Controller implements IController{
 	  try{
       outMap = new ObjectOutputStream(new FileOutputStream("disegno.txt"));
       outMap.writeObject(draw.getMap());
-      out.close();
+      outMap.close();
     }catch (Exception e){
       
     }
@@ -201,8 +172,32 @@ public class Controller implements IController{
       
 	}
 
+  @Override
+  public IReservation getExternalReservation(Integer table, String date) {
+    this.setModel();    
+    return this.getReservation(table, date);
+  }
 
 
-	
+  @Override
+  public IModel getModel() {
+    return this.model;
+  }
+
+
+  @Override
+  public void commandQuit() {
+    this.saveModel();
+    System.exit(0);
+  }
+
+  /*
+   * @param file
+   *            the new file name
+   
+  public void setFileName(final String file) {
+    this.fileName = file;
+  }*/
+
 }
 

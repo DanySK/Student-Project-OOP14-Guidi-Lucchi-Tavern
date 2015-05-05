@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  * 
  */
 
-public interface IIconBuilder {
+public interface IUtilities {
 	
 	/**
 	 * Crea un pannello con sfondo bianco.
@@ -73,5 +73,7 @@ public interface IIconBuilder {
 	ImageIcon getButtonIcon(final String srt);
 	
 	JLabel dateLabel();
+
+  String getCurrentDate();
 
 }

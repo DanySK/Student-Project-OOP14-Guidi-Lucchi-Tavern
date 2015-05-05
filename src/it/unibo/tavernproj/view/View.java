@@ -1,6 +1,5 @@
 package it.unibo.tavernproj.view;
 
-import it.unibo.tavernproj.calendar.Calendar;
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
@@ -25,6 +24,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -32,7 +34,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 
 /**
@@ -45,7 +49,7 @@ import javax.swing.JPanel;
  *          
  *              in entrambi gli elenchi aggungere un pulsante per eliminare le prenotazioni
  *              
- *              (oppure fare un pulsantee unico elimina prenotazione e da lì, inserendo il nome del cliente
+ *              (oppure fare un pulsante unico elimina prenotazione e da lì, inserendo il nome del cliente
  *              fare scegliere qual'è quello giusto da cancellare e rimuovere dal sistema.)
  *
  */
@@ -55,8 +59,9 @@ import javax.swing.JPanel;
 public class View extends JFrame implements IView{
 
   private static final long serialVersionUID = 1L;
-  private final IconBuilder build = new IconBuilder();
+  private final Utilities build = new Utilities();
   private final JButton buttonNew = new JButton("Nuova Prenotazione"); 
+  private final JButton buttonDelete = new JButton("Elimina Prenotazione");
   private final JButton cancelAll = new JButton("Cancella Tutto");
   private final JButton cancelTable = new JButton("Cancella Tavolo");
   private final JButton drawTable = new JButton("Disegna Tavolo ");
@@ -66,7 +71,7 @@ public class View extends JFrame implements IView{
 
   public View() {
     super();
-    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     setLocationByPlatform(true);
 
   /* Set window dimension to the screen */
@@ -91,10 +96,14 @@ public class View extends JFrame implements IView{
    *(tipo il pannello si può rendere bianco di là)*/
     buttonNew.setFont(new Font("Arial", Font.BOLD, 18));
     buttonNew.setBackground(Color.white);
+    
+    buttonDelete.setFont(new Font("Arial", Font.BOLD, 18));
+    buttonDelete.setBackground(Color.white);
 
     this.setHandlers();
     this.setResizable(true); 
     this.setVisible(true);
+    
   }
 
 
@@ -110,7 +119,8 @@ public class View extends JFrame implements IView{
     gap.fill = GridBagConstraints.HORIZONTAL;
     buttonNew.setSize(pNew.getWidth(), pNew.getHeight() * 1 / 10);
     pNew.add(buttonNew, gap);
-    //gap.gridy++;
+    gap.gridy++;
+    pNew.add(buttonDelete, gap);
 
     dx.add(pNew, BorderLayout.CENTER);
     dx.add(logo, BorderLayout.NORTH);
@@ -195,6 +205,7 @@ public class View extends JFrame implements IView{
           fc.addView(form);
 
           fc.setDate(calendar.getPickedDate());
+          fc.setModel(controller.getModel());
           form.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentHidden(final ComponentEvent ce) {
@@ -212,12 +223,36 @@ public class View extends JFrame implements IView{
               }
             }
           });
-
+          
+          
           //fare un metodo nella form che tira fuori una finestra se la voglio chiudere senza salvare!!
 
         }
       }
     });
+    
+    this.buttonDelete.addActionListener(new ActionListener(){
+
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        Chooser c = new Chooser();
+        
+      }
+      
+    });
+    
+    this.addWindowListener(new WindowAdapter() {
+      public void windowClosing(final WindowEvent e) {
+        quitHandler();
+      }
+    });
+  }
+  
+  private void quitHandler() {
+    final int n = JOptionPane.showConfirmDialog(this, "Do you really want to quit?", "Quitting..", JOptionPane.YES_NO_OPTION);
+    if (n == JOptionPane.YES_OPTION) {
+      controller.commandQuit();
+    }
   }
 
   @Override
@@ -229,7 +264,7 @@ public class View extends JFrame implements IView{
   public void addTable(Integer table, String date) {
     /* System.getProperty("user.home")+System.getProperty("file.separator")+
      */
-
+    
     final JButton b = build.buildButton(table + "s.png");
     b.addActionListener(new ActionListener(){
       @Override
@@ -241,23 +276,28 @@ public class View extends JFrame implements IView{
          * 
          */
 
-        final IReservation res;
+        IReservation res;
 
           try {
             res = View.this.controller.getReservation(table, date);
-
             //res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
-
+            
             final TableReservationForm form = new TableReservationForm(date, res);
+            //form.setTable(Integer.parseInt(b.getName()));
             final IFormController fc = FormController.getController();
             fc.addView(form);
+            
+            fc.setModel(View.this.controller.getModel());
             fc.setDate(date);
             form.addComponentListener(new ComponentAdapter() {
               @Override
               public void componentHidden(final ComponentEvent ce) {
                 if (form.isBeenModified()) {
                   try {
-                    fc.save(form.getTable(), form.getName(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
+                    //fc.delete(table, date);
+                    //PER ORA IL TAVOLO NON è MODIFICABILE PERCHè DAVA PROBLEMI!
+                    
+                    fc.save(table.toString(), form.getName(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
                     b.setIcon(build.getButtonIcon(form.getTable() + "s.png"));
                   } catch (NullPointerException e) {
                     System.out.print("Riempire la form!");
@@ -272,9 +312,41 @@ public class View extends JFrame implements IView{
                 }
               }
             });
-          } catch (NumberFormatException e1) {
-            System.out.print("Prenotazione non disponibile!");
-          }
+            
+          } catch (NumberFormatException e1) {/*
+            //caricare il modello esterno: SISTEMARE PERCHè SE USO FC SALVA SU UN ALTRO MODELLO
+            try{
+              res = View.this.controller.getExternalReservation(table, date);
+              
+              final TableReservationForm form = new TableReservationForm(date, res);
+              final IFormController fc = FormController.getController();
+              fc.addView(form);
+              fc.setDate(date);
+              form.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentHidden(final ComponentEvent ce) {
+                  if (form.isBeenModified()) {
+                    try {
+                      fc.save(form.getTable(), form.getName(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
+                      b.setIcon(build.getButtonIcon(form.getTable() + "s.png"));
+                    } catch (NullPointerException e) {
+                      System.out.print("Riempire la form!");
+                      form.setVisible(true);
+                    } catch (NumberFormatException e1) {
+                      System.out.print("Riempire la form con dei numeri!");
+                      form.setVisible(true);
+                    } catch (IllegalArgumentException e2) {
+                      System.out.print("il numero del tavolo è sbagliato!");
+                      form.setVisible(true);
+                    }
+                  }
+                }
+              });
+              
+            }catch (NumberFormatException e2){*/
+              System.out.print("Prenotazione non disponibile!");
+            }              
+          //}
       }
     });
     tablesButtons.add(b);
@@ -282,21 +354,5 @@ public class View extends JFrame implements IView{
   }
 
 
-  public static void main(final String[] argv) {
-    final IController c = Controller.getController();
-    
-    final View v = new View();
-    c.addView(v);
-    
-    c.setModel();
-    
-    java.util.Calendar localCalendar = java.util.Calendar.getInstance();
-    int month = localCalendar.get(java.util.Calendar.MONTH);
-    int year = localCalendar.get(java.util.Calendar.YEAR);
-    int day = localCalendar.get(java.util.Calendar.DATE);   
-    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
-    localCalendar.set(year, month, day);        
-    c.loadTables(sdf.format(localCalendar.getTime()));
-    
-  }
+  
 }

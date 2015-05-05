@@ -81,5 +81,13 @@ public interface IController {
 
   void loadTables(String format);
 
+  IReservation getExternalReservation(Integer table, String date);
+
+  IModel getModel();
+
+  void commandQuit();
+
+  //void setFileName(String string);
+
 
 }

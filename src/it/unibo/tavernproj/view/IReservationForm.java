@@ -43,5 +43,5 @@ public interface IReservationForm {
 
 	void setMenu(String srt);
 
-	void setMenuVisible();
+	//void setMenuVisible();
 }

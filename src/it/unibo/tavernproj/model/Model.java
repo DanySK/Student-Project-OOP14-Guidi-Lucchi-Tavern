@@ -33,17 +33,13 @@ public class Model implements IModel {
 	@Override
 	public void add(final String date, final IReservation pren) {
 		
-		Map<Integer, IReservation> temp;
+		Map<Integer, IReservation> temp = new HashMap<>();
 		
-		if(map.containsKey(date)){
-			temp= map.get(date); 
-		}else{
-			temp=new HashMap<>();
-			map.put(date,temp);
+		if (map.containsKey(date)){
+			temp = map.get(date); 
 		}
 		temp.put(pren.getTable(), pren);
-
-		
+		map.put(date, temp);		
 	}
 		/*
 		 * Fare un file per giorno
@@ -92,19 +88,43 @@ public class Model implements IModel {
 	
 	@Override
 	public Map<Integer,IReservation> getTableRes(String date){
+	  if (!map.containsKey(date)){
+	    throw new NullPointerException();
+	  }
 		return map.get(date);
-		
 	}
 	
 	@Override
-	public  Map<String, Map <Integer, IReservation>> getMap(){
+	public Map<String, Map <Integer, IReservation>> getMap(){
 		return this.map;
+	}
+	
+	public Model getModel(){
+	  return this;
 	}
 	
 	@Override
 	public int getSize(){
 		return map.size();
 	}
+	
+	
+	//eleonora
+  @Override
+  public void remove(String date, Integer table) {
+    if (map.containsKey(date)) {
+      Map<Integer,IReservation> temp = map.get(date);
+      if (temp.containsKey(table)) {
+        map.get(date).remove(table);
+      }
+      else {
+        throw new IllegalArgumentException("Non esiste quel tavolo");
+      }
+     }
+    else{
+      throw new IllegalArgumentException("Non esiste quella data");
+    }
+  }
 	
 	@Override
 	public Set<IReservation> getNameRes( final String name){

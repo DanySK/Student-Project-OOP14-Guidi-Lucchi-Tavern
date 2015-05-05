@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  * 
  * */
 
-public class IconBuilder implements IIconBuilder{
+public class Utilities implements IUtilities{
 	
 	final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 	private final int sw = (int) screen.getWidth() * 3/4;
@@ -52,7 +52,7 @@ public class IconBuilder implements IIconBuilder{
 	
 	public JLabel buildMap(final String srt){
 		try{
-			//final BufferedImage myPicture = ImageIO.read(getClass().getResourceAsStream(srt));
+			//final BufferedImage myPicture = ImageIO.read(getClass().getResourceAsStream("/" + srt));
 			final BufferedImage myPicture = ImageIO.read(new File(srt));
 			ImageIcon img = new ImageIcon(myPicture);
 			Image temp = img.getImage().getScaledInstance(sw*25/40, sh*25/40, Image.SCALE_SMOOTH);
@@ -93,5 +93,15 @@ public class IconBuilder implements IIconBuilder{
 		}catch(IOException e){
 			throw new IllegalArgumentException();
 		}
+	}
+	
+	public String getCurrentDate(){
+	  java.util.Calendar localCalendar = java.util.Calendar.getInstance();
+    int month = localCalendar.get(java.util.Calendar.MONTH);
+    int year = localCalendar.get(java.util.Calendar.YEAR);
+    int day = localCalendar.get(java.util.Calendar.DATE);   
+    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+    localCalendar.set(year, month, day);
+    return sdf.format(localCalendar.getTime());
 	}
 }

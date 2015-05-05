@@ -1,6 +1,6 @@
 package it.unibo.tavernproj.disegno;
 
-import it.unibo.tavernproj.view.IconBuilder;
+import it.unibo.tavernproj.view.Utilities;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -21,7 +21,7 @@ public class DrawTable implements IDrawTable{
 	private int x;
 	private int y;
 	private int table=0;
-	IconBuilder icon = new IconBuilder();
+	Utilities icon = new Utilities();
 	
 	
 	public DrawTable(int x, int y, final JLabel label){

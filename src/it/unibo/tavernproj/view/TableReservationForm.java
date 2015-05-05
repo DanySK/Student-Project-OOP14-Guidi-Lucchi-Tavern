@@ -41,8 +41,8 @@ public class TableReservationForm extends ReservationForm{
 		super.setH(res.getHours());
 		super.setTel(res.getTel());
 		super.setNum(res.getNumPers());
-		if (!res.getMenu().equals(Optional.empty())){
-			super.setMenuVisible();
+		if (!res.getMenu().isEmpty()){//.equals(Optional.empty())){
+			//super.setMenuVisible();
 			super.setMenu(res.getMenu());
 		}				
 	}

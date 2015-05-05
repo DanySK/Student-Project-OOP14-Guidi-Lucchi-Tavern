@@ -54,4 +54,8 @@ public interface IFormController {
 	void save(String table, String name, String h, String tel, String numPers, Optional<String> menu);
 
 	Set<IReservation> getRes(String date);
+
+  void setModel(IModel model);
+
+  void delete(Integer table, String date);
 }

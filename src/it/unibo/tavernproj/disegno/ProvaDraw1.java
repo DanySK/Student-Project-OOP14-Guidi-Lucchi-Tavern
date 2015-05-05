@@ -7,11 +7,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.event.MouseInputListener;
 
-import it.unibo.tavernproj.view.IconBuilder;
+import it.unibo.tavernproj.view.Utilities;
 
 public class ProvaDraw1 implements MouseInputListener {
 	
-	IconBuilder icon = new IconBuilder();
+	Utilities icon = new Utilities();
 	private int x;
 	private int y;
 	private JLabel label;

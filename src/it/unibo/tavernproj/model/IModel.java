@@ -50,6 +50,10 @@ public interface IModel{
 
   boolean isEmpty();
 
+  void remove(String date, Integer table);
+
+  Object getModel();
+
   Set<IReservation> getNameRes(String name);
 
 	

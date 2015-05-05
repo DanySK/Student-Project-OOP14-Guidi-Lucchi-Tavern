@@ -216,7 +216,8 @@ public class ReservationForm extends JFrame implements IReservationForm{
 	public void enableAll() {
 		for (String s: map.keySet()){
 			map.get(s).setEnabled(true);
-		}		
+		}	
+		map.get("Tav").setEnabled(false);
 	}
 
 	@Override
@@ -248,10 +249,11 @@ public class ReservationForm extends JFrame implements IReservationForm{
 	public void setMenu(String srt) {
 		((JTextField) map.get("Menu fisso")).setText(srt);
 		((JRadioButton) map.get("Menu")).setSelected(true);
+		map.get("Menu fisso").setVisible(true);
 	}
 
-	@Override
+	/*@Override
 	public void setMenuVisible() {
-		map.get("Menu fisso").setVisible(true);
-	}	
+		
+	}	*/
 }

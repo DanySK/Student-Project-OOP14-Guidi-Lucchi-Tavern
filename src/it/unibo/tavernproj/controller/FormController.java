@@ -68,23 +68,34 @@ public class FormController implements IFormController {
 	@Override
 	public void save(String table, String name, String h, String tel,
 			String numPers, Optional<String> menu) {
-		Reservation pren = new Reservation(table, name, this.date, h, tel, Integer.parseInt(numPers), menu);
-		try{
+		Reservation res = new Reservation(table, name, this.date, h, tel, Integer.parseInt(numPers), menu);
+		/*try{
       in = new ObjectInputStream(new FileInputStream("map.txt"));
-        model.setModel((Map<String, Map <Integer, IReservation>>) in.readObject());
+      model.setModel((Map<String, Map <Integer, IReservation>>) in.readObject());
       in.close();
     }catch(Exception e){
       
-    }
-		model.add(this.date, pren);
+    }*/
+		model.add(this.date, res);
 		
-		try{
+		/*try{
 	        out = new ObjectOutputStream(new FileOutputStream("map.txt"));
 	        out.writeObject(this.model.getMap());
 	        out.close();
 	      }catch (Exception e){
 	        
-	  }
+	  }*/
 	}
+
+  @Override
+  public void setModel(IModel model) {
+    this.model = model;
+  }
+
+  @Override
+  public void delete(Integer table, String date) {
+    model.remove(date, table);
+    
+  }
 	
 }
