@@ -12,8 +12,6 @@ import java.util.Set;
  * 
  */
 
-//fare un metodo per ricavare un Set di prenotazioni avendo il nome 
-
 public class Model implements IModel {
 	
 	private Map<String, Map <Integer, IReservation>> map; // = new HashMap<>();

@@ -17,13 +17,11 @@ public class DrawButton {
 	
 	private final JButton button;
 	private final JLabel label;
-	private final DrawPosition mouse;
 	
-	public DrawButton(final JButton button, JLabel label, DrawPosition drawPosition){
+	public DrawButton(final JButton button, JLabel label){
 		this.button=button;
 		this.label=label;
 		this.label.setBackground(Color.white);
-		this.mouse=drawPosition;
 	}
 	
 	public void setting(){
@@ -31,8 +29,6 @@ public class DrawButton {
 		this.button.setBackground(Color.white);
 		this.button.setBorderPainted(false);
 		this.button.setSize(10, 40);
-		this.button.addActionListener(e->{
-			label.addMouseListener(this.mouse);
-		});
+		
 	}
 }

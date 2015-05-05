@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 
 public class DrawPosition implements MouseListener {
   private final Map<Integer,Pair<Integer,Integer>> disegno = new HashMap<>();
+  
   private int index=0;
 	
 	private final JLabel label;
@@ -44,7 +45,6 @@ public class DrawPosition implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		this.x0=e.getX();
 		this.y0=e.getY();
-	//	table= new DrawTable(x0, y0,label);
 		this.paint(label.getGraphics());
 		this.setMap(x0, y0);
 	}
@@ -61,7 +61,6 @@ public class DrawPosition implements MouseListener {
   public void setMap(int x, int y){
     index++;
     disegno.put(index, new Pair<>(x,y));
-    System.out.println(disegno);
   }
   
   public void paint(Graphics g) {
@@ -70,21 +69,22 @@ public class DrawPosition implements MouseListener {
   
 }
   
-	 public void cancel(Graphics g1){
-     System.out.println(disegno);
- Pair<Integer, Integer> p = disegno.get(index);
-// System.out.println(p);
-// g1.clearRect(p.getX(),p.getY(), 50, 50);
-// g1.setColor(Color.white);
+  public void cancel(Graphics g1){
+    Pair<Integer, Integer> p = disegno.get(disegno.size());
+    g1.setColor(label.getBackground());
+    g1.drawRect(p.getX(),p.getY(), 50, 50);
+    disegno.remove(disegno.size());
+    
+    
 }
 
 public void cancelAll(Graphics g1){
-// Map<Integer,Pair<Integer,Integer>> map = draw.getMap();
-// for(int i : map.keySet()){
-//   Pair<Integer, Integer> p = map.get(i);
-//   g1.fillRect(p.getX(),p.getY(), 50, 50);
-//   g1.setColor(label.getBackground());
-// }
+ for(int i : disegno.keySet()){
+   Pair<Integer, Integer> p = disegno.get(i);
+   g1.setColor(label.getBackground());
+   g1.drawRect(p.getX(),p.getY(), 50, 50);
+ }
+ disegno.clear();
 }
 
 public Map<Integer,Pair<Integer,Integer>> getMap(){

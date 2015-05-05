@@ -58,6 +58,7 @@ public class View extends JFrame implements IView{
   private static final long serialVersionUID = 1L;
   private final IconBuilder build = new IconBuilder();
   private final JButton buttonNew = new JButton("Nuova Prenotazione"); 
+  private final JButton cancelAll = new JButton("Cancella Tutto");
   private final JButton cancelTable = new JButton("Cancella Tavolo");
   private final JButton drawTable = new JButton("Disegna Tavolo ");
   private JPanel tablesButtons = build.buildPanel(new FlowLayout());
@@ -139,28 +140,31 @@ public class View extends JFrame implements IView{
     
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.add(drawTable);
+    panel.add(cancelTable);
+    panel.add(cancelAll);
     
-    final DrawButton dDrawTable = new DrawButton(this.drawTable,map,new DrawPosition(map));
-    
-    dDrawTable.setting();
-    
-    
+    final DrawButton bDrawTable = new DrawButton(this.drawTable,map);
+    bDrawTable.setting();
+    final DrawButton bCancelTable = new DrawButton(this.cancelTable,map);
+    bCancelTable.setting();
+    final DrawButton bCancelAll = new DrawButton(this.cancelAll,map);
+    bCancelAll.setting();
     
     final DrawPosition cancel = new DrawPosition(map);
-    final JButton cancelPrev = new JButton("Cancella tavolo");
-    final JButton cancelAll = new JButton("Cancella Tutto");
-    panel.add(cancelAll);
-    panel.add(cancelPrev);
-    cancelPrev.addActionListener(e->{
-      cancel.cancel(map.getGraphics());
+     
+    this.drawTable.addActionListener(e->{
+         map.addMouseListener(cancel);
+    });
+   
+    this.cancelTable.addActionListener(e->{
+        cancel.cancel(map.getGraphics());
     });
     
-    cancelAll.addActionListener(e->{
-       System.out.println(cancel.getMap());
+    this.cancelAll.addActionListener(e->{
+        cancel.cancelAll(map.getGraphics());
     });
-    
-//    final DrawButton dCancelTable = new DrawButton(this.cancelTable,map,new DrawCancel(map)) ;
-//    dCancelTable.setting();
+   
+
 
     
     final JPanel main = build.buildPanel(new BorderLayout(5, 5));
