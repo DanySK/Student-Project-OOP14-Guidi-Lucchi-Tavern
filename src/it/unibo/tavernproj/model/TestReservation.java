@@ -43,7 +43,6 @@ public class TestReservation {
 		
 		ctr.saveModel();		
 
-		//map.putAll(model.getMap());
 		model.getMap().clear();
 		
 		/*
@@ -51,15 +50,13 @@ public class TestReservation {
 		 * Controllo che la mappa di confronto alla quale gli ho aggiunto le prenotazioni non sia vuota.
 		 */
     assertTrue(model.getMap().isEmpty());
-    //assertFalse(map.isEmpty());
-    
+      
 		ctr.setModel();
 		
 		//Controllo se il caricamento � avvenuto correttamente
 		assertEquals(model.getTableRes("14-06-2015").get(2).getName(), "Pirlo");
     assertEquals(model.getTableRes("3-07-2015").get(1).getName(), "Enrico");
     assertEquals(model.getTableRes("30-04-2015").get(3).getTel(), "054751042");
-		
 
 	}
 	

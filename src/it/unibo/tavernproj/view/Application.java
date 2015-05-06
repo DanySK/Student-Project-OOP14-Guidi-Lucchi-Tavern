@@ -15,8 +15,9 @@ public class Application {
     final IUtilities utilities = new Utilities();
     final IController c = Controller.getController();  
     //c.setFileName(/*HOME + SEPARATOR + */DEFAULT_FILE);
-          
+
     c.loadTables(utilities.getCurrentDate());
+    c.LoadDisegno();
     
     final View v = new View();
     c.addView(v);   

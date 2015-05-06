@@ -3,8 +3,6 @@ package it.unibo.tavernproj.disegno;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JLabel;
-
 public class DrawMap implements IDrawMap {
   private Map<Integer,Pair<Integer,Integer>> disegno = new HashMap<>();
   private int index=0;

@@ -6,6 +6,7 @@ import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.view.IView;
+import it.unibo.tavernproj.view.Utilities;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,6 +19,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import javax.swing.JLabel;
 
 /**
  * @author Eleonora Guidi
@@ -34,6 +37,8 @@ public class Controller implements IController{
 	
 	
 	private final Set<IView> view = new HashSet<>();
+	private final Utilities utilies = new Utilities();
+	private JLabel label = new JLabel();
 	private DrawMap draw = new DrawMap();
 	private IModel model = new Model();
 	private ObjectOutput outMap;
@@ -66,11 +71,12 @@ public class Controller implements IController{
 		
 	}
 	
-	
+
 	 public void loadTables(String date) {
 	   this.setModel();
       if (!model.isEmpty()){
 
+        System.out.println(model.getMap());
 	   //try{
 	      for (Integer i: model.getTableRes(date).keySet()){
     	    this.addTable(i, date);
@@ -125,7 +131,7 @@ public class Controller implements IController{
 	@Override
 	public void saveModel(){
 			try{
-			  final ObjectOutput out = new ObjectOutputStream(new FileOutputStream("map.txt"));
+			  final ObjectOutput out = new ObjectOutputStream(new FileOutputStream("model.txt"));
 				out.writeObject(this.model.getMap());
 				out.close();
 			}catch (IOException e){
@@ -137,7 +143,7 @@ public class Controller implements IController{
 	 @Override
 	  public void setModel(){
       try{
-         final ObjectInput in = new ObjectInputStream(new FileInputStream("map.txt"));
+         final ObjectInput in = new ObjectInputStream(new FileInputStream("model.txt"));
          model.setModel((Map<String, Map <Integer, IReservation>>) in.readObject());
          in.close();
       }catch(IOException e){
@@ -149,27 +155,50 @@ public class Controller implements IController{
 	  }
 	//SALVARE TUTTO IL MODELLO SU FILESYSTEM (QUINDI LA MAPPA PRINCIPALE) E RISETTARLO AL CARICAMENTO
 
-	
+	@Override
 	public void saveDisegno(){
 	  try{
       outMap = new ObjectOutputStream(new FileOutputStream("disegno.txt"));
+      outMap.writeObject(utilies.getCurrentDate());
       outMap.writeObject(draw.getMap());
       outMap.close();
-    }catch (Exception e){
-      
+	  }catch (IOException e){
+      System.out.print("non salva  sul file nel disegno");
     }
 	}
 	
+//	@Override
+//	public void setLabel(JLabel label){
+//	  this.label=label;
+//	}
+	
+	
+	@Override
 	public void LoadDisegno(){
-    Map<Integer,Pair<Integer,Integer>> map = null;
+    Map<Integer,Pair<Integer,Integer>> map;
 	    try{
-        inMap = new ObjectInputStream(new FileInputStream("map.txt"));
-        map=((Map<Integer,Pair<Integer,Integer>>)inMap.readObject());
-        inMap.close();
-      }catch(Exception e){
+        inMap = new ObjectInputStream(new FileInputStream("disegno.txt"));
         
+    
+      if(utilies.getCurrentDate().equals(inMap.readObject())){
+            map=(Map<Integer,Pair<Integer,Integer>>)inMap.readObject();
+            inMap.close();
+            if(!map.isEmpty()){
+            final DrawPosition pos = new DrawPosition(label);
+            for(Integer i : map.keySet()){
+              System.out.println("disegno"+i);
+              Pair<Integer,Integer> p = map.get(i);
+              pos.paint(label.getGraphics(),p.getX(),p.getY());
+            }
+         }else{
+           System.out.println("\ndisegno non tirato su--->mappa vuota");
+         }
+       }
+    } catch (ClassNotFoundException e) {
+      System.out.println("\nnon trova la classe");
+    }catch(IOException e){
+        System.out.println("\nnon carica il disegno");
       }
-      
 	}
 
   @Override
@@ -187,8 +216,15 @@ public class Controller implements IController{
 
   @Override
   public void commandQuit() {
+    this.saveDisegno();
     this.saveModel();
     System.exit(0);
+  }
+
+
+  @Override
+  public void setLabel(JLabel label) {
+    this.label=label;
   }
 
   /*

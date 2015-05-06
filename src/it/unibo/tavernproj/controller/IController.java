@@ -87,6 +87,12 @@ public interface IController {
 
   void commandQuit();
 
+  void saveDisegno();
+
+  void setLabel(JLabel label);
+
+  void LoadDisegno();
+
   //void setFileName(String string);
 
 

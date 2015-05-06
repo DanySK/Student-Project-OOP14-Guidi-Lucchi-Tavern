@@ -88,9 +88,9 @@ public class Model implements IModel {
 	
 	@Override
 	public Map<Integer,IReservation> getTableRes(String date){
-	  if (!map.containsKey(date)){
-	    throw new NullPointerException();
-	  }
+//	  if (!map.containsKey(date)){
+//	    throw new NullPointerException();
+//	  }
 		return map.get(date);
 	}
 	

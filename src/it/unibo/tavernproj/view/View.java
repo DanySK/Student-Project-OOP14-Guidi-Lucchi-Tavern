@@ -112,6 +112,9 @@ public class View extends JFrame implements IView{
     final JPanel dx = build.buildPanel(new BorderLayout());
     final JPanel pNew = build.buildPanel(new GridBagLayout());
     final JLabel logo = build.buildLogo("res" + System.getProperty("file.separator") + "logo.jpg");
+    
+   
+  // controller.setLabel(map);
 
     final GridBagConstraints gap = new GridBagConstraints();
     gap.gridy = 0;
@@ -196,6 +199,8 @@ public class View extends JFrame implements IView{
           System.out.println("Selezionare una data utile");
           calendar = new Calendar(frame);
         }
+        
+       
 
          //GESTIRE DIVERSAMENTE
         if (!calendar.getPickedDate().equals("Error")) {
@@ -231,6 +236,7 @@ public class View extends JFrame implements IView{
       }
     });
     
+  
     this.buttonDelete.addActionListener(new ActionListener(){
 
       @Override
@@ -353,6 +359,4 @@ public class View extends JFrame implements IView{
     View.this.validate();
   }
 
-
-  
 }
