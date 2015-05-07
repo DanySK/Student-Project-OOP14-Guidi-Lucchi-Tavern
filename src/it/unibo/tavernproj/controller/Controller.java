@@ -168,15 +168,20 @@ public class Controller implements IController{
            int max = (int) in.readObject();
 
            for (int j = 1; j <= max; j++){
-           
-             IReservation tempres = new Reservation((Integer) in.readObject(), (String) in.readObject(), date, (String) in.readObject(), 
+             /*add(String table, String name, String date, String h, String tel, String num,
+                 Optional<String> menu)*/
+                 
+             this.add((Integer) in.readObject(), (String) in.readObject(), date, (String) in.readObject(),
                  (String) in.readObject(), (String) in.readObject(), (String) in.readObject());
-             tempMap.put(j, tempres);
+             
+             //IReservation tempres = new Reservation(, , date, , 
+                 
+             //tempMap.put(j, tempres);
            }
-           temp.put(date, tempMap);
+           //temp.put(date, tempMap);
          } 
          
-         model.setModel(temp);
+         //model.setModel(temp);
          in.close();
       }catch(IOException e){
         System.out.print("non prende il file");
@@ -185,7 +190,10 @@ public class Controller implements IController{
         System.out.print("non carica il modello");
       }
     }
-	//SALVARE TUTTO IL MODELLO SU FILESYSTEM (QUINDI LA MAPPA PRINCIPALE) E RISETTARLO AL CARICAMENTO
+	
+
+
+  //SALVARE TUTTO IL MODELLO SU FILESYSTEM (QUINDI LA MAPPA PRINCIPALE) E RISETTARLO AL CARICAMENTO
 
 	@Override
 	public void saveDisegno(){
@@ -261,10 +269,17 @@ public class Controller implements IController{
 
 
   @Override
-  public void add(String table, String name, String date, String h, String tel, String num,
+  public void add(Integer table, String name, String date, String h, String tel, String num,
       Optional<String> menu) {
-    Reservation res = new Reservation(Integer.parseInt(table), name, date, h, tel, num, menu);
+    Reservation res = new Reservation(table, name, date, h, tel, num, menu);
     model.add(date, res);
+  }
+  
+  private void add(Integer table, String name, String date, String h, String tel, String num,
+      String menu) {
+    Reservation res = new Reservation(table, name, date, h, tel, num, Optional.ofNullable(menu));
+    model.add(date, res);
+    
   }
 
   /*

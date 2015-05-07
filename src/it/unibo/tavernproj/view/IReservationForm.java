@@ -13,7 +13,7 @@ public interface IReservationForm {
 	 */
 	void attachViewObserver(IFormController listener);
 	
-	String getTable();
+	Integer getTable();
 	
 	String getName(); 
 

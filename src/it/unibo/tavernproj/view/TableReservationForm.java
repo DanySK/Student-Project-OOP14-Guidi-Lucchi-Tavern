@@ -70,7 +70,7 @@ public class TableReservationForm extends ReservationForm{
 		super.attachViewObserver(formController);
 	}	
 	
-	public String getTable() {
+	public Integer getTable() {
 		return super.getTable();
 	}
 

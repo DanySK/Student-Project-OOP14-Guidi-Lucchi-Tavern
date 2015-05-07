@@ -158,11 +158,11 @@ public class ReservationForm extends JFrame implements IReservationForm{
 		panelAggregator.accept(pos, panel);	
 	}
 
-	public String getTable() {
+	public Integer getTable() {
 		if (((JTextField) map.get("Tav")).getText().equals("")){
 			throw new NumberFormatException();
 		}
-		return ((JTextField) map.get("Tav")).getText();
+		return Integer.parseInt(((JTextField) map.get("Tav")).getText());
 	}
 
 	public String getName() {

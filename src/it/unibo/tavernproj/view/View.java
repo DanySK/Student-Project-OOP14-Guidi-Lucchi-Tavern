@@ -217,7 +217,7 @@ public class View extends JFrame implements IView{
                     form.getTel(), form.getNum(), form.getMenu());
                 //fc.save();
                 if (fc.getDate().equals(View.this.date.getText())) {
-                  controller.addTable(Integer.parseInt(form.getTable()), fc.getDate());
+                  controller.addTable(form.getTable(), fc.getDate());
                 }
               } catch (NullPointerException e) {
                 System.out.print("Riempire la form!");
@@ -308,7 +308,7 @@ public class View extends JFrame implements IView{
                     //fc.delete(table, date);
                     //PER ORA IL TAVOLO NON è MODIFICABILE PERCHè DAVA PROBLEMI!
                     
-                    controller.add(table.toString(), form.getName(), fc.getDate(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
+                    controller.add(table, form.getName(), fc.getDate(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
                     b.setIcon(build.getButtonIcon(form.getTable() + "s.png"));
                   } catch (NullPointerException e) {
                     System.out.print("Riempire la form!");
