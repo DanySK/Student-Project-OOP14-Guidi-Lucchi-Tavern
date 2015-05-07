@@ -6,6 +6,7 @@ import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.controller.IFormController;
 import it.unibo.tavernproj.disegno.DrawButton;
 import it.unibo.tavernproj.disegno.DrawPosition;
+import it.unibo.tavernproj.disegno.Pair;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.model.Reservation;
@@ -28,6 +29,7 @@ import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.BoxLayout;
@@ -65,6 +67,7 @@ public class View extends JFrame implements IView{
   private final JButton cancelAll = new JButton("Cancella Tutto");
   private final JButton cancelTable = new JButton("Cancella Tavolo");
   private final JButton drawTable = new JButton("Disegna Tavolo ");
+  private final JLabel map = build.buildMap("res" + System.getProperty("file.separator") + "map.png");
   private JPanel tablesButtons = build.buildPanel(new FlowLayout());
   private final JLabel date = build.dateLabel();
   private IController controller;  
@@ -87,7 +90,9 @@ public class View extends JFrame implements IView{
     this.setSize(sw, sh);
     this.setResizable(false);
     
+    
     buildLayout();    
+    
 
   /*Fare metodi a parte per cambiare lo stile dei bottoni 
    *e anche degli altri componenti che si rovano in icon builder
@@ -103,17 +108,21 @@ public class View extends JFrame implements IView{
     this.setVisible(true);
     
   }
-
+  
+  @Override
+  public void addDraw(Pair<Integer, Integer> p){
+      final DrawPosition pos = new DrawPosition(map);
+       pos.paint(map.getGraphics(),p.getX(),p.getY());
+  }
+  
 
   private void buildLayout() {
-    final JLabel map = build.buildMap("res" + System.getProperty("file.separator") + "map.png");
     final JPanel dx = build.buildPanel(new BorderLayout());
     final JPanel pNew = build.buildPanel(new GridBagLayout());
     final JLabel logo = build.buildLogo("res" + System.getProperty("file.separator") + "logo.jpg");
     
-   
-  // controller.setLabel(map);
-
+  
+  
     final GridBagConstraints gap = new GridBagConstraints();
     gap.gridy = 0;
     gap.insets = new Insets(10, 10, 20, 10);

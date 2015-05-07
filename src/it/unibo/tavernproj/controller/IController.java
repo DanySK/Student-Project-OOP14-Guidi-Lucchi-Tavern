@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 
+import it.unibo.tavernproj.disegno.Pair;
 import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
@@ -92,9 +93,9 @@ public interface IController {
 
   void setLabel(JLabel label);
 
-  void LoadDisegno();
-
   void add(Integer table, String name, String date, String h, String tel, String num, Optional<String> menu);
+
+  void LoadDisegno();
 
   //void setFileName(String string);
 

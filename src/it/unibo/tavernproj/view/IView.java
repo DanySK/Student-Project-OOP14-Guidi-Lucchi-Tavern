@@ -1,5 +1,9 @@
 package it.unibo.tavernproj.view;
+import javax.swing.JLabel;
+
 import it.unibo.tavernproj.controller.*;
+import it.unibo.tavernproj.disegno.DrawPosition;
+import it.unibo.tavernproj.disegno.Pair;
 
 /**
  * @author Eleonora Guidi
@@ -21,7 +25,10 @@ public interface IView {
 	 * 		the table number
 	 */
 	void addTable(Integer number, String date);
-	
+
+  void addDraw(Pair<Integer, Integer> p);
+
+
 	
 
 }

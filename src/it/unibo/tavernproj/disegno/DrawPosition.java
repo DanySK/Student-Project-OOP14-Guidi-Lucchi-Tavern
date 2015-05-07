@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Map;
 
 import javax.swing.JLabel;
 
@@ -12,7 +13,7 @@ import javax.swing.JLabel;
  *
  */
 
-public class DrawPosition extends JLabel implements MouseListener {
+public class DrawPosition implements MouseListener {
 
   private final IDrawMap draw = new DrawMap();
 	
@@ -24,6 +25,7 @@ public class DrawPosition extends JLabel implements MouseListener {
 		this.label=label;
 	
 	}
+
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -40,6 +42,7 @@ public class DrawPosition extends JLabel implements MouseListener {
 		this.y0=e.getY();
 		this.paint(label.getGraphics(),x0,y0);
 		draw.setMap(x0, y0);
+		System.out.println(draw.getMap());
 	}
 
 	@Override
@@ -48,6 +51,9 @@ public class DrawPosition extends JLabel implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {}
 	
+	public Map<Integer, Pair<Integer, Integer>> getMap(){
+	  return draw.getMap();
+	}
 
   public void paint(Graphics g, int x0, int y0) {
   g.drawRect(x0, y0, 50, 50);
@@ -66,6 +72,7 @@ public class DrawPosition extends JLabel implements MouseListener {
       draw.getMap().remove(draw.getSize());
     }else{
       System.out.println("Ho cancellato tutti i tavoli");
+      
     }
   }
 
@@ -76,5 +83,5 @@ public class DrawPosition extends JLabel implements MouseListener {
    }
    draw.removeAll();
   }
-
-}
+  
+  }
