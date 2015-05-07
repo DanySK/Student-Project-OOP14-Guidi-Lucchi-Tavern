@@ -45,6 +45,7 @@ public class Controller implements IController{
 	private IModel model = new Model();
 	private ObjectOutput outMap;
 	private ObjectInput  inMap; 
+	private String fileName;
 	
 //	private String fileName = "file.txt";
 
@@ -291,13 +292,8 @@ public class Controller implements IController{
     this.fileName = string;
   }
 
-  /*
-   * @param file
-   *            the new file name
-   
-  public void setFileName(final String file) {
-    this.fileName = file;
-  }*/
+  
+
 
 }
 
