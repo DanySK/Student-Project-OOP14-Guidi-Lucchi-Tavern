@@ -12,6 +12,7 @@ import it.unibo.tavernproj.model.Reservation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -32,6 +33,7 @@ import java.util.Optional;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -244,8 +246,21 @@ public class View extends JFrame implements IView{
 
       @Override
       public void actionPerformed(ActionEvent arg0) {
-        Chooser c = new Chooser();
+        Chooser c = new Chooser(controller);
+        c.addComponentListener(new ComponentAdapter(){
+          @Override
+          public void componentHidden(final ComponentEvent ce) {
+            //non va!
+            if (c.isBeenRemoved()){
+              for (Component comp: View.this.tablesButtons.getComponents())
+                if (comp.getName().equals(c.getTable())){
+                  View.this.tablesButtons.remove(comp);
+                }              
+            }
+          }
+        });
         
+        View.this.validate();
       }
       
     });
@@ -275,6 +290,7 @@ public class View extends JFrame implements IView{
      */
     
     final JButton b = build.buildButton(table + "s.png");
+    b.setName(table.toString());
     b.addActionListener(new ActionListener(){
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -325,40 +341,10 @@ public class View extends JFrame implements IView{
               }
             });
             
-          } catch (NumberFormatException e1) {/*
-            //caricare il modello esterno: SISTEMARE PERCHè SE USO FC SALVA SU UN ALTRO MODELLO
-            try{
-              res = View.this.controller.getExternalReservation(table, date);
-              
-              final TableReservationForm form = new TableReservationForm(date, res);
-              final IFormController fc = FormController.getController();
-              fc.addView(form);
-              fc.setDate(date);
-              form.addComponentListener(new ComponentAdapter() {
-                @Override
-                public void componentHidden(final ComponentEvent ce) {
-                  if (form.isBeenModified()) {
-                    try {
-                      fc.save(form.getTable(), form.getName(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
-                      b.setIcon(build.getButtonIcon(form.getTable() + "s.png"));
-                    } catch (NullPointerException e) {
-                      System.out.print("Riempire la form!");
-                      form.setVisible(true);
-                    } catch (NumberFormatException e1) {
-                      System.out.print("Riempire la form con dei numeri!");
-                      form.setVisible(true);
-                    } catch (IllegalArgumentException e2) {
-                      System.out.print("il numero del tavolo è sbagliato!");
-                      form.setVisible(true);
-                    }
-                  }
-                }
-              });
-              
-            }catch (NumberFormatException e2){*/
+          } catch (NumberFormatException e1) {
               System.out.print("Prenotazione non disponibile!");
-            }              
-          //}
+          }              
+
       }
     });
     tablesButtons.add(b);
