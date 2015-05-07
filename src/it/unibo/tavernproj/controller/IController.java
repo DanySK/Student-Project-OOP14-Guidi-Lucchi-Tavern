@@ -1,5 +1,6 @@
 package it.unibo.tavernproj.controller;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.swing.Icon;
@@ -92,6 +93,8 @@ public interface IController {
   void setLabel(JLabel label);
 
   void LoadDisegno();
+
+  void add(String table, String name, String date, String h, String tel, String num, Optional<String> menu);
 
   //void setFileName(String string);
 

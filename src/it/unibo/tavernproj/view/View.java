@@ -86,10 +86,8 @@ public class View extends JFrame implements IView{
 
     this.setSize(sw, sh);
     this.setResizable(false);
-
-    //controller.loadTables(date.getText());
     
-    buildLayout();
+    buildLayout();    
 
   /*Fare metodi a parte per cambiare lo stile dei bottoni 
    *e anche degli altri componenti che si rovano in icon builder
@@ -210,13 +208,15 @@ public class View extends JFrame implements IView{
           fc.addView(form);
 
           fc.setDate(calendar.getPickedDate());
-          fc.setModel(controller.getModel());
+          //fc.setModel(controller.getModel());
           form.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentHidden(final ComponentEvent ce) {
               try {
-                fc.save(form.getTable(), form.getName(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
-                if (fc.getDate().equals(View.this.date.getText())){
+                controller.add(form.getTable(), form.getName(), fc.getDate(), form.getH(),
+                    form.getTel(), form.getNum(), form.getMenu());
+                //fc.save();
+                if (fc.getDate().equals(View.this.date.getText())) {
                   controller.addTable(Integer.parseInt(form.getTable()), fc.getDate());
                 }
               } catch (NullPointerException e) {
@@ -271,7 +271,7 @@ public class View extends JFrame implements IView{
     /* System.getProperty("user.home")+System.getProperty("file.separator")+
      */
     
-    final JButton b = build.buildButton(table + "s.png");
+    final JButton b = build.buildButton(table + 1 + "s.png");
     b.addActionListener(new ActionListener(){
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -281,19 +281,26 @@ public class View extends JFrame implements IView{
          * fare una form a parte ReservaionForm che sia modificabile!
          * 
          */
+        
+
 
         IReservation res;
 
-          try {
-            res = View.this.controller.getReservation(table, date);
+          try { 
+            
+            
+            
+            res = controller.getReservation(table, date);
             //res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
+            
+            System.out.print("Entra?");
             
             final TableReservationForm form = new TableReservationForm(date, res);
             //form.setTable(Integer.parseInt(b.getName()));
             final IFormController fc = FormController.getController();
             fc.addView(form);
             
-            fc.setModel(View.this.controller.getModel());
+            //fc.setModel(View.this.controller.getModel());
             fc.setDate(date);
             form.addComponentListener(new ComponentAdapter() {
               @Override
@@ -303,7 +310,7 @@ public class View extends JFrame implements IView{
                     //fc.delete(table, date);
                     //PER ORA IL TAVOLO NON è MODIFICABILE PERCHè DAVA PROBLEMI!
                     
-                    fc.save(table.toString(), form.getName(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
+                    controller.add(table.toString(), form.getName(), fc.getDate(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
                     b.setIcon(build.getButtonIcon(form.getTable() + "s.png"));
                   } catch (NullPointerException e) {
                     System.out.print("Riempire la form!");

@@ -13,6 +13,8 @@ import java.util.Set;
  */
 
 public class Model implements IModel {
+  
+  //TOGLIERE LA SECONDA MAPPA: FARE SEMPLICEMENTE UNA MAPPA DATA - LISTA DI IRESERVATION
 	
 	private Map<String, Map <Integer, IReservation>> map; // = new HashMap<>();
 	

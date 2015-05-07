@@ -14,13 +14,19 @@ import java.util.Optional;
  */
 public class Reservation implements Serializable, IReservation{
 	
-	private static final long serialVersionUID = -5126256178520079481L;
+	@Override
+  public String toString() {
+    return "Reservation [table=" + table + ", name=" + name + ", date=" + date + ", h=" + h
+        + ", tel=" + tel + ", numPers=" + numPers + ", menu=" + menu + "]";
+  }
+
+  private static final long serialVersionUID = -5126256178520079481L;
 	private final int table;
 	private final String name;
 	private final String date;
 	private final String h;
 	private final String tel;
-	private final int numPers;
+	private final String numPers;
 	private final Optional<String> menu;
 	
 	/**
@@ -40,10 +46,10 @@ public class Reservation implements Serializable, IReservation{
 	 *            an Optional containing the selected menu, if added.
 	 *            Else an empty Optional.
 	 */
-	public Reservation(final String table, final String name, final String date, 
-			final String h, final String tel, final int numPers, final Optional<String> menu) {
+	public Reservation(final Integer table, final String name, final String date, 
+			final String h, final String tel, final String numPers, final String menu) {
 		Objects.requireNonNull(table);
-		this.table = Integer.parseInt(table);
+		this.table = table;
 		Objects.requireNonNull(name);
 		this.name = name;
 		Objects.requireNonNull(date);
@@ -54,10 +60,10 @@ public class Reservation implements Serializable, IReservation{
 		this.tel = tel;
 		Objects.requireNonNull(numPers);
 		this.numPers = numPers;
-		this.menu = menu;
+		this.menu = Optional.ofNullable(menu);
 	}
-	
-	@Override
+
+  @Override
 	public int getTable() {
 		return table;
 	}
@@ -83,7 +89,7 @@ public class Reservation implements Serializable, IReservation{
 	}
 	
 	@Override
-	public int getNumPers() {
+	public String getNumPers() {
 		return numPers;
 	}
 	

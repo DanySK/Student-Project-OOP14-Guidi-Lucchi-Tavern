@@ -51,7 +51,7 @@ public interface IFormController {
 	 * @param menu
 	 *            the selected menu.
 	 */
-	void save(String table, String name, String h, String tel, String numPers, Optional<String> menu);
+	//void save(String table, String name, String h, String tel, String numPers, Optional<String> menu);
 
 	Set<IReservation> getRes(String date);
 

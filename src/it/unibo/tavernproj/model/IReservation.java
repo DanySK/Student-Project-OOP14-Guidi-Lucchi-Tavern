@@ -39,7 +39,7 @@ public interface IReservation {
 	/**
 	 * @return the number of people
 	 */
-	public int getNumPers();
+	public String getNumPers();
 	
 	/**
 	 * @return the menu, if selected and added

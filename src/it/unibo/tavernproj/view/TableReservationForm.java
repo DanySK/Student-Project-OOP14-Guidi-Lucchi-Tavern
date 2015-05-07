@@ -36,11 +36,11 @@ public class TableReservationForm extends ReservationForm{
 	}
 
 	private void writeForm() {
-		super.setTable(res.getTable());		
+		super.setTable(res.getTable() + 1);		
 		super.setName(res.getName());
 		super.setH(res.getHours());
 		super.setTel(res.getTel());
-		super.setNum(res.getNumPers());
+		super.setNum(Integer.parseInt(res.getNumPers()));
 		if (!res.getMenu().isEmpty()){//.equals(Optional.empty())){
 			//super.setMenuVisible();
 			super.setMenu(res.getMenu());

@@ -9,6 +9,7 @@ import it.unibo.tavernproj.view.NewReservationForm;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -65,7 +66,7 @@ public class FormController implements IFormController {
 		return model.getRes(date);
 	}
 
-	@Override
+	/*@Override
 	public void save(String table, String name, String h, String tel,
 			String numPers, Optional<String> menu) {
 		Reservation res = new Reservation(table, name, this.date, h, tel, Integer.parseInt(numPers), menu);
@@ -75,17 +76,17 @@ public class FormController implements IFormController {
       in.close();
     }catch(Exception e){
       
-    }*/
+    }
 		model.add(this.date, res);
 		
-		/*try{
+		try{
 	        out = new ObjectOutputStream(new FileOutputStream("map.txt"));
-	        out.writeObject(this.model.getMap());
+	        out.writeObject(model.getMap());
 	        out.close();
-	      }catch (Exception e){
-	        
-	  }*/
-	}
+	      }catch (IOException e){
+	        System.out.print("non salva  sul file");
+	  }
+	}*/
 
   @Override
   public void setModel(IModel model) {

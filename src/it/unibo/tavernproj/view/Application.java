@@ -16,11 +16,13 @@ public class Application {
     final IController c = Controller.getController();  
     //c.setFileName(/*HOME + SEPARATOR + */DEFAULT_FILE);
 
-    c.loadTables(utilities.getCurrentDate());
-    c.LoadDisegno();
+    
     
     final View v = new View();
-    c.addView(v);   
+    c.addView(v); 
+    
+    c.loadTables(utilities.getCurrentDate());
+    c.LoadDisegno();
     
     
   }
