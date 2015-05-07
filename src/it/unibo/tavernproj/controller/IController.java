@@ -45,7 +45,7 @@ public interface IController {
 	 * @param number
 	 *     table number
 	 */
-	void removeTable(int number);
+	void removeTable(int number, String date);
 	
 	/**
 	 * @param table
@@ -82,7 +82,7 @@ public interface IController {
 
   void loadTables(String format);
 
-  IReservation getExternalReservation(Integer table, String date);
+  //IReservation getExternalReservation(Integer table, String date);
 
   IModel getModel();
 

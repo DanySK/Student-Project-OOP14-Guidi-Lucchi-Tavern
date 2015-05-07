@@ -70,9 +70,8 @@ public class Controller implements IController{
 	}
 
 	@Override
-	public void removeTable(final int number) {
-		// TODO Auto-generated method stub
-		
+	public void removeTable(final int table, final String date) {
+		model.remove(date, table);		
 	}
 	
   public void loadTables (final String date) {
@@ -172,7 +171,7 @@ public class Controller implements IController{
                  Optional<String> menu)*/
                  
              this.add((Integer) in.readObject(), (String) in.readObject(), date, (String) in.readObject(),
-                 (String) in.readObject(), (String) in.readObject(), (String) in.readObject());
+                 (String) in.readObject(), (String) in.readObject(), Optional.ofNullable((String) in.readObject()));
              
              //IReservation tempres = new Reservation(, , date, , 
                  
@@ -241,13 +240,13 @@ public class Controller implements IController{
       }
 	}
 
-  @Override
+/*  @Override
   public IReservation getExternalReservation(Integer table, String date) {
     this.setModel();    
     return this.getReservation(table, date);
   }
 
-
+*/
   @Override
   public IModel getModel() {
     return this.model;
@@ -270,12 +269,15 @@ public class Controller implements IController{
 
   @Override
   public void add(Integer table, String name, String date, String h, String tel, String num,
-      Optional<String> menu) {
+      Optional<String> menu) throws IllegalArgumentException{
+    if (Double.parseDouble(h)<= 0 || Double.parseDouble(h) > 24){
+      throw new NumberFormatException();
+    }
     Reservation res = new Reservation(table, name, date, h, tel, num, menu);
     model.add(date, res);
   }
   
-  private void add(Integer table, String name, String date, String h, String tel, String num,
+  /*private void add(Integer table, String name, String date, String h, String tel, String num,
       String menu) throws IllegalArgumentException{
     if (Double.parseDouble(h)<= 0 || Double.parseDouble(h) > 24){
       throw new NumberFormatException();
@@ -283,7 +285,7 @@ public class Controller implements IController{
     Reservation res = new Reservation(table, name, date, h, tel, num, Optional.ofNullable(menu));
     model.add(date, res);
     
-  }
+  }*/
 
 
   @Override

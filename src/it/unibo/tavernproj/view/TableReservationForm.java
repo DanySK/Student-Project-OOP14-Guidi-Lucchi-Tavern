@@ -19,7 +19,7 @@ public class TableReservationForm extends ReservationForm{
 	private static final long serialVersionUID = 1L;
 	private final JButton modifyButton = new JButton("Modifica");
 	public JLabel date;
-	private IReservation res;
+	private final IReservation res;
 	private boolean modified = false;
 	
 	/*Usare l'esame 01b del 2015 per fare la form!*/
@@ -42,10 +42,11 @@ public class TableReservationForm extends ReservationForm{
 		super.setH(res.getHours());
 		super.setTel(res.getTel());
 		super.setNum(Integer.parseInt(res.getNumPers()));
-    if (!res.getMenu().isPresent()){//.equals(Optional.empty())){
-      //super.setMenuVisible();
-      super.setMenu(res.getMenu().get());
-    }
+		try{
+		  super.setMenu(res.getMenu().get());
+		} catch(NoSuchElementException e){
+		  //
+		}
 	}
 
 	private void buildLayout() {
@@ -60,7 +61,7 @@ public class TableReservationForm extends ReservationForm{
 		this.modifyButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(final ActionEvent arg0) {
-				TableReservationForm.this.enableAll();
+				TableReservationForm.this.enableAll();				
 				TableReservationForm.this.modified = true;
 			}			
 		});	
@@ -111,6 +112,10 @@ public class TableReservationForm extends ReservationForm{
 	public boolean isBeenModified() {
 		return this.modified;
 	}
+
+  public IReservation getOld() {
+    return this.res;
+  }
 
 
 }

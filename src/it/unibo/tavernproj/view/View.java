@@ -203,7 +203,7 @@ public class View extends JFrame implements IView{
          //GESTIRE DIVERSAMENTE
         if (!calendar.getPickedDate().equals("Error")) {
 
-          NewReservationForm form = new NewReservationForm(calendar.getPickedDate());
+          NewReservationForm form = new NewReservationForm(calendar.getPickedDate(), controller.getRes(calendar.getPickedDate()));
           final IFormController fc = FormController.getController();
           fc.addView(form);
 
@@ -283,15 +283,12 @@ public class View extends JFrame implements IView{
          * prenderla dalla mappa del modello in cui c'è la data giusta e il numero del tavolo
          * fare una form a parte ReservaionForm che sia modificabile!
          * 
-         */
-        
+         */  
 
 
         IReservation res;
 
-          try { 
-            
-            
+          try {            
             
             res = controller.getReservation(table, date);
             //res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
@@ -310,8 +307,9 @@ public class View extends JFrame implements IView{
                   try {
                     //fc.delete(table, date);
                     //PER ORA IL TAVOLO NON è MODIFICABILE PERCHè DAVA PROBLEMI!
-                    
-                    controller.add(table, form.getName(), fc.getDate(), form.getH(), form.getTel(), form.getNum(), form.getMenu());
+                    controller.removeTable(form.getOld().getTable(), fc.getDate());
+                    controller.add(form.getTable(), form.getName(), fc.getDate(), form.getH(), 
+                        form.getTel(), form.getNum(), form.getMenu());
                     b.setIcon(build.getButtonIcon(form.getTable() + "s.png"));
                   } catch (NullPointerException e) {
                     System.out.print("Riempire la form!");

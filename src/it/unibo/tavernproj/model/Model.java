@@ -33,18 +33,18 @@ public class Model implements IModel {
 	}
 
 	@Override
-	public void add(final String date, final IReservation pren) {
+	public void add(final String date, final IReservation res) {
 		
 		Map<Integer, IReservation> temp = new HashMap<>();
 		
 		if (map.containsKey(date)){
 			temp = map.get(date); 
 		}
-		if (temp.containsKey(pren.getTable())){
+		if (temp.containsKey(res.getTable())){
 		  //se il tavolo è già presente
 		  throw new IllegalArgumentException();
 		}
-		temp.put(pren.getTable(), pren);
+		temp.put(res.getTable(), res);
 		map.put(date, temp);
 	}
 		/*

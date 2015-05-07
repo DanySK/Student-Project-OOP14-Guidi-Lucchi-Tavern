@@ -10,6 +10,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,12 +41,15 @@ public class NewReservationForm extends ReservationForm{
 
 	private static final long serialVersionUID = 1L;
 	public JLabel date;
-	private final JLabel reserv = new JLabel();
+	private final JPanel res = new JPanel(new GridBagLayout());
+	private Map<Integer, IReservation> map = new HashMap<>();
 	
 	/*Usare l'esame 01b del 2015 per fare la form!*/
-	public NewReservationForm(String date){
+	public NewReservationForm(String date, Map<Integer, IReservation> map){
 		super();
 		this.date = new JLabel(date);
+		
+		this.map = map;
 		
 		loadReservation();
 		
@@ -57,15 +61,23 @@ public class NewReservationForm extends ReservationForm{
 	
 	private void loadReservation() {
 		//scaricare da un file le prentazioni in base alla data
-		
-		reserv.setText(""); //stampare il set con le prenotazioni nel file di sopra
+
+    final GridBagConstraints gap = new GridBagConstraints();
+    gap.gridy = 0;
+    gap.insets = new Insets(5, 5, 5, 5);
+    gap.fill = GridBagConstraints.HORIZONTAL;
+	  
+		for (Integer i: map.keySet()){
+		  res.add(new JLabel(map.get(i).toString()), gap); //stampare il set con le prenotazioni nel file di sopra
+		  gap.gridy++;
+		}
 		this.validate();
 	}
 
 	private void buildLayout() {
 		final JPanel north = new JPanel(new BorderLayout());
 		north.add(date, BorderLayout.NORTH);
-		north.add(reserv, BorderLayout.CENTER);
+		north.add(res, BorderLayout.CENTER);
 		super.getContentPane().add(north, BorderLayout.NORTH);		
 	}
 
