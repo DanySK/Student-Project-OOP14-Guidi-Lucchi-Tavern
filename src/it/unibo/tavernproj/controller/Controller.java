@@ -41,13 +41,12 @@ public class Controller implements IController{
 	
 	private final Set<IView> view = new HashSet<>();
 	private final Utilities utilies = new Utilities();
-	private JLabel label = new JLabel();
 	private DrawMap draw = new DrawMap();
 	private IModel model = new Model();
 	private ObjectOutput outMap;
 	private ObjectInput  inMap; 
 	
-	private String fileName = "file.txt";
+//	private String fileName = "file.txt";
 
 	private Controller(){};
 	
@@ -200,6 +199,7 @@ public class Controller implements IController{
       outMap = new ObjectOutputStream(new FileOutputStream("disegno.txt"));
       outMap.writeObject(utilies.getCurrentDate());
       outMap.writeObject(draw.getMap());
+      System.out.print(draw.getMap());
       outMap.close();
 	  }catch (IOException e){
       System.out.print("non salva  sul file nel disegno");
@@ -214,30 +214,28 @@ public class Controller implements IController{
 	
 	@Override
 	public void LoadDisegno(){
-    Map<Integer,Pair<Integer,Integer>> map;
-	    try{
+	   try{
         inMap = new ObjectInputStream(new FileInputStream("disegno.txt"));
-        
-    
       if(utilies.getCurrentDate().equals(inMap.readObject())){
-            map=(Map<Integer,Pair<Integer,Integer>>)inMap.readObject();
+        System.out.println("data giusta per caricare");
+        Map<Integer,Pair<Integer,Integer>> map = (Map<Integer,Pair<Integer,Integer>>)inMap.readObject();
+           System.out.println("assegnato mappa"+ map);
             inMap.close();
-            if(!map.isEmpty()){
-            final DrawPosition pos = new DrawPosition(label);
             for(Integer i : map.keySet()){
-              System.out.println("disegno"+i);
               Pair<Integer,Integer> p = map.get(i);
-              pos.paint(label.getGraphics(),p.getX(),p.getY());
+              for (final IView v: view){
+                v.addDraw(p);
+              }
+               
             }
-         }else{
-           System.out.println("\ndisegno non tirato su--->mappa vuota");
-         }
        }
+         
     } catch (ClassNotFoundException e) {
       System.out.println("\nnon trova la classe");
     }catch(IOException e){
         System.out.println("\nnon carica il disegno");
-      }
+    }
+	
 	}
 
 /*  @Override
@@ -263,7 +261,7 @@ public class Controller implements IController{
 
   @Override
   public void setLabel(JLabel label) {
-    this.label=label;
+   // this.label=label;
   }
 
 

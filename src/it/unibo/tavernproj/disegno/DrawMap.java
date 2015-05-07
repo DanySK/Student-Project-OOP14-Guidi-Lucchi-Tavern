@@ -12,9 +12,11 @@ public class DrawMap implements IDrawMap {
   
   
   @Override
-  public void setMap(Map<Integer,Pair<Integer,Integer>> map){
-    this.disegno=map;
+  public String toString() {
+    return "DrawMap [disegno=" + disegno + ", index=" + index + "]";
   }
+
+
   
   @Override
   public Map<Integer,Pair<Integer,Integer>> getMap(){

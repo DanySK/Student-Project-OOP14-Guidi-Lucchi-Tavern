@@ -13,6 +13,4 @@ public interface IDrawMap {
   
   void removeAll();
 
-  void setMap(Map<Integer, Pair<Integer, Integer>> map);
-
 }
