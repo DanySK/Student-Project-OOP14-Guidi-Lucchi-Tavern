@@ -271,7 +271,7 @@ public class View extends JFrame implements IView{
     /* System.getProperty("user.home")+System.getProperty("file.separator")+
      */
     
-    final JButton b = build.buildButton(table + 1 + "s.png");
+    final JButton b = build.buildButton(table + "s.png");
     b.addActionListener(new ActionListener(){
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -292,8 +292,6 @@ public class View extends JFrame implements IView{
             
             res = controller.getReservation(table, date);
             //res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
-            
-            System.out.print("Entra?");
             
             final TableReservationForm form = new TableReservationForm(date, res);
             //form.setTable(Integer.parseInt(b.getName()));

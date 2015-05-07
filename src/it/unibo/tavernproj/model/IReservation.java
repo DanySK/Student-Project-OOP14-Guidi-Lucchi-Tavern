@@ -3,6 +3,7 @@ package it.unibo.tavernproj.model;
 import it.unibo.tavernproj.view.NewReservationForm;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Giulia Lucchi
@@ -44,7 +45,7 @@ public interface IReservation {
 	/**
 	 * @return the menu, if selected and added
 	 * */
-	public String getMenu();
+	public Optional<String> getMenu();
 
 	String getDate();
 	

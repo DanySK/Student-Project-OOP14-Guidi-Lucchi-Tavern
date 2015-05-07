@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.swing.JButton;
@@ -36,15 +37,15 @@ public class TableReservationForm extends ReservationForm{
 	}
 
 	private void writeForm() {
-		super.setTable(res.getTable() + 1);		
+		super.setTable(res.getTable());		
 		super.setName(res.getName());
 		super.setH(res.getHours());
 		super.setTel(res.getTel());
 		super.setNum(Integer.parseInt(res.getNumPers()));
-		if (!res.getMenu().isEmpty()){//.equals(Optional.empty())){
-			//super.setMenuVisible();
-			super.setMenu(res.getMenu());
-		}				
+    if (!res.getMenu().isPresent()){//.equals(Optional.empty())){
+      //super.setMenuVisible();
+      super.setMenu(res.getMenu().get());
+    }
 	}
 
 	private void buildLayout() {

@@ -3,6 +3,7 @@ package it.unibo.tavernproj.model;
 import it.unibo.tavernproj.view.NewReservationForm;
 
 import java.io.Serializable;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -17,7 +18,7 @@ public class Reservation implements Serializable, IReservation{
 	@Override
   public String toString() {
     return "Reservation [table=" + table + ", name=" + name + ", date=" + date + ", h=" + h
-        + ", tel=" + tel + ", numPers=" + numPers + ", menu=" + menu + "]";
+        + ", tel=" + tel + ", numPers=" + numPers + ", menu=" + menu.get() + "]";
   }
 
   private static final long serialVersionUID = -5126256178520079481L;
@@ -63,6 +64,23 @@ public class Reservation implements Serializable, IReservation{
 		this.menu = Optional.ofNullable(menu);
 	}
 
+  public Reservation(final Integer table, final String name, final String date, 
+      final String h, final String tel, final String numPers, final Optional<String> menu) {
+    Objects.requireNonNull(table);
+    this.table = table;
+    Objects.requireNonNull(name);
+    this.name = name;
+    Objects.requireNonNull(date);
+    this.date = date;
+    Objects.requireNonNull(h);
+    this.h = h;
+    Objects.requireNonNull(tel);
+    this.tel = tel;
+    Objects.requireNonNull(numPers);
+    this.numPers = numPers;
+    this.menu = menu;    
+  }
+
   @Override
 	public int getTable() {
 		return table;
@@ -94,8 +112,11 @@ public class Reservation implements Serializable, IReservation{
 	}
 	
 	@Override 
-	public String getMenu(){
-		return menu.get();
+	public Optional<String> getMenu(){
+	  /*if (!menu.isPresent()) {
+	    throw new NoSuchElementException();
+	  }*/
+		return menu;
 	}	
 	
 }

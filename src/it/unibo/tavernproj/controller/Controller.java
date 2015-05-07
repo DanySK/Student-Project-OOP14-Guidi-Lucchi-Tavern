@@ -19,6 +19,7 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -126,48 +127,47 @@ public class Controller implements IController{
 	 * @author Giulia Lucchi
 	 * 
 	 */
-	
 	@Override
-	public void saveModel(){	  
-	  
-			try{
-			  final ObjectOutput out = new ObjectOutputStream(new FileOutputStream("model.txt"));
-			  out.writeObject(model.getMap().keySet().size());
-			  for (String s: model.getMap().keySet()){
-			    out.writeObject(s);
-			    out.writeObject(model.getMap().get(s).keySet().size());
-    	    for (Integer i: model.getMap().get(s).keySet()){
-    	      out.writeObject(i);
-    	      //System.out.println(model.getMap().get(s).get(i).toString());
-    	      out.writeObject(model.getMap().get(s).get(i).getName().toString());
-    	      out.writeObject(model.getMap().get(s).get(i).getHours().toString());
-    	      out.writeObject(model.getMap().get(s).get(i).getTel().toString());
-    	      out.writeObject(model.getMap().get(s).get(i).getNumPers().toString());
-    	      out.writeObject(model.getMap().get(s).get(i).getMenu().toString());
-    	    }	    
-    	  }				
-				out.close();
-			}catch (IOException e){
-			  System.out.print("non salva sul file");
-			}
-	}
+  public void saveModel(){    
+    
+      try{
+        final ObjectOutput out = new ObjectOutputStream(new FileOutputStream("model.txt"));
+        out.writeObject(model.getMap().keySet().size());
+        for (String s: model.getMap().keySet()){
+          out.writeObject(s);
+          out.writeObject(model.getMap().get(s).keySet().size());
+          for (Integer i: model.getMap().get(s).keySet()){
+            out.writeObject(i);
+            //System.out.println(model.getMap().get(s).get(i).toString());
+            out.writeObject(model.getMap().get(s).get(i).getName().toString());
+            out.writeObject(model.getMap().get(s).get(i).getHours().toString());
+            out.writeObject(model.getMap().get(s).get(i).getTel().toString());
+            out.writeObject(model.getMap().get(s).get(i).getNumPers().toString());
+            out.writeObject(model.getMap().get(s).get(i).getMenu().toString());
+          }     
+        }       
+        out.close();
+      }catch (IOException e){
+        System.out.print("non salva sul file");
+      }
+  }
 
 
   /*per caricare il modello da file system all'accensione*/
-	 @Override
-	  public void setModel(){
-	   Map<String, Map <Integer, IReservation>> temp = new HashMap<>();
-	   Map<Integer, IReservation> tempMap = new HashMap<>();
+   @Override
+    public void setModel(){
+     Map<String, Map <Integer, IReservation>> temp = new HashMap<>();
+     Map<Integer, IReservation> tempMap = new HashMap<>();
       try{
          final ObjectInput in = new ObjectInputStream(new FileInputStream("model.txt"));
          int size = (int) in.readObject();
-         for (int i = 0; i < size; i++) {
+         for (int i = 1; i <= size; i++) {
 
            String date = (String) in.readObject();
 
            int max = (int) in.readObject();
 
-           for (int j = 0; j < max; j++){
+           for (int j = 1; j <= max; j++){
            
              IReservation tempres = new Reservation((Integer) in.readObject(), (String) in.readObject(), date, (String) in.readObject(), 
                  (String) in.readObject(), (String) in.readObject(), (String) in.readObject());
@@ -184,7 +184,7 @@ public class Controller implements IController{
       } catch (ClassNotFoundException e) {
         System.out.print("non carica il modello");
       }
-	  }
+    }
 	//SALVARE TUTTO IL MODELLO SU FILESYSTEM (QUINDI LA MAPPA PRINCIPALE) E RISETTARLO AL CARICAMENTO
 
 	@Override
@@ -263,7 +263,7 @@ public class Controller implements IController{
   @Override
   public void add(String table, String name, String date, String h, String tel, String num,
       Optional<String> menu) {
-    Reservation res = new Reservation(Integer.parseInt(table), name, date, h, tel, num, menu.get());
+    Reservation res = new Reservation(Integer.parseInt(table), name, date, h, tel, num, menu);
     model.add(date, res);
   }
 
