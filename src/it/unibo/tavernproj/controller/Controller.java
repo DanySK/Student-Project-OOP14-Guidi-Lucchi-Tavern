@@ -130,7 +130,7 @@ public class Controller implements IController{
   public void saveModel(){    
     
       try{
-        final ObjectOutput out = new ObjectOutputStream(new FileOutputStream("model.txt"));
+        final ObjectOutput out = new ObjectOutputStream(new FileOutputStream(fileName));
         out.writeObject(model.getMap().keySet().size());
         for (String s: model.getMap().keySet()){
           out.writeObject(s);
@@ -158,7 +158,7 @@ public class Controller implements IController{
      Map<String, Map <Integer, IReservation>> temp = new HashMap<>();
      Map<Integer, IReservation> tempMap = new HashMap<>();
       try{
-         final ObjectInput in = new ObjectInputStream(new FileInputStream("model.txt"));
+         final ObjectInput in = new ObjectInputStream(new FileInputStream(fileName));
          int size = (int) in.readObject();
          for (int i = 1; i <= size; i++) {
 
