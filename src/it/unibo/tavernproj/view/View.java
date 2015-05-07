@@ -223,7 +223,10 @@ public class View extends JFrame implements IView{
                 System.out.print("Riempire la form!");
                 form.setVisible(true);
               } catch (NumberFormatException e1) {
-                System.out.print("Riempire la form con dei numeri!");
+                System.out.print("Riempire la form con dei numeri utili!");
+                form.setVisible(true);
+              } catch (IllegalArgumentException e2) {
+                System.out.print("Il tavolo inserito e' gia' stato utilizzato");
                 form.setVisible(true);
               }
             }

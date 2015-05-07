@@ -40,8 +40,12 @@ public class Model implements IModel {
 		if (map.containsKey(date)){
 			temp = map.get(date); 
 		}
+		if (temp.containsKey(pren.getTable())){
+		  //se il tavolo è già presente
+		  throw new IllegalArgumentException();
+		}
 		temp.put(pren.getTable(), pren);
-		map.put(date, temp);		
+		map.put(date, temp);
 	}
 		/*
 		 * Fare un file per giorno

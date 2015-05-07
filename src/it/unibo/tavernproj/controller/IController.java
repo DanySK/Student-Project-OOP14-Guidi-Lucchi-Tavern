@@ -96,6 +96,8 @@ public interface IController {
 
   void add(Integer table, String name, String date, String h, String tel, String num, Optional<String> menu);
 
+  void setFileName(String string);
+
   //void setFileName(String string);
 
 

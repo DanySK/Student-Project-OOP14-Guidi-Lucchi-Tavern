@@ -276,10 +276,19 @@ public class Controller implements IController{
   }
   
   private void add(Integer table, String name, String date, String h, String tel, String num,
-      String menu) {
+      String menu) throws IllegalArgumentException{
+    if (Double.parseDouble(h)<= 0 || Double.parseDouble(h) > 24){
+      throw new NumberFormatException();
+    }
     Reservation res = new Reservation(table, name, date, h, tel, num, Optional.ofNullable(menu));
     model.add(date, res);
     
+  }
+
+
+  @Override
+  public void setFileName(String string) {
+    this.fileName = string;
   }
 
   /*
