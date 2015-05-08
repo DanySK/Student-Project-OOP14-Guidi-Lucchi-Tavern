@@ -193,8 +193,8 @@ public class ReservationForm extends JFrame implements IReservationForm{
 		return ((JTextField) map.get("Num")).getText();
 	}
 
-	public Optional<String> getMenu() {
-		return Optional.ofNullable(((JTextField)map.get("Menu fisso")).getText());
+	public String getMenu() {
+		return ((JTextField)map.get("Menu fisso")).getText();
 	}
 
 	public boolean isMenuSelected() {

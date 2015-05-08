@@ -56,6 +56,8 @@ public interface IModel{
 
   Set<IReservation> getNameRes(String name);
 
+  Set<String> getDates();
+
 	
 	
 }

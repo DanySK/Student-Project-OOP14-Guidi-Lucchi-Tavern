@@ -23,7 +23,7 @@ public interface IReservationForm {
 	
 	String getNum();
 	
-	Optional<String> getMenu();
+	String getMenu();
 	
 	boolean isMenuSelected();
 

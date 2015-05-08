@@ -24,9 +24,11 @@ public interface IView {
 	 * @param number
 	 * 		the table number
 	 */
-	void addTable(Integer number, String date);
+	void addTable(Integer number);
 
   void addDraw(Pair<Integer, Integer> p);
+
+  void removeTable(Integer table);
 
 
 	

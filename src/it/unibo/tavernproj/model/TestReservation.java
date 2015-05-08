@@ -19,12 +19,12 @@ public class TestReservation {
 	  
 	  ctr.setModel(model);
 		
-		final IReservation r1 = new Reservation(1, "Giulia", "30-04-2015", "21.30","054751083" , "5", "");
-		final IReservation r2 = new Reservation(3, "Andrea", "30-04-2015", "21.30","054751042" , "5", "");
-		final IReservation r3 = new Reservation(2, "Pirlo", "14-06-2015", "21.30","054751267" , "5", "");
-		final IReservation r4 = new Reservation(1, "Eleonora", "1-05-2015", "21.30","054751323" , "5", "");
-		final IReservation r5 = new Reservation(1, "Federico", "14-06-2015", "21.30","054751876" , "5", "");
-		final IReservation r6 = new Reservation(1, "Enrico", "3-07-2015", "21.30","054751376" , "5", "");
+		final IReservation r1 = new Reservation(1, "Giulia", "30-04-2015", "21.30","054751083" , "5", null);
+		final IReservation r2 = new Reservation(3, "Andrea", "30-04-2015", "21.30","054751042" , "5", null);
+		final IReservation r3 = new Reservation(2, "Pirlo", "14-06-2015", "21.30","054751267" , "5", null);
+		final IReservation r4 = new Reservation(1, "Eleonora", "1-05-2015", "21.30","054751323" , "5", null);
+		final IReservation r5 = new Reservation(1, "Federico", "14-06-2015", "21.30","054751876" , "5", null);
+		final IReservation r6 = new Reservation(1, "Enrico", "3-07-2015", "21.30","054751376" , "5", null);
 		
 		//Controllo che l'aggiunta delle prenotazioni sia avvenuta correttamente.
 		model.add(r1.getDate(), r1);

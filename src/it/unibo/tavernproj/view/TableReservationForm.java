@@ -42,9 +42,12 @@ public class TableReservationForm extends ReservationForm{
 		super.setH(res.getHours());
 		super.setTel(res.getTel());
 		super.setNum(Integer.parseInt(res.getNumPers()));
-		try{
+		/*if (res.getMenu().isPresent()){
 		  super.setMenu(res.getMenu().get());
-		} catch(NoSuchElementException e){
+		}*/
+		try{
+		  super.setMenu(res.getMenu());
+		} catch(Exception e){
 		  //
 		}
 	}
@@ -91,7 +94,7 @@ public class TableReservationForm extends ReservationForm{
 		return super.getNum();
 	}
 
-	public Optional<String> getMenu() {
+	public String getMenu() {
 		return super.getMenu();
 	}
 

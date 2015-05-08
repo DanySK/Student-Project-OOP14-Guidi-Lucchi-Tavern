@@ -45,7 +45,7 @@ public interface IReservation {
 	/**
 	 * @return the menu, if selected and added
 	 * */
-	public Optional<String> getMenu();
+	public String getMenu();
 
 	String getDate();
 	

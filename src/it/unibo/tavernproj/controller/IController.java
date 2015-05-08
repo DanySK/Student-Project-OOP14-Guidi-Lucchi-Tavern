@@ -37,7 +37,7 @@ public interface IController {
 	 * @param table
 	 * 		the table number
 	 */
-	void addTable(Integer table, String date);
+	void addTable(Integer table);
 	
 	/**
 	 * Remove a table previously added both as a button and from the map.
@@ -45,7 +45,7 @@ public interface IController {
 	 * @param number
 	 *     table number
 	 */
-	void removeTable(int number, String date);
+	void remove(int number, String date);
 	
 	/**
 	 * @param table
@@ -78,7 +78,7 @@ public interface IController {
 	void removeView(IView v);
 	
 
-	Map<Integer,IReservation> getRes(final String date);
+	Map<Integer,IReservation> getReservation(final String date);
 
   void loadTables(String format);
 
@@ -94,9 +94,15 @@ public interface IController {
 
   void LoadDisegno();
 
-  void add(Integer table, String name, String date, String h, String tel, String num, Optional<String> menu);
+  void add(Integer table, String name, String date, String h, String tel, String num, String menu);
 
   void setFileName(String string);
+
+  void removeTable(Integer table);
+
+  Set<String> getDates();
+
+  int getReservation(String date, String name);
 
   //void setFileName(String string);
 

@@ -133,8 +133,7 @@ public class Model implements IModel {
   }
 	
 	@Override
-	public Set<IReservation> getNameRes( final String name){
-	  
+	public Set<IReservation> getNameRes(final String name){	  
 	  Set<IReservation> res = new HashSet<>();
 	  for(String date : map.keySet()){
 	    Map<Integer,IReservation> mapRes = this.getTableRes(date);
@@ -147,6 +146,12 @@ public class Model implements IModel {
 	   }
     return res;
 	}
+
+  @Override
+  public Set<String> getDates() {
+    return map.keySet();
+  }
+
 
 
 	

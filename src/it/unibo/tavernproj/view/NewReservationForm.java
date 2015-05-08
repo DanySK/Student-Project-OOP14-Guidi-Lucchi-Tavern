@@ -105,7 +105,7 @@ public class NewReservationForm extends ReservationForm{
 		return super.getNum();
 	}
 
-	public Optional<String> getMenu() {
+	public String getMenu() {
 		return super.getMenu();
 	}
 

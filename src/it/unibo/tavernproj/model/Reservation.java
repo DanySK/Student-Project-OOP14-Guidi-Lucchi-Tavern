@@ -17,7 +17,7 @@ public class Reservation implements Serializable, IReservation{
 	
 	@Override
   public String toString() {
-    return "Tavolo:" + table + ", Nome:" + name + ", Ora:" + h;
+    return "Tavolo:" + table + ",\n Nome:" + name + ",\n Data:" + date + ",\n Ora:" + h;
   }
 
   private static final long serialVersionUID = -5126256178520079481L;
@@ -46,7 +46,7 @@ public class Reservation implements Serializable, IReservation{
 	 *            an Optional containing the selected menu, if added.
 	 *            Else an empty Optional.
 	 */
-	public Reservation(final Integer table, final String name, final String date, 
+	/*public Reservation(final Integer table, final String name, final String date, 
 			final String h, final String tel, final String numPers, final String menu) {
 		Objects.requireNonNull(table);
 		this.table = table;
@@ -62,7 +62,7 @@ public class Reservation implements Serializable, IReservation{
 		this.numPers = numPers;
 		this.menu = Optional.ofNullable(menu);
 	}
-
+*/
   public Reservation(final Integer table, final String name, final String date, 
       final String h, final String tel, final String numPers, final Optional<String> menu) {
     Objects.requireNonNull(table);
@@ -111,11 +111,8 @@ public class Reservation implements Serializable, IReservation{
 	}
 	
 	@Override 
-	public Optional<String> getMenu(){
-	  /*if (!menu.isPresent()) {
-	    throw new NoSuchElementException();
-	  }*/
-		return menu;
+	public String getMenu(){
+		return menu.get();
 	}	
 	
 }

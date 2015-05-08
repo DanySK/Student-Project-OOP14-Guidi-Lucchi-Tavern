@@ -1,6 +1,7 @@
 package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.controller.IController;
+import it.unibo.tavernproj.model.IReservation;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -9,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,7 +56,7 @@ public class Chooser extends JFrame{
         }
         if (!calendar.getPickedDate().equals("Error")) {
           date = calendar.getPickedDate();
-          if (controller.getRes(date).size() == 0){
+          if (controller.getReservation(date).size() == 0){
             //FARE FORM CHE ESCE FUORI
             System.out.print("Nessuna prenotazione per la data selezionata.");
           }else{
@@ -75,11 +77,14 @@ public class Chooser extends JFrame{
 
       @Override
       public void actionPerformed(ActionEvent e) {
+        Set<String> dates = controller.getDates();
+        for (String s: dates){
+          loadReservation(s);
+        }
         
-        //STAMPARE TUTTE LE PRENOTAZIONI
-        //FARE UN METODO APPOSITO NEL CONTROLLER CHE RESTITUISCE LA LISTA DI TUTTE LE IRESERVATION
         lDat.setVisible(true);
         dat.setVisible(true);
+        lName.setVisible(true);
         name.setVisible(true);
         ok.setVisible(true);        
       }
@@ -103,22 +108,27 @@ public class Chooser extends JFrame{
       @Override
       public void actionPerformed(ActionEvent e) {
         Chooser.this.setVisible(false);
-        if (!choosedByDate) {
-          date = dat.getText();
+        if (choosedByDate) {          
+          try{
+            table = Integer.parseInt(tav.getText());
+          }catch(NumberFormatException e1){
+            System.out.print("Il numero del tavolo è sbagliato");
+            Chooser.this.setVisible(true);
+          }
         }
-        try{
-          table = Integer.parseInt(tav.getText());
-          controller.removeTable(table, date);
-          removed = true;
-        }catch(NumberFormatException e1){
-          System.out.print("Il numero del tavolo è sbagliato");
-          Chooser.this.setVisible(true);
+        else {
+          try{
+            date = dat.getText();
+            table = controller.getReservation(date, name.getText());  
+          }catch(IllegalArgumentException e1){
+            System.out.print("Il nome o la data inseriti sono sbagliati");
+            Chooser.this.setVisible(true);
+          }
         }
-      }
-      
-      
-      //FARE IN MODO CHE SI REFRESCI LA VIEW  E SI CANCELLINO I SIMBOLI DEI TAVOLI DA SOTTO!
-      
+        
+        controller.remove(table, date);
+        removed = true;        
+      }      
     });
     
     JPanel up = new JPanel(new FlowLayout());
@@ -165,8 +175,8 @@ public class Chooser extends JFrame{
     gap.insets = new Insets(5, 5, 5, 5);
     gap.fill = GridBagConstraints.HORIZONTAL;
     
-    for (Integer i: controller.getRes(date).keySet()){
-      res.add(new JLabel(controller.getRes(date).get(i).toString()), gap); //stampare il set con le prenotazioni nel file di sopra
+    for (Integer i: controller.getReservation(date).keySet()){
+      res.add(new JLabel(controller.getReservation(date).get(i).toString()), gap); //stampare il set con le prenotazioni nel file di sopra
       gap.gridy++;
     }
     this.validate();

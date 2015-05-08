@@ -214,7 +214,7 @@ public class View extends JFrame implements IView{
          //GESTIRE DIVERSAMENTE
         if (!calendar.getPickedDate().equals("Error")) {
 
-          NewReservationForm form = new NewReservationForm(calendar.getPickedDate(), controller.getRes(calendar.getPickedDate()));
+          NewReservationForm form = new NewReservationForm(calendar.getPickedDate(), controller.getReservation(calendar.getPickedDate()));
           final IFormController fc = FormController.getController();
           fc.addView(form);
 
@@ -228,7 +228,7 @@ public class View extends JFrame implements IView{
                     form.getTel(), form.getNum(), form.getMenu());
                 //fc.save();
                 if (fc.getDate().equals(View.this.date.getText())) {
-                  controller.addTable(form.getTable(), fc.getDate());
+                  controller.addTable(form.getTable());
                 }
               } catch (NullPointerException e) {
                 System.out.print("Riempire la form!");
@@ -259,19 +259,15 @@ public class View extends JFrame implements IView{
         c.addComponentListener(new ComponentAdapter(){
           @Override
           public void componentHidden(final ComponentEvent ce) {
-            //non va!
+             //non va!
             if (c.isBeenRemoved()){
-              for (Component comp: View.this.tablesButtons.getComponents())
-                if (comp.getName().equals(c.getTable())){
-                  View.this.tablesButtons.remove(comp);
-                }              
-            }
+             controller.removeTable(c.getTable()); 
+             //SE HO PIù DI UN TAVOLO PER GIORNO DA PROBLEMI
+             View.this.validate();
+            } 
           }
-        });
-        
-        View.this.validate();
-      }
-      
+        });       
+      }     
     });
     
     this.addWindowListener(new WindowAdapter() {
@@ -294,7 +290,7 @@ public class View extends JFrame implements IView{
   }
 
   @Override
-  public void addTable(Integer table, String date) {
+  public void addTable(Integer table) {
     /* System.getProperty("user.home")+System.getProperty("file.separator")+
      */
     
@@ -315,16 +311,16 @@ public class View extends JFrame implements IView{
 
           try {            
             
-            res = controller.getReservation(table, date);
+            res = controller.getReservation(table, date.getText());
             //res = new Reservation("1", "lino", "1", "pino", "1", 2, Optional.of("ciccia"));
             
-            final TableReservationForm form = new TableReservationForm(date, res);
+            final TableReservationForm form = new TableReservationForm(date.getText(), res);
             //form.setTable(Integer.parseInt(b.getName()));
             final IFormController fc = FormController.getController();
             fc.addView(form);
             
             //fc.setModel(View.this.controller.getModel());
-            fc.setDate(date);
+            fc.setDate(date.getText());
             form.addComponentListener(new ComponentAdapter() {
               @Override
               public void componentHidden(final ComponentEvent ce) {
@@ -332,7 +328,7 @@ public class View extends JFrame implements IView{
                   try {
                     //fc.delete(table, date);
                     //PER ORA IL TAVOLO NON è MODIFICABILE PERCHè DAVA PROBLEMI!
-                    controller.removeTable(form.getOld().getTable(), fc.getDate());
+                    controller.remove(form.getOld().getTable(), fc.getDate());
                     controller.add(form.getTable(), form.getName(), fc.getDate(), form.getH(), 
                         form.getTel(), form.getNum(), form.getMenu());
                     b.setIcon(build.getButtonIcon(form.getTable() + "s.png"));
@@ -358,6 +354,16 @@ public class View extends JFrame implements IView{
     });
     tablesButtons.add(b);
     View.this.validate();
+  }
+
+  @Override
+  public void removeTable(Integer table) {
+    for (Component c: tablesButtons.getComponents()){
+      if (c.getName().equals(table.toString())){
+        tablesButtons.remove(c);
+        tablesButtons.validate();
+      }
+    }
   }
 
 }

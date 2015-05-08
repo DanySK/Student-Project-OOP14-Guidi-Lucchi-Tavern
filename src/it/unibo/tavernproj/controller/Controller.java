@@ -45,9 +45,7 @@ public class Controller implements IController{
 	private IModel model = new Model();
 	private ObjectOutput outMap;
 	private ObjectInput  inMap; 
-	private String fileName;
-	
-//	private String fileName = "file.txt";
+	private String fileName = "file.txt";
 
 	private Controller(){};
 	
@@ -62,16 +60,16 @@ public class Controller implements IController{
 	}
 
 	@Override
-	public void addTable(Integer table, String date) {
+	public void addTable(Integer table) {
 	  
 		for (final IView v: view){
-			v.addTable(table, date);
+			v.addTable(table);
 		}
 	}
 
 	@Override
-	public void removeTable(final int table, final String date) {
-		model.remove(date, table);		
+	public void remove(final int table, final String date) {
+		model.remove(date, table);
 	}
 	
   public void loadTables (final String date) {
@@ -79,7 +77,7 @@ public class Controller implements IController{
     if (!model.isEmpty()) {
       try {
         for (Integer i: model.getTableRes(date).keySet()) {
-          this.addTable(i, date);
+          this.addTable(i);
         }
       } catch (NullPointerException e) {
         System.out.print("non ci sono tavoli quel giorno");
@@ -91,7 +89,7 @@ public class Controller implements IController{
 
 
   @Override
-	  public Map<Integer,IReservation> getRes(final String date) {	
+	  public Map<Integer,IReservation> getReservation(final String date) {	
 	   if (model.getRes(date).isEmpty()){
 	     return new HashMap<>();
 	   }
@@ -142,7 +140,11 @@ public class Controller implements IController{
             out.writeObject(model.getMap().get(s).get(i).getHours().toString());
             out.writeObject(model.getMap().get(s).get(i).getTel().toString());
             out.writeObject(model.getMap().get(s).get(i).getNumPers().toString());
-            out.writeObject(model.getMap().get(s).get(i).getMenu().toString());
+            try{
+              out.writeObject(model.getMap().get(s).get(i).getMenu().toString());
+            }catch(NoSuchElementException e){
+              out.writeObject("");
+            }            
           }     
         }       
         out.close();
@@ -171,7 +173,7 @@ public class Controller implements IController{
                  Optional<String> menu)*/
                  
              this.add((Integer) in.readObject(), (String) in.readObject(), date, (String) in.readObject(),
-                 (String) in.readObject(), (String) in.readObject(), Optional.ofNullable((String) in.readObject()));
+                 (String) in.readObject(), (String) in.readObject(), (String) in.readObject());
              
              //IReservation tempres = new Reservation(, , date, , 
                  
@@ -268,11 +270,23 @@ public class Controller implements IController{
 
   @Override
   public void add(Integer table, String name, String date, String h, String tel, String num,
-      Optional<String> menu) throws IllegalArgumentException{
-    if (Double.parseDouble(h)<= 0 || Double.parseDouble(h) > 24){
+      String menu) throws IllegalArgumentException, NumberFormatException{
+    
+    try{
+      if (Double.parseDouble(h)<= 0 || Double.parseDouble(h) > 24 || Integer.parseInt(num) > 300){
+        throw new NumberFormatException();
+      }
+    } catch(NumberFormatException e){
       throw new NumberFormatException();
+    }    
+    
+    Reservation res;
+    if (menu.equals("")){
+      res = new Reservation(table, name, date, h, tel, num, Optional.empty());
     }
-    Reservation res = new Reservation(table, name, date, h, tel, num, menu);
+    else {
+      res = new Reservation(table, name, date, h, tel, num, Optional.of(menu));
+    }
     model.add(date, res);
   }
   
@@ -291,6 +305,32 @@ public class Controller implements IController{
   public void setFileName(String string) {
     this.fileName = string;
   }
+
+
+  @Override
+  public void removeTable(Integer table) {
+    for (final IView v: view){
+      v.removeTable(table);
+    }
+  }
+
+
+  @Override
+  public Set<String> getDates() {
+    return model.getDates();
+  }
+
+
+  @Override
+  public int getReservation(String date, String name){
+    for (IReservation r: model.getNameRes(name)){
+      if (r.getDate().equals(date)){
+        return r.getTable();
+      }
+    }
+    throw new IllegalArgumentException();
+  }
+
 
   
 
