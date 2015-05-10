@@ -1,7 +1,6 @@
 package it.unibo.tavernproj.view;
 
-import it.unibo.tavernproj.controller.FormController;
-import it.unibo.tavernproj.controller.IFormController;
+import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.IReservation;
 
 import java.awt.BorderLayout;
@@ -68,7 +67,7 @@ public class NewReservationForm extends ReservationForm{
     gap.fill = GridBagConstraints.HORIZONTAL;
 	  
 		for (Integer i: map.keySet()){
-		  res.add(new JLabel(map.get(i).toString()), gap); //stampare il set con le prenotazioni nel file di sopra
+		  res.add(new JLabel(map.get(i).toString(date.getText())), gap); //stampare il set con le prenotazioni nel file di sopra
 		  gap.gridy++;
 		}
 		this.validate();
@@ -81,8 +80,8 @@ public class NewReservationForm extends ReservationForm{
 		super.getContentPane().add(north, BorderLayout.NORTH);		
 	}
 
-	public void attachViewObserver(IFormController formController) {
-		super.attachViewObserver(formController);
+	public void attachViewObserver(IController controller) {
+		super.attachViewObserver(controller);
 	}	
 	
 	public Integer getTable() {

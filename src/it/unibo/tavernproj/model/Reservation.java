@@ -17,8 +17,12 @@ public class Reservation implements Serializable, IReservation{
 	
 	@Override
   public String toString() {
-    return "Tavolo:" + table + ",\n Nome:" + name + ",\n Data:" + date + ",\n Ora:" + h;
+    return "Tavolo:" + table + ", Nome:" + name + ", Data:" + date + ", Ora:" + h;
   }
+	
+	public String toString(String date){
+	  return "Tavolo:" + table + ", Nome:" + name + ", Ora:" + h;
+	}
 
   private static final long serialVersionUID = -5126256178520079481L;
 	private final int table;

@@ -1,7 +1,5 @@
 package it.unibo.tavernproj.view;
 import it.unibo.tavernproj.controller.Controller;
-import it.unibo.tavernproj.controller.FormController;
-import it.unibo.tavernproj.controller.IFormController;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

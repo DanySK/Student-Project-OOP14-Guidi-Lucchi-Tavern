@@ -46,6 +46,8 @@ public class Controller implements IController{
 	private ObjectOutput outMap;
 	private ObjectInput  inMap; 
 	private String fileName = "file.txt";
+	
+	private Optional<String> date = Optional.empty();
 
 	private Controller(){};
 	
@@ -144,7 +146,9 @@ public class Controller implements IController{
               out.writeObject(model.getMap().get(s).get(i).getMenu().toString());
             }catch(NoSuchElementException e){
               out.writeObject("");
-            }            
+            }catch(NullPointerException e1){
+              out.writeObject("");
+            }
           }     
         }       
         out.close();
@@ -331,7 +335,26 @@ public class Controller implements IController{
     throw new IllegalArgumentException();
   }
 
+  public void displayException(final String e) {
+    for (final IView v : view) {
+      v.commandFailed(e);
+    }
+  }
 
+
+  @Override
+  public String getDate() {
+    if (!date.isPresent()){
+      throw new IllegalArgumentException();
+    }
+    return this.date.get();
+  }
+
+
+  @Override
+  public void setDate(String date) {
+    this.date = Optional.of(date);
+  }
   
 
 

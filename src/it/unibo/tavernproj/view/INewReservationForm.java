@@ -1,8 +1,6 @@
 package it.unibo.tavernproj.view;
 
-import java.util.Optional;
-
-import it.unibo.tavernproj.controller.IFormController;
+import it.unibo.tavernproj.controller.IController;
 
 public interface INewReservationForm {
 	
@@ -11,6 +9,6 @@ public interface INewReservationForm {
 	 * @param listener
 	 *      new {@link IFormController}.
 	 */
-	void attachViewObserver(IFormController listener);
+	void attachViewObserver(IController listener);
 	
 }

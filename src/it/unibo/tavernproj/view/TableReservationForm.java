@@ -1,10 +1,11 @@
 package it.unibo.tavernproj.view;
 
-import it.unibo.tavernproj.controller.IFormController;
+import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.IReservation;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.NoSuchElementException;
@@ -18,9 +19,13 @@ public class TableReservationForm extends ReservationForm{
 	
 	private static final long serialVersionUID = 1L;
 	private final JButton modifyButton = new JButton("Modifica");
+	private final JButton deleteButton = new JButton("Elimina");
 	public JLabel date;
 	private final IReservation res;
 	private boolean modified = false;
+  private boolean deleted = false;
+  
+  private IUtilities utilities = new Utilities();
 	
 	/*Usare l'esame 01b del 2015 per fare la form!*/
 	public TableReservationForm(String date, IReservation res){
@@ -53,9 +58,12 @@ public class TableReservationForm extends ReservationForm{
 	}
 
 	private void buildLayout() {
+	  final JPanel east = utilities.buildGridPanel(modifyButton, deleteButton, 5);	  
+	  
 		final JPanel north = new JPanel(new BorderLayout());
 		north.add(date, BorderLayout.WEST);
-		north.add(modifyButton, BorderLayout.EAST);		
+		
+		north.add(east, BorderLayout.EAST);		
 		super.getContentPane().add(north, BorderLayout.NORTH);			
 		this.disableAll();
 	}
@@ -68,10 +76,21 @@ public class TableReservationForm extends ReservationForm{
 				TableReservationForm.this.modified = true;
 			}			
 		});	
+		
+		this.deleteButton.addActionListener(new ActionListener(){
+		  @Override
+      public void actionPerformed(ActionEvent arg0) {
+        
+		    TableReservationForm.this.deleted = true;
+        TableReservationForm.this.setVisible(false);
+      }		  
+		});
+
+    
 	}
 
-	public void attachViewObserver(IFormController formController) {
-		super.attachViewObserver(formController);
+	public void attachViewObserver(IController controller) {
+		super.attachViewObserver(controller);
 	}	
 	
 	public Integer getTable() {
@@ -115,6 +134,10 @@ public class TableReservationForm extends ReservationForm{
 	public boolean isBeenModified() {
 		return this.modified;
 	}
+	
+	public boolean isBeenDeleted() {
+    return this.deleted ;
+  }
 
   public IReservation getOld() {
     return this.res;

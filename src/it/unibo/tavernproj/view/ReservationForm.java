@@ -1,6 +1,7 @@
 package it.unibo.tavernproj.view;
 
-import it.unibo.tavernproj.controller.IFormController;
+
+import it.unibo.tavernproj.controller.IController;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -35,7 +36,7 @@ public class ReservationForm extends JFrame implements IReservationForm{
 
 	private final JButton okButton = new JButton("OK");
 	
-	private IFormController ctrl;
+	private IController ctrl;
 	
 	public ReservationForm(){
 		super();
@@ -201,8 +202,8 @@ public class ReservationForm extends JFrame implements IReservationForm{
 		return ((JRadioButton) map.get("Menu")).isSelected();
 	}
 
-	public void attachViewObserver(IFormController formController) {
-		this.ctrl = formController;		
+	public void attachViewObserver(IController controller) {
+		this.ctrl = controller;		
 	}
 
 	@Override

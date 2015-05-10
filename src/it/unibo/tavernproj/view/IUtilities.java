@@ -76,4 +76,12 @@ public interface IUtilities {
 
   String getCurrentDate();
 
+  JButton defaultButton(String string);
+
+  int getDefaultWidth();
+
+  int getDefaultHeight();
+
+  JPanel buildGridPanel(JButton buttonNew, JButton buttonDelete, int i);
+
 }
