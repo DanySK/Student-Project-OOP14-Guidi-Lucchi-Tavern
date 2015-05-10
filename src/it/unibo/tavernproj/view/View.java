@@ -16,6 +16,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -37,14 +38,14 @@ public class View extends JFrame implements IView{
 
   private static final long serialVersionUID = 1L;
   private final IUtilities build = new Utilities();
-  private final JButton buttonNew = build.defaultButton("Nuova Prenotazione");
-  private final JButton buttonDelete = build.defaultButton("Elimina Prenotazione");
+  private final JButton buttonNew = build.getDefaultButton("Nuova Prenotazione");
+  private final JButton buttonDelete = build.getDefaultButton("Elimina Prenotazione");
   private final JButton cancelAll = new JButton("Cancella Tutto");
   private final JButton cancelTable = new JButton("Cancella Tavolo");
   private final JButton drawTable = new JButton("Disegna Tavolo ");
-  private final JLabel map = build.buildMap("map.png");
-  private final JPanel tablesButtons = build.buildPanel(new FlowLayout());
-  private final JLabel date = build.dateLabel();
+  private final JPanel tablesButtons = build.getDefaultPanel(new FlowLayout());
+  private final JLabel date = build.getDateLabel();
+  private JLabel map;
   private IController controller;  
 
   /**
@@ -68,18 +69,24 @@ public class View extends JFrame implements IView{
   }  
 
   private void buildLayout() {
+    
     final JPanel reservPanel = build.buildGridPanel(buttonNew, buttonDelete, 10);
-    final JPanel east = build.buildPanel(new BorderLayout());
-    east.add(reservPanel, BorderLayout.CENTER);
-    east.add(build.buildLogo("logo.jpg"), BorderLayout.NORTH);
+    final JPanel east = build.getDefaultPanel(new BorderLayout());
+    east.add(reservPanel, BorderLayout.CENTER);    
+    try {
+      map = build.getDefaultMap("map.png");
+      east.add(build.getDefaultLogo("logo.jpg"), BorderLayout.NORTH);  
+    } catch (IOException e) {
+      controller.displayException("Le risorse non sono al momento raggiungibili");
+    }
     
     //??
     final GridBagConstraints gap = new GridBagConstraints();
-    final JPanel north = build.buildPanel(new GridBagLayout());    
+    final JPanel north = build.getDefaultPanel(new GridBagLayout());    
     north.add(date, gap);
 //
     
-    final JPanel center = build.buildPanel(new BorderLayout());
+    final JPanel center = build.getDefaultPanel(new BorderLayout());
     center.add(map, BorderLayout.CENTER);
     center.add(tablesButtons, BorderLayout.SOUTH);
     center.add(north, BorderLayout.NORTH);
@@ -120,7 +127,7 @@ public class View extends JFrame implements IView{
 
 
     
-    final JPanel main = build.buildPanel(new BorderLayout(5, 5));
+    final JPanel main = build.getDefaultPanel(new BorderLayout(5, 5));
     main.add(center, BorderLayout.CENTER);
     main.add(east, BorderLayout.EAST);
     this.getContentPane().add(main);
@@ -198,9 +205,14 @@ public class View extends JFrame implements IView{
   public void addTable(final Integer table) {
     /* System.getProperty("user.home")+System.getProperty("file.separator")+
      */
-    final JButton b = build.buildButton(table + "s.png");
-    b.setName(table.toString());
-    b.addActionListener(e -> {
+    JButton button = build.getDefaultButton(table.toString());
+    try {
+      button = build.getPicButton(table + "s.png");
+    } catch (IOException e3) {
+      controller.displayException("Le risorse non sono al momento raggiungibili");
+    }
+    button.setName(table.toString());
+    button.addActionListener(e -> {
         IReservation res;
         try {
           res = controller.getReservation(table, date.getText());          
@@ -226,7 +238,6 @@ public class View extends JFrame implements IView{
                 try {
                   controller.add(form.getTable(), form.getName(), controller.getDate(), form.getH(),
                       form.getTel(), form.getNum(), form.getMenu());
-                  b.setIcon(build.getButtonIcon(form.getTable() + "s.png"));
                 } catch (NullPointerException e) {
                   controller.displayException("Riempire la form!");
                   form.setVisible(true);
@@ -241,7 +252,7 @@ public class View extends JFrame implements IView{
           controller.displayException("Prenotazione non disponibile!");
         }      
       });
-    tablesButtons.add(b);
+    tablesButtons.add(button);
     View.this.validate();
   }
   

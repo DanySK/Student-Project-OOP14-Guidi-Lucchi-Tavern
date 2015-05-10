@@ -1,87 +1,127 @@
 package it.unibo.tavernproj.view;
 
 import java.awt.LayoutManager;
+import java.io.IOException;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * @author
- * 		Eleonora Guidi
- * 
+ * @author Eleonora Guidi
  */
 
 public interface IUtilities {
-	
-	/**
-	 * Crea un pannello con sfondo bianco.
-	 * 
-	 * Creates a JPanel with a white background.
-	 * 
-	 * @param lm
-	 * 		il layout che si vuole usare nel pannello.
-	 * 		the layout you want to use in the JPanel.
-	 * 
-	 * @return
-	 * 		il pannello creato.
-	 * 		the JPanel created.
-	 */
-	JPanel buildPanel(LayoutManager lm);
-	
-	/**
-	 * Crea una JLabel usando come sfondo l'immagine al percorso passato.
-	 * It creates a new JLabel with the image passed as background.
-	 *
-	 * @param srt
-	 * 		il path dell'immagine.
-	 * 		the image path.
-	 * 
-	 * @throws IllegalArgumentException
-	 * 		se il percorso immesso e' errato.
-	 * 		if you passed a wrong path.
-	 * 
-	 * @return
-	 * 		la JLabel creata.
-	 * 		the JLabel created.
-	 */
-	JLabel buildLogo(String srt);
-	
-	JLabel buildMap(String srt);
-	
-	/**
-	 * Crea un bottne usando come sfondo l'immagine al percorso passato,
-	 * sfondo bianco e senza borso.
-	 * It creates a new JButton with the image passed as background, 
-	 * white background base and no border.
-	 *
-	 * @param srt
-	 * 		il path dell'immagine.
-	 * 		the image path.
-	 * 
-	 * @throws IllegalArgumentException
-	 * 		se il percorso immesso e' errato.
-	 * 		if you passed a wrong path.
-	 * 
-	 * @return
-	 * 		il JButton creato.
-	 * 		the JButton created.
-	 */
-	JButton buildButton(String srt);	
-	
-	ImageIcon getButtonIcon(final String srt);
-	
-	JLabel dateLabel();
+  
+  /**
+   * Creates a JPanel with a white background.
+   * 
+   * @param lm
+   *      the layout to use.
+   *
+   * @return
+   *      the panel.
+   */
+  JPanel getDefaultPanel(LayoutManager lm);
+  
+  /**
+   * It creates a new JLabel with the image passed as background.
+   *
+   * @param srt
+   *      the image path.
+   *      
+   * @return
+   *      the JLabel created.
+   *      
+   * @throws IOException
+   *      if you passed a wrong path.
+   */
+  JLabel getDefaultLogo(String srt) throws IOException;
+  
+  /**
+   * It creates a new JLabel with the image passed as background.
+   *
+   * @param srt
+   *      the image path.
+   *      
+   * @return
+   *      the JLabel created.
+   *      
+   * @throws IOException
+   *      if you passed a wrong path.
+   */
+  JLabel getDefaultMap(String srt) throws IOException;
+  
+  /**
+   * It creates a new JButton with the image passed as background, 
+   * white background base and no border.
+   *
+   * @param srt
+   *      the image path.
+   *      
+   * @return
+   *      the button.
+   *
+   * @throws IOException
+   *      if you passed a wrong path.
+   */
+  JButton getPicButton(String srt) throws IOException;
+  
+  /**
+   * It creates a JLabel containing the current date.
+   * 
+   * @return
+   *      the label.
+   */
+  JLabel getDateLabel();
 
+  /**
+   * @return
+   *      the current date.
+   */
   String getCurrentDate();
 
-  JButton defaultButton(String string);
+  /**
+   * It creates a new JButton with the string passed as text,
+   * white background and black border.
+   * 
+   * @param string
+   *      the button text.
+   *      
+   * @return
+   *      the button.
+   */
+  JButton getDefaultButton(String string);
 
+  /**
+   * @return
+   *      the default screen width for the program.
+   */
   int getDefaultWidth();
 
+  /**
+   * @return
+   *      the default screen height for the program.
+   */
   int getDefaultHeight();
 
-  JPanel buildGridPanel(JButton buttonNew, JButton buttonDelete, int i);
+  /**
+   * It creates a new GridBagLayouted panel with two buttons,
+   * one above the other.
+   * 
+   * @param b1
+   *      the first button.
+   * @param b2
+   *      the second button.
+   * @param ins
+   *      the insets between the buttons.
+   * @return
+   *      the panel.
+   */
+  JPanel buildGridPanel(JButton b1, JButton b2, int ins);
+  /*questo metodo potrebbe essere migliorato aumentandone la riusabilità
+   * usando due Component oppure passando una lista di Component e aggiungendoli tutti quanti
+   */
+  
 
 }
