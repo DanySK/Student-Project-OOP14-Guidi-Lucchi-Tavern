@@ -26,9 +26,9 @@ public interface IView {
 	 */
 	void addTable(Integer number);
 
-  void addDraw(Pair<Integer, Integer> p);
-
   void removeTable(Integer table);
+
+  void addDraw(Pair<Integer, Integer> p, int index);
 
 
 	

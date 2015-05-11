@@ -4,6 +4,7 @@ import it.unibo.tavernproj.controller.FormController;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.controller.IFormController;
 import it.unibo.tavernproj.disegno.DrawButton;
+import it.unibo.tavernproj.disegno.DrawMap;
 import it.unibo.tavernproj.disegno.DrawPosition;
 import it.unibo.tavernproj.disegno.Pair;
 import it.unibo.tavernproj.model.IReservation;
@@ -24,6 +25,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -61,6 +63,7 @@ public class View extends JFrame implements IView{
   private final JButton cancelTable = new JButton("Cancella Tavolo");
   private final JButton drawTable = new JButton("Disegna Tavolo ");
   private final JLabel map = build.buildMap("res" + System.getProperty("file.separator") + "map.png");
+  private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();
   private JPanel tablesButtons = build.buildPanel(new FlowLayout());
   private final JLabel date = build.dateLabel();
   private IController controller;  
@@ -103,9 +106,10 @@ public class View extends JFrame implements IView{
   }
   
   @Override
-  public void addDraw(Pair<Integer, Integer> p){
+  public void addDraw(Pair<Integer, Integer> p, int index){
       final DrawPosition pos = new DrawPosition(map);
-       pos.paint(map.getGraphics(),p.getX(),p.getY());
+      pos.setIndex(index);
+      pos.paint(map.getGraphics(),p.getX(),p.getY());
   }
   
 
@@ -165,16 +169,25 @@ public class View extends JFrame implements IView{
     final DrawPosition cancel = new DrawPosition(map);
      
     this.drawTable.addActionListener(e->{
-         map.addMouseListener(cancel);
-    });
-   
-    this.cancelTable.addActionListener(e->{
-        cancel.cancel(map.getGraphics());
-    });
+      map.addMouseListener(cancel);
+      cancelAll.setEnabled(true);
+      cancelTable.setEnabled(true);
+     });
     
-    this.cancelAll.addActionListener(e->{
-        cancel.cancelAll(map.getGraphics());
-    });
+     this.cancelTable.addActionListener(e->{
+           cancel.cancel(map.getGraphics());
+           if(draw.isEmpty()){
+            cancelTable.setEnabled(false); 
+            cancelAll.setEnabled(false);
+           }
+     });
+     
+     this.cancelAll.addActionListener(e->{
+       
+         cancel.cancelAll(map.getGraphics());
+         cancelAll.setEnabled(false); 
+         cancelTable.setEnabled(false);
+     });
    
 
 

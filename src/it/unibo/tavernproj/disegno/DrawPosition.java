@@ -48,8 +48,7 @@ public class DrawPosition implements MouseListener,Serializable {
 		this.x0=e.getX();
 		this.y0=e.getY();
 		this.paint(label.getGraphics(),x0,y0);
-		draw.put(index, new Pair<>(x0,y0));
-		index++;
+	
 		System.out.println(draw);
 	}
 
@@ -62,8 +61,16 @@ public class DrawPosition implements MouseListener,Serializable {
   public void paint(Graphics g, int x0, int y0) {
   g.drawRect(x0, y0, 50, 50);
   g.setColor(Color.black); 
+  draw.put(index, new Pair<>(x0,y0));
+  index++;
   
   }
+  
+  //solo per salvataggio
+  public void setIndex(int index){
+    this.index=index;
+  }
+  
   public void paintCancel(Graphics g, int x, int y){
     g.setColor(label.getBackground());
     g.drawRect(x,y, 50, 50);

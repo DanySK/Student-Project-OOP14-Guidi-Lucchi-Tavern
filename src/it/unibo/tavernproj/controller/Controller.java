@@ -225,10 +225,12 @@ public class Controller implements IController,Serializable{
         Map<Integer,Pair<Integer,Integer>> map = (Map<Integer,Pair<Integer,Integer>>)inMap.readObject();
            System.out.println("assegnato mappa"+ map);
             inMap.close();
+            int index=0;
             for(Integer i : map.keySet()){
               Pair<Integer,Integer> p = map.get(i);
               for (final IView v: view){
-                v.addDraw(p);
+                v.addDraw(p, index);
+                index++;
               }
                
             }
