@@ -233,7 +233,7 @@ public class Controller implements IController,Serializable{
             for(Integer i : map.keySet()){
               Pair<Integer,Integer> p = map.get(i);
               for (final IView v: view){
-                v.addDraw(p);
+                v.addDraw(p, index);
                 index++;
               }
                

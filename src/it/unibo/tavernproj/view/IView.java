@@ -46,6 +46,6 @@ public interface IView {
   
   // DA FARE
   
-  void addDraw(Pair<Integer, Integer> pair);
+  void addDraw(Pair<Integer, Integer> pair, int i);
 
 }

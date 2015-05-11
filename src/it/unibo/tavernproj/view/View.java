@@ -63,8 +63,9 @@ public class View extends JFrame implements IView{
   }
   
   @Override
-  public void addDraw(final Pair<Integer, Integer> pair) {
+  public void addDraw(final Pair<Integer, Integer> pair, int index) {
     final DrawPosition pos = new DrawPosition(map);
+    pos.setIndex(index);
     pos.paint(map.getGraphics(),pair.getX(),pair.getY());
   }  
 
