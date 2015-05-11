@@ -228,8 +228,10 @@ public class ReservationForm extends JFrame implements IReservationForm {
 
   @Override
   public void setMenu(final String srt) {
-    ((JTextField) map.get(MENUFISSO)).setText(srt);
-    ((JRadioButton) map.get(MENU)).setSelected(true);
-    map.get(MENUFISSO).setVisible(true);
+    if (!srt.isEmpty()) {
+      ((JTextField) map.get(MENUFISSO)).setText(srt);
+      ((JRadioButton) map.get(MENU)).setSelected(true);
+      map.get(MENUFISSO).setVisible(true);
+    }
   }
 }

@@ -6,14 +6,13 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
  * @author Eleonora Guidi
- * 
+ *
  * modified by @author Giulia Lucchi
  *
  */
@@ -21,9 +20,9 @@ import javax.swing.JPanel;
 public class NewReservationForm extends ReservationForm {
 
   private static final long serialVersionUID = 1L;
-  private final JPanel res = new JPanel(new GridBagLayout());  
-  public JLabel date;
-  private Map<Integer, IReservation> map = new HashMap<>();
+  private final JPanel res = new JPanel(new GridBagLayout());
+  private final Map<Integer, IReservation> map;
+  private JLabel date;  
 
   /**
    * It builds a new Reservation Form whenever we need to add a new Reservation.
