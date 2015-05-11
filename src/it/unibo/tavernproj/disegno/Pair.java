@@ -1,7 +1,13 @@
 package it.unibo.tavernproj.disegno;
 
-public class Pair<X, Y> {
+import java.io.Serializable;
+
+public class Pair<X, Y> implements Serializable {
     
+    /**
+   * 
+   */
+  private static final long serialVersionUID = 4195385612271660319L;
     private final X x;
     private final Y y;
     

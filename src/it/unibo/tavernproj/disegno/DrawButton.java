@@ -2,9 +2,6 @@ package it.unibo.tavernproj.disegno;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 

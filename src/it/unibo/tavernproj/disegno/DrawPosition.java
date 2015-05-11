@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serializable;
 import java.util.Map;
 
 import javax.swing.JLabel;
@@ -13,11 +14,17 @@ import javax.swing.JLabel;
  *
  */
 
-public class DrawPosition implements MouseListener {
+public class DrawPosition implements MouseListener,Serializable {
 
-  private final IDrawMap draw = new DrawMap();
-	
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -2547031979468896800L;
+
+  private final Map<Integer, Pair<Integer, Integer>> draw =DrawMap.getMap();
 	private final JLabel label;
+	private int index=0;
 	private int x0=0;
 	private int y0=0;
 	
@@ -41,8 +48,9 @@ public class DrawPosition implements MouseListener {
 		this.x0=e.getX();
 		this.y0=e.getY();
 		this.paint(label.getGraphics(),x0,y0);
-		draw.setMap(x0, y0);
-		System.out.println(draw.getMap());
+		draw.put(index, new Pair<>(x0,y0));
+		index++;
+		System.out.println(draw);
 	}
 
 	@Override
@@ -51,10 +59,6 @@ public class DrawPosition implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {}
 	
-	public Map<Integer, Pair<Integer, Integer>> getMap(){
-	  return draw.getMap();
-	}
-
   public void paint(Graphics g, int x0, int y0) {
   g.drawRect(x0, y0, 50, 50);
   g.setColor(Color.black); 
@@ -66,10 +70,10 @@ public class DrawPosition implements MouseListener {
   }
   
   public void cancel(Graphics g1){
-    if(!draw.getMap().isEmpty()){
-      Pair<Integer, Integer> p = draw.getMap().get(draw.getSize());
+    if(!draw.isEmpty()){
+      Pair<Integer, Integer> p = draw.get(draw.size()-1);
       this.paintCancel(label.getGraphics(), p.getX(),p.getY());
-      draw.getMap().remove(draw.getSize());
+      draw.remove(draw.size()-1);
     }else{
       System.out.println("Ho cancellato tutti i tavoli");
       
@@ -77,11 +81,14 @@ public class DrawPosition implements MouseListener {
   }
 
   public void cancelAll(Graphics g1){
-   for(int i : draw.getMap().keySet()){
-     Pair<Integer, Integer> p = draw.getMap().get(i);
+   for(int i : draw.keySet()){
+     Pair<Integer, Integer> p = draw.get(i);
      this.paintCancel(label.getGraphics(), p.getX(),p.getY());
    }
-   draw.removeAll();
+   draw.clear();
   }
   
+ 
+
+
   }
