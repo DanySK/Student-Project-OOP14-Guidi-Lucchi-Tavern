@@ -17,7 +17,7 @@ public interface IView {
    * @param listener
    *      new {@link IController}.
    */
-  void attachViewObserver(IController listener);
+  void attachViewObserver(final IController listener);
 
   /**
    * Adds a new table button. 
@@ -25,7 +25,7 @@ public interface IView {
    * @param number
    *      the table number
    */
-  void addTable(Integer number);
+  void addTable(final Integer number);
   
   /**
    * Removes a table button.
@@ -33,7 +33,7 @@ public interface IView {
    * @param table
    *      the table number
    */
-  void removeTable(Integer table);  
+  void removeTable(final Integer table);  
 
   /**
    * Displays a message window with an error message.
@@ -41,11 +41,11 @@ public interface IView {
    * @param message
    *      the message to be displayed
    */
-  void commandFailed(String message);
+  void commandFailed(final String message);
   
   
   // DA FARE
   
-  void addDraw(Pair<Integer, Integer> pair, int i);
+  void addDraw(final Pair<Integer, Integer> pair, final int i);
 
 }

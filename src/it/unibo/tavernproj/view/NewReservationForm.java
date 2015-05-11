@@ -20,7 +20,8 @@ import javax.swing.JPanel;
 public class NewReservationForm extends ReservationForm {
 
   private static final long serialVersionUID = 1L;
-  private final JPanel res = new JPanel(new GridBagLayout());
+  private final IUtilities util = new Utilities();
+  private final JPanel res = util.getDefaultPanel(new GridBagLayout());
   private final Map<Integer, IReservation> map;
   private JLabel date;  
 
@@ -54,7 +55,7 @@ public class NewReservationForm extends ReservationForm {
   }
 
   private void buildLayout() {
-    final JPanel north = new JPanel(new BorderLayout());
+    final JPanel north = util.getDefaultPanel(new BorderLayout());
     north.add(date, BorderLayout.NORTH);
     north.add(res, BorderLayout.CENTER);
     super.getContentPane().add(north, BorderLayout.NORTH);

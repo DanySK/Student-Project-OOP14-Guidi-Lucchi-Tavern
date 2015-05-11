@@ -87,6 +87,21 @@ public interface IUtilities {
    * 
    * @param string
    *      the button text.
+   * 
+   * @param size
+   *      the font size desired.
+   *      
+   * @return
+   *      the button.
+   */
+  JButton getDefaultButton(String string, int size);
+  
+  /**
+   * It creates a new JButton with the string passed as text,
+   * white background and black border.
+   * 
+   * @param string
+   *      the button text.
    *      
    * @return
    *      the button.

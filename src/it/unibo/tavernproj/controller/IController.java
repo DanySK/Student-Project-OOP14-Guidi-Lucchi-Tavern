@@ -18,12 +18,12 @@ import it.unibo.tavernproj.view.*;
 
 public interface IController {
   
-  void setModel();
+  
 	
 	/**
 	 * Loads the map of reservations from the local file system. 
 	 */
-
+  void setModel();
   void setModel(IModel model);
 
 	/**
@@ -40,10 +40,12 @@ public interface IController {
 	void addTable(Integer table);
 	
 	/**
-	 * Remove a table previously added both as a button and from the map.
+	 * Remove a reservation from the model.
 	 * 
 	 * @param number
 	 *     table number
+	 * @param date
+	 *     the date
 	 */
 	void remove(int number, String date);
 	
@@ -82,15 +84,9 @@ public interface IController {
 
   void loadTables(String format);
 
-  //IReservation getExternalReservation(Integer table, String date);
-
-  IModel getModel();
-
   void commandQuit();
 
   void saveDisegno();
-
-  void setLabel(JLabel label);
 
   void LoadDisegno();
 
@@ -105,8 +101,6 @@ public interface IController {
   int getReservation(String date, String name);
 
   void displayException(String string);
-
-  //void setFileName(String string);
   
   /**
    * 
@@ -121,6 +115,8 @@ public interface IController {
    * Sets the date the user picked
    * */
   void setDate(String date);
+  
+  
 
 
 }

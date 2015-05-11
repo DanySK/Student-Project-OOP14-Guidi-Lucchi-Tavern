@@ -14,13 +14,10 @@ public class Application {
     final IUtilities utilities = new Utilities();
     final IController c = Controller.getController();  
     c.setFileName(HOME + SEPARATOR + DEFAULT_FILE);    
-    
     final View v = new View();
-    c.addView(v); 
-    
+    c.addView(v);     
     c.loadTables(utilities.getCurrentDate());
-    c.LoadDisegno();
-    
+    c.LoadDisegno();   
     
   }
 

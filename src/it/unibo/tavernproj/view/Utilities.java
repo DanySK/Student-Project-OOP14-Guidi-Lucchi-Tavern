@@ -111,10 +111,7 @@ public class Utilities implements IUtilities{
 
   @Override
   public JButton getDefaultButton(final String string) {
-    final JButton button = new JButton(string);
-    button.setFont(new Font("Arial", Font.BOLD, 18));
-    button.setBackground(Color.white);
-    return button;
+    return this.getDefaultButton(string, 18);
   }
 
   @Override
@@ -125,5 +122,13 @@ public class Utilities implements IUtilities{
   @Override
   public int getDefaultHeight() {
     return Utilities.HEIGHT;
+  }
+
+  @Override
+  public JButton getDefaultButton(String string, int size) {
+    final JButton button = new JButton(string);
+    button.setFont(new Font("Arial", Font.BOLD, size));
+    button.setBackground(Color.white);
+    return button;
   }
 }

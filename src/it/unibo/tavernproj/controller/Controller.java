@@ -42,7 +42,7 @@ public class Controller implements IController,Serializable{
 	
 	private final Set<IView> view = new HashSet<>();
 	private final Utilities utilies = new Utilities();
-  private final Map<Integer, Pair<Integer, Integer>> draw =DrawMap.getMap();
+  private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();
 	private IModel model = new Model();
 	private ObjectOutput outMap;
 	private ObjectInput  inMap; 
@@ -214,12 +214,6 @@ public class Controller implements IController,Serializable{
     }
 	}
 	
-//	@Override
-//	public void setLabel(JLabel label){
-//	  this.label=label;
-//	}
-	
-	
 	@Override
 	public void LoadDisegno(){
 	   try{
@@ -248,17 +242,6 @@ public class Controller implements IController,Serializable{
 	
 	}
 
-/*  @Override
-  public IReservation getExternalReservation(Integer table, String date) {
-    this.setModel();    
-    return this.getReservation(table, date);
-  }
-
-*/
-  @Override
-  public IModel getModel() {
-    return this.model;
-  }
 
 
   @Override
@@ -268,11 +251,6 @@ public class Controller implements IController,Serializable{
     System.exit(0);
   }
 
-
-  @Override
-  public void setLabel(JLabel label) {
-   // this.label=label;
-  }
 
 
   @Override

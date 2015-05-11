@@ -10,9 +10,9 @@ import javax.swing.JPanel;
 public class TableReservationForm extends ReservationForm{
   
   private static final long serialVersionUID = 1L;
-  private final JButton modifyButton = new JButton("Modifica");
-  private final JButton deleteButton = new JButton("Elimina");
-  private final IUtilities utilities = new Utilities();
+  private final IUtilities util = new Utilities();
+  private final JButton modifyButton = util.getDefaultButton("Modifica", 12);
+  private final JButton deleteButton = util.getDefaultButton("Elimina", 12);  
   private final JLabel date;
   private final IReservation res;
   private boolean modified;
@@ -47,8 +47,8 @@ public class TableReservationForm extends ReservationForm{
   }
 
   private void buildLayout() {
-    final JPanel east = utilities.buildGridPanel(modifyButton, deleteButton, 5);
-    final JPanel north = new JPanel(new BorderLayout());
+    final JPanel east = util.buildGridPanel(modifyButton, deleteButton, 5);
+    final JPanel north = util.getDefaultPanel(new BorderLayout());
     north.add(date, BorderLayout.WEST);
     north.add(east, BorderLayout.EAST);
     super.getContentPane().add(north, BorderLayout.NORTH);

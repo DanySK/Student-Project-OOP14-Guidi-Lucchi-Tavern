@@ -1,6 +1,7 @@
 package it.unibo.tavernproj.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -9,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -41,8 +43,10 @@ public class ReservationForm extends JFrame implements IReservationForm {
   private final ProgressiveAcceptor<JPanel> panelAggregator = 
       new ProgressiveAcceptorImpl<>();
   private final Map<String, JComponent> map = new HashMap<>();
+  
+  private final IUtilities util = new Utilities();
 
-  private final JButton okButton = new JButton("OK");
+  private final JButton okButton = util.getDefaultButton("OK", 12);
 
   /**
    * Builds a new form.
@@ -77,7 +81,8 @@ public class ReservationForm extends JFrame implements IReservationForm {
     panelAggregator.setAggregator(new Aggregator<JPanel>(){
       @Override
       public JPanel aggregate(final JPanel one, final JPanel two) {
-        final JPanel temp = new JPanel(new GridBagLayout());
+        final JPanel temp = util.getDefaultPanel(new GridBagLayout());
+        //final JPanel temp = util.buildGridPanel(one, two, 5);
         GridBagConstraints gap = new GridBagConstraints();
         gap.gridy = 0;
         temp.add(one, gap);
@@ -89,7 +94,7 @@ public class ReservationForm extends JFrame implements IReservationForm {
     panelAggregator.setSize(MAX);
 
     // Pannello centrale, ossia una griglia a due colonne
-    final JPanel center = new JPanel(new GridLayout(0,2));
+    final JPanel center = util.getDefaultPanel(new GridLayout(0,2));
 
     acceptPanel(new JLabel(TAV), FlowLayout.RIGHT, 0);
     acceptPanel(new JLabel(NOME),FlowLayout.RIGHT, 1);
@@ -137,6 +142,7 @@ public class ReservationForm extends JFrame implements IReservationForm {
 
   private JRadioButton addRadioButton(final String string) {
     final JRadioButton b = new JRadioButton();
+    b.setBackground(Color.white);
     b.setSelected(false);
     b.setName(string);
     map.put(string, b);
@@ -144,7 +150,7 @@ public class ReservationForm extends JFrame implements IReservationForm {
   }
 
   private void acceptPanel(final JComponent component, final int orientation, final int pos) {
-    final JPanel panel = new JPanel(new FlowLayout(orientation));
+    final JPanel panel = util.getDefaultPanel(new FlowLayout(orientation));
     panel.add(component);
     panelAggregator.accept(pos, panel);
   }
