@@ -68,8 +68,7 @@ public class View extends JFrame implements IView{
     pos.paint(map.getGraphics(),pair.getX(),pair.getY());
   }  
 
-  private void buildLayout() {
-    
+  private void buildLayout() {    
     final JPanel reservPanel = build.buildGridPanel(buttonNew, buttonDelete, 10);
     final JPanel east = build.getDefaultPanel(new BorderLayout());
     east.add(reservPanel, BorderLayout.CENTER);    
@@ -134,7 +133,6 @@ public class View extends JFrame implements IView{
   }
   
   private void setHandlers() {
-
     this.buttonNew.addActionListener(e -> {      
         final JFrame frame = new JFrame("Calendar");
         Calendar calendar = new Calendar(frame);
