@@ -85,50 +85,7 @@ public class TableReservationForm extends ReservationForm{
         TableReservationForm.this.setVisible(false);
       }		  
 		});
-
     
-	}
-
-	public void attachViewObserver(IController controller) {
-		super.attachViewObserver(controller);
-	}	
-	
-	public Integer getTable() {
-		return super.getTable();
-	}
-
-	public String getName() {
-		return super.getName();
-	}
-
-	public String getH() {
-		return super.getH();
-	}
-
-	public String getTel() {
-		return super.getTel();
-	}
-
-	public String getNum() {
-		return super.getNum();
-	}
-
-	public String getMenu() {
-		return super.getMenu();
-	}
-
-	public boolean isMenuSelected() {
-		return super.isMenuSelected();
-	}
-
-	@Override
-	public void disableAll(){		
-		super.disableAll();	
-	}
-
-	@Override
-	public void enableAll() {
-		super.enableAll();		
 	}
 
 	public boolean isBeenModified() {
