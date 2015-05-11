@@ -104,7 +104,23 @@ public interface IController {
 
   int getReservation(String date, String name);
 
+  void displayException(String string);
+
   //void setFileName(String string);
+  
+  /**
+   * 
+   * @return
+   * 
+   * @throws IllegalArgumentException if none date is set
+   */
+  String getDate();
+  
+  
+  /**
+   * Sets the date the user picked
+   * */
+  void setDate(String date);
 
 
 }

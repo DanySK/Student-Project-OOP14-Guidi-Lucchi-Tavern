@@ -127,7 +127,13 @@ public class Chooser extends JFrame{
         }
         
         controller.remove(table, date);
-        removed = true;        
+        /*setto la variaabile rimossa solo se è il giorno corrente, 
+         * così modifico la view solo se necessario */
+        IUtilities utilities = new Utilities();
+        if (date.equals(utilities .getCurrentDate())){
+          removed = true;  
+        }
+              
       }      
     });
     

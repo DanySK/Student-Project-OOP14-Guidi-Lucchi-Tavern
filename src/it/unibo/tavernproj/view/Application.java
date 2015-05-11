@@ -13,9 +13,7 @@ public class Application {
   public static void main(final String[] argv) {
     final IUtilities utilities = new Utilities();
     final IController c = Controller.getController();  
-    c.setFileName(HOME + SEPARATOR + DEFAULT_FILE);
-
-    
+    c.setFileName(HOME + SEPARATOR + DEFAULT_FILE);    
     
     final View v = new View();
     c.addView(v); 

@@ -1,117 +1,63 @@
 package it.unibo.tavernproj.view;
 
-import it.unibo.tavernproj.controller.FormController;
-import it.unibo.tavernproj.controller.IFormController;
 import it.unibo.tavernproj.model.IReservation;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 
 /**
  * @author Eleonora Guidi
- * 
+ *
  * modified by @author Giulia Lucchi
  *
  */
 
+public class NewReservationForm extends ReservationForm {
 
-//vedere se fare un'interfaccia per la form
+  private static final long serialVersionUID = 1L;
+  private final JPanel res = new JPanel(new GridBagLayout());
+  private final Map<Integer, IReservation> map;
+  private JLabel date;  
 
-public class NewReservationForm extends ReservationForm{
-
-	private static final long serialVersionUID = 1L;
-	public JLabel date;
-	private final JPanel res = new JPanel(new GridBagLayout());
-	private Map<Integer, IReservation> map = new HashMap<>();
-	
-	/*Usare l'esame 01b del 2015 per fare la form!*/
-	public NewReservationForm(String date, Map<Integer, IReservation> map){
-		super();
-		this.date = new JLabel(date);
-		
-		this.map = map;
-		
-		loadReservation();
-		
-		buildLayout();
-
-		
-		this.setVisible(true);		
-	}
-	
-	private void loadReservation() {
-		//scaricare da un file le prentazioni in base alla data
-
+  /**
+   * It builds a new Reservation Form whenever we need to add a new Reservation.
+   * 
+   * @param date
+   *      the reservation date.
+   * @param map
+   *      the map containing all the tables and reservations
+   */
+  public NewReservationForm(final String date, final Map<Integer, IReservation> map) {
+    super();
+    this.date = new JLabel(date);
+    this.map = map;
+    loadReservation();
+    buildLayout();
+    this.setVisible(true);
+  }
+  
+  private void loadReservation() {
     final GridBagConstraints gap = new GridBagConstraints();
     gap.gridy = 0;
     gap.insets = new Insets(5, 5, 5, 5);
     gap.fill = GridBagConstraints.HORIZONTAL;
-	  
-		for (Integer i: map.keySet()){
-		  res.add(new JLabel(map.get(i).toString()), gap); //stampare il set con le prenotazioni nel file di sopra
-		  gap.gridy++;
-		}
-		this.validate();
-	}
+    for (final Integer i: map.keySet()) {
+      res.add(new JLabel(map.get(i).toString(date.getText())), gap);
+      gap.gridy++;
+    }
+    this.validate();
+  }
 
-	private void buildLayout() {
-		final JPanel north = new JPanel(new BorderLayout());
-		north.add(date, BorderLayout.NORTH);
-		north.add(res, BorderLayout.CENTER);
-		super.getContentPane().add(north, BorderLayout.NORTH);		
-	}
+  private void buildLayout() {
+    final JPanel north = new JPanel(new BorderLayout());
+    north.add(date, BorderLayout.NORTH);
+    north.add(res, BorderLayout.CENTER);
+    super.getContentPane().add(north, BorderLayout.NORTH);
+  }
 
-	public void attachViewObserver(IFormController formController) {
-		super.attachViewObserver(formController);
-	}	
-	
-	public Integer getTable() {
-		return super.getTable();
-	}
-
-	public String getName() {
-		return super.getName();
-	}
-
-	public String getH() {
-		return super.getH();
-	}
-
-	public String getTel() {
-		return super.getTel();
-	}
-
-	public String getNum() {
-		return super.getNum();
-	}
-
-	public String getMenu() {
-		return super.getMenu();
-	}
-
-	public boolean isMenuSelected() {
-		return super.isMenuSelected();
-	}	
-	
-	
 }

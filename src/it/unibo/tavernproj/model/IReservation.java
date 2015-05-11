@@ -48,6 +48,8 @@ public interface IReservation {
 	public String getMenu();
 
 	String getDate();
+
+  public String toString(String text);
 	
 	
 }

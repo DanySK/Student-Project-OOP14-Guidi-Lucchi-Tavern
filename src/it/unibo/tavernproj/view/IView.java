@@ -1,36 +1,51 @@
 package it.unibo.tavernproj.view;
-import javax.swing.JLabel;
 
-import it.unibo.tavernproj.controller.*;
-import it.unibo.tavernproj.disegno.DrawPosition;
+import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.disegno.Pair;
 
 /**
  * @author Eleonora Guidi
+ * @author Giulia Lucchi
  *
  */
 
 public interface IView {
-	
-	/**Change current {@link IController}
-	 * 
-	 * @param listener
-	 *      new {@link IController}.
-	 */
-	void attachViewObserver(IController listener);
-	
-	/**Adds a new table button. 
-	 * 
-	 * @param number
-	 * 		the table number
-	 */
-	void addTable(Integer number);
+  
+  /**
+   * Changes current {@link IController}
+   * 
+   * @param listener
+   *      new {@link IController}.
+   */
+  void attachViewObserver(IController listener);
 
-  void removeTable(Integer table);
+  /**
+   * Adds a new table button. 
+   * 
+   * @param number
+   *      the table number
+   */
+  void addTable(Integer number);
+  
+  /**
+   * Removes a table button.
+   * 
+   * @param table
+   *      the table number
+   */
+  void removeTable(Integer table);  
 
-  void addDraw(Pair<Integer, Integer> p, int index);
-
-
-	
+  /**
+   * Displays a message window with an error message.
+   * 
+   * @param message
+   *      the message to be displayed
+   */
+  void commandFailed(String message);
+  
+  
+  // DA FARE
+  
+  void addDraw(Pair<Integer, Integer> pair);
 
 }

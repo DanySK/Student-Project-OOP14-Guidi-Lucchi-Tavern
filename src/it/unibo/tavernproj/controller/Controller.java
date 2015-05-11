@@ -47,6 +47,8 @@ public class Controller implements IController,Serializable{
 	private ObjectOutput outMap;
 	private ObjectInput  inMap; 
 	private String fileName = "file.txt";
+	
+	private Optional<String> date = Optional.empty();
 
 	private Controller(){};
 	
@@ -145,7 +147,9 @@ public class Controller implements IController,Serializable{
               out.writeObject(model.getMap().get(s).get(i).getMenu().toString());
             }catch(NoSuchElementException e){
               out.writeObject("");
-            }            
+            }catch(NullPointerException e1){
+              out.writeObject("");
+            }
           }     
         }       
         out.close();
@@ -229,7 +233,7 @@ public class Controller implements IController,Serializable{
             for(Integer i : map.keySet()){
               Pair<Integer,Integer> p = map.get(i);
               for (final IView v: view){
-                v.addDraw(p, index);
+                v.addDraw(p);
                 index++;
               }
                
@@ -334,7 +338,26 @@ public class Controller implements IController,Serializable{
     throw new IllegalArgumentException();
   }
 
+  public void displayException(final String e) {
+    for (final IView v : view) {
+      v.commandFailed(e);
+    }
+  }
 
+
+  @Override
+  public String getDate() {
+    if (!date.isPresent()){
+      throw new IllegalArgumentException();
+    }
+    return this.date.get();
+  }
+
+
+  @Override
+  public void setDate(String date) {
+    this.date = Optional.of(date);
+  }
   
 
 
