@@ -2,6 +2,7 @@ package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.disegno.DrawButton;
+import it.unibo.tavernproj.disegno.DrawMap;
 import it.unibo.tavernproj.disegno.DrawPosition;
 import it.unibo.tavernproj.disegno.Pair;
 import it.unibo.tavernproj.model.IReservation;
@@ -19,6 +20,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -49,7 +51,8 @@ public class View extends JFrame implements IView{
   private final JButton drawTable = new JButton("Disegna Tavolo ");
   private final JPanel tablesButtons = build.getDefaultPanel(new FlowLayout());
   private final JLabel date = build.getDateLabel();
-  private JLabel map;
+  private final JLabel map = build.getDefaultMap("map.png");
+  private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();  
   private IController controller;  
 
   /**
@@ -70,8 +73,7 @@ public class View extends JFrame implements IView{
     final JPanel reservPanel = build.buildGridPanel(util.getList(buttonNew, buttonDelete), 10);
     final JPanel east = build.getDefaultPanel(new BorderLayout());
     east.add(reservPanel, BorderLayout.CENTER);    
-    try {
-      map = build.getDefaultMap("map.png");
+    try {      
       east.add(build.getDefaultLogo("logo.jpg"), BorderLayout.NORTH);  
     } catch (IOException e) {
       controller.displayException("Le risorse non sono al momento raggiungibili");
@@ -89,7 +91,7 @@ public class View extends JFrame implements IView{
     center.add(north, BorderLayout.NORTH);
     
     //aggiunta pannello
-    final JPanel panel = new JPanel();
+    JPanel panel = new JPanel();
 
     panel.setBackground(Color.white);
 
@@ -109,17 +111,26 @@ public class View extends JFrame implements IView{
     
     final DrawPosition cancel = new DrawPosition(map);
      
-    this.drawTable.addActionListener(e-> {
-        map.addMouseListener(cancel);
-      });
-   
-    this.cancelTable.addActionListener(e-> {
-        cancel.cancel(map.getGraphics());
-      });
+    this.drawTable.addActionListener(e->{
+      map.addMouseListener(cancel);
+      cancelAll.setEnabled(true);
+      cancelTable.setEnabled(true);
+     });
     
-    this.cancelAll.addActionListener(e-> {
-        cancel.cancelAll(map.getGraphics());
-      });
+     this.cancelTable.addActionListener(e->{
+           cancel.cancel(map.getGraphics());
+           if(draw.isEmpty()){
+            cancelTable.setEnabled(false); 
+            cancelAll.setEnabled(false);
+           }
+     });
+     
+     this.cancelAll.addActionListener(e->{
+       
+         cancel.cancelAll(map.getGraphics());
+         cancelAll.setEnabled(false); 
+         cancelTable.setEnabled(false);
+     });
    //
 
 
@@ -183,12 +194,13 @@ public class View extends JFrame implements IView{
       }
     });
   }
+  
   @Override
-  public void addDraw(final Pair<Integer, Integer> pair, final int index) {
+  public void addDraw(Pair<Integer, Integer> p, int index){
     final DrawPosition pos = new DrawPosition(map);
     pos.setIndex(index);
-    pos.paint(map.getGraphics(),pair.getX(),pair.getY());
-  }  
+    pos.paint(map.getGraphics(),p.getX(),p.getY());
+  } 
 
   
   

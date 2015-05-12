@@ -51,8 +51,13 @@ public class GUIutilities extends Utilities implements IGUIutilities{
   }
 
   @Override
-  public JLabel getDefaultMap(final String srt) throws IOException {
-    final ImageIcon img = this.getImage(srt);
+  public JLabel getDefaultMap(final String srt){
+    ImageIcon img = new ImageIcon();
+    try {
+      img = this.getImage(srt);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     final Image temp = img.getImage().getScaledInstance(WIDTH * 25 / 40,
         HEIGHT * 25 / 40, Image.SCALE_SMOOTH);
     img.setImage(temp);

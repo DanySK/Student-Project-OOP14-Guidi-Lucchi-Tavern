@@ -52,7 +52,7 @@ public interface IGUIutilities {
    * @throws IOException
    *      if you passed a wrong path.
    */
-  JLabel getDefaultMap(String srt) throws IOException;
+  JLabel getDefaultMap(String srt);
   
   /**
    * It creates a new JButton with the image passed as background, 
