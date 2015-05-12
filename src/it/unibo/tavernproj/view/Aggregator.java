@@ -8,6 +8,5 @@ package it.unibo.tavernproj.view;
  */
 
 public interface Aggregator<X> {
-	
-	X aggregate(X one, X two);
+  X aggregate(X one, X two);
 }

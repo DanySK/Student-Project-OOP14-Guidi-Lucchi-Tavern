@@ -2,8 +2,10 @@ package it.unibo.tavernproj.view;
 
 import java.awt.LayoutManager;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -11,7 +13,7 @@ import javax.swing.JPanel;
  * @author Eleonora Guidi
  */
 
-public interface IUtilities {
+public interface IGUIutilities {
   
   /**
    * Creates a JPanel with a white background.
@@ -76,14 +78,8 @@ public interface IUtilities {
   JLabel getDateLabel();
 
   /**
-   * @return
-   *      the current date.
-   */
-  String getCurrentDate();
-
-  /**
    * It creates a new JButton with the string passed as text,
-   * white background and black border.
+   * size as the int passed, white background and black border.
    * 
    * @param string
    *      the button text.
@@ -121,22 +117,17 @@ public interface IUtilities {
   int getDefaultHeight();
 
   /**
-   * It creates a new GridBagLayouted panel with two buttons,
+   * It creates a new GridBagLayouted panel with all the components in the list,
    * one above the other.
    * 
-   * @param b1
-   *      the first button.
-   * @param b2
-   *      the second button.
+   * @param list
+   *      the JComponent list.
    * @param ins
-   *      the insets between the buttons.
+   *      the insets between the components.
    * @return
    *      the panel.
    */
-  JPanel buildGridPanel(JButton b1, JButton b2, int ins);
-  /*questo metodo potrebbe essere migliorato aumentandone la riusabilità
-   * usando due Component oppure passando una lista di Component e aggiungendoli tutti quanti
-   */
+  JPanel buildGridPanel(final List<JComponent> list, final int ins);
   
 
 }

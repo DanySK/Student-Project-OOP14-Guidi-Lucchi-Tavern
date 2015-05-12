@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 public class NewReservationForm extends ReservationForm {
 
   private static final long serialVersionUID = 1L;
-  private final IUtilities util = new Utilities();
+  private final IGUIutilities util = new GUIutilities();
   private final JPanel res = util.getDefaultPanel(new GridBagLayout());
   private final Map<Integer, IReservation> map;
   private JLabel date;  

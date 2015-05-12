@@ -44,7 +44,7 @@ public class ReservationForm extends JFrame implements IReservationForm {
       new ProgressiveAcceptorImpl<>();
   private final Map<String, JComponent> map = new HashMap<>();
   
-  private final IUtilities util = new Utilities();
+  private final IGUIutilities util = new GUIutilities();
 
   private final JButton okButton = util.getDefaultButton("OK", 12);
 

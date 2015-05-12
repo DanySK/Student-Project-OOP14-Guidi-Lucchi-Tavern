@@ -17,9 +17,12 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -37,7 +40,8 @@ import javax.swing.WindowConstants;
 public class View extends JFrame implements IView{
 
   private static final long serialVersionUID = 1L;
-  private final IUtilities build = new Utilities();
+  private final IGUIutilities build = new GUIutilities();
+  private final IUtilities util = new Utilities();
   private final JButton buttonNew = build.getDefaultButton("Nuova Prenotazione");
   private final JButton buttonDelete = build.getDefaultButton("Elimina Prenotazione");
   private final JButton cancelAll = new JButton("Cancella Tutto");
@@ -69,8 +73,8 @@ public class View extends JFrame implements IView{
     pos.paint(map.getGraphics(),pair.getX(),pair.getY());
   }  
 
-  private void buildLayout() {    
-    final JPanel reservPanel = build.buildGridPanel(buttonNew, buttonDelete, 10);
+  private void buildLayout() {
+    final JPanel reservPanel = build.buildGridPanel(util.getList(buttonNew, buttonDelete), 10);
     final JPanel east = build.getDefaultPanel(new BorderLayout());
     east.add(reservPanel, BorderLayout.CENTER);    
     try {

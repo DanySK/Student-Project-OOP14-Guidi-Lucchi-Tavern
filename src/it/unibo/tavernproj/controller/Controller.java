@@ -5,7 +5,9 @@ import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.model.Reservation;
+import it.unibo.tavernproj.view.IUtilities;
 import it.unibo.tavernproj.view.IView;
+import it.unibo.tavernproj.view.GUIutilities;
 import it.unibo.tavernproj.view.Utilities;
 
 import java.io.FileInputStream;
@@ -41,7 +43,7 @@ public class Controller implements IController,Serializable{
   private static final Controller SINGLETON = new Controller();  
 	
 	private final Set<IView> view = new HashSet<>();
-	private final Utilities utilies = new Utilities();
+	private final IUtilities util = new Utilities();
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();
 	private IModel model = new Model();
 	private ObjectOutput outMap;
@@ -205,7 +207,7 @@ public class Controller implements IController,Serializable{
 	public void saveDisegno(){
 	  try{
       outMap = new ObjectOutputStream(new FileOutputStream("disegno.dat"));
-      outMap.writeObject(utilies.getCurrentDate());
+      outMap.writeObject(util.getCurrentDate());
       outMap.writeObject(draw);
       System.out.print(draw);
       outMap.close();
@@ -218,7 +220,7 @@ public class Controller implements IController,Serializable{
 	public void LoadDisegno(){
 	   try{
         inMap = new ObjectInputStream(new FileInputStream("disegno.dat"));
-      if(utilies.getCurrentDate().equals(inMap.readObject())){
+      if(util.getCurrentDate().equals(inMap.readObject())){
         System.out.println("data giusta per caricare");
         Map<Integer,Pair<Integer,Integer>> map = (Map<Integer,Pair<Integer,Integer>>)inMap.readObject();
            System.out.println("assegnato mappa"+ map);

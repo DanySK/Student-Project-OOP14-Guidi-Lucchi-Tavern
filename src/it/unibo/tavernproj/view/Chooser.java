@@ -1,198 +1,170 @@
 package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.controller.IController;
-import it.unibo.tavernproj.model.IReservation;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Chooser extends JFrame{
-  
-  private final JLabel lDat = new JLabel("Data (formato gg-mm-aaa): ");
+
+  private static final long serialVersionUID = 1L;
+  private final JLabel dateLabel = new JLabel("Data (formato gg-mm-aaa): ");
   private final JTextField dat = new JTextField(20);
-  private final JLabel lName = new JLabel("Nome: ");
+  private final JLabel nameLabel = new JLabel("Nome: ");
   private final JTextField name = new JTextField(20);
-  private final JLabel lTav = new JLabel("Tavolo: ");
-  private final JTextField tav = new JTextField(20);
-  private boolean choosedByDate = false;
-  private boolean removed = false;
+  private final JLabel tableLabel = new JLabel("Tavolo: ");
+  private final JTextField tab = new JTextField(20);
+  private final IGUIutilities util = new GUIutilities();
+  private final IUtilities utilities = new Utilities();
+  private boolean choosedByDate;
+  private boolean removed;
   private int table;
-  private JButton ok = new JButton("OK");
-  
-  private final JPanel res = new JPanel(new GridBagLayout());
-  
-  private String date;
-  
+  private final JButton ok = util.getDefaultButton("OK");  
+  private JPanel res = util.getDefaultPanel(new FlowLayout());  
+  private String date;  
   private final IController controller;
   
-  public Chooser(IController controller){
-    this.setSize(500, 400);
+  /**
+   * build a new chooser view
+   * 
+   * @param controller
+   *      the controller to use.
+   */
+  public Chooser(final IController controller) {
+    this.setSize(util.getDefaultWidth() * 1 / 2, util.getDefaultHeight() * 1 / 2);  
+    this.setLocationByPlatform(true);
+    this.controller = controller;    
+    final JButton bDate = util.getDefaultButton("Scegli per data");
+    final JButton personButton = util.getDefaultButton("Scegli per nome");
     
-    this.controller = controller;
-    
-    JButton bDate = new JButton("Scegli per data");
-    bDate.addActionListener(new ActionListener(){
-      @Override
-      public void actionPerformed(ActionEvent arg0) {
+    bDate.addActionListener(e -> {
         choosedByDate = true;
-        JFrame frame = new JFrame("Calendar");
+        personButton.setEnabled(false);
+        final JFrame frame = new JFrame("Calendar");
         Calendar calendar = new Calendar(frame);
         while (!calendar.getPickedDate().equals("Error") && !calendar.isRight()) {
-          //FARE una finestra al posto del messaggio stampato
-          System.out.println("Selezionare una data utile");
+          controller.displayException("Selezionare una data utile");
           calendar = new Calendar(frame);
         }
         if (!calendar.getPickedDate().equals("Error")) {
           date = calendar.getPickedDate();
-          if (controller.getReservation(date).size() == 0){
-            //FARE FORM CHE ESCE FUORI
-            System.out.print("Nessuna prenotazione per la data selezionata.");
-          }else{
+          if (controller.getReservation(date).size() == 0) {
+            controller.displayException("Nessuna prenotazione per la data selezionata.");
+            calendar = new Calendar(frame);
+          } else {
             loadReservation(date);
-            lTav.setVisible(true);
-            tav.setVisible(true);
+            tableLabel.setVisible(true);
+            tab.setVisible(true);
             ok.setVisible(true);
           }
         }
-        
-      }
-      
-    });
-    
-    
-    JButton bPerson = new JButton("Scegli per nome");
-    bPerson.addActionListener(new ActionListener(){
+      });    
 
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        Set<String> dates = controller.getDates();
-        for (String s: dates){
-          loadReservation(s);
-        }
-        
-        lDat.setVisible(true);
+    personButton.addActionListener(e -> {
+        bDate.setEnabled(false);
+        this.loadReservations();
+        dateLabel.setVisible(true);
         dat.setVisible(true);
-        lName.setVisible(true);
+        nameLabel.setVisible(true);
         name.setVisible(true);
-        ok.setVisible(true);        
-      }
-      
-    }); 
+        ok.setVisible(true);
+      });
     
-    
-    JPanel top = new JPanel(new FlowLayout());
+    final JPanel top = util.getDefaultPanel(new FlowLayout());
     top.add(bDate);
-    top.add(bPerson);   
-    
-    lDat.setVisible(false);
+    top.add(personButton);    
+    dateLabel.setVisible(false);
     dat.setVisible(false);
-    tav.setVisible(false);
-    lTav.setVisible(false);
+    tab.setVisible(false);
+    tableLabel.setVisible(false);
     name.setVisible(false);
-    lName.setVisible(false);
-    
+    nameLabel.setVisible(false);    
     ok.setVisible(false);
-    ok.addActionListener(new ActionListener(){
-      @Override
-      public void actionPerformed(ActionEvent e) {
+    ok.addActionListener(e -> {
         Chooser.this.setVisible(false);
         if (choosedByDate) {          
-          try{
-            table = Integer.parseInt(tav.getText());
-          }catch(NumberFormatException e1){
-            System.out.print("Il numero del tavolo è sbagliato");
+          try {
+            table = Integer.parseInt(tab.getText());
+            controller.remove(table, date);
+          } catch (NumberFormatException e1) {
+            controller.displayException("Il numero del tavolo è sbagliato");
+            Chooser.this.setVisible(true);
+          } catch (IllegalArgumentException e2) {
+            controller.displayException("Il numero e' sbagliato");
             Chooser.this.setVisible(true);
           }
-        }
-        else {
-          try{
+        } else {
+          try {
             date = dat.getText();
             table = controller.getReservation(date, name.getText());  
-          }catch(IllegalArgumentException e1){
-            System.out.print("Il nome o la data inseriti sono sbagliati");
+            controller.remove(table, date);
+          } catch (IllegalArgumentException e1) {
+            controller.displayException("Il nome o la data inseriti sono sbagliati");
             Chooser.this.setVisible(true);
           }
-        }
-        
-        controller.remove(table, date);
-        /*setto la variaabile rimossa solo se è il giorno corrente, 
+        }        
+        final IUtilities utilities = new Utilities();
+        /*setto la variabile rimossa solo se è il giorno corrente, 
          * così modifico la view solo se necessario */
-        IUtilities utilities = new Utilities();
-        if (date.equals(utilities .getCurrentDate())){
+        if (date.equals(utilities.getCurrentDate())) {
           removed = true;  
         }
-              
-      }      
-    });
-    
-    JPanel up = new JPanel(new FlowLayout());
-    up.add(lTav);
-    up.add(tav);
-    
-    JPanel center = new JPanel(new FlowLayout());
-    center.add(lDat);
-    center.add(dat);
-    
-    JPanel down = new JPanel(new FlowLayout());
-    down.add(lName);
-    down.add(name);
-    
-    JPanel south = new JPanel(new GridBagLayout());
-    final GridBagConstraints gap = new GridBagConstraints();
-    gap.gridy = 0;
-    gap.insets = new Insets(5, 5, 5, 5);
-    gap.fill = GridBagConstraints.HORIZONTAL;
-   
-    south.add(up, gap);
-    gap.gridy++;
-    south.add(center, gap);
-    gap.gridy++;
-    south.add(down, gap);
-    gap.gridy++;
-    south.add(ok, gap);
-
-    
-    JPanel main = new JPanel(new BorderLayout());
+      });    
+    final JPanel up = util.getDefaultPanel(new FlowLayout());
+    up.add(tableLabel);
+    up.add(tab);    
+    final JPanel center = util.getDefaultPanel(new FlowLayout());
+    center.add(dateLabel);
+    center.add(dat);    
+    final JPanel down = util.getDefaultPanel(new FlowLayout());
+    down.add(nameLabel);
+    down.add(name); 
+    utilities.add(up);
+    utilities.add(center);
+    utilities.add(down);
+    utilities.add(ok);
+    final JPanel south = util.buildGridPanel(utilities.getList(), 5);
+    final JPanel main = util.getDefaultPanel(new BorderLayout());
     main.add(top, BorderLayout.NORTH);
     main.add(res, BorderLayout.CENTER);
-    main.add(south, BorderLayout.SOUTH);
-    
+    main.add(south, BorderLayout.SOUTH);    
     this.getContentPane().add(main);
     this.setVisible(true);
   }
   
   private void loadReservation(String date) {
-    //scaricare da un file le prentazioni in base alla data
-
-    final GridBagConstraints gap = new GridBagConstraints();
-    gap.gridy = 0;
-    gap.insets = new Insets(5, 5, 5, 5);
-    gap.fill = GridBagConstraints.HORIZONTAL;
-    
-    for (Integer i: controller.getReservation(date).keySet()){
-      res.add(new JLabel(controller.getReservation(date).get(i).toString()), gap); //stampare il set con le prenotazioni nel file di sopra
-      gap.gridy++;
+    for (final Integer i: controller.getReservation(date).keySet()) {
+      utilities.add(new JLabel(controller.getReservation(date).get(i).toString()));  
     }
-    this.validate();
+    res.add(util.buildGridPanel(utilities.getList(), 10));
+  }
+
+  private void loadReservations() {
+    final Set<String> dates = controller.getDates();
+    //LAMBDA??
+    for (final String s: dates) {
+      for (final Integer i: controller.getReservation(s).keySet()) {
+        utilities.add(new JLabel(controller.getReservation(s).get(i).toString()));  
+      }         
+    }        
+    res.add(util.buildGridPanel(utilities.getList(), 10));
   }
   
-  public boolean isBeenRemoved(){
+  public boolean isBeenRemoved() {
     return this.removed;
   }
   
-  public int getTable(){
+  public int getTable() {
     return this.table;
   }
 

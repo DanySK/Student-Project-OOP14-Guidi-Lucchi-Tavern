@@ -3,14 +3,19 @@ package it.unibo.tavernproj.view;
 import it.unibo.tavernproj.model.IReservation;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class TableReservationForm extends ReservationForm{
   
   private static final long serialVersionUID = 1L;
-  private final IUtilities util = new Utilities();
+  private final IGUIutilities util = new GUIutilities();
+  private final IUtilities utilities = new Utilities();
   private final JButton modifyButton = util.getDefaultButton("Modifica", 12);
   private final JButton deleteButton = util.getDefaultButton("Elimina", 12);  
   private final JLabel date;
@@ -47,7 +52,7 @@ public class TableReservationForm extends ReservationForm{
   }
 
   private void buildLayout() {
-    final JPanel east = util.buildGridPanel(modifyButton, deleteButton, 5);
+    final JPanel east = util.buildGridPanel(utilities.getList(modifyButton, deleteButton), 5);
     final JPanel north = util.getDefaultPanel(new BorderLayout());
     north.add(date, BorderLayout.WEST);
     north.add(east, BorderLayout.EAST);

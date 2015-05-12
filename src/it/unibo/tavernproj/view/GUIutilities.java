@@ -11,10 +11,12 @@ import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -26,7 +28,7 @@ import javax.swing.JPanel;
 /* Mi sono basata su questo http://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
  */
 
-public class Utilities implements IUtilities{
+public class GUIutilities implements IGUIutilities{
   
   private static final Dimension SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
   private static final int WIDTH = (int) SCREEN.getWidth() * 4 / 5;
@@ -59,7 +61,8 @@ public class Utilities implements IUtilities{
 
   @Override
   public JLabel getDateLabel() {
-    final JLabel date = new JLabel(this.getCurrentDate());
+    final IUtilities util = new Utilities();
+    final JLabel date = new JLabel(util.getCurrentDate());
     date.setFont(new Font("Arial", Font.BOLD, 18));
     return date;
   }
@@ -86,49 +89,39 @@ public class Utilities implements IUtilities{
   }
 
   @Override
-  public String getCurrentDate() {
-    final java.util.Calendar localCalendar = java.util.Calendar.getInstance();
-    final int month = localCalendar.get(java.util.Calendar.MONTH);
-    final int year = localCalendar.get(java.util.Calendar.YEAR);
-    final int day = localCalendar.get(java.util.Calendar.DATE);   
-    final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
-    localCalendar.set(year, month, day);
-    return sdf.format(localCalendar.getTime());
-  }
-
-  @Override
-  public JPanel buildGridPanel(final JButton c1, final JButton c2, final int ins) {
-    final JPanel panel = this.getDefaultPanel(new GridBagLayout());
-    final GridBagConstraints gap = new GridBagConstraints();
-    gap.gridy = 0;
-    gap.insets = new Insets(ins, ins, ins, ins);
-    gap.fill = GridBagConstraints.HORIZONTAL;    
-    panel.add(c1, gap);
-    gap.gridy++;
-    panel.add(c2, gap);    
-    return panel;
-  }
-
-  @Override
   public JButton getDefaultButton(final String string) {
     return this.getDefaultButton(string, 18);
   }
-
+  
   @Override
-  public int getDefaultWidth() {
-    return Utilities.WIDTH;
-  }
-
-  @Override
-  public int getDefaultHeight() {
-    return Utilities.HEIGHT;
-  }
-
-  @Override
-  public JButton getDefaultButton(String string, int size) {
+  public JButton getDefaultButton(final String string, final int size) {
     final JButton button = new JButton(string);
     button.setFont(new Font("Arial", Font.BOLD, size));
     button.setBackground(Color.white);
     return button;
+  }
+
+  @Override
+  public int getDefaultWidth() {
+    return GUIutilities.WIDTH;
+  }
+
+  @Override
+  public int getDefaultHeight() {
+    return GUIutilities.HEIGHT;
+  }
+
+  @Override
+  public JPanel buildGridPanel(final List<JComponent> list, final int ins) {
+    final JPanel panel = this.getDefaultPanel(new GridBagLayout());
+    final GridBagConstraints gap = new GridBagConstraints();
+    gap.gridy = 0;
+    gap.insets = new Insets(ins, ins, ins, ins);
+    gap.fill = GridBagConstraints.HORIZONTAL;
+    for (final JComponent c: list) {
+      panel.add(c, gap);
+      gap.gridy++;
+    }    
+    return panel;
   }
 }
