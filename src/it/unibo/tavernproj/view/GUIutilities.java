@@ -28,7 +28,7 @@ import javax.swing.JPanel;
 /* Mi sono basata su questo http://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
  */
 
-public class GUIutilities implements IGUIutilities{
+public class GUIutilities extends Utilities implements IGUIutilities{
   
   private static final Dimension SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
   private static final int WIDTH = (int) SCREEN.getWidth() * 4 / 5;
@@ -61,8 +61,7 @@ public class GUIutilities implements IGUIutilities{
 
   @Override
   public JLabel getDateLabel() {
-    final IUtilities util = new Utilities();
-    final JLabel date = new JLabel(util.getCurrentDate());
+    final JLabel date = new JLabel(super.getCurrentDate());
     date.setFont(new Font("Arial", Font.BOLD, 18));
     return date;
   }

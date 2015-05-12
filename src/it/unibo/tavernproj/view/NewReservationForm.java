@@ -21,6 +21,7 @@ public class NewReservationForm extends ReservationForm {
 
   private static final long serialVersionUID = 1L;
   private final IGUIutilities util = new GUIutilities();
+  //private final IUtilities utilities = new Utilities();
   private final JPanel res = util.getDefaultPanel(new GridBagLayout());
   private final Map<Integer, IReservation> map;
   private JLabel date;  

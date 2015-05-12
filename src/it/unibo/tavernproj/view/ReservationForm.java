@@ -25,7 +25,7 @@ import javax.swing.JTextField;
  */
 
 /*Usato l'esame 01b del 2015 per fare la form!*/
-public class ReservationForm extends JFrame implements IReservationForm {
+public class ReservationForm extends BasicFrame implements IReservationForm {
   
   private static final long serialVersionUID = 1L;
   //numero massimo di campi per il form
@@ -42,31 +42,22 @@ public class ReservationForm extends JFrame implements IReservationForm {
 
   private final ProgressiveAcceptor<JPanel> panelAggregator = 
       new ProgressiveAcceptorImpl<>();
-  private final Map<String, JComponent> map = new HashMap<>();
+  private final Map<String, JComponent> map = new HashMap<>(); 
   
   private final IGUIutilities util = new GUIutilities();
-
   private final JButton okButton = util.getDefaultButton("OK", 12);
-
+  
   /**
    * Builds a new form.
    */
   public ReservationForm() {
     super();
-    setLocationByPlatform(true);
-    final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-    final int sw = (int) screen.getWidth() * 1 / 2;
-    final int sh = (int) screen.getHeight() * 1 / 2;
-    this.setSize(sw, sh);
-    this.setResizable(true);
-    this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     buildLayout();
     setHandlers();
     this.setVisible(true);
   }
 
   private void buildLayout() {
-    this.getContentPane().setLayout(new BorderLayout());    
     buildForm();    
   }
 
@@ -114,9 +105,8 @@ public class ReservationForm extends JFrame implements IReservationForm {
     acceptPanel(addTextField(MENUFISSO), FlowLayout.CENTER, 6);
     map.get(MENUFISSO).setVisible(false);
     center.add(panelAggregator.aggregateAll());
-
-    this.getContentPane().add(center, BorderLayout.CENTER);
-    this.getContentPane().add(okButton, BorderLayout.SOUTH);
+    super.getContentPane().add(okButton, BorderLayout.SOUTH);
+    super.getContentPane().add(center, BorderLayout.CENTER);
   }
 
   private void setHandlers() {
@@ -129,8 +119,8 @@ public class ReservationForm extends JFrame implements IReservationForm {
           ReservationForm.this.validate();
         }
       });
-
-    this.okButton.addActionListener(e -> { ReservationForm.this.setVisible(false); }); 
+    
+    this.okButton.addActionListener(e -> { ReservationForm.this.setVisible(false); });
   } 
   
   private JTextField addTextField(final String string) {

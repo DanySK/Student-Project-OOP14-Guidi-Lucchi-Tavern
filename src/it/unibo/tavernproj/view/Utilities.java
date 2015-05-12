@@ -9,7 +9,7 @@ public class Utilities implements IUtilities {
   
   private List<JComponent> list;
   
-  public Utilities(){
+  public Utilities() {
     this.list = new ArrayList<>();
   }
 
@@ -40,7 +40,7 @@ public class Utilities implements IUtilities {
   }
   
   @Override
-  public void add(JComponent c){
+  public void add(JComponent c) {
     list.add(c);
   }
 

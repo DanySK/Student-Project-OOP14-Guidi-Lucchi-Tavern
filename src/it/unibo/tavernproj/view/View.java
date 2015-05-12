@@ -66,13 +66,6 @@ public class View extends JFrame implements IView{
     this.setVisible(true);
   }
   
-  @Override
-  public void addDraw(final Pair<Integer, Integer> pair, final int index) {
-    final DrawPosition pos = new DrawPosition(map);
-    pos.setIndex(index);
-    pos.paint(map.getGraphics(),pair.getX(),pair.getY());
-  }  
-
   private void buildLayout() {
     final JPanel reservPanel = build.buildGridPanel(util.getList(buttonNew, buttonDelete), 10);
     final JPanel east = build.getDefaultPanel(new BorderLayout());
@@ -190,6 +183,14 @@ public class View extends JFrame implements IView{
       }
     });
   }
+  @Override
+  public void addDraw(final Pair<Integer, Integer> pair, final int index) {
+    final DrawPosition pos = new DrawPosition(map);
+    pos.setIndex(index);
+    pos.paint(map.getGraphics(),pair.getX(),pair.getY());
+  }  
+
+  
   
   private void quitHandler() {
     final int n = JOptionPane.showConfirmDialog(this, "Vuoi davvero uscire?", 

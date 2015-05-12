@@ -81,7 +81,7 @@ public class Controller implements IController,Serializable{
     this.setModel();
     if (!model.isEmpty()) {
       try {
-        for (Integer i: model.getTableRes(date).keySet()) {
+        for (Integer i: model.getTableRes(util.getCurrentDate()).keySet()) {
           this.addTable(i);
         }
       } catch (NullPointerException e) {

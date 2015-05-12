@@ -4,32 +4,34 @@ import it.unibo.tavernproj.controller.IController;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Chooser extends JFrame{
+public class Chooser extends BasicFrame{
 
   private static final long serialVersionUID = 1L;
+  private final IGUIutilities util = new GUIutilities();
+  private final IUtilities utilities = new Utilities();  
+  private final JButton dateButton = util.getDefaultButton("Scegli per data");
+  private final JButton personButton = util.getDefaultButton("Scegli per nome");
+  private final JButton ok = util.getDefaultButton("OK", 12); 
+  
   private final JLabel dateLabel = new JLabel("Data (formato gg-mm-aaa): ");
   private final JTextField dat = new JTextField(20);
   private final JLabel nameLabel = new JLabel("Nome: ");
   private final JTextField name = new JTextField(20);
   private final JLabel tableLabel = new JLabel("Tavolo: ");
   private final JTextField tab = new JTextField(20);
-  private final IGUIutilities util = new GUIutilities();
-  private final IUtilities utilities = new Utilities();
+
   private boolean choosedByDate;
   private boolean removed;
   private int table;
-  private final JButton ok = util.getDefaultButton("OK");  
+   
   private JPanel res = util.getDefaultPanel(new FlowLayout());  
   private String date;  
   private final IController controller;
@@ -41,47 +43,16 @@ public class Chooser extends JFrame{
    *      the controller to use.
    */
   public Chooser(final IController controller) {
-    this.setSize(util.getDefaultWidth() * 1 / 2, util.getDefaultHeight() * 1 / 2);  
-    this.setLocationByPlatform(true);
-    this.controller = controller;    
-    final JButton bDate = util.getDefaultButton("Scegli per data");
-    final JButton personButton = util.getDefaultButton("Scegli per nome");
-    
-    bDate.addActionListener(e -> {
-        choosedByDate = true;
-        personButton.setEnabled(false);
-        final JFrame frame = new JFrame("Calendar");
-        Calendar calendar = new Calendar(frame);
-        while (!calendar.getPickedDate().equals("Error") && !calendar.isRight()) {
-          controller.displayException("Selezionare una data utile");
-          calendar = new Calendar(frame);
-        }
-        if (!calendar.getPickedDate().equals("Error")) {
-          date = calendar.getPickedDate();
-          if (controller.getReservation(date).size() == 0) {
-            controller.displayException("Nessuna prenotazione per la data selezionata.");
-            calendar = new Calendar(frame);
-          } else {
-            loadReservation(date);
-            tableLabel.setVisible(true);
-            tab.setVisible(true);
-            ok.setVisible(true);
-          }
-        }
-      });    
-
-    personButton.addActionListener(e -> {
-        bDate.setEnabled(false);
-        this.loadReservations();
-        dateLabel.setVisible(true);
-        dat.setVisible(true);
-        nameLabel.setVisible(true);
-        name.setVisible(true);
-        ok.setVisible(true);
-      });
-    
+    super();
+    this.controller = controller;   
+    buildLayout();
+    setHandlers();
+    this.setVisible(true);
+  }
+  
+  private void buildLayout() {    
     final JPanel top = util.getDefaultPanel(new FlowLayout());
-    top.add(bDate);
+    top.add(dateButton);
     top.add(personButton);    
     dateLabel.setVisible(false);
     dat.setVisible(false);
@@ -113,7 +84,6 @@ public class Chooser extends JFrame{
             Chooser.this.setVisible(true);
           }
         }        
-        final IUtilities utilities = new Utilities();
         /*setto la variabile rimossa solo se è il giorno corrente, 
          * così modifico la view solo se necessario */
         if (date.equals(utilities.getCurrentDate())) {
@@ -139,10 +109,44 @@ public class Chooser extends JFrame{
     main.add(res, BorderLayout.CENTER);
     main.add(south, BorderLayout.SOUTH);    
     this.getContentPane().add(main);
-    this.setVisible(true);
   }
   
-  private void loadReservation(String date) {
+  private void setHandlers() {
+    dateButton.addActionListener(e -> {
+      choosedByDate = true;
+      personButton.setEnabled(false);
+      final JFrame frame = new JFrame("Calendar");
+      Calendar calendar = new Calendar(frame);
+      while (!calendar.getPickedDate().equals("Error") && !calendar.isRight()) {
+        controller.displayException("Selezionare una data utile");
+        calendar = new Calendar(frame);
+      }
+      if (!calendar.getPickedDate().equals("Error")) {
+        date = calendar.getPickedDate();
+        if (controller.getReservation(date).size() == 0) {
+          controller.displayException("Nessuna prenotazione per la data selezionata.");
+          calendar = new Calendar(frame);
+        } else {
+          loadReservation(date);
+          tableLabel.setVisible(true);
+          tab.setVisible(true);
+          ok.setVisible(true);
+        }
+      }
+    });    
+
+  personButton.addActionListener(e -> {
+      dateButton.setEnabled(false);
+      this.loadReservations();
+      dateLabel.setVisible(true);
+      dat.setVisible(true);
+      nameLabel.setVisible(true);
+      name.setVisible(true);
+      ok.setVisible(true);
+    });
+  }
+  
+  private void loadReservation(final String date) {
     for (final Integer i: controller.getReservation(date).keySet()) {
       utilities.add(new JLabel(controller.getReservation(date).get(i).toString()));  
     }
@@ -158,14 +162,13 @@ public class Chooser extends JFrame{
       }         
     }        
     res.add(util.buildGridPanel(utilities.getList(), 10));
-  }
+  }  
   
   public boolean isBeenRemoved() {
     return this.removed;
-  }
+  }  
   
   public int getTable() {
     return this.table;
   }
-
 }
