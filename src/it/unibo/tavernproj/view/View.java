@@ -147,6 +147,7 @@ public class View extends JFrame implements IView{
           controller.displayException("Selezionare una data utile");
           calendar = new Calendar(frame);
         }
+        //problemi del calendario: se chiudo senza selezionare una data tira comunque fuori la form.
         final NewReservationForm form = new NewReservationForm(calendar.getPickedDate(), 
             controller.getReservation(calendar.getPickedDate()));
         controller.setDate(calendar.getPickedDate());
@@ -180,8 +181,7 @@ public class View extends JFrame implements IView{
           public void componentHidden(final ComponentEvent ce) {
              //non va!
             if (chooser.isBeenRemoved()) {
-              controller.removeTable(chooser.getTable()); 
-              View.this.validate();
+              controller.removeTable(chooser.getTable());
             } 
           }
         });            
@@ -278,10 +278,10 @@ public class View extends JFrame implements IView{
     for (final Component c: tablesButtons.getComponents()) {
       if (c.getName().equals(table.toString())) {
         tablesButtons.remove(c);
-        tablesButtons.validate();
+        tablesButtons.repaint();
         //SE HO PIù DI UN TAVOLO PER GIORNO DA PROBLEMI
-        View.this.validate();
-        controller.LoadDisegno();
+        //View.this.validate();
+        //controller.LoadDisegno();
       }
     }
   }
