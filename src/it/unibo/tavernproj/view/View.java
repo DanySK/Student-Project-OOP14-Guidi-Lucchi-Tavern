@@ -132,8 +132,6 @@ public class View extends JFrame implements IView{
          cancelTable.setEnabled(false);
      });
    //
-
-
     
     final JPanel main = build.getDefaultPanel(new BorderLayout(5, 5));
     main.add(center, BorderLayout.CENTER);
@@ -183,6 +181,7 @@ public class View extends JFrame implements IView{
              //non va!
             if (chooser.isBeenRemoved()) {
               controller.removeTable(chooser.getTable()); 
+              View.this.validate();
             } 
           }
         });            
@@ -196,13 +195,12 @@ public class View extends JFrame implements IView{
   }
   
   @Override
-  public void addDraw(Pair<Integer, Integer> p, int index){
+  public void addDraw(Pair<Integer, Integer> p, int index) {
     final DrawPosition pos = new DrawPosition(map);
     pos.setIndex(index);
     pos.paint(map.getGraphics(),p.getX(),p.getY());
-  } 
-
-  
+    this.validate();
+  }   
   
   private void quitHandler() {
     final int n = JOptionPane.showConfirmDialog(this, "Vuoi davvero uscire?", 
@@ -269,7 +267,10 @@ public class View extends JFrame implements IView{
         }      
       });
     tablesButtons.add(button);
+    /*  SE LO COMMENTO FUNZIONA LA MAPPA DEI TAVOLI MA NON MI CARICA IL BOTTONE SOTTO!
+     */
     View.this.validate();
+    controller.LoadDisegno();
   }
   
   @Override
@@ -280,6 +281,7 @@ public class View extends JFrame implements IView{
         tablesButtons.validate();
         //SE HO PIù DI UN TAVOLO PER GIORNO DA PROBLEMI
         View.this.validate();
+        controller.LoadDisegno();
       }
     }
   }

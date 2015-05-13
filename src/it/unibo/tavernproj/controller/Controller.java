@@ -65,8 +65,7 @@ public class Controller implements IController,Serializable{
 	}
 
 	@Override
-	public void addTable(Integer table) {
-	  
+	public void addTable(Integer table) {	  
 		for (final IView v: view){
 			v.addTable(table);
 		}
@@ -85,10 +84,10 @@ public class Controller implements IController,Serializable{
           this.addTable(i);
         }
       } catch (NullPointerException e) {
-        System.out.print("non ci sono tavoli quel giorno");
+        //System.out.print("non ci sono tavoli quel giorno");
       }
     } else {
-      System.out.print("sticazzi è vuoto il model");
+      //è vuoto il model
     }
   }
 
