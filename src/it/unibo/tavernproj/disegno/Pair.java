@@ -3,66 +3,41 @@ package it.unibo.tavernproj.disegno;
 import java.io.Serializable;
 
 public class Pair<X, Y> implements Serializable {
-    
-    /**
-   * 
-   */
+//esami vecchi viroli
   private static final long serialVersionUID = 4195385612271660319L;
-    private final X x;
-    private final Y y;
-    
-    public Pair(X x, Y y) {
-      super();
-      this.x = x;
-      this.y = y;
-    }
+  
+  private final X x0;
+  private final Y y0;
 
-    public X getX() {
-      return x;
-    }
-
-    public Y getY() {
-      return y;
-    }
-
-    @Override
-    public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + ((x == null) ? 0 : x.hashCode());
-      result = prime * result + ((y == null) ? 0 : y.hashCode());
-      return result;
-    }
-
-    @SuppressWarnings("rawtypes")
-    @Override
-    public boolean equals(Object obj) {
-      if (this == obj)
-        return true;
-      if (obj == null)
-        return false;
-      if (getClass() != obj.getClass())
-        return false;
-      Pair other = (Pair) obj;
-      if (x == null) {
-        if (other.x != null)
-          return false;
-      } else if (!x.equals(other.x))
-        return false;
-      if (y == null) {
-        if (other.y != null)
-          return false;
-      } else if (!y.equals(other.y))
-        return false;
-      return true;
-    }
-
-    @Override
-    public String toString() {
-      return "Pair [x=" + x + ", y=" + y + "]";
-    }
-    
-    
-
+  /**
+   * It sets the values
+   * 
+   * @param x0
+   *      value x
+   * @param y0
+   *      value y
+   */
+  public Pair(X x0, Y y0) {
+    super();
+    this.x0 = x0;
+    this.y0 = y0;
   }
+
+  public X getX() {
+    return x0;
+  }
+
+  public Y getY() {
+    return y0;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((x0 == null) ? 0 : x0.hashCode());
+    result = prime * result + ((y0 == null) ? 0 : y0.hashCode());
+    return result;
+  }
+}
 

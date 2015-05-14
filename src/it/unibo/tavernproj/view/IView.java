@@ -44,8 +44,16 @@ public interface IView {
   void commandFailed(final String message);
   
   
-  // DA FARE
-  
-  void addDraw(final Pair<Integer, Integer> pair, final int i);
+  /**
+   *  It draws the rectangle and it sets le index of Map.
+   *  It's used for loading.
+   *   
+   * @param pair
+   *      the coordinates of pair
+   *      
+   * @param index
+   *      the index of Map
+   */
+  void addDraw(final Pair<Integer, Integer> pair, final int index);
 
 }
