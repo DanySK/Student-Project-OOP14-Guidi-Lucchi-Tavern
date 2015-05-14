@@ -8,6 +8,10 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * @author Eleonora Guidi
+ *
+ */
 public interface IBasicGUIutilities extends IUtilities {
   
   /**
@@ -64,7 +68,7 @@ public interface IBasicGUIutilities extends IUtilities {
   
   /**
    * It creates a new JButton with the string passed as text,
-   * size as the int passed, white background and black border.
+   * size as the integer passed, white background and black border.
    * 
    * @param string
    *      the button text.

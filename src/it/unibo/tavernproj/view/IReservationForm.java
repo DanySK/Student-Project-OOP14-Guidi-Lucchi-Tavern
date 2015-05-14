@@ -4,7 +4,6 @@ package it.unibo.tavernproj.view;
  * @author Eleonora Guidi
  *
  */
-
 public interface IReservationForm {
   
   /**

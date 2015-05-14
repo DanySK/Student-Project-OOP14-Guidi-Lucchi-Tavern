@@ -8,7 +8,6 @@ import it.unibo.tavernproj.disegno.Pair;
  * @author Giulia Lucchi
  *
  */
-
 public interface IView {
   
   /**

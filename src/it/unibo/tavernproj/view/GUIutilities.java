@@ -19,10 +19,6 @@ import javax.swing.JPanel;
  * @author Eleonora Guidi
  *
  */
-
-/* Mi sono basata su questo http://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
- */
-
 public class GUIutilities extends BasicGUIutilities implements IGUIutilities {
 
   @Override
@@ -31,7 +27,9 @@ public class GUIutilities extends BasicGUIutilities implements IGUIutilities {
     date.setFont(new Font("Arial", Font.BOLD, 18));
     return date;
   }
-
+  
+/* Mi sono basata su questo http://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
+ */
   @Override
   public JButton getPicButton(final String srt) throws IOException {
     final JButton picButton = new JButton(this.getButtonIcon(srt));

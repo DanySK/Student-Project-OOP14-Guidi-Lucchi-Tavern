@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 
 /**
  * @author Eleonora Guidi
+ * 
  */
-
 public interface IGUIutilities extends IBasicGUIutilities {
   
   /**
