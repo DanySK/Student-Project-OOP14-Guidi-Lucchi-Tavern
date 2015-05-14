@@ -6,24 +6,21 @@ import java.util.Map;
 import java.util.Set;
 
 public class DrawMap implements Map<Integer, Pair<Integer, Integer>>,java.io.Serializable {
-  
-  private static final long serialVersionUID = 1L;
 
-  //SINGLETON
+  private static final long serialVersionUID = 1L;
+  private final Map<Integer,Pair<Integer,Integer>> disegno = new HashMap<>();
+  
   private static DrawMap SINGLETON = new DrawMap();
-  
-  private Map<Integer,Pair<Integer,Integer>> disegno = new HashMap<>();
- 
-    
-  private DrawMap(){  }
-  
-  public static Map<Integer,Pair<Integer,Integer>> getMap(){
+
+  private DrawMap(){}
+
+  public static Map<Integer,Pair<Integer,Integer>> getMap() {
     return SINGLETON;
   }
-  
+
   @Override
   public String toString() {
-    return "DrawMap [disegno=" + disegno +"]";
+    return "DrawMap [disegno=" + disegno + "]";
   }
 
   @Override
@@ -76,9 +73,9 @@ public class DrawMap implements Map<Integer, Pair<Integer, Integer>>,java.io.Ser
 
 
   @Override
-  public void putAll(Map<? extends Integer, ? extends Pair<Integer, Integer>> m) {
+  public void putAll(Map<? extends Integer, ? extends Pair<Integer, Integer>> map) {
     // TODO Auto-generated method stub
-    disegno.putAll(m);
+    disegno.putAll(map);
   }
 
 
@@ -108,6 +105,6 @@ public class DrawMap implements Map<Integer, Pair<Integer, Integer>>,java.io.Ser
     // TODO Auto-generated method stub
     return null;
   }
-  
-  
+
+
 }

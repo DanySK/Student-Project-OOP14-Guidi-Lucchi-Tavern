@@ -10,54 +10,100 @@ import java.util.Set;
 
 public interface IModel{
   
-  void setModel(Map<String, Map <Integer, IReservation>> map);
-	
-	/**
-	 * Adds a new reservation.
-	 *
-	 * @param pren
-	 *            the reservation
-	 */
-	void add(final String date, final IReservation pren) ;
-	
-	/**
-	 * Removes the reservation.
-	 * 
-	 * @param pren
-	 *            the reservation
-	 * @param date
-	 * 			  the date of the reservation to remove
-	 */
-	void remove(final String date,final IReservation pren);
+  /**
+   * It sets the Map of Model.
+   * 
+   * @param map
+   *      the map of reservation
+   */
 
-	/**
-	 * Create a Set of the reservations of the specific date.
-	 *
-	 * @param date
-	 *            the date
-	 */
-	Set<IReservation> getRes(final String date);
+  void setModel(Map<String, Map<Integer, IReservation>> map);
 
-	/**
-	 * @return
-	 * 			the main Map 
-	 */
-	Map<String, Map<Integer, IReservation>> getMap();
+  /**
+   * It adds a new reservation.
+   *
+   * @param pren
+   *            the reservation
+   */
+  void add(final String date, final IReservation pren) ;
 
-	Map<Integer, IReservation> getTableRes(String date);
+  /**
+   * It removes the reservation.
+   * 
+   * @param pren
+   *      the reservation
+   * @param date
+   *      the date of the reservation
+   */
+  void remove(final String date, final IReservation pren);
 
-	int getSize();
+  /**
+   * It removes the reservation.
+   * 
+   * @param date
+   *      the date of the reservation
+   * @param table
+   *      the table's number of the reservation
+   */
+  void remove(final String date, final Integer table);
+  
+  /**
+   * It create a Set of the reservations of the specific date.
+   *
+   * @param date
+   *            the date
+   *            
+   * @return 
+   *        Set of reservation of a specific date 
+   */
+  Set<IReservation> getRes(final String date);
 
+  /**
+   *  
+   * @return
+   *      the main Map 
+   */
+  Map<String, Map<Integer, IReservation>> getMap();
+  
+  /**
+   * It returns a reservation's Map, that has the table's number as key 
+   * and entire reservation as value.
+   *
+   * @param date
+   *      the specific date
+   * @return
+   *      Reservation's Map
+   */
+  Map<Integer, IReservation> getTableRes(final String date);
+  
+  /**
+   * @return 
+   *      the size of Map
+   */
+  int getSize();
+  
+  /**
+   * @return
+   *      true if the map is empty 
+   *      false if the map is full
+   */
   boolean isEmpty();
-
-  void remove(String date, Integer table);
-
-  Object getModel();
-
-  Set<IReservation> getNameRes(String name);
-
+  
+  /** 
+   * @param name
+   *          name of reservation 
+   *          
+   * @return
+   *      the reservations' Set
+   */
+  Set<IReservation> getNameRes(final String name);
+  
+  /**
+   * @return
+   *      the date's Set
+   */
   Set<String> getDates();
 
-	
-	
+
+
 }

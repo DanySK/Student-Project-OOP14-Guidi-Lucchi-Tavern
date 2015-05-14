@@ -70,7 +70,7 @@ public class Controller implements IController,Serializable{
 		for (final IView v: view){
 			v.addTable(table);
 		}
-		this.LoadDisegno();
+		//this.LoadDisegno();
 	}
 
   @Override
@@ -303,9 +303,9 @@ public class Controller implements IController,Serializable{
 
 
   @Override
-  public int getReservation(String date, String name){
-    for (IReservation r: model.getNameRes(name)){
-      if (r.getDate().equals(date)){
+  public int getReservation(String date, String name) {
+    for (IReservation r: model.getNameRes(name)) {
+      if (r.getDate().equals(date)) {
         return r.getTable();
       }
     }
@@ -321,7 +321,7 @@ public class Controller implements IController,Serializable{
 
   @Override
   public String getDate() {
-    if (!date.isPresent()){
+    if (!date.isPresent()) {
       throw new IllegalArgumentException();
     }
     return this.date.get();
@@ -335,7 +335,7 @@ public class Controller implements IController,Serializable{
 
 
 
-  
+
 
 
 }

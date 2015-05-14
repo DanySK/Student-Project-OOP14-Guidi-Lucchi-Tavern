@@ -6,7 +6,10 @@ package it.unibo.tavernproj.disegno;
  */
 
 public interface IDrawButton {
-
-		public void setting();
+  
+  /** 
+   * It sets the button's design
+   */
+  void setting();
 
 }

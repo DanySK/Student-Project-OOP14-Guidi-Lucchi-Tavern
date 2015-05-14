@@ -165,9 +165,8 @@ public class View extends JFrame implements IView{
   }
   
   @Override
-  public void addDraw(final Pair<Integer, Integer> p, final int index) {
-    pos.setIndex(index);
-    pos.paint(map.getGraphics(),p.getX(),p.getY());
+  public void addDraw(Pair<Integer, Integer> pt, int index) {
+    pos.paint(map.getGraphics(),pt.getX(),pt.getY());
     this.validate();
   }   
   
@@ -210,6 +209,18 @@ public class View extends JFrame implements IView{
       cancelTable.setEnabled(false);
      * */
     View.this.validate();
+
+    try {
+      Thread.sleep(10);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+
+    controller.LoadDisegno();  
+
+
   }
   
   @Override
