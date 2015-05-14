@@ -29,41 +29,7 @@ import javax.swing.JPanel;
 /* Mi sono basata su questo http://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
  */
 
-public class GUIutilities extends Utilities implements IGUIutilities{
-  
-  private static final Dimension SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
-  private static final int WIDTH = (int) SCREEN.getWidth() * 4 / 5;
-  private static final int HEIGHT = (int) SCREEN.getHeight() * 3 / 4;
-  
-  @Override
-  public JPanel getDefaultPanel(final LayoutManager lm) {
-    final JPanel p = new JPanel(lm);
-    p.setBackground(Color.WHITE);
-    return p;
-  }
-  
-  @Override
-  public JLabel getDefaultLogo(final String srt) throws IOException {
-    final ImageIcon img = this.getImage(srt);
-    final Image temp = img.getImage().getScaledInstance(WIDTH * 1 / 4,
-        HEIGHT * 1 / 4, Image.SCALE_DEFAULT);
-    img.setImage(temp);
-    return new JLabel(img);
-  }
-
-  @Override
-  public JLabel getDefaultMap(final String srt){
-    ImageIcon img = new ImageIcon();
-    try {
-      img = this.getImage(srt);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    final Image temp = img.getImage().getScaledInstance(WIDTH * 25 / 40,
-        HEIGHT * 25 / 40, Image.SCALE_SMOOTH);
-    img.setImage(temp);
-    return new JLabel(img);
-  }
+public class GUIutilities extends BasicGUIutilities implements IGUIutilities{
 
   @Override
   public JLabel getDateLabel() {
@@ -82,39 +48,15 @@ public class GUIutilities extends Utilities implements IGUIutilities{
 
   private ImageIcon getButtonIcon(final String srt) throws IOException {
     final ImageIcon img = this.getImage(srt);
-    final Image temp = img.getImage().getScaledInstance(HEIGHT * 1 / 8,
-        HEIGHT * 1 / 8, Image.SCALE_SMOOTH);
+    final Image temp = img.getImage().getScaledInstance(super.getDefaultHeight() * 1 / 8,
+        super.getDefaultHeight() * 1 / 8, Image.SCALE_SMOOTH);
     img.setImage(temp);
     return img;
   }
 
-  private ImageIcon getImage(final String  srt) throws IOException {
-    final BufferedImage myPicture = ImageIO.read(getClass().getResourceAsStream("/" + srt));
-    return new ImageIcon(myPicture);
-  }
 
-  @Override
-  public JButton getDefaultButton(final String string) {
-    return this.getDefaultButton(string, 18);
-  }
-  
-  @Override
-  public JButton getDefaultButton(final String string, final int size) {
-    final JButton button = new JButton(string);
-    button.setFont(new Font("Arial", Font.BOLD, size));
-    button.setBackground(Color.white);
-    return button;
-  }
 
-  @Override
-  public int getDefaultWidth() {
-    return GUIutilities.WIDTH;
-  }
 
-  @Override
-  public int getDefaultHeight() {
-    return GUIutilities.HEIGHT;
-  }
 
   @Override
   public JPanel buildGridPanel(final List<JComponent> list, final int ins) {
@@ -130,11 +72,4 @@ public class GUIutilities extends Utilities implements IGUIutilities{
     return panel;
   }
 
-  @Override
-  public JPanel getDefaultPanel(LayoutManager lm, JComponent c1, JComponent c2) {
-    JPanel temp = this.getDefaultPanel(lm);
-    temp.add(c1);
-    temp.add(c2);    
-    return temp;
-  }
 }
