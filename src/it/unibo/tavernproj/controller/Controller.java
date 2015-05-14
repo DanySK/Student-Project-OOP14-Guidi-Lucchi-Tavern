@@ -5,6 +5,7 @@ import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.model.Reservation;
+import it.unibo.tavernproj.view.IGUIutilities;
 import it.unibo.tavernproj.view.IUtilities;
 import it.unibo.tavernproj.view.IView;
 import it.unibo.tavernproj.view.GUIutilities;
@@ -43,7 +44,7 @@ public class Controller implements IController,Serializable{
   private static final Controller SINGLETON = new Controller();  
 	
 	private final Set<IView> view = new HashSet<>();
-	private final IUtilities util = new Utilities();
+	private final IGUIutilities util = new GUIutilities();
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();
 	private IModel model = new Model();
 	private ObjectOutput outMap;
@@ -72,9 +73,17 @@ public class Controller implements IController,Serializable{
 		this.LoadDisegno();
 	}
 
+  @Override
+  public void removeReservation(Integer table, String date) {
+    model.remove(date, table);
+  }
+	
 	@Override
 	public void remove(final int table, final String date) {
-		model.remove(date, table);
+		this.removeReservation(table, date);
+		if (date.equals(util.getCurrentDate())){
+		  this.removeTable(table);
+		}
 	}
 	
   public void load (final String date) {
@@ -258,7 +267,10 @@ public class Controller implements IController,Serializable{
   @Override
   public void add(Integer table, String name, String date, String h, String tel, String num,
       String menu) throws IllegalArgumentException, NumberFormatException {
-    
+    if (name.isEmpty() || name.equals(" ")){
+      throw new NullPointerException();
+    }
+
     Reservation res;
     if (menu.equals("")){
       res = new Reservation(table, name, date, h, tel, num, Optional.empty());
@@ -320,6 +332,9 @@ public class Controller implements IController,Serializable{
   public void setDate(String date) {
     this.date = Optional.of(date);
   }
+
+
+
   
 
 

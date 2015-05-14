@@ -49,4 +49,17 @@ public interface IGUIutilities extends IBasicGUIutilities {
    *      the panel.
    */
   JPanel buildGridPanel(final List<JComponent> list, final int ins);
+  
+  /**
+   * It builds a new GridBagLayouted panel with all the components in the list,
+   * one next the other.
+   * 
+   * @param list
+   *      the JComponent list.
+   * @param ins
+   *      the insets between the components.
+   * @return
+   *      the panel.
+   */
+  JPanel buildOrizzontalGridPanel(final List<JComponent> list, final int ins);
 }

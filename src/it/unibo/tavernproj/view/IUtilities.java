@@ -30,7 +30,7 @@ public interface IUtilities {
    * @return
    *      a list with the two components.
    */
-  List<JComponent> getList(JComponent one, JComponent two);
+  List<JComponent> getList(final JComponent one, final JComponent two);
 
   /**
    * Adds a component to the list.

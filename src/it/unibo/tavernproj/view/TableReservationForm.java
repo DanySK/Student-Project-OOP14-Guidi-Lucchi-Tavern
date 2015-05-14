@@ -1,25 +1,28 @@
 package it.unibo.tavernproj.view;
 
+import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.IReservation;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * @author Eleonora Guidi
+ *
+ */
 public class TableReservationForm extends ReservationForm{
   
   private static final long serialVersionUID = 1L;
-  private final IGUIutilities util = new GUIutilities();
-  private final IUtilities utilities = new Utilities();
+  private final transient IGUIutilities util = new GUIutilities();
+  private final transient IReservation res;  
   private final JButton modifyButton = util.getDefaultButton("Modifica", 12);
-  private final JButton deleteButton = util.getDefaultButton("Elimina", 12);  
+  private final JButton deleteButton = util.getDefaultButton("Elimina", 12); 
+  private final JButton okButton = util.getDefaultButton("OK", 12);
   private final JLabel date;
-  private final IReservation res;
+  private final IController controller;
   private boolean modified;
   private boolean deleted;  
 
@@ -32,10 +35,12 @@ public class TableReservationForm extends ReservationForm{
    * @param res
    *      the reservation.
    */
-  public TableReservationForm(final String date, final IReservation res) {
+  public TableReservationForm(final String date, final IReservation res, 
+      final IController controller) {
     super();
     this.date = new JLabel(date);
     this.res = res;
+    this.controller = controller;
     buildLayout();
     setHandlers();
     writeForm();
@@ -52,11 +57,12 @@ public class TableReservationForm extends ReservationForm{
   }
 
   private void buildLayout() {
-    final JPanel east = util.buildGridPanel(utilities.getList(modifyButton, deleteButton), 5);
+    final JPanel east = util.buildGridPanel(util.getList(modifyButton, deleteButton), 5);
     final JPanel north = util.getDefaultPanel(new BorderLayout());
     north.add(date, BorderLayout.WEST);
     north.add(east, BorderLayout.EAST);
     super.getContentPane().add(north, BorderLayout.NORTH);
+    super.getContentPane().add(okButton, BorderLayout.SOUTH);
     this.disableAll();
   }
 
@@ -64,23 +70,40 @@ public class TableReservationForm extends ReservationForm{
     this.modifyButton.addActionListener(e -> {
         TableReservationForm.this.enableAll();
         TableReservationForm.this.modified = true;
+        deleteButton.setEnabled(false);
       });
 
     this.deleteButton.addActionListener(e -> {
-        TableReservationForm.this.deleted = true;
+        controller.remove(getTable(), controller.getDate());
         TableReservationForm.this.setVisible(false);
       });
+    
+    this.okButton.addActionListener(e -> { 
+        TableReservationForm.this.setVisible(false); 
+        if (isBeenModified()) {
+          try {
+            controller.removeReservation(getTable(), controller.getDate());
+          } catch (IllegalArgumentException e2) {
+            /* Non segnala nulla perchè viene lanciata quando modifico il 
+             * tavolo più di una volta. In questo caso devo solo intercettare
+             * l'eccezione.
+             */
+          }  
+          try {
+            controller.add(getTable(), getName(), controller.getDate(), getH(),
+                getTel(), getNum(), getMenu());
+          } catch (NullPointerException e1) {
+            controller.displayException("Riempire la form!");
+            TableReservationForm.this.setVisible(true);
+          } catch (NumberFormatException e2) {
+            controller.displayException("Riempire la form con dei numeri!");
+            TableReservationForm.this.setVisible(true);
+          }
+        }      
+      });
   }
-
-  public boolean isBeenModified() {
+  
+  private boolean isBeenModified() {
     return this.modified;
-  }
-
-  public boolean isBeenDeleted() {
-    return this.deleted ;
-  }
-
-  public IReservation getOld() {
-    return this.res;
   }
 }

@@ -15,7 +15,7 @@ import javax.swing.JTextField;
  * @author Eleonora Guidi
  *
  */
-public class Chooser extends BasicFrame implements IChooser{
+public class Chooser extends BasicFrame{
 
   private static final long serialVersionUID = 1L;
   private final transient IGUIutilities util = new GUIutilities(); 
@@ -31,7 +31,6 @@ public class Chooser extends BasicFrame implements IChooser{
   private final JTextField tab = new JTextField(20);
   private final transient IController controller;
   private boolean choosedByDate;
-  private boolean removed;
   private int table;  
   private String date;   
   
@@ -112,12 +111,7 @@ public class Chooser extends BasicFrame implements IChooser{
             controller.displayException("Il nome o la data inseriti sono sbagliati");
             Chooser.this.setVisible(true);
           }
-        }        
-        /*setto la variabile rimossa solo se è il giorno corrente, 
-         * così modifico la view solo se necessario */
-        if (date.equals(util.getCurrentDate())) {
-          removed = true;  
-        }
+        } 
       });
   }
   
@@ -153,13 +147,5 @@ public class Chooser extends BasicFrame implements IChooser{
     nameLabel.setVisible(true);
     name.setVisible(true);
     ok.setVisible(true);
-  }
-
-  public boolean isBeenRemoved() {
-    return this.removed;
-  }  
-
-  public int getTable() {
-    return this.table;
   }
 }

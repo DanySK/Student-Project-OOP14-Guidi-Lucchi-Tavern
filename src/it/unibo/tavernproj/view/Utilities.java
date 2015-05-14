@@ -30,22 +30,21 @@ public class Utilities implements IUtilities {
   
   @Override
   public List<JComponent> getList() {
-    List<JComponent> temp = list;
+    final List<JComponent> temp = list;
     list = new ArrayList<>();
     return temp;
   }
 
   @Override
-  public List<JComponent> getList(JComponent one, JComponent two) {
-    List<JComponent> temp = new ArrayList<>();
+  public List<JComponent> getList(final JComponent one, final JComponent two) {
+    final List<JComponent> temp = new ArrayList<>();
     temp.add(one);
     temp.add(two);
     return temp;
   }
   
   @Override
-  public void add(JComponent c) {
-    list.add(c);
+  public void add(final JComponent comp) {
+    list.add(comp);
   }
-
 }

@@ -59,4 +59,18 @@ public class GUIutilities extends BasicGUIutilities implements IGUIutilities {
     }    
     return panel;
   }
+
+  @Override
+  public JPanel buildOrizzontalGridPanel(List<JComponent> list, int ins) {
+    final JPanel panel = this.getDefaultPanel(new GridBagLayout());
+    final GridBagConstraints gap = new GridBagConstraints();
+    gap.gridx = 0;
+    gap.insets = new Insets(ins, ins, ins, ins);
+    gap.fill = GridBagConstraints.VERTICAL;
+    for (final JComponent c: list) {
+      panel.add(c, gap);
+      gap.gridx++;
+    }    
+    return panel;
+  }
 }

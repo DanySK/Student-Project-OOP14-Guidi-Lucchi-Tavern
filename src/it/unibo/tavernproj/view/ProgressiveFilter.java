@@ -8,6 +8,5 @@ package it.unibo.tavernproj.view;
  * E.g., it could be used to say that the sequence of numbers is increasing.
  */
 public interface ProgressiveFilter<X> {
-
-	boolean isNextOK(X previous, X next);
+  boolean isNextOK(X previous, X next);
 }

@@ -1,5 +1,6 @@
 package it.unibo.tavernproj.view;
 
+import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.IReservation;
 
 import java.awt.BorderLayout;
@@ -7,8 +8,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.Map;
+
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 /**
  * @author Eleonora Guidi
@@ -17,14 +21,15 @@ import javax.swing.JPanel;
  *
  */
 
-public class NewReservationForm extends ReservationForm {
+public class NewReservationForm extends ReservationForm{
 
   private static final long serialVersionUID = 1L;
-  private final IGUIutilities util = new GUIutilities();
-  //private final IUtilities utilities = new Utilities();
+  private final transient IGUIutilities util = new GUIutilities();
   private final JPanel res = util.getDefaultPanel(new GridBagLayout());
-  private final Map<Integer, IReservation> map;
-  private JLabel date;  
+  private final JButton okButton = util.getDefaultButton("OK", 12);
+  private final transient Map<Integer, IReservation> map;
+  private final JLabel date;  
+  private final IController controller;
 
   /**
    * It builds a new Reservation Form whenever we need to add a new Reservation.
@@ -34,12 +39,15 @@ public class NewReservationForm extends ReservationForm {
    * @param map
    *      the map containing all the tables and reservations
    */
-  public NewReservationForm(final String date, final Map<Integer, IReservation> map) {
+  public NewReservationForm(final String date, final Map<Integer, IReservation> map,
+      IController controller) {
     super();
     this.date = new JLabel(date);
     this.map = map;
-    loadReservation();
-    buildLayout();
+    this.controller = controller;
+    this.loadReservation();
+    this.buildLayout();
+    this.setHandlers();
     this.setVisible(true);
   }
   
@@ -59,7 +67,33 @@ public class NewReservationForm extends ReservationForm {
     final JPanel north = util.getDefaultPanel(new BorderLayout());
     north.add(date, BorderLayout.NORTH);
     north.add(res, BorderLayout.CENTER);
+    super.getContentPane().add(okButton, BorderLayout.SOUTH);
     super.getContentPane().add(north, BorderLayout.NORTH);
   }
+  
+  private void setHandlers() {
+    this.okButton.addActionListener(e -> { 
+      NewReservationForm.this.setVisible(false); 
+      try {
+        controller.add(getTable(), getName(), controller.getDate(), getH(),
+            getTel(), getNum(), getMenu());
+        if (controller.getDate().equals(util.getCurrentDate())) {
+          controller.addTable(getTable());
+        }
+      } catch (NullPointerException e1) {
+        controller.displayException("Riempire la form!");
+        NewReservationForm.this.setVisible(true);
+      } catch (NumberFormatException e2) {
+        controller.displayException("Riempire la form con dei numeri utili!");
+        NewReservationForm.this.setVisible(true);
+      } catch (IllegalArgumentException e3) {
+        controller.displayException("Il tavolo inserito e' gia' stato utilizzato");
+        NewReservationForm.this.setVisible(true);
+      }
+      
+      
+    
+    });
+  } 
 
 }

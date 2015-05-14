@@ -115,6 +115,7 @@ public interface IController {
    * Sets the date the user picked
    * */
   void setDate(String date);
+  void removeReservation(Integer table, String date);
   
   
 

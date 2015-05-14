@@ -91,6 +91,4 @@ public class BasicGUIutilities extends Utilities implements IBasicGUIutilities {
   public int getDefaultHeight() {
     return BasicGUIutilities.HEIGHT;
   }  
-
-
 }

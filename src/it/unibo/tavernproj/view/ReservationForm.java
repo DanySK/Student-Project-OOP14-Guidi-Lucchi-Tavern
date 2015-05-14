@@ -2,18 +2,15 @@ package it.unibo.tavernproj.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -23,7 +20,6 @@ import javax.swing.JTextField;
  * @author Eleonora Guidi
  *
  */
-
 /*Usato l'esame 01b del 2015 per fare la form!*/
 public class ReservationForm extends BasicFrame implements IReservationForm {
   
@@ -40,12 +36,11 @@ public class ReservationForm extends BasicFrame implements IReservationForm {
   private static final String MENU = "Menu";
   private static final String MENUFISSO = "Menu Fisso";
 
-  private final ProgressiveAcceptor<JPanel> panelAggregator = 
+  private final transient ProgressiveAcceptor<JPanel> panelAggregator = 
       new ProgressiveAcceptorImpl<>();
   private final Map<String, JComponent> map = new HashMap<>(); 
   
-  private final IGUIutilities util = new GUIutilities();
-  private final JButton okButton = util.getDefaultButton("OK", 12);
+  private final transient IGUIutilities util = new GUIutilities();
   
   /**
    * Builds a new form.
@@ -73,7 +68,6 @@ public class ReservationForm extends BasicFrame implements IReservationForm {
       @Override
       public JPanel aggregate(final JPanel one, final JPanel two) {
         final JPanel temp = util.getDefaultPanel(new GridBagLayout());
-        //final JPanel temp = util.buildGridPanel(one, two, 5);
         GridBagConstraints gap = new GridBagConstraints();
         gap.gridy = 0;
         temp.add(one, gap);
@@ -105,7 +99,6 @@ public class ReservationForm extends BasicFrame implements IReservationForm {
     acceptPanel(addTextField(MENUFISSO), FlowLayout.CENTER, 6);
     map.get(MENUFISSO).setVisible(false);
     center.add(panelAggregator.aggregateAll());
-    super.getContentPane().add(okButton, BorderLayout.SOUTH);
     super.getContentPane().add(center, BorderLayout.CENTER);
   }
 
@@ -119,8 +112,6 @@ public class ReservationForm extends BasicFrame implements IReservationForm {
           ReservationForm.this.validate();
         }
       });
-    
-    this.okButton.addActionListener(e -> { ReservationForm.this.setVisible(false); });
   } 
   
   private JTextField addTextField(final String string) {
@@ -147,9 +138,9 @@ public class ReservationForm extends BasicFrame implements IReservationForm {
 
   @Override
   public Integer getTable() throws NumberFormatException {
-    if (((JTextField) map.get(TAV)).getText().isEmpty() || 
-        (Integer.parseInt(((JTextField)map.get(TAV)).getText())) > 20 || 
-        (Integer.parseInt(((JTextField)map.get(TAV)).getText())) <= 0) {
+    if (((JTextField) map.get(TAV)).getText().isEmpty()
+        || (Integer.parseInt(((JTextField)map.get(TAV)).getText())) > 20
+        || (Integer.parseInt(((JTextField)map.get(TAV)).getText())) <= 0) {
       throw new NumberFormatException();
     }
     return Integer.parseInt(((JTextField) map.get(TAV)).getText());
@@ -157,7 +148,7 @@ public class ReservationForm extends BasicFrame implements IReservationForm {
 
   @Override
   public String getName() throws NullPointerException {
-    if (((JTextField) map.get(NOME)).getText().equals(" ")){
+    if (((JTextField) map.get(NOME)).getText().equals(" ")) {
       throw new NullPointerException();
     }
     return ((JTextField)map.get(NOME)).getText();
@@ -165,8 +156,8 @@ public class ReservationForm extends BasicFrame implements IReservationForm {
 
   @Override
   public String getH() throws NullPointerException, NumberFormatException {
-    if (Double.parseDouble(((JTextField) map.get(ORA)).getText()) <= 0 ||
-        Double.parseDouble(((JTextField) map.get(ORA)).getText()) > 24){
+    if (Double.parseDouble(((JTextField) map.get(ORA)).getText()) <= 0
+        || Double.parseDouble(((JTextField) map.get(ORA)).getText()) > 24) {
       throw new NumberFormatException();
     }
     return ((JTextField) map.get(ORA)).getText();
@@ -180,8 +171,8 @@ public class ReservationForm extends BasicFrame implements IReservationForm {
 
   @Override
   public String getNum() throws NumberFormatException {
-    if (((JTextField) map.get(NUM)).getText().isEmpty() || 
-        Double.parseDouble(((JTextField) map.get(NUM)).getText()) > 300) {
+    if (((JTextField) map.get(NUM)).getText().isEmpty()
+        || Double.parseDouble(((JTextField) map.get(NUM)).getText()) > 300) {
       throw new NumberFormatException();
     }
     return ((JTextField) map.get(NUM)).getText();
@@ -192,19 +183,14 @@ public class ReservationForm extends BasicFrame implements IReservationForm {
     return ((JTextField)map.get(MENUFISSO)).getText();
   }
 
-  //RIDURRE CON UNA LAMBDA
   @Override
   public void disableAll() {
-    for (final String s: map.keySet()) {
-      map.get(s).setEnabled(false);
-    }
+    map.keySet().forEach(e -> map.get(e).setEnabled(false));
   }
 
   @Override
   public void enableAll() {
-    for (final String s: map.keySet()) {
-      map.get(s).setEnabled(true);
-    }
+    map.keySet().forEach(e -> map.get(e).setEnabled(true));
     map.get(TAV).setEnabled(false);
   }
 

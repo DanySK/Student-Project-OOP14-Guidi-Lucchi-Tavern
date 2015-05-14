@@ -42,17 +42,18 @@ import javax.swing.WindowConstants;
 public class View extends JFrame implements IView{
 
   private static final long serialVersionUID = 1L;
-  private final IGUIutilities util = new GUIutilities();
+  private final transient IGUIutilities util = new GUIutilities();
   private final JButton buttonNew = util.getDefaultButton("Nuova Prenotazione");
   private final JButton buttonDelete = util.getDefaultButton("Elimina Prenotazione");
-  private final JButton cancelAll = new JButton("Cancella Tutto");
-  private final JButton cancelTable = new JButton("Cancella Tavolo");
-  private final JButton drawTable = new JButton("Disegna Tavolo ");
-  private final JPanel tablesButtons = util.getDefaultPanel(new FlowLayout());
+  private final JButton cancelAll = util.getDefaultButton("Cancella Tutto", 12);
+  private final JButton cancelTable = util.getDefaultButton("Cancella Tavolo", 12);
+  private final JButton drawTable = util.getDefaultButton("Disegna Tavolo", 12);
+  private final JPanel tablesButtons = util.getDefaultPanel(new FlowLayout());  
   private final JLabel date = util.getDateLabel(); 
   private final JLabel map = util.getDefaultMap("map.png");
-  private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();  
-  private IController controller;  
+  private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap(); 
+  private JPanel mapButtons;
+  private transient IController controller;  
   
   private final DrawPosition pos = new DrawPosition(map);
 
@@ -79,60 +80,32 @@ public class View extends JFrame implements IView{
     } catch (IOException e) {
       controller.displayException("Le risorse non sono al momento raggiungibili");
     }
-    
-    //??
+
     final GridBagConstraints gap = new GridBagConstraints();
-    final JPanel north = util.getDefaultPanel(new GridBagLayout());    
-    north.add(date, gap);
-//
+    final JPanel datePanel = util.getDefaultPanel(new GridBagLayout());    
+    datePanel.add(date, gap);    
+    
+    util.add(drawTable);
+    util.add(cancelTable);
+    util.add(cancelAll);
+    mapButtons = util.buildOrizzontalGridPanel(util.getList(), 10);
+    mapButtons.setVisible(false);
+    
+    final JPanel north = util.getDefaultPanel(new BorderLayout());
+    north.add(datePanel, BorderLayout.NORTH);
+    north.add(mapButtons, BorderLayout.CENTER);
     
     final JPanel center = util.getDefaultPanel(new BorderLayout());
     center.add(map, BorderLayout.CENTER);
     center.add(tablesButtons, BorderLayout.SOUTH);
     center.add(north, BorderLayout.NORTH);
-    
-    //aggiunta pannello
-    JPanel panel = new JPanel();
-
-    panel.setBackground(Color.white);
-
-    reservPanel.add(panel);
-    
-    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    panel.add(drawTable);
-    panel.add(cancelTable);
-    panel.add(cancelAll);
-    
-    final DrawButton bDrawTable = new DrawButton(this.drawTable,map);
-    bDrawTable.setting();
-    final DrawButton bCancelTable = new DrawButton(this.cancelTable,map);
-    bCancelTable.setting();
-    final DrawButton bCancelAll = new DrawButton(this.cancelAll,map);
-    bCancelAll.setting();
-    
-    
-     
-    this.drawTable.addActionListener(e->{
-      map.addMouseListener(pos);
-      cancelAll.setEnabled(true);
-      cancelTable.setEnabled(true);
-     });
-    
-     this.cancelTable.addActionListener(e->{
-           pos.cancel(map.getGraphics());
-           if(draw.isEmpty()){
-            cancelTable.setEnabled(false); 
-            cancelAll.setEnabled(false);
-           }
-     });
-     
-     this.cancelAll.addActionListener(e->{
        
-         pos.cancelAll(map.getGraphics());
-         cancelAll.setEnabled(false); 
-         cancelTable.setEnabled(false);
-     });
-   //
+    final DrawButton bDrawTable = new DrawButton(this.drawTable, map);
+    bDrawTable.setting();
+    final DrawButton bCancelTable = new DrawButton(this.cancelTable, map);
+    bCancelTable.setting();
+    final DrawButton bCancelAll = new DrawButton(this.cancelAll, map);
+    bCancelAll.setting();
     
     final JPanel main = util.getDefaultPanel(new BorderLayout(5, 5));
     main.add(center, BorderLayout.CENTER);
@@ -149,44 +122,14 @@ public class View extends JFrame implements IView{
           calendar = new Calendar(frame);
         }
         if (!calendar.getPickedDate().equals("Error")) {
-          final NewReservationForm form = new NewReservationForm(calendar.getPickedDate(), 
-              controller.getReservation(calendar.getPickedDate()));
           controller.setDate(calendar.getPickedDate());
-          form.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentHidden(final ComponentEvent ce) {
-              try {
-                controller.add(form.getTable(), form.getName(), controller.getDate(), form.getH(),
-                    form.getTel(), form.getNum(), form.getMenu());
-                if (controller.getDate().equals(View.this.date.getText())) {
-                  controller.addTable(form.getTable());
-                }
-              } catch (NullPointerException e) {
-                controller.displayException("Riempire la form!");
-                form.setVisible(true);
-              } catch (NumberFormatException e1) {
-                controller.displayException("Riempire la form con dei numeri utili!");
-                form.setVisible(true);
-              } catch (IllegalArgumentException e2) {
-                controller.displayException("Il tavolo inserito e' gia' stato utilizzato");
-                form.setVisible(true);
-              }
-            }          
-          });
+          new NewReservationForm(calendar.getPickedDate(), 
+              controller.getReservation(calendar.getPickedDate()), controller);
         }
       });    
   
     this.buttonDelete.addActionListener(e -> {      
-        final Chooser chooser = new Chooser(controller);
-        chooser.addComponentListener(new ComponentAdapter(){          
-          @Override
-          public void componentHidden(final ComponentEvent ce) {
-             //non va!
-            if (chooser.isBeenRemoved()) {
-              controller.removeTable(chooser.getTable());
-            } 
-          }
-        });            
+        new Chooser(controller);
       });
     
     this.addWindowListener(new WindowAdapter() {
@@ -194,11 +137,35 @@ public class View extends JFrame implements IView{
         quitHandler();
       }
     });
+    
+    this.drawTable.addActionListener(e-> {
+        map.addMouseListener(pos);
+        cancelAll.setEnabled(true);
+        cancelTable.setEnabled(true);
+        /* fare un controllo per disabilitare il bottone se si sono già 
+         * aggiunti tanti ttavoli in mappa quanti sono prenotati
+         * 
+         * quindi con tablesButtons.getComponentCount o qualcosa di simile
+         */
+      });
+
+    this.cancelTable.addActionListener(e-> {
+        pos.cancel(map.getGraphics());
+        if (draw.isEmpty()) {
+          cancelTable.setEnabled(false); 
+          cancelAll.setEnabled(false);
+        }
+      });
+
+    this.cancelAll.addActionListener(e-> {
+        pos.cancelAll(map.getGraphics());
+        cancelAll.setEnabled(false); 
+        cancelTable.setEnabled(false);
+      });
   }
   
   @Override
-  public void addDraw(Pair<Integer, Integer> p, int index) {
-    //final DrawPosition pos = new DrawPosition(map);
+  public void addDraw(final Pair<Integer, Integer> p, final int index) {
     pos.setIndex(index);
     pos.paint(map.getGraphics(),p.getX(),p.getY());
     this.validate();
@@ -219,8 +186,6 @@ public class View extends JFrame implements IView{
 
   @Override
   public void addTable(final Integer table) {
-    /* System.getProperty("user.home")+System.getProperty("file.separator")+
-     */
     JButton button = util.getDefaultButton(table.toString());
     try {
       button = util.getPicButton(table + "s.png");
@@ -231,48 +196,20 @@ public class View extends JFrame implements IView{
     button.addActionListener(e -> {
         IReservation res;
         try {
-          res = controller.getReservation(table, date.getText());          
-          final TableReservationForm form = new TableReservationForm(date.getText(), res);
+          res = controller.getReservation(table, date.getText());    
           controller.setDate(date.getText());
-          form.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentHidden(final ComponentEvent ce) {
-              if (form.isBeenDeleted()) {
-                //problemi
-                controller.remove(form.getTable(), controller.getDate());
-                controller.removeTable(form.getTable());
-              }
-              if (form.isBeenModified()) {
-                try {
-                  controller.remove(form.getOld().getTable(), controller.getDate());
-                } catch (IllegalArgumentException e2) {
-                  /* Non segnala nulla perchè viene lanciata quando modifico il 
-                   * tavolo più di una volta. In questo caso devo solo intercettare
-                   * l'eccezione.
-                   */
-                }  
-                try {
-                  controller.add(form.getTable(), form.getName(), controller.getDate(), form.getH(),
-                      form.getTel(), form.getNum(), form.getMenu());
-                } catch (NullPointerException e) {
-                  controller.displayException("Riempire la form!");
-                  form.setVisible(true);
-                } catch (NumberFormatException e1) {
-                  controller.displayException("Riempire la form con dei numeri!");
-                  form.setVisible(true);
-                }
-              }
-            }
-          });          
+          new TableReservationForm(date.getText(), res, controller);         
         } catch (NumberFormatException e1) {
           controller.displayException("Prenotazione non disponibile!");
         }      
       });
     tablesButtons.add(button);
-    /*  SE LO COMMENTO FUNZIONA LA MAPPA DEI TAVOLI MA NON MI CARICA IL BOTTONE SOTTO!
-     */
+    mapButtons.setVisible(true);
+    /* disabilitare i bottoni se non c'è niente nella mappa
+     * cancelAll.setEnabled(false);
+      cancelTable.setEnabled(false);
+     * */
     View.this.validate();
-    //controller.LoadDisegno();
   }
   
   @Override
@@ -281,6 +218,7 @@ public class View extends JFrame implements IView{
       if (c.getName().equals(table.toString())) {
         tablesButtons.remove(c);
         tablesButtons.repaint();
+        /*controllare disabilitzione bottoni sopra alla mappa*/
       }
     }
   }
