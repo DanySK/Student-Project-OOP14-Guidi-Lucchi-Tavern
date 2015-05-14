@@ -15,8 +15,7 @@ import javax.swing.JTextField;
 public class Chooser extends BasicFrame{
 
   private static final long serialVersionUID = 1L;
-  private final IGUIutilities util = new GUIutilities();
-  private final IUtilities utilities = new Utilities();  
+  private final IGUIutilities util = new GUIutilities(); 
   private final JButton dateButton = util.getDefaultButton("Scegli per data");
   private final JButton personButton = util.getDefaultButton("Scegli per nome");
   private final JButton ok = util.getDefaultButton("OK", 12); 
@@ -51,16 +50,58 @@ public class Chooser extends BasicFrame{
   }
   
   private void buildLayout() {    
-    final JPanel top = util.getDefaultPanel(new FlowLayout());
-    top.add(dateButton);
-    top.add(personButton);    
     dateLabel.setVisible(false);
     dat.setVisible(false);
     tab.setVisible(false);
     tableLabel.setVisible(false);
     name.setVisible(false);
     nameLabel.setVisible(false);    
-    ok.setVisible(false);
+    ok.setVisible(false);       
+    util.add(util.getDefaultPanel(new FlowLayout(), tableLabel, tab));
+    util.add(util.getDefaultPanel(new FlowLayout(), dateLabel, dat));
+    util.add(util.getDefaultPanel(new FlowLayout(), nameLabel, name));
+    util.add(ok);
+    final JPanel main = util.getDefaultPanel(new BorderLayout());
+    main.add(util.getDefaultPanel(new FlowLayout(), dateButton, personButton), BorderLayout.NORTH);
+    main.add(res, BorderLayout.CENTER);
+    main.add(util.buildGridPanel(util.getList(), 5), BorderLayout.SOUTH);    
+    this.getContentPane().add(main);
+  }
+  
+  private void setHandlers() {
+    dateButton.addActionListener(e -> {
+        choosedByDate = true;
+        personButton.setEnabled(false);
+        final JFrame frame = new JFrame("Calendar");
+        Calendar calendar = new Calendar(frame);
+        while (!calendar.getPickedDate().equals("Error") && !calendar.isRight()) {
+          controller.displayException("Selezionare una data utile");
+          calendar = new Calendar(frame);
+        }
+        if (!calendar.getPickedDate().equals("Error")) {
+          date = calendar.getPickedDate();
+          if (controller.getReservation(date).size() == 0) {
+            controller.displayException("Nessuna prenotazione per la data selezionata.");
+            calendar = new Calendar(frame);
+          } else {
+            loadReservation(date);
+            tableLabel.setVisible(true);
+            tab.setVisible(true);
+            ok.setVisible(true);
+          }
+        }
+      });
+
+    personButton.addActionListener(e -> {
+        dateButton.setEnabled(false);
+        this.loadReservations();
+        dateLabel.setVisible(true);
+        dat.setVisible(true);
+        nameLabel.setVisible(true);
+        name.setVisible(true);
+        ok.setVisible(true);
+      });
+  
     ok.addActionListener(e -> {
         Chooser.this.setVisible(false);
         if (choosedByDate) {          
@@ -86,71 +127,17 @@ public class Chooser extends BasicFrame{
         }        
         /*setto la variabile rimossa solo se è il giorno corrente, 
          * così modifico la view solo se necessario */
-        if (date.equals(utilities.getCurrentDate())) {
+        if (date.equals(util.getCurrentDate())) {
           removed = true;  
         }
-      });    
-    final JPanel up = util.getDefaultPanel(new FlowLayout());
-    up.add(tableLabel);
-    up.add(tab);    
-    final JPanel center = util.getDefaultPanel(new FlowLayout());
-    center.add(dateLabel);
-    center.add(dat);    
-    final JPanel down = util.getDefaultPanel(new FlowLayout());
-    down.add(nameLabel);
-    down.add(name); 
-    utilities.add(up);
-    utilities.add(center);
-    utilities.add(down);
-    utilities.add(ok);
-    final JPanel south = util.buildGridPanel(utilities.getList(), 5);
-    final JPanel main = util.getDefaultPanel(new BorderLayout());
-    main.add(top, BorderLayout.NORTH);
-    main.add(res, BorderLayout.CENTER);
-    main.add(south, BorderLayout.SOUTH);    
-    this.getContentPane().add(main);
-  }
-  
-  private void setHandlers() {
-    dateButton.addActionListener(e -> {
-      choosedByDate = true;
-      personButton.setEnabled(false);
-      final JFrame frame = new JFrame("Calendar");
-      Calendar calendar = new Calendar(frame);
-      while (!calendar.getPickedDate().equals("Error") && !calendar.isRight()) {
-        controller.displayException("Selezionare una data utile");
-        calendar = new Calendar(frame);
-      }
-      if (!calendar.getPickedDate().equals("Error")) {
-        date = calendar.getPickedDate();
-        if (controller.getReservation(date).size() == 0) {
-          controller.displayException("Nessuna prenotazione per la data selezionata.");
-          calendar = new Calendar(frame);
-        } else {
-          loadReservation(date);
-          tableLabel.setVisible(true);
-          tab.setVisible(true);
-          ok.setVisible(true);
-        }
-      }
-    });    
-
-  personButton.addActionListener(e -> {
-      dateButton.setEnabled(false);
-      this.loadReservations();
-      dateLabel.setVisible(true);
-      dat.setVisible(true);
-      nameLabel.setVisible(true);
-      name.setVisible(true);
-      ok.setVisible(true);
-    });
+      });
   }
   
   private void loadReservation(final String date) {
     for (final Integer i: controller.getReservation(date).keySet()) {
-      utilities.add(new JLabel(controller.getReservation(date).get(i).toString()));  
+      util.add(new JLabel(controller.getReservation(date).get(i).toString()));  
     }
-    res.add(util.buildGridPanel(utilities.getList(), 10));
+    res.add(util.buildGridPanel(util.getList(), 10));
   }
 
   private void loadReservations() {
@@ -158,10 +145,10 @@ public class Chooser extends BasicFrame{
     //LAMBDA??
     for (final String s: dates) {
       for (final Integer i: controller.getReservation(s).keySet()) {
-        utilities.add(new JLabel(controller.getReservation(s).get(i).toString()));  
+        util.add(new JLabel(controller.getReservation(s).get(i).toString()));  
       }         
     }        
-    res.add(util.buildGridPanel(utilities.getList(), 10));
+    res.add(util.buildGridPanel(util.getList(), 10));
   }  
   
   public boolean isBeenRemoved() {

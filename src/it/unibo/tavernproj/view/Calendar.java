@@ -128,7 +128,7 @@ public class Calendar {
     return sdf.format(cal.getTime());
   }
   
-  /** 
+  /**
    * @return
    *      a boolean explaining if the date picked can be correct
    */

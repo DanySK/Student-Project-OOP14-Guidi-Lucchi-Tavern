@@ -24,6 +24,6 @@ public class BasicFrame extends JFrame{
   }
 
   private void buildLayout() {
-    this.getContentPane().setLayout(new BorderLayout());  }
-
+    this.getContentPane().setLayout(new BorderLayout());
+  }
 }

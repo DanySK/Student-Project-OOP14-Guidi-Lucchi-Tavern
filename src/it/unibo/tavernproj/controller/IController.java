@@ -82,7 +82,7 @@ public interface IController {
 
 	Map<Integer,IReservation> getReservation(final String date);
 
-  void loadTables(final String date);
+  void load(final String date);
 
   void commandQuit();
 

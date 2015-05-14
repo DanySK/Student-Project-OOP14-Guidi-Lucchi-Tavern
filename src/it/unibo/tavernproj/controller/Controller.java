@@ -69,6 +69,7 @@ public class Controller implements IController,Serializable{
 		for (final IView v: view){
 			v.addTable(table);
 		}
+		this.LoadDisegno();
 	}
 
 	@Override
@@ -76,7 +77,7 @@ public class Controller implements IController,Serializable{
 		model.remove(date, table);
 	}
 	
-  public void loadTables (final String date) {
+  public void load (final String date) {
     this.setModel();
     if (!model.isEmpty()) {
       try {

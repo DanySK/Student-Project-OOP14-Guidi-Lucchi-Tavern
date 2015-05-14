@@ -2,6 +2,7 @@ package it.unibo.tavernproj.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -127,5 +128,13 @@ public class GUIutilities extends Utilities implements IGUIutilities{
       gap.gridy++;
     }    
     return panel;
+  }
+
+  @Override
+  public JPanel getDefaultPanel(LayoutManager lm, JComponent c1, JComponent c2) {
+    JPanel temp = this.getDefaultPanel(lm);
+    temp.add(c1);
+    temp.add(c2);    
+    return temp;
   }
 }

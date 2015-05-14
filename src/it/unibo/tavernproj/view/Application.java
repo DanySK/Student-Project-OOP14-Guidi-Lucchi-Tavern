@@ -22,9 +22,6 @@ public final class Application {
     c.setFileName(HOME + SEPARATOR + DEFAULT_FILE);    
     final View v = new View();
     c.addView(v);    
-    c.loadTables(util.getCurrentDate());
-    c.LoadDisegno();
-    
+    c.load(util.getCurrentDate());    
   }
-
 }

@@ -1,5 +1,6 @@
 package it.unibo.tavernproj.view;
 
+import java.awt.FlowLayout;
 import java.awt.LayoutManager;
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +14,7 @@ import javax.swing.JPanel;
  * @author Eleonora Guidi
  */
 
-public interface IGUIutilities {
+public interface IGUIutilities extends IUtilities {
   
   /**
    * Creates a JPanel with a white background.
@@ -128,6 +129,19 @@ public interface IGUIutilities {
    *      the panel.
    */
   JPanel buildGridPanel(final List<JComponent> list, final int ins);
+
+  /**
+   * Builds a new panel with the layout passed and the two components
+   * @param lm
+   *      the layout to use.
+   * @param c1
+   *      the first component.
+   * @param c2
+   *      the second component.
+   * @return
+   *      the panel.
+   */
+  JPanel getDefaultPanel(LayoutManager lm, JComponent c1, JComponent c2);
   
 
 }

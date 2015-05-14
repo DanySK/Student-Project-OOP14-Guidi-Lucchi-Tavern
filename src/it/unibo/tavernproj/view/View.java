@@ -272,7 +272,7 @@ public class View extends JFrame implements IView{
     /*  SE LO COMMENTO FUNZIONA LA MAPPA DEI TAVOLI MA NON MI CARICA IL BOTTONE SOTTO!
      */
     View.this.validate();
-    controller.LoadDisegno();
+    //controller.LoadDisegno();
   }
   
   @Override
