@@ -147,7 +147,9 @@ public class ReservationForm extends BasicFrame implements IReservationForm {
 
   @Override
   public Integer getTable() throws NumberFormatException {
-    if (((JTextField) map.get(NUM)).getText().isEmpty()) {
+    if (((JTextField) map.get(TAV)).getText().isEmpty() || 
+        (Integer.parseInt(((JTextField)map.get(TAV)).getText())) > 20 || 
+        (Integer.parseInt(((JTextField)map.get(TAV)).getText())) <= 0) {
       throw new NumberFormatException();
     }
     return Integer.parseInt(((JTextField) map.get(TAV)).getText());
@@ -155,14 +157,22 @@ public class ReservationForm extends BasicFrame implements IReservationForm {
 
   @Override
   public String getName() throws NullPointerException {
+    if (((JTextField) map.get(NOME)).getText().equals(" ")){
+      throw new NullPointerException();
+    }
     return ((JTextField)map.get(NOME)).getText();
   }
 
   @Override
-  public String getH() throws NullPointerException {
+  public String getH() throws NullPointerException, NumberFormatException {
+    if (Double.parseDouble(((JTextField) map.get(ORA)).getText()) <= 0 ||
+        Double.parseDouble(((JTextField) map.get(ORA)).getText()) > 24){
+      throw new NumberFormatException();
+    }
     return ((JTextField) map.get(ORA)).getText();
   }
 
+  /*vedere se sostituirlo con un optional*/
   @Override
   public String getTel() throws NullPointerException {
     return ((JTextField)map.get(TEL)).getText();
@@ -170,7 +180,8 @@ public class ReservationForm extends BasicFrame implements IReservationForm {
 
   @Override
   public String getNum() throws NumberFormatException {
-    if (((JTextField) map.get(NUM)).getText().isEmpty()) {
+    if (((JTextField) map.get(NUM)).getText().isEmpty() || 
+        Double.parseDouble(((JTextField) map.get(NUM)).getText()) > 300) {
       throw new NumberFormatException();
     }
     return ((JTextField) map.get(NUM)).getText();

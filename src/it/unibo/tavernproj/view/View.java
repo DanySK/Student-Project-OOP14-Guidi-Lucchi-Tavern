@@ -50,10 +50,12 @@ public class View extends JFrame implements IView{
   private final JButton cancelTable = new JButton("Cancella Tavolo");
   private final JButton drawTable = new JButton("Disegna Tavolo ");
   private final JPanel tablesButtons = build.getDefaultPanel(new FlowLayout());
-  private final JLabel date = build.getDateLabel();
+  private final JLabel date = build.getDateLabel(); 
   private final JLabel map = build.getDefaultMap("map.png");
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();  
   private IController controller;  
+  
+  private final DrawPosition pos = new DrawPosition(map);
 
   /**
    * Builds the main view
@@ -109,16 +111,16 @@ public class View extends JFrame implements IView{
     final DrawButton bCancelAll = new DrawButton(this.cancelAll,map);
     bCancelAll.setting();
     
-    final DrawPosition cancel = new DrawPosition(map);
+    
      
     this.drawTable.addActionListener(e->{
-      map.addMouseListener(cancel);
+      map.addMouseListener(pos);
       cancelAll.setEnabled(true);
       cancelTable.setEnabled(true);
      });
     
      this.cancelTable.addActionListener(e->{
-           cancel.cancel(map.getGraphics());
+           pos.cancel(map.getGraphics());
            if(draw.isEmpty()){
             cancelTable.setEnabled(false); 
             cancelAll.setEnabled(false);
@@ -127,7 +129,7 @@ public class View extends JFrame implements IView{
      
      this.cancelAll.addActionListener(e->{
        
-         cancel.cancelAll(map.getGraphics());
+         pos.cancelAll(map.getGraphics());
          cancelAll.setEnabled(false); 
          cancelTable.setEnabled(false);
      });
@@ -196,7 +198,7 @@ public class View extends JFrame implements IView{
   
   @Override
   public void addDraw(Pair<Integer, Integer> p, int index) {
-    final DrawPosition pos = new DrawPosition(map);
+    //final DrawPosition pos = new DrawPosition(map);
     pos.setIndex(index);
     pos.paint(map.getGraphics(),p.getX(),p.getY());
     this.validate();
@@ -279,9 +281,6 @@ public class View extends JFrame implements IView{
       if (c.getName().equals(table.toString())) {
         tablesButtons.remove(c);
         tablesButtons.repaint();
-        //SE HO PIù DI UN TAVOLO PER GIORNO DA PROBLEMI
-        //View.this.validate();
-        //controller.LoadDisegno();
       }
     }
   }

@@ -33,7 +33,7 @@ public class Model implements IModel {
 	}
 
 	@Override
-	public void add(final String date, final IReservation res) {
+	public void add(final String date, final IReservation res) throws IllegalArgumentException{
 		
 		Map<Integer, IReservation> temp = new HashMap<>();
 		
