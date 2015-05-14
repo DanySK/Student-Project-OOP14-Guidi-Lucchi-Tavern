@@ -42,16 +42,15 @@ import javax.swing.WindowConstants;
 public class View extends JFrame implements IView{
 
   private static final long serialVersionUID = 1L;
-  private final IGUIutilities build = new GUIutilities();
-  private final IUtilities util = new Utilities();
-  private final JButton buttonNew = build.getDefaultButton("Nuova Prenotazione");
-  private final JButton buttonDelete = build.getDefaultButton("Elimina Prenotazione");
+  private final IGUIutilities util = new GUIutilities();
+  private final JButton buttonNew = util.getDefaultButton("Nuova Prenotazione");
+  private final JButton buttonDelete = util.getDefaultButton("Elimina Prenotazione");
   private final JButton cancelAll = new JButton("Cancella Tutto");
   private final JButton cancelTable = new JButton("Cancella Tavolo");
   private final JButton drawTable = new JButton("Disegna Tavolo ");
-  private final JPanel tablesButtons = build.getDefaultPanel(new FlowLayout());
-  private final JLabel date = build.getDateLabel(); 
-  private final JLabel map = build.getDefaultMap("map.png");
+  private final JPanel tablesButtons = util.getDefaultPanel(new FlowLayout());
+  private final JLabel date = util.getDateLabel(); 
+  private final JLabel map = util.getDefaultMap("map.png");
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();  
   private IController controller;  
   
@@ -64,7 +63,7 @@ public class View extends JFrame implements IView{
     super();
     this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     setLocationByPlatform(true);    
-    this.setSize(build.getDefaultWidth(), build.getDefaultHeight());
+    this.setSize(util.getDefaultWidth(), util.getDefaultHeight());
     this.setResizable(false);    
     this.buildLayout();
     this.setHandlers();    
@@ -72,22 +71,22 @@ public class View extends JFrame implements IView{
   }
   
   private void buildLayout() {
-    final JPanel reservPanel = build.buildGridPanel(util.getList(buttonNew, buttonDelete), 10);
-    final JPanel east = build.getDefaultPanel(new BorderLayout());
+    final JPanel reservPanel = util.buildGridPanel(util.getList(buttonNew, buttonDelete), 10);
+    final JPanel east = util.getDefaultPanel(new BorderLayout());
     east.add(reservPanel, BorderLayout.CENTER);    
     try {      
-      east.add(build.getDefaultLogo("logo.jpg"), BorderLayout.NORTH);  
+      east.add(util.getDefaultLogo("logo.jpg"), BorderLayout.NORTH);  
     } catch (IOException e) {
       controller.displayException("Le risorse non sono al momento raggiungibili");
     }
     
     //??
     final GridBagConstraints gap = new GridBagConstraints();
-    final JPanel north = build.getDefaultPanel(new GridBagLayout());    
+    final JPanel north = util.getDefaultPanel(new GridBagLayout());    
     north.add(date, gap);
 //
     
-    final JPanel center = build.getDefaultPanel(new BorderLayout());
+    final JPanel center = util.getDefaultPanel(new BorderLayout());
     center.add(map, BorderLayout.CENTER);
     center.add(tablesButtons, BorderLayout.SOUTH);
     center.add(north, BorderLayout.NORTH);
@@ -135,7 +134,7 @@ public class View extends JFrame implements IView{
      });
    //
     
-    final JPanel main = build.getDefaultPanel(new BorderLayout(5, 5));
+    final JPanel main = util.getDefaultPanel(new BorderLayout(5, 5));
     main.add(center, BorderLayout.CENTER);
     main.add(east, BorderLayout.EAST);
     this.getContentPane().add(main);
@@ -149,31 +148,32 @@ public class View extends JFrame implements IView{
           controller.displayException("Selezionare una data utile");
           calendar = new Calendar(frame);
         }
-        //problemi del calendario: se chiudo senza selezionare una data tira comunque fuori la form.
-        final NewReservationForm form = new NewReservationForm(calendar.getPickedDate(), 
-            controller.getReservation(calendar.getPickedDate()));
-        controller.setDate(calendar.getPickedDate());
-        form.addComponentListener(new ComponentAdapter() {
-          @Override
-          public void componentHidden(final ComponentEvent ce) {
-            try {
-              controller.add(form.getTable(), form.getName(), controller.getDate(), form.getH(),
-                  form.getTel(), form.getNum(), form.getMenu());
-              if (controller.getDate().equals(View.this.date.getText())) {
-                controller.addTable(form.getTable());
+        if (!calendar.getPickedDate().equals("Error")) {
+          final NewReservationForm form = new NewReservationForm(calendar.getPickedDate(), 
+              controller.getReservation(calendar.getPickedDate()));
+          controller.setDate(calendar.getPickedDate());
+          form.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentHidden(final ComponentEvent ce) {
+              try {
+                controller.add(form.getTable(), form.getName(), controller.getDate(), form.getH(),
+                    form.getTel(), form.getNum(), form.getMenu());
+                if (controller.getDate().equals(View.this.date.getText())) {
+                  controller.addTable(form.getTable());
+                }
+              } catch (NullPointerException e) {
+                controller.displayException("Riempire la form!");
+                form.setVisible(true);
+              } catch (NumberFormatException e1) {
+                controller.displayException("Riempire la form con dei numeri utili!");
+                form.setVisible(true);
+              } catch (IllegalArgumentException e2) {
+                controller.displayException("Il tavolo inserito e' gia' stato utilizzato");
+                form.setVisible(true);
               }
-            } catch (NullPointerException e) {
-              controller.displayException("Riempire la form!");
-              form.setVisible(true);
-            } catch (NumberFormatException e1) {
-              controller.displayException("Riempire la form con dei numeri utili!");
-              form.setVisible(true);
-            } catch (IllegalArgumentException e2) {
-              controller.displayException("Il tavolo inserito e' gia' stato utilizzato");
-              form.setVisible(true);
-            }
-          }
-        });
+            }          
+          });
+        }
       });    
   
     this.buttonDelete.addActionListener(e -> {      
@@ -221,9 +221,9 @@ public class View extends JFrame implements IView{
   public void addTable(final Integer table) {
     /* System.getProperty("user.home")+System.getProperty("file.separator")+
      */
-    JButton button = build.getDefaultButton(table.toString());
+    JButton button = util.getDefaultButton(table.toString());
     try {
-      button = build.getPicButton(table + "s.png");
+      button = util.getPicButton(table + "s.png");
     } catch (IOException e3) {
       controller.displayException("Le risorse non sono al momento raggiungibili");
     }

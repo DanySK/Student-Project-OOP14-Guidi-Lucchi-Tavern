@@ -1,14 +1,16 @@
 package it.unibo.tavernproj.view;
 
 import java.awt.BorderLayout;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
+/**
+ * @author Eleonora Guidi
+ *
+ */
 public class BasicFrame extends JFrame{
   
   private static final long serialVersionUID = 1L;
-  private final IGUIutilities util = new GUIutilities();
+  private final transient IGUIutilities util = new GUIutilities();
   
   /**
    * Builds a new basic form with width and height half of the main view.

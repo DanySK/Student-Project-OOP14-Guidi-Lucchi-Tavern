@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
+/**
+ * @author Eleonora Guidi
+ *
+ */
 public class Utilities implements IUtilities {  
   
   private List<JComponent> list;

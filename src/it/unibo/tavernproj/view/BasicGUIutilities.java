@@ -16,6 +16,10 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * @author Eleonora Guidi
+ *
+ */
 public class BasicGUIutilities extends Utilities implements IBasicGUIutilities {
   
   private static final Dimension SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
