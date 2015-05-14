@@ -24,4 +24,5 @@ public final class Application {
     c.addView(v);    
     c.load(util.getCurrentDate());    
   }
+
 }

@@ -69,7 +69,10 @@ public class Controller implements IController,Serializable{
 		for (final IView v: view){
 			v.addTable(table);
 		}
-		this.LoadDisegno();
+		
+		//this.LoadDisegno();
+		
+
 	}
 
 	@Override
