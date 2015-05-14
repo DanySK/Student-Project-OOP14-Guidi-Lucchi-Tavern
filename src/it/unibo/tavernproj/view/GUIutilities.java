@@ -1,20 +1,14 @@
 package it.unibo.tavernproj.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.LayoutManager;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -29,7 +23,7 @@ import javax.swing.JPanel;
 /* Mi sono basata su questo http://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
  */
 
-public class GUIutilities extends BasicGUIutilities implements IGUIutilities{
+public class GUIutilities extends BasicGUIutilities implements IGUIutilities {
 
   @Override
   public JLabel getDateLabel() {
@@ -53,11 +47,7 @@ public class GUIutilities extends BasicGUIutilities implements IGUIutilities{
     img.setImage(temp);
     return img;
   }
-
-
-
-
-
+  
   @Override
   public JPanel buildGridPanel(final List<JComponent> list, final int ins) {
     final JPanel panel = this.getDefaultPanel(new GridBagLayout());
@@ -71,5 +61,4 @@ public class GUIutilities extends BasicGUIutilities implements IGUIutilities{
     }    
     return panel;
   }
-
 }

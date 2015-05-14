@@ -1,7 +1,5 @@
 package it.unibo.tavernproj.view;
 
-import java.awt.FlowLayout;
-import java.awt.LayoutManager;
 import java.io.IOException;
 import java.util.List;
 
@@ -39,8 +37,6 @@ public interface IGUIutilities extends IBasicGUIutilities {
    */
   JLabel getDateLabel();
 
-
-
   /**
    * It creates a new GridBagLayouted panel with all the components in the list,
    * one above the other.
@@ -53,7 +49,4 @@ public interface IGUIutilities extends IBasicGUIutilities {
    *      the panel.
    */
   JPanel buildGridPanel(final List<JComponent> list, final int ins);
-
-  
-
 }
