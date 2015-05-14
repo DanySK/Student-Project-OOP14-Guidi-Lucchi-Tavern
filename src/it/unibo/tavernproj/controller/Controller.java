@@ -37,49 +37,49 @@ import javax.swing.JLabel;
 //HO USATO IL PATTERN SINGLETON
 
 public class Controller implements IController,Serializable{
-  
+
   private static final long serialVersionUID = 1L;
 
   private static final Controller SINGLETON = new Controller();  
-	
-	private final Set<IView> view = new HashSet<>();
-	private final IUtilities util = new Utilities();
+
+  private final Set<IView> view = new HashSet<>();
+  private final IUtilities util = new Utilities();
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();
-	private IModel model = new Model();
-	private ObjectOutput outMap;
-	private ObjectInput  inMap; 
-	private String fileName = "file.txt";
-	
-	private Optional<String> date = Optional.empty();
+  private IModel model = new Model();
+  private ObjectOutput outMap;
+  private ObjectInput  inMap; 
+  private String fileName = "file.txt";
 
-	private Controller(){};
-	
-	
-	/*usato nel test junit per caricare un modello a piacere*/
-	public void setModel(IModel model){
-	  this.model = model;
-	}
-	
-	public static Controller getController(){
-	  return SINGLETON;
-	}
+  private Optional<String> date = Optional.empty();
 
-	@Override
-	public void addTable(Integer table) {	  
-		for (final IView v: view){
-			v.addTable(table);
-		}
-		
-		//this.LoadDisegno();
-		
+  private Controller(){};
 
-	}
 
-	@Override
-	public void remove(final int table, final String date) {
-		model.remove(date, table);
-	}
-	
+  /*usato nel test junit per caricare un modello a piacere*/
+  public void setModel(IModel model){
+    this.model = model;
+  }
+
+  public static Controller getController(){
+    return SINGLETON;
+  }
+
+  @Override
+  public void addTable(Integer table) {	  
+    for (final IView v: view){
+      v.addTable(table);
+    }
+
+    //this.LoadDisegno();
+
+
+  }
+
+  @Override
+  public void remove(final int table, final String date) {
+    model.remove(date, table);
+  }
+
   public void load (final String date) {
     this.setModel();
     if (!model.isEmpty()) {
@@ -97,155 +97,155 @@ public class Controller implements IController,Serializable{
 
 
   @Override
-	  public Map<Integer,IReservation> getReservation(final String date) {	
-	   if (model.getRes(date).isEmpty()){
-	     return new HashMap<>();
-	   }
-     return model.getTableRes(date);
-	  } 
-	
-
-	@Override
-	public IReservation getReservation(int table, String date) {
-		for (IReservation r: model.getRes(date)){
-			if (r.getTable() == table){
-				return r;
-			}
-		}
-		throw new NumberFormatException();
-	}
-
-	@Override
-	public void addView(final IView v) {
-		v.attachViewObserver(this);
-		view.add(v);
-	}
-
-	@Override
-	public void removeView(final IView v) {
-		view.remove(v);	
-	}
+  public Map<Integer,IReservation> getReservation(final String date) {	
+    if (model.getRes(date).isEmpty()){
+      return new HashMap<>();
+    }
+    return model.getTableRes(date);
+  } 
 
 
-	/*
-	 * Save and Load
-	 * @author Giulia Lucchi
-	 * 
-	 */
-	@Override
-  public void saveModel(){    
-    
-      try{
-        final ObjectOutput out = new ObjectOutputStream(new FileOutputStream(fileName));
-        out.writeObject(model.getMap().keySet().size());
-        for (String s: model.getMap().keySet()){
-          out.writeObject(s);
-          out.writeObject(model.getMap().get(s).keySet().size());
-          for (Integer i: model.getMap().get(s).keySet()){
-            out.writeObject(i);
-            //System.out.println(model.getMap().get(s).get(i).toString());
-            out.writeObject(model.getMap().get(s).get(i).getName().toString());
-            out.writeObject(model.getMap().get(s).get(i).getHours().toString());
-            out.writeObject(model.getMap().get(s).get(i).getTel().toString());
-            out.writeObject(model.getMap().get(s).get(i).getNumPers().toString());
-            try{
-              out.writeObject(model.getMap().get(s).get(i).getMenu().toString());
-            }catch(NoSuchElementException e){
-              out.writeObject("");
-            }catch(NullPointerException e1){
-              out.writeObject("");
-            }
-          }     
-        }       
-        out.close();
-      }catch (IOException e){
-        System.out.print("non salva sul file");
+  @Override
+  public IReservation getReservation(int table, String date) {
+    for (IReservation r: model.getRes(date)){
+      if (r.getTable() == table){
+        return r;
       }
+    }
+    throw new NumberFormatException();
+  }
+
+  @Override
+  public void addView(final IView v) {
+    v.attachViewObserver(this);
+    view.add(v);
+  }
+
+  @Override
+  public void removeView(final IView v) {
+    view.remove(v);	
+  }
+
+
+  /*
+   * Save and Load
+   * @author Giulia Lucchi
+   * 
+   */
+  @Override
+  public void saveModel(){    
+
+    try{
+      final ObjectOutput out = new ObjectOutputStream(new FileOutputStream(fileName));
+      out.writeObject(model.getMap().keySet().size());
+      for (String s: model.getMap().keySet()){
+        out.writeObject(s);
+        out.writeObject(model.getMap().get(s).keySet().size());
+        for (Integer i: model.getMap().get(s).keySet()){
+          out.writeObject(i);
+          //System.out.println(model.getMap().get(s).get(i).toString());
+          out.writeObject(model.getMap().get(s).get(i).getName().toString());
+          out.writeObject(model.getMap().get(s).get(i).getHours().toString());
+          out.writeObject(model.getMap().get(s).get(i).getTel().toString());
+          out.writeObject(model.getMap().get(s).get(i).getNumPers().toString());
+          try{
+            out.writeObject(model.getMap().get(s).get(i).getMenu().toString());
+          }catch(NoSuchElementException e){
+            out.writeObject("");
+          }catch(NullPointerException e1){
+            out.writeObject("");
+          }
+        }     
+      }       
+      out.close();
+    }catch (IOException e){
+      System.out.print("non salva sul file");
+    }
   }
 
 
   /*per caricare il modello da file system all'accensione*/
-   @Override
-    public void setModel(){
-     Map<String, Map <Integer, IReservation>> temp = new HashMap<>();
-     Map<Integer, IReservation> tempMap = new HashMap<>();
-      try{
-         final ObjectInput in = new ObjectInputStream(new FileInputStream(fileName));
-         int size = (int) in.readObject();
-         for (int i = 1; i <= size; i++) {
+  @Override
+  public void setModel(){
+    Map<String, Map <Integer, IReservation>> temp = new HashMap<>();
+    Map<Integer, IReservation> tempMap = new HashMap<>();
+    try{
+      final ObjectInput in = new ObjectInputStream(new FileInputStream(fileName));
+      int size = (int) in.readObject();
+      for (int i = 1; i <= size; i++) {
 
-           String date = (String) in.readObject();
+        String date = (String) in.readObject();
 
-           int max = (int) in.readObject();
+        int max = (int) in.readObject();
 
-           for (int j = 1; j <= max; j++){
-             /*add(String table, String name, String date, String h, String tel, String num,
+        for (int j = 1; j <= max; j++){
+          /*add(String table, String name, String date, String h, String tel, String num,
                  Optional<String> menu)*/
-                 
-             this.add((Integer) in.readObject(), (String) in.readObject(), date, (String) in.readObject(),
-                 (String) in.readObject(), (String) in.readObject(), (String) in.readObject());
-             
-             //IReservation tempres = new Reservation(, , date, , 
-                 
-             //tempMap.put(j, tempres);
-           }
-           //temp.put(date, tempMap);
-         } 
-         
-         //model.setModel(temp);
-         in.close();
-      }catch(IOException e){
-        System.out.print("non prende il file");
-      
-      } catch (ClassNotFoundException e) {
-        System.out.print("non carica il modello");
-      }
+
+          this.add((Integer) in.readObject(), (String) in.readObject(), date, (String) in.readObject(),
+              (String) in.readObject(), (String) in.readObject(), (String) in.readObject());
+
+          //IReservation tempres = new Reservation(, , date, , 
+
+          //tempMap.put(j, tempres);
+        }
+        //temp.put(date, tempMap);
+      } 
+
+      //model.setModel(temp);
+      in.close();
+    }catch(IOException e){
+      System.out.print("non prende il file");
+
+    } catch (ClassNotFoundException e) {
+      System.out.print("non carica il modello");
     }
-	
+  }
+
 
 
   //SALVARE TUTTO IL MODELLO SU FILESYSTEM (QUINDI LA MAPPA PRINCIPALE) E RISETTARLO AL CARICAMENTO
 
-	@Override
-	public void saveDisegno(){
-	  try{
+  @Override
+  public void saveDisegno() {
+    try {
       outMap = new ObjectOutputStream(new FileOutputStream("disegno.dat"));
       outMap.writeObject(util.getCurrentDate());
       outMap.writeObject(draw);
       System.out.print(draw);
       outMap.close();
-	  }catch (IOException e){
+    } catch (IOException e) {
       System.out.print("non salva  sul file nel disegno");
     }
-	}
-	
-	@Override
-	public void LoadDisegno(){
-	   try{
-        inMap = new ObjectInputStream(new FileInputStream("disegno.dat"));
-      if(util.getCurrentDate().equals(inMap.readObject())){
+  }
+
+  @Override
+  public void LoadDisegno(){
+    try {
+      inMap = new ObjectInputStream(new FileInputStream("disegno.dat"));
+      if (util.getCurrentDate().equals(inMap.readObject())) {
         System.out.println("data giusta per caricare");
-        Map<Integer,Pair<Integer,Integer>> map = (Map<Integer,Pair<Integer,Integer>>)inMap.readObject();
-           System.out.println("assegnato mappa"+ map);
-            inMap.close();
-            int index=0;
-            for(Integer i : map.keySet()){
-              Pair<Integer,Integer> p = map.get(i);
-              for (final IView v: view){
-                v.addDraw(p, index);
-                index++;
-              }
-               
-            }
-       }
-         
+        Map<Integer,Pair<Integer,Integer>> map =
+                              (Map<Integer,Pair<Integer,Integer>>)inMap.readObject();
+        System.out.println("assegnato mappa" + map);
+        inMap.close();
+        
+        for (Integer i : map.keySet()) {
+          Pair<Integer,Integer> pt = map.get(i);
+          for (final IView v: view) {
+            v.addDraw(pt, i);
+          }
+
+        }
+      }
+
     } catch (ClassNotFoundException e) {
       System.out.println("\nnon trova la classe");
-    }catch(IOException e){
-        System.out.println("\nnon carica il disegno");
+    } catch (IOException e1) {
+      System.out.println("\nnon carica il disegno");
     }
-	
-	}
+
+  }
 
 
 
@@ -261,12 +261,11 @@ public class Controller implements IController,Serializable{
   @Override
   public void add(Integer table, String name, String date, String h, String tel, String num,
       String menu) throws IllegalArgumentException, NumberFormatException {
-    
+
     Reservation res;
-    if (menu.equals("")){
+    if (menu.equals("")) {
       res = new Reservation(table, name, date, h, tel, num, Optional.empty());
-    }
-    else {
+    } else {
       res = new Reservation(table, name, date, h, tel, num, Optional.of(menu));
     }
     model.add(date, res);
@@ -281,7 +280,7 @@ public class Controller implements IController,Serializable{
 
   @Override
   public void removeTable(Integer table) {
-    for (final IView v: view){
+    for (final IView v: view) {
       v.removeTable(table);
     }
   }
@@ -294,9 +293,9 @@ public class Controller implements IController,Serializable{
 
 
   @Override
-  public int getReservation(String date, String name){
-    for (IReservation r: model.getNameRes(name)){
-      if (r.getDate().equals(date)){
+  public int getReservation(String date, String name) {
+    for (IReservation r: model.getNameRes(name)) {
+      if (r.getDate().equals(date)) {
         return r.getTable();
       }
     }
@@ -312,7 +311,7 @@ public class Controller implements IController,Serializable{
 
   @Override
   public String getDate() {
-    if (!date.isPresent()){
+    if (!date.isPresent()) {
       throw new IllegalArgumentException();
     }
     return this.date.get();
@@ -323,7 +322,7 @@ public class Controller implements IController,Serializable{
   public void setDate(String date) {
     this.date = Optional.of(date);
   }
-  
+
 
 
 }

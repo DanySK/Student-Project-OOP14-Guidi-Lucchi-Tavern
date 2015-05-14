@@ -51,8 +51,7 @@ public class DrawPosition implements MouseListener,Serializable,IDrawPosition {
   public void paint(Graphics gr, int x0, int y0) {
     gr.drawRect(x0, y0, 50, 50);
     gr.setColor(Color.black); 
-    draw.put(index, new Pair<>(x0,y0));
-    index++;
+    draw.put(draw.size(), new Pair<>(x0,y0));
   }
 
   @Override
@@ -71,10 +70,7 @@ public class DrawPosition implements MouseListener,Serializable,IDrawPosition {
     if (!draw.isEmpty()) {
       Pair<Integer, Integer> pt = draw.get(draw.size() - 1);
       this.paintCancel(label.getGraphics(), pt.getX(),pt.getY());
-      draw.remove(draw.size() - 1);
-    } else {
-      System.out.println("Ho cancellato tutti i tavoli");
-
+      
     }
   }
   

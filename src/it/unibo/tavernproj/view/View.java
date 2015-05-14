@@ -198,7 +198,6 @@ public class View extends JFrame implements IView{
 
   @Override
   public void addDraw(Pair<Integer, Integer> pt, int index) {
-    pos.setIndex(index);
     pos.paint(map.getGraphics(),pt.getX(),pt.getY());
     this.validate();
   }   
