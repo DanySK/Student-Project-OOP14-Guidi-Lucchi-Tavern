@@ -1,5 +1,7 @@
 package it.unibo.tavernproj.view;
 
+import it.unibo.tavernproj.model.Utilities;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;

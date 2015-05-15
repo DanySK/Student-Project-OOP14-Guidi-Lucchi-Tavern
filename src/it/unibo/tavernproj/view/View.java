@@ -198,16 +198,8 @@ public class View extends JFrame implements IView{
      * cancelAll.setEnabled(false);
      * cancelTable.setEnabled(false);
      * */
-    View.this.validate();
-
-    /* spostato in load disegno
-     * try {
-      Thread.sleep(100);
-    } catch (InterruptedException e) {
-      //e.printStackTrace();
-    }*/
-    
-    controller.loadDisegno();
+    View.this.validate();    
+    //controller.loadDisegno();
   }
   
   @Override

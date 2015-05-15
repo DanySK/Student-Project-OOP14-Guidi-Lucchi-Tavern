@@ -1,4 +1,4 @@
-package it.unibo.tavernproj.view;
+package it.unibo.tavernproj.model;
 
 import java.util.ArrayList;
 import java.util.List;

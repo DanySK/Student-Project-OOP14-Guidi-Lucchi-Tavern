@@ -1,5 +1,7 @@
 package it.unibo.tavernproj.view;
 
+import it.unibo.tavernproj.model.IUtilities;
+
 import java.awt.LayoutManager;
 import java.io.IOException;
 

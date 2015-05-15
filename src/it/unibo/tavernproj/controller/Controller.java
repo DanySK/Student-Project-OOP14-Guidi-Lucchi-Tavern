@@ -179,13 +179,14 @@ public final class Controller implements IController {
   }
   
   @Override
-  public void load(final String date){
+  public void load(final String date) {
     this.setModel();
     if (!model.isEmpty()) {
       try {
         for (final Integer i: model.getTableRes(util.getCurrentDate()).keySet()) {
           this.addTable(i);
         }
+        this.loadDisegno();
       } catch (NullPointerException e) {
         //System.out.print("non ci sono tavoli quel giorno");
       }
@@ -222,7 +223,7 @@ public final class Controller implements IController {
       }       
       out.close();
     } catch (IOException e) {
-      System.out.print("non salva sul file");
+      //System.out.print("non salva sul file");
     }
   }
 
@@ -243,9 +244,9 @@ public final class Controller implements IController {
       }
       in.close();
     } catch (IOException e) {
-      System.out.print("non prende il file");
+      //System.out.print("non prende il file");
     } catch (ClassNotFoundException e) {
-      System.out.print("non carica il modello");
+      //System.out.print("non carica il modello");
     }
   }
 
