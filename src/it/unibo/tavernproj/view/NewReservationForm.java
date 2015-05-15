@@ -12,7 +12,6 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
 /**
  * @author Eleonora Guidi
@@ -71,29 +70,28 @@ public class NewReservationForm extends ReservationForm{
     super.getContentPane().add(north, BorderLayout.NORTH);
   }
   
+  //FARE UN CONTROLLO SE C'è GIà UN CLIENTE CON QUEL NOME QUEL GIORNO
+  
   private void setHandlers() {
     this.okButton.addActionListener(e -> { 
-      NewReservationForm.this.setVisible(false); 
-      try {
-        controller.add(getTable(), getName(), controller.getDate(), getH(),
-            getTel(), getNum(), getMenu());
-        if (controller.getDate().equals(util.getCurrentDate())) {
-          controller.addTable(getTable());
+        NewReservationForm.this.setVisible(false); 
+        try {
+          controller.add(getTable(), getName(), controller.getDate(), getH(),
+              getTel(), getNum(), getMenu());
+          if (controller.getDate().equals(util.getCurrentDate())) {
+            controller.addTable(getTable());
+          }
+        } catch (NullPointerException e1) {
+          controller.displayException("Riempire la form!");
+          NewReservationForm.this.setVisible(true);
+        } catch (NumberFormatException e2) {
+          controller.displayException("Riempire la form con dei numeri utili!");
+          NewReservationForm.this.setVisible(true);
+        } catch (IllegalArgumentException e3) {
+          controller.displayException("Il tavolo inserito e' gia' stato utilizzato");
+          NewReservationForm.this.setVisible(true);
         }
-      } catch (NullPointerException e1) {
-        controller.displayException("Riempire la form!");
-        NewReservationForm.this.setVisible(true);
-      } catch (NumberFormatException e2) {
-        controller.displayException("Riempire la form con dei numeri utili!");
-        NewReservationForm.this.setVisible(true);
-      } catch (IllegalArgumentException e3) {
-        controller.displayException("Il tavolo inserito e' gia' stato utilizzato");
-        NewReservationForm.this.setVisible(true);
-      }
-      
-      
-    
-    });
+      });
   } 
 
 }

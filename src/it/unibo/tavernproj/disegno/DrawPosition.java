@@ -70,7 +70,7 @@ public class DrawPosition implements MouseListener,Serializable,IDrawPosition {
     if (!draw.isEmpty()) {
       Pair<Integer, Integer> pt = draw.get(draw.size() - 1);
       this.paintCancel(label.getGraphics(), pt.getX(),pt.getY());
-      
+      draw.remove(draw.size() - 1);
     }
   }
   

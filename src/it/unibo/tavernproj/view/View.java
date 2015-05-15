@@ -207,7 +207,7 @@ public class View extends JFrame implements IView{
       //e.printStackTrace();
     }*/
     
-    controller.LoadDisegno();
+    controller.loadDisegno();
   }
   
   @Override
