@@ -186,10 +186,11 @@ public final class Controller implements IController {
         for (final Integer i: model.getTableRes(util.getCurrentDate()).keySet()) {
           this.addTable(i);
         }
-        this.loadDisegno();
+       
       } catch (NullPointerException e) {
         //System.out.print("non ci sono tavoli quel giorno");
       }
+      this.loadDisegno();
     }
   } 
   

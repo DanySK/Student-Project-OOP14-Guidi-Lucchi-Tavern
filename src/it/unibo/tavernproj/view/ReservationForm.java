@@ -19,6 +19,7 @@ import javax.swing.JTextField;
  * @author Eleonora Guidi
  *
  */
+
 /*Usato l'esame 01b del 2015 per fare la form!*/
 public abstract class ReservationForm extends BasicFrame implements IReservationForm {
   

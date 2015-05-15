@@ -1,5 +1,6 @@
 package it.unibo.tavernproj.view;
 
+import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.disegno.DrawButton;
 import it.unibo.tavernproj.disegno.DrawMap;
@@ -44,7 +45,7 @@ public class View extends JFrame implements IView{
   private final JLabel map = util.getDefaultMap("map.png");
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap(); 
   private JPanel mapButtons;
-  private transient IController controller;  
+  private transient IController controller;
   
   private final DrawPosition pos = new DrawPosition(map);
 
@@ -61,7 +62,7 @@ public class View extends JFrame implements IView{
     this.setHandlers();    
     this.setVisible(true);
   }
-  
+
   private void buildLayout() {
     final JPanel reservPanel = util.buildGridPanel(util.getList(buttonNew, buttonDelete), 10);
     final JPanel east = util.getDefaultPanel(new BorderLayout());
@@ -104,6 +105,7 @@ public class View extends JFrame implements IView{
     this.getContentPane().add(main);
   }
   
+  @SuppressWarnings("deprecation")
   private void setHandlers() {
     this.buttonNew.addActionListener(e -> {      
         final JFrame frame = new JFrame("Calendar");
@@ -128,16 +130,12 @@ public class View extends JFrame implements IView{
         quitHandler();
       }
     });
-    
+
     this.drawTable.addActionListener(e-> {
-        map.addMouseListener(pos);
-        cancelAll.setEnabled(true);
-        cancelTable.setEnabled(true);
-        /* fare un controllo per disabilitare il bottone se si sono già 
-         * aggiunti tanti tavoli in mappa quanti sono prenotati
-         * 
-         * quindi con tablesButtons.getComponentCount o qualcosa di simile
-         */
+      map.addMouseListener(pos);
+      cancelAll.setEnabled(true);
+      cancelTable.setEnabled(true);
+
       });
 
     this.cancelTable.addActionListener(e-> {
