@@ -25,84 +25,72 @@ public class DrawMap implements Map<Integer, Pair<Integer, Integer>>,java.io.Ser
 
   @Override
   public int size() {
-    // TODO Auto-generated method stub
     return disegno.size();
   }
 
 
   @Override
   public boolean isEmpty() {
-    // TODO Auto-generated method stub
     return disegno.isEmpty();
   }
 
 
   @Override
   public boolean containsKey(Object key) {
-    // TODO Auto-generated method stub
     return disegno.containsKey(key);
   }
 
 
   @Override
   public boolean containsValue(Object value) {
-    // TODO Auto-generated method stub
     return disegno.containsValue(value);
   }
 
 
   @Override
   public Pair<Integer, Integer> get(Object key) {
-    // TODO Auto-generated method stub
     return disegno.get(key);
   }
 
 
   @Override
   public Pair<Integer, Integer> put(Integer key, Pair<Integer, Integer> value) {
-    // TODO Auto-generated method stub
     return disegno.put(key, value);
   }
 
 
   @Override
   public Pair<Integer, Integer> remove(Object key) {
-    // TODO Auto-generated method stub
     return disegno.remove(key);
   }
 
 
   @Override
   public void putAll(Map<? extends Integer, ? extends Pair<Integer, Integer>> map) {
-    // TODO Auto-generated method stub
     disegno.putAll(map);
   }
 
 
   @Override
   public void clear() {
-    // TODO Auto-generated method stub
     disegno.clear();
   }
 
 
   @Override
   public Set<Integer> keySet() {
-    // TODO Auto-generated method stub
     return disegno.keySet();
   }
 
 
   @Override
   public Collection<Pair<Integer, Integer>> values() {
-    // TODO Auto-generated method stub
     return null;
   }
 
 
   @Override
   public Set<java.util.Map.Entry<Integer, Pair<Integer, Integer>>> entrySet() {
-    // TODO Auto-generated method stub
     return null;
   }
 

@@ -9,7 +9,6 @@ import java.awt.GridLayout;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,7 +20,7 @@ import javax.swing.JTextField;
  *
  */
 /*Usato l'esame 01b del 2015 per fare la form!*/
-public class ReservationForm extends BasicFrame implements IReservationForm {
+public abstract class ReservationForm extends BasicFrame implements IReservationForm {
   
   private static final long serialVersionUID = 1L;
   //numero massimo di campi per il form
