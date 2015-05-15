@@ -212,5 +212,13 @@ public interface IController {
 
   boolean isPresent(String name, String date);
 
+  /**
+   * Sets the file to save to or load from.
+   * 
+   * @param string
+   *       the file name.
+   */
+  void setFileDisegno(String string);
+
 
 }

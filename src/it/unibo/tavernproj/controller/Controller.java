@@ -46,6 +46,7 @@ public final class Controller implements IController {
   private ObjectOutput outMap;
   private ObjectInput  inMap; 
   private String fileName = "file.txt";
+  private String fileDisegno = "disegno.dat";
 
   private Optional<String> date = Optional.empty();
 
@@ -69,6 +70,11 @@ public final class Controller implements IController {
   @Override
   public void setFileName(final String string) {
     this.fileName = string;
+  }
+  
+  @Override
+  public void setFileDisegno(final String string) {
+     this.fileDisegno = string;
   }
   
   @Override
@@ -262,7 +268,7 @@ public final class Controller implements IController {
   @Override
   public void saveDisegno() {
     try {
-      outMap = new ObjectOutputStream(new FileOutputStream("disegno.dat"));
+      outMap = new ObjectOutputStream(new FileOutputStream(fileDisegno));
       outMap.writeObject(util.getCurrentDate());
       outMap.writeObject(draw);
       System.out.print(draw);
@@ -275,7 +281,7 @@ public final class Controller implements IController {
   @Override
   public void loadDisegno() {
     try {
-      inMap = new ObjectInputStream(new FileInputStream("disegno.dat"));
+      inMap = new ObjectInputStream(new FileInputStream(fileDisegno));
       if (util.getCurrentDate().equals(inMap.readObject())) {
         System.out.println("data giusta per caricare");
         final Map<Integer,Pair<Integer,Integer>> map = 

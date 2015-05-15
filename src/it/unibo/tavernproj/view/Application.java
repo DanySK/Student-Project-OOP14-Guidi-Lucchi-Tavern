@@ -12,6 +12,7 @@ public final class Application {
   private static final String HOME = System.getProperty("user.home");
   private static final String SEPARATOR = System.getProperty("file.separator");  
   private static final String DEFAULT_FILE = "dat.txt";
+  private static final String DEFAULT_DISEGNO = "disegno.dat";
   
   private Application(){    
   }
@@ -23,7 +24,8 @@ public final class Application {
   public static void main(final String[] args) {
     final IGUIutilities util = new GUIutilities();
     final IController c = Controller.getController();  
-    c.setFileName(HOME + SEPARATOR + DEFAULT_FILE);    
+    c.setFileName(HOME + SEPARATOR + DEFAULT_FILE);   
+    c.setFileDisegno(HOME + SEPARATOR + DEFAULT_DISEGNO);  
     final View v = new View();
     c.addView(v);    
     c.load(util.getCurrentDate());    
