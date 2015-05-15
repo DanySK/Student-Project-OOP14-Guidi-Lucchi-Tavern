@@ -18,7 +18,7 @@ public class BasicFrame extends JFrame{
   public BasicFrame() {
     super();
     setLocationByPlatform(true);
-    this.setSize(util.getDefaultWidth() / 2, util.getDefaultHeight() / 2);
+    this.setSize(util.getDefaultWidth() * 5 / 8, util.getDefaultHeight() * 3 / 4);
     this.setResizable(true);
     this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     buildLayout();
