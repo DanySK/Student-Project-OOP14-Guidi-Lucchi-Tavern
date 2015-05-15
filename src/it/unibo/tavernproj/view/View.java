@@ -5,26 +5,18 @@ import it.unibo.tavernproj.disegno.DrawButton;
 import it.unibo.tavernproj.disegno.DrawMap;
 import it.unibo.tavernproj.disegno.DrawPosition;
 import it.unibo.tavernproj.disegno.Pair;
-import it.unibo.tavernproj.model.IReservation;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -49,7 +41,6 @@ public class View extends JFrame implements IView{
   private final JButton cancelTable = util.getDefaultButton("Cancella Tavolo", 12);
   private final JButton drawTable = util.getDefaultButton("Disegna Tavolo", 12);
   private final JPanel tablesButtons = util.getDefaultPanel(new FlowLayout());  
-  private final JLabel date = util.getDateLabel(); 
   private final JLabel map = util.getDefaultMap("map.png");
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap(); 
   private JPanel mapButtons;
@@ -83,7 +74,7 @@ public class View extends JFrame implements IView{
 
     final GridBagConstraints gap = new GridBagConstraints();
     final JPanel datePanel = util.getDefaultPanel(new GridBagLayout());    
-    datePanel.add(date, gap);    
+    datePanel.add(util.getDateLabel(), gap);    
     
     util.add(drawTable);
     util.add(cancelTable);
@@ -143,7 +134,7 @@ public class View extends JFrame implements IView{
         cancelAll.setEnabled(true);
         cancelTable.setEnabled(true);
         /* fare un controllo per disabilitare il bottone se si sono già 
-         * aggiunti tanti ttavoli in mappa quanti sono prenotati
+         * aggiunti tanti tavoli in mappa quanti sono prenotati
          * 
          * quindi con tablesButtons.getComponentCount o qualcosa di simile
          */
@@ -165,7 +156,7 @@ public class View extends JFrame implements IView{
   }
   
   @Override
-  public void addDraw(Pair<Integer, Integer> pt, int index) {
+  public void addDraw(final Pair<Integer, Integer> pt, final int index) {
     pos.paint(map.getGraphics(),pt.getX(),pt.getY());
     this.validate();
   }   
@@ -193,11 +184,10 @@ public class View extends JFrame implements IView{
     }
     button.setName(table.toString());
     button.addActionListener(e -> {
-        IReservation res;
-        try {
-          res = controller.getReservation(table, date.getText());    
-          controller.setDate(date.getText());
-          new TableReservationForm(date.getText(), res, controller);         
+        try { 
+          controller.setDate(util.getCurrentDate());
+          new TableReservationForm(util.getCurrentDate(), 
+              controller.getReservation(table, util.getCurrentDate()), controller);         
         } catch (NumberFormatException e1) {
           controller.displayException("Prenotazione non disponibile!");
         }      
@@ -206,21 +196,18 @@ public class View extends JFrame implements IView{
     mapButtons.setVisible(true);
     /* disabilitare i bottoni se non c'è niente nella mappa
      * cancelAll.setEnabled(false);
-      cancelTable.setEnabled(false);
+     * cancelTable.setEnabled(false);
      * */
     View.this.validate();
 
-    try {
-      Thread.sleep(10);
+    /* spostato in load disegno
+     * try {
+      Thread.sleep(100);
     } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
-
-    controller.LoadDisegno();  
-
-
+      //e.printStackTrace();
+    }*/
+    
+    controller.LoadDisegno();
   }
   
   @Override
