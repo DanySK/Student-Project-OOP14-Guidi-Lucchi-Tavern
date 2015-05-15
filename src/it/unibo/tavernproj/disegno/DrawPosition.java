@@ -20,7 +20,6 @@ public class DrawPosition implements MouseListener,Serializable,IDrawPosition {
 
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();
   private final JLabel label;
-  private int index = 0;
   private int x0 = 0;
   private int y0 = 0;
 
@@ -52,11 +51,6 @@ public class DrawPosition implements MouseListener,Serializable,IDrawPosition {
     gr.drawRect(x0, y0, 50, 50);
     gr.setColor(Color.black); 
     draw.put(draw.size(), new Pair<>(x0,y0));
-  }
-
-  @Override
-  public void setIndex(int index) {
-    this.index = index;
   }
   
   @Override

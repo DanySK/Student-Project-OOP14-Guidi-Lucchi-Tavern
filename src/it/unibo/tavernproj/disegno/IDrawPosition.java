@@ -20,14 +20,6 @@ public interface IDrawPosition {
    *      the coordinate y
    */
   void paint(Graphics gr, int x0, int y0);
-  
-  /**
-   * It sets the index of Map to add the rectangle of loading.
-   * 
-   * @param index
-   *      the index of rectangle's Map
-   */
-  void setIndex(int index);
 
   /**
    * It removes a rectangle from drawing.

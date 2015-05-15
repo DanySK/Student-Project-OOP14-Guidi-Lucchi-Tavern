@@ -210,5 +210,7 @@ public interface IController {
   
   void displayException(final String e);
 
+  boolean isPresent(String name, String date);
+
 
 }

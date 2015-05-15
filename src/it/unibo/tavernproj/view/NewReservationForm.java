@@ -70,16 +70,19 @@ public class NewReservationForm extends ReservationForm{
     super.getContentPane().add(north, BorderLayout.NORTH);
   }
   
-  //FARE UN CONTROLLO SE C'è GIà UN CLIENTE CON QUEL NOME QUEL GIORNO
-  
   private void setHandlers() {
     this.okButton.addActionListener(e -> { 
         NewReservationForm.this.setVisible(false); 
         try {
-          controller.add(getTable(), getName(), controller.getDate(), getH(),
-              getTel(), getNum(), getMenu());
-          if (controller.getDate().equals(util.getCurrentDate())) {
-            controller.addTable(getTable());
+          if (controller.isPresent(getName(), controller.getDate())) {
+            controller.displayException("Il nome inserito e' gia' stato utilizzato");
+            NewReservationForm.this.setVisible(true);
+          } else {
+            controller.add(getTable(), getName(), controller.getDate(), getH(),
+                getTel(), getNum(), getMenu());
+            if (controller.getDate().equals(util.getCurrentDate())) {
+              controller.addTable(getTable());
+            }
           }
         } catch (NullPointerException e1) {
           controller.displayException("Riempire la form!");
@@ -93,5 +96,4 @@ public class NewReservationForm extends ReservationForm{
         }
       });
   } 
-
 }

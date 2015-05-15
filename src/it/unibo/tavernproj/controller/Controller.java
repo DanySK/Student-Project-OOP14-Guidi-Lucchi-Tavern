@@ -301,5 +301,15 @@ public final class Controller implements IController {
       System.out.println("\nnon carica il disegno");
     }
   }
+
+  @Override
+  public boolean isPresent(String name, String date) {
+    try {
+      this.getReservation(date, name);
+      return true;
+    } catch (IllegalArgumentException e) {
+      return false;
+    }
+  }
 }
 
