@@ -1,5 +1,6 @@
 package it.unibo.tavernproj.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,7 +13,7 @@ import java.util.Set;
  *      modify by @author Eleonora Guidi
  */
 
-public class Model implements IModel {
+public class Model implements IModel, Serializable {
   
   private Map<String, Map<Integer, IReservation>> map; 
 

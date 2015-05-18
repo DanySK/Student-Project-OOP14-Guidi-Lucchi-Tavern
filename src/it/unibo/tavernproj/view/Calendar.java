@@ -141,4 +141,6 @@ public class Calendar {
     }
     return false;
   }
+  
+  //GENERARE HASHCODE E EQUALS!!
 }

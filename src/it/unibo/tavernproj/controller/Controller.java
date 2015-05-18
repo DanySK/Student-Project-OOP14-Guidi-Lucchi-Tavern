@@ -188,6 +188,11 @@ public final class Controller implements IController {
   public void saveModel() {
     try {
       final ObjectOutput out = new ObjectOutputStream(new FileOutputStream(fileName));
+      /*
+       * out.writeObject(model);
+       * out.close();
+       * 
+       * */
       out.writeObject(model.getMap().keySet().size());
       for (final String s: model.getMap().keySet()) {
         out.writeObject(s);
@@ -218,6 +223,11 @@ public final class Controller implements IController {
   public void setModel() {
     try {
       final ObjectInput in = new ObjectInputStream(new FileInputStream(fileName));
+      /*
+       * this.setModel(in.readObject());
+       * in.close();
+       * 
+       * */
       final int size = (int) in.readObject();
       for (int i = 1; i <= size; i++) {
         final String date = (String) in.readObject();

@@ -109,4 +109,56 @@ public class Reservation implements Serializable, IReservation{
     return menu.get();
   }
 
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((date == null) ? 0 : date.hashCode());
+    result = prime * result + ((hour == null) ? 0 : hour.hashCode());
+    result = prime * result + ((name == null) ? 0 : name.hashCode());
+    result = prime * result + ((numPers == null) ? 0 : numPers.hashCode());
+    result = prime * result + table;
+    result = prime * result + ((tel == null) ? 0 : tel.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Reservation other = (Reservation) obj;
+    if (date == null) {
+      if (other.date != null)
+        return false;
+    } else if (!date.equals(other.date))
+      return false;
+    if (hour == null) {
+      if (other.hour != null)
+        return false;
+    } else if (!hour.equals(other.hour))
+      return false;
+    if (name == null) {
+      if (other.name != null)
+        return false;
+    } else if (!name.equals(other.name))
+      return false;
+    if (numPers == null) {
+      if (other.numPers != null)
+        return false;
+    } else if (!numPers.equals(other.numPers))
+      return false;
+    if (table != other.table)
+      return false;
+    if (tel == null) {
+      if (other.tel != null)
+        return false;
+    } else if (!tel.equals(other.tel))
+      return false;
+    return true;
+  }
+
 }
