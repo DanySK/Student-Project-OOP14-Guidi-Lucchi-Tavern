@@ -134,6 +134,8 @@ public interface IController {
 	 *       the costumer name.
 	 * @return
 	 *       the table linked to that reservation.
+	 * @throws IllegalArgumentException 
+	 *       if the date or the name are wrong.
 	 */
 	int getReservation(String date, String name) throws IllegalArgumentException;
 	

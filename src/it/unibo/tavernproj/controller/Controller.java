@@ -142,8 +142,12 @@ public final class Controller implements IController {
   public int getReservation(final String date, final String name) 
     throws IllegalArgumentException {
     for (final Integer i: this.getReservation(date).keySet()) {
-      if (this.getReservation(i, date).getName().equals(name)) {
-        return i;
+      try {
+        if (this.getReservation(i, date).getName().equals(name)) {
+          return i;
+        }
+      } catch (NumberFormatException e){
+        //blocco l'eccezione tirata dal metodo soprastante
       }
     }
     throw new IllegalArgumentException();
@@ -234,10 +238,8 @@ public final class Controller implements IController {
     try {
       final ObjectInput inMap = new ObjectInputStream(new FileInputStream(fileDisegno));
       if (util.getCurrentDate().equals(inMap.readObject())) {
-        //System.out.println("data giusta per caricare");
         final Map<Integer,Pair<Integer,Integer>> map = 
             (Map<Integer,Pair<Integer,Integer>>) inMap.readObject();
-        //System.out.println("assegnato mappa" + map);
         inMap.close();
         for (final Integer i : map.keySet()) {
           final Pair<Integer,Integer> p = map.get(i);
