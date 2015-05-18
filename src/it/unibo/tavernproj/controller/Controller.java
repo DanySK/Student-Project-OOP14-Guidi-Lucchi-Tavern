@@ -5,13 +5,11 @@ import it.unibo.tavernproj.disegno.Pair;
 import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
-import it.unibo.tavernproj.model.Reservation;
 import it.unibo.tavernproj.view.GUIutilities;
 import it.unibo.tavernproj.view.IGUIutilities;
 import it.unibo.tavernproj.view.IView;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -21,7 +19,6 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -36,6 +33,7 @@ import java.util.Set;
 
 public final class Controller implements IController {
   
+  @SuppressWarnings("unused")
   private static final long serialVersionUID = 1L;
 
   private static final Controller SINGLETON = new Controller();  
@@ -95,7 +93,7 @@ public final class Controller implements IController {
   }
   
   @Override
-  public void add(IReservation res, String date) {
+  public void add(final IReservation res, final String date) {
     model.add(date, res);
   }
   
@@ -117,7 +115,7 @@ public final class Controller implements IController {
   }  
   
   @Override
-  public void removeReservation(Integer table, String date) {
+  public void removeReservation(final Integer table,final  String date) {
     model.remove(date, table);
   }
 
@@ -197,6 +195,7 @@ public final class Controller implements IController {
   }
 
   /*per caricare il modello da file system all'accensione*/
+  @SuppressWarnings("unchecked")
   @Override
   public void setModel() {
     try {
@@ -225,19 +224,20 @@ public final class Controller implements IController {
       System.out.print(draw);
       outMap.close();
     } catch (IOException e) {
-      System.out.print("non salva  sul file nel disegno");
+      //System.out.print("non salva  sul file nel disegno");
     }
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public void loadDisegno() {
     try {
       final ObjectInput inMap = new ObjectInputStream(new FileInputStream(fileDisegno));
       if (util.getCurrentDate().equals(inMap.readObject())) {
-        System.out.println("data giusta per caricare");
+        //System.out.println("data giusta per caricare");
         final Map<Integer,Pair<Integer,Integer>> map = 
             (Map<Integer,Pair<Integer,Integer>>) inMap.readObject();
-        System.out.println("assegnato mappa" + map);
+        //System.out.println("assegnato mappa" + map);
         inMap.close();
         for (final Integer i : map.keySet()) {
           final Pair<Integer,Integer> p = map.get(i);
@@ -252,9 +252,9 @@ public final class Controller implements IController {
         }
       }
     } catch (ClassNotFoundException e) {
-      System.out.println("\nnon trova la classe");
+      //System.out.println("non trova la classe");
     } catch (IOException e) {
-      System.out.println("\nnon carica il disegno");
+      //System.out.println("non carica il disegno");
     }
   }
 

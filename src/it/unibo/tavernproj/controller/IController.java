@@ -1,7 +1,5 @@
 package it.unibo.tavernproj.controller;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,7 +38,15 @@ public interface IController {
    *       the file name.
    */
   void setFileName(final String string);
-
+  
+  /**
+   * Sets the file to save to or load from.
+   * 
+   * @param string
+   *       the file name.
+   */
+  void setFileDisegno(String string);
+  
   /**
    * Sets the date the user picked
    * 
@@ -129,11 +135,20 @@ public interface IController {
 	 * @return
 	 *       the table linked to that reservation.
 	 */
-	int getReservation(String date, String name);
+	int getReservation(String date, String name) throws IllegalArgumentException;
 	
+	/**
+   * Ordinately shuts down the program.
+   */
+	void commandQuit();
 	
-	
-  
+	/**
+	 * Opens a new window displaying the exception
+	 * 
+	 * @param e
+	 *       the exception message.
+	 */
+  void displayException(final String e);
   
   /**
    * Loads the current day reservations.
@@ -144,63 +159,40 @@ public interface IController {
   void load(final String date);
   
   /**
-   * Loads the map of reservations from the local file system.
-   */
-  void setModel();
+	 * Saves the reservations map from the model in the local file system.
+	 */
+	void saveModel();  
   
+  /**
+   * Loads the map of reservations from the local file system and puts it as model.
+   */
+  void setModel(); 
+  
+  /**
+   * Sets the model with an IModel passed.
+   * 
+   * @param model
+   *      the IModel passed.
+   */
   void setModel(IModel model);
 
-	/**
-	 * Saves the reservations map in the local file system.
-	 */
-	void saveModel();
-
-
-	
-
-	
-
-
-	
-	
-
-
-
-
-
-  void commandQuit();
-
+  /**
+   * Saves the map of the painted tables.
+   */
   void saveDisegno();
 
+  /**
+   * Loads the map f the painted tables.
+   */
   void loadDisegno();
 
-  
-
-
-
-
-
-  
-
-  
-  
-
-  
-  
-
-  
-  
-  void displayException(final String e);
-
-  boolean isPresent(String name, String date);
-
   /**
-   * Sets the file to save to or load from.
-   * 
-   * @param string
-   *       the file name.
+   * @param name
+   *      the costumer name.
+   * @param date
+   *      the reservation date.
+   * @return
+   *      true if the reservation for that day and that costumer is present.
    */
-  void setFileDisegno(String string);
-
-
+  boolean isPresent(String name, String date);
 }
