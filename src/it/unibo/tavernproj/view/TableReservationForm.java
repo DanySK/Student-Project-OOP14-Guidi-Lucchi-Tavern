@@ -2,8 +2,10 @@ package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.IReservation;
+import it.unibo.tavernproj.model.Reservation;
 
 import java.awt.BorderLayout;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -90,8 +92,15 @@ public class TableReservationForm extends ReservationForm{
              */
           }  
           try {
-            controller.add(getTable(), getName(), controller.getDate(), getH(),
-                getTel(), getNum(), getMenu());
+            IReservation res;
+            if (getMenu().equals("")) {
+              res = new Reservation(getTable(), getName(), controller.getDate(), getH(),
+                  getTel(), getNum(), Optional.empty());
+            } else {
+              res = new Reservation(getTable(), getName(), controller.getDate(), getH(),
+                  getTel(), getNum(), Optional.of(getMenu()));
+            }
+            controller.add(res, controller.getDate());
           } catch (NullPointerException e1) {
             controller.displayException("Riempire la form!");
             TableReservationForm.this.setVisible(true);
