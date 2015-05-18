@@ -42,7 +42,7 @@ public final class Controller implements IController {
   private final IGUIutilities util = new GUIutilities();
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();
   private IModel model = new Model();
-  private String fileName = "file.txt";
+  private String fileName = "file.dat";
   private String fileDisegno = "disegno.dat";
 
   private Optional<String> date = Optional.empty();
