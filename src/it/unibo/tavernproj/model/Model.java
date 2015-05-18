@@ -15,11 +15,14 @@ import java.util.Set;
 
 public class Model implements IModel, Serializable {
   
-  private static final long serialVersionUID = 1L;
   private Map<String, Map<Integer, IReservation>> map; 
 
   public Model() {
     this.map = new HashMap<>();
+  }
+  
+  public Map<String, Map<Integer, IReservation>> getModel(){
+    return this.map;
   }
 
   public boolean isEmpty() {
@@ -35,7 +38,6 @@ public class Model implements IModel, Serializable {
   @Override
   public void add(final String date, final IReservation res) 
                                             throws IllegalArgumentException {
-
     Map<Integer, IReservation> temp = new HashMap<>();
     if (map.containsKey(date)) {
       temp = map.get(date); 
@@ -112,9 +114,8 @@ public class Model implements IModel, Serializable {
   public Set<IReservation> getNameRes(final String name) {
     Set<IReservation> res = new HashSet<>();
     for (String date : map.keySet()) {
-      Map<Integer,IReservation> mapRes = this.getTableRes(date);
-      for (Integer i : mapRes.keySet()) {
-        IReservation temp = mapRes.get(i);
+      for (Integer i : this.getTableRes(date).keySet()) {
+        IReservation temp = this.getTableRes(date).get(i);
         if (temp.getName().equals(name)) {
           res.add(temp);
         }

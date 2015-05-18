@@ -91,14 +91,8 @@ public class TableReservationForm extends ReservationForm{
              */
           }  
           try {
-            IReservation res;
-            if (getMenu().equals("")) {
-              res = new Reservation(getTable(), getName(), controller.getDate(), getH(),
-                  getTel(), getNum(), Optional.empty());
-            } else {
-              res = new Reservation(getTable(), getName(), controller.getDate(), getH(),
-                  getTel(), getNum(), Optional.of(getMenu()));
-            }
+            IReservation res = new Reservation(getTable(), getName(), 
+                controller.getDate(), getH(), getTel(), getNum(), getMenu());
             controller.add(res, controller.getDate());
           } catch (NullPointerException e1) {
             controller.displayException("Riempire la form!");

@@ -222,7 +222,7 @@ public abstract class ReservationForm extends BasicFrame implements IReservation
 
   @Override
   public void setMenu(final String srt) {
-    if (!srt.isEmpty()) {
+    if (!srt.equals("")) {
       ((JTextField) map.get(MENUFISSO)).setText(srt);
       ((JRadioButton) map.get(MENU)).setSelected(true);
       map.get(MENUFISSO).setVisible(true);

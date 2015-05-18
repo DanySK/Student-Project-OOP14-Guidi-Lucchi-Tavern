@@ -104,6 +104,8 @@ public interface IModel{
    */
   Set<String> getDates();
 
+  Object getModel();
+
 
 
 }

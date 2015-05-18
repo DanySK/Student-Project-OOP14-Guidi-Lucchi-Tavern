@@ -79,14 +79,8 @@ public class NewReservationForm extends ReservationForm{
             controller.displayException("Il nome inserito e' gia' stato utilizzato");
             NewReservationForm.this.setVisible(true);
           } else {
-            IReservation res;
-            if (getMenu().equals("")) {
-              res = new Reservation(getTable(), getName(), controller.getDate(), getH(),
-                  getTel(), getNum(), Optional.empty());
-            } else {
-              res = new Reservation(getTable(), getName(), controller.getDate(), getH(),
-                  getTel(), getNum(), Optional.of(getMenu()));
-            }
+            IReservation res = new Reservation(getTable(), getName(), 
+                controller.getDate(), getH(), getTel(), getNum(), getMenu());
             controller.add(res, controller.getDate());
             if (controller.getDate().equals(util.getCurrentDate())) {
               controller.addTable(getTable());

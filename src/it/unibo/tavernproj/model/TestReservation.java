@@ -1,7 +1,6 @@
 package it.unibo.tavernproj.model;
 
 import static org.junit.Assert.*;
-
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
 

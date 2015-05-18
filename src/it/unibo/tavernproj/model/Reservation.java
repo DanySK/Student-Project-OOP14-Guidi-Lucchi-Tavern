@@ -29,8 +29,7 @@ public class Reservation implements Serializable, IReservation{
   private final String hour;
   private final String tel;
   private final String numPers;
-  //guardare cosa significa????
-  private final transient Optional<String> menu;
+  private final String menu;
 
   /**
    * Build the constructor.
@@ -53,7 +52,7 @@ public class Reservation implements Serializable, IReservation{
    */
   public Reservation(final Integer table, final String name, final String date,
                                final String hour, final String tel, final String numPers, 
-                                                 final Optional<String> menu) {
+                                                 final String menu) {
     Objects.requireNonNull(table);
     this.table = table;
     Objects.requireNonNull(name);
@@ -101,12 +100,7 @@ public class Reservation implements Serializable, IReservation{
 
   @Override 
   public String getMenu() {
-    try {
-      menu.get();
-    } catch (NoSuchElementException e) {
-      return "";
-    }
-    return menu.get();
+    return menu;
   }
 
   @Override
