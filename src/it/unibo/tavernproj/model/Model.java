@@ -15,6 +15,7 @@ import java.util.Set;
 
 public class Model implements IModel, Serializable {
   
+  private static final long serialVersionUID = 1L;
   private Map<String, Map<Integer, IReservation>> map; 
 
   public Model() {

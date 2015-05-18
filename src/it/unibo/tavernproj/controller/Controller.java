@@ -278,12 +278,10 @@ public final class Controller implements IController {
             (Map<Integer,Pair<Integer,Integer>>) inMap.readObject();
         System.out.println("assegnato mappa" + map);
         inMap.close();
-        int index = 0;
         for (final Integer i : map.keySet()) {
           final Pair<Integer,Integer> p = map.get(i);
           for (final IView v: view) {
-            v.addDraw(p, index);
-            index++;
+            v.addDraw(p);
             try {
               Thread.sleep(10);
             } catch (InterruptedException e) {

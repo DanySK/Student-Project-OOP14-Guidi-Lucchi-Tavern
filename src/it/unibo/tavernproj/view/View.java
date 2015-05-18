@@ -1,6 +1,5 @@
 package it.unibo.tavernproj.view;
 
-import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.disegno.DrawButton;
 import it.unibo.tavernproj.disegno.DrawMap;
@@ -12,8 +11,10 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.MouseAdapter;
 import java.io.IOException;
 import java.util.Map;
 
@@ -130,7 +131,18 @@ public class View extends JFrame implements IView{
     });
 
     this.drawTable.addActionListener(e-> {
-        map.addMouseListener(pos);
+        //map.addMouseListener(pos);
+        map.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e1){
+              if (tablesButtons.getComponents().length <= pos.size()){
+                controller.displayException("Non ci sono altri tavoli prenotati.");
+              }
+              else {
+                pos.paint(map.getGraphics(), e1.getX(), e1.getY());
+              }
+            }
+        });
         cancelAll.setEnabled(true);
         cancelTable.setEnabled(true);
       });
@@ -151,7 +163,7 @@ public class View extends JFrame implements IView{
   }
   
   @Override
-  public void addDraw(final Pair<Integer, Integer> pt, final int index) {
+  public void addDraw(final Pair<Integer, Integer> pt) {
     pos.paint(map.getGraphics(),pt.getX(),pt.getY());
     this.validate();
   }   
@@ -189,12 +201,7 @@ public class View extends JFrame implements IView{
       });
     tablesButtons.add(button);
     mapButtons.setVisible(true);
-    /* disabilitare i bottoni se non c'è niente nella mappa
-     * cancelAll.setEnabled(false);
-     * cancelTable.setEnabled(false);
-     * */
-    View.this.validate();    
-    //controller.loadDisegno();
+    View.this.validate();
   }
   
   @Override
@@ -203,7 +210,10 @@ public class View extends JFrame implements IView{
       if (c.getName().equals(table.toString())) {
         tablesButtons.remove(c);
         tablesButtons.repaint();
-        /*controllare disabilitzione bottoni sopra alla mappa*/
+      }
+      if (tablesButtons.getComponents().length == 0){
+        pos.cancelAll(map.getGraphics());
+        mapButtons.setVisible(false);
       }
     }
   }

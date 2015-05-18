@@ -1,16 +1,7 @@
 package it.unibo.tavernproj.disegno;
 
-import it.unibo.tavernproj.controller.Controller;
-import it.unibo.tavernproj.controller.IController;
-import it.unibo.tavernproj.model.IModel;
-import it.unibo.tavernproj.model.IUtilities;
-import it.unibo.tavernproj.model.Model;
-import it.unibo.tavernproj.model.Utilities;
-
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -21,45 +12,16 @@ import javax.swing.JLabel;
  *
  */
 
-public class DrawPosition implements MouseListener,Serializable,IDrawPosition {
+public class DrawPosition implements Serializable,IDrawPosition {
 
   private static final long serialVersionUID = -2547031979468896800L;
 
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();
   private final JLabel label;
-  private final IModel model = new Model();
-  private final IUtilities util = new Utilities();
-  private transient IController controller = Controller.getController();  
-  private int x0 = 0;
-  private int y0 = 0;
-
+  
   public DrawPosition(JLabel label) {
     this.label = label;
   }
-
-  @Override
-  public void mouseClicked(MouseEvent e1) { }
-
-  @Override
-  public void mousePressed(MouseEvent e1) { }
-
-  @Override
-  public void mouseReleased(MouseEvent e1) {
-    this.x0 = e1.getX();
-    this.y0 = e1.getY();
-    if (draw.size() <= model.getRes(util.getCurrentDate()).size()) {
-      this.paint(label.getGraphics(),x0,y0);
-    } else {
-      controller.displayException("Non ci sono altri tavoli prenotati.");
-    }
-   
-  }
-
-  @Override
-  public void mouseEntered(MouseEvent e1) { }
-
-  @Override
-  public void mouseExited(MouseEvent e1) { }
 
   @Override
   public void paint(Graphics gr, int x0, int y0) {
@@ -90,6 +52,15 @@ public class DrawPosition implements MouseListener,Serializable,IDrawPosition {
       this.paintCancel(label.getGraphics(), pt.getX(),pt.getY());
     }
     draw.clear();
+    System.out.println(draw.size());
+  }
+
+  /**
+   * @return
+   *      the number of tables on the map.
+   */
+  public int size() {
+    return draw.keySet().size();
   }
 
 }

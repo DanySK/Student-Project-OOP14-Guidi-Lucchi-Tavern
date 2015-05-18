@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.TimeZone;
 
 import javax.swing.JButton;
@@ -60,10 +63,13 @@ public class Calendar {
        * 
        */
       if (x > 6) {
-        button[x].addActionListener( e-> {
+        button[x].addActionListener( new ActionListener(){
+          @Override
+          public void actionPerformed(ActionEvent arg0) {
             day = button[selection].getActionCommand();
             jdg.dispose();
-          });
+          }          
+        });
       }      
       if (x < 7) {
         button[x].setText(header[x]);
@@ -74,16 +80,23 @@ public class Calendar {
   
     final JPanel p2 = new JPanel(new GridLayout(1, 3));
     final JButton previous = new JButton("<< Precedente");
-    previous.addActionListener(e -> {
-        month--;
-        displayDate();
+    previous.addActionListener(new ActionListener(){      
+
+        @Override
+        public void actionPerformed(ActionEvent e) {         
+          month--;
+          displayDate();
+        }
       });
     p2.add(previous);
     p2.add(label);
     final JButton next = new JButton("Prossimo >>");
-    next.addActionListener(e -> {
-        month++;
-        displayDate();
+    next.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          month++;
+          displayDate();
+        }
       });
     p2.add(next);
     jdg.add(p1, BorderLayout.CENTER);
@@ -141,6 +154,64 @@ public class Calendar {
     }
     return false;
   }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + Arrays.hashCode(button);
+    result = prime * result + currentDay;
+    result = prime * result + currentMonth;
+    result = prime * result + ((day == null) ? 0 : day.hashCode());
+    result = prime * result + ((jdg == null) ? 0 : jdg.hashCode());
+    result = prime * result + ((label == null) ? 0 : label.hashCode());
+    result = prime * result + ((localCalendar == null) ? 0 : localCalendar.hashCode());
+    result = prime * result + month;
+    result = prime * result + year;
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Calendar other = (Calendar) obj;
+    if (!Arrays.equals(button, other.button))
+      return false;
+    if (currentDay != other.currentDay)
+      return false;
+    if (currentMonth != other.currentMonth)
+      return false;
+    if (day == null) {
+      if (other.day != null)
+        return false;
+    } else if (!day.equals(other.day))
+      return false;
+    if (jdg == null) {
+      if (other.jdg != null)
+        return false;
+    } else if (!jdg.equals(other.jdg))
+      return false;
+    if (label == null) {
+      if (other.label != null)
+        return false;
+    } else if (!label.equals(other.label))
+      return false;
+    if (localCalendar == null) {
+      if (other.localCalendar != null)
+        return false;
+    } else if (!localCalendar.equals(other.localCalendar))
+      return false;
+    if (month != other.month)
+      return false;
+    if (year != other.year)
+      return false;
+    return true;
+  }
   
-  //GENERARE HASHCODE E EQUALS!!
+  
 }

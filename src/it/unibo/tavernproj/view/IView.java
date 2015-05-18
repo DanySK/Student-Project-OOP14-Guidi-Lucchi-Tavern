@@ -49,10 +49,7 @@ public interface IView {
    *   
    * @param pair
    *      the coordinates of pair
-   *      
-   * @param index
-   *      the index of Map
    */
-  void addDraw(final Pair<Integer, Integer> pair, final int index);
+  void addDraw(final Pair<Integer, Integer> pair);
 
 }

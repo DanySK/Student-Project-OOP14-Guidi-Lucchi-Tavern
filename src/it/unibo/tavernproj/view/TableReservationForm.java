@@ -26,7 +26,6 @@ public class TableReservationForm extends ReservationForm{
   private final JLabel date;
   private final IController controller;
   private boolean modified;
-  private boolean deleted;  
 
   /**
    * It builds a new Table Reservation Form whenever we need to see the reservation
