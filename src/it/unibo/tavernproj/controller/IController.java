@@ -64,22 +64,10 @@ public interface IController {
   /**
    * Adds a new reservation to the model.
    * 
-   * @param table
-   *      the table number.
-   * @param name
-   *      the costumer name.
-   * @param date
-   *      the reservation date.
-   * @param h
-   *      the hour.
-   * @param tel
-   *      the phone  number.
-   * @param num
-   *      the number of people.
-   * @param menu
-   *      the menu.
+   * @param res
+   *      the reservation.
    */
-  void add(Integer table, String name, String date, String h, String tel, String num, String menu);
+  void add(final IReservation res, String date);
   
   /**
    * Adds a new table button.
@@ -98,15 +86,7 @@ public interface IController {
    * @param date
    *     the date
    */
-  void remove(int number, String date);
-  
-  /**
-   * Removes the table reservation from the view.
-   * 
-   * @param table
-   *      the table number.
-   */
-  void removeTable(Integer table);
+  void remove(final int number, final String date);
   
   /**
    * Removes the table reservation from the model.
@@ -116,7 +96,7 @@ public interface IController {
    * @param date
    *     the date
    */
-  void removeReservation(Integer table, String date);
+  void removeReservation(final Integer table, final String date);
   
   /**
    * @param date

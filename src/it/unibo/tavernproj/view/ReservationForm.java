@@ -148,7 +148,8 @@ public abstract class ReservationForm extends BasicFrame implements IReservation
 
   @Override
   public String getName() throws NullPointerException {
-    if (((JTextField) map.get(NOME)).getText().equals(" ")) {
+    if (((JTextField) map.get(NOME)).getText().equals(" ") 
+        || ((JTextField) map.get(NOME)).getText().isEmpty()) {
       throw new NullPointerException();
     }
     return ((JTextField)map.get(NOME)).getText();

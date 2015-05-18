@@ -43,8 +43,6 @@ public final class Controller implements IController {
   private final IGUIutilities util = new GUIutilities();
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();
   private IModel model = new Model();
-  private ObjectOutput outMap;
-  private ObjectInput  inMap; 
   private String fileName = "file.txt";
   private String fileDisegno = "disegno.dat";
 
@@ -96,18 +94,7 @@ public final class Controller implements IController {
   }
   
   @Override
-  public void add(final Integer table, final String name, final String date, 
-      final String h, final String tel, final String num, final String menu) 
-          throws IllegalArgumentException, NumberFormatException, NullPointerException {
-    if (name.isEmpty() || name.equals(" ")) {
-      throw new NullPointerException();
-    }
-    Reservation res;
-    if (menu.equals("")) {
-      res = new Reservation(table, name, date, h, tel, num, Optional.empty());
-    } else {
-      res = new Reservation(table, name, date, h, tel, num, Optional.of(menu));
-    }
+  public void add(IReservation res, String date) {
     model.add(date, res);
   }
   
@@ -116,27 +103,20 @@ public final class Controller implements IController {
     for (final IView v: view) {
       v.addTable(table);
     }
-    //this.LoadDisegno();
   } 
 
   @Override
   public void remove(final int table, final String date) {
-    //this.removeReservation(table, date);
-    model.remove(date, table);
+    this.removeReservation(table, date);
     if (date.equals(util.getCurrentDate())) {
-      this.removeTable(table);
+      for (final IView v: view) {
+        v.removeTable(table);
+      }
     }
-  }
+  }  
   
   @Override
-  public void removeTable(final Integer table) {
-    for (final IView v: view) {
-      v.removeTable(table);
-    }
-  }
-  
-  @Override
-  public void removeReservation(final Integer table, final String date) {
+  public void removeReservation(Integer table, String date) {
     model.remove(date, table);
   }
 
@@ -151,9 +131,9 @@ public final class Controller implements IController {
   @Override
   public IReservation getReservation(final int table, final String date) 
       throws NumberFormatException {
-    for (final IReservation r: model.getRes(date)) {
-      if (r.getTable() == table) {
-        return r;
+    for (final Integer i: this.getReservation(date).keySet()) {
+      if (i == table) {
+        return this.getReservation(date).get(i);
       }
     }
     throw new NumberFormatException();
@@ -162,9 +142,9 @@ public final class Controller implements IController {
   @Override
   public int getReservation(final String date, final String name) 
     throws IllegalArgumentException {
-    for (final IReservation r: model.getNameRes(name)) {
-      if (r.getDate().equals(date)) {
-        return r.getTable();
+    for (final Integer i: this.getReservation(date).keySet()) {
+      if (this.getReservation(i, date).getName().equals(name)) {
+        return i;
       }
     }
     throw new IllegalArgumentException();
@@ -191,8 +171,7 @@ public final class Controller implements IController {
       try {
         for (final Integer i: model.getTableRes(util.getCurrentDate()).keySet()) {
           this.addTable(i);
-        }
-       
+        }       
       } catch (NullPointerException e) {
         //System.out.print("non ci sono tavoli quel giorno");
       }
@@ -244,9 +223,10 @@ public final class Controller implements IController {
         final String date = (String) in.readObject();
         final int max = (int) in.readObject();
         for (int j = 1; j <= max; j++) {
-          this.add((Integer) in.readObject(), (String) in.readObject(), 
+          IReservation res = new Reservation((Integer) in.readObject(), (String) in.readObject(), 
               date, (String) in.readObject(), (String) in.readObject(), 
-              (String) in.readObject(), (String) in.readObject());
+              (String) in.readObject(), Optional.ofNullable((String) in.readObject()));
+          this.add(res, res.getDate());
         }
       }
       in.close();
@@ -268,7 +248,7 @@ public final class Controller implements IController {
   @Override
   public void saveDisegno() {
     try {
-      outMap = new ObjectOutputStream(new FileOutputStream(fileDisegno));
+      final ObjectOutput outMap = new ObjectOutputStream(new FileOutputStream(fileDisegno));
       outMap.writeObject(util.getCurrentDate());
       outMap.writeObject(draw);
       System.out.print(draw);
@@ -281,7 +261,7 @@ public final class Controller implements IController {
   @Override
   public void loadDisegno() {
     try {
-      inMap = new ObjectInputStream(new FileInputStream(fileDisegno));
+      final ObjectInput inMap = new ObjectInputStream(new FileInputStream(fileDisegno));
       if (util.getCurrentDate().equals(inMap.readObject())) {
         System.out.println("data giusta per caricare");
         final Map<Integer,Pair<Integer,Integer>> map = 
@@ -310,7 +290,7 @@ public final class Controller implements IController {
   }
 
   @Override
-  public boolean isPresent(String name, String date) {
+  public boolean isPresent(final String name, final String date) {
     try {
       this.getReservation(date, name);
       return true;

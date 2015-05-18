@@ -105,7 +105,6 @@ public class View extends JFrame implements IView{
     this.getContentPane().add(main);
   }
   
-  @SuppressWarnings("deprecation")
   private void setHandlers() {
     this.buttonNew.addActionListener(e -> {      
         final JFrame frame = new JFrame("Calendar");
@@ -116,8 +115,7 @@ public class View extends JFrame implements IView{
         }
         if (!calendar.getPickedDate().equals("Error")) {
           controller.setDate(calendar.getPickedDate());
-          new NewReservationForm(calendar.getPickedDate(), 
-              controller.getReservation(calendar.getPickedDate()), controller);
+          new NewReservationForm(calendar.getPickedDate(), controller);
         }
       });    
   
@@ -132,10 +130,9 @@ public class View extends JFrame implements IView{
     });
 
     this.drawTable.addActionListener(e-> {
-      map.addMouseListener(pos);
-      cancelAll.setEnabled(true);
-      cancelTable.setEnabled(true);
-
+        map.addMouseListener(pos);
+        cancelAll.setEnabled(true);
+        cancelTable.setEnabled(true);
       });
 
     this.cancelTable.addActionListener(e-> {

@@ -11,7 +11,7 @@ public final class Application {
   
   private static final String HOME = System.getProperty("user.home");
   private static final String SEPARATOR = System.getProperty("file.separator");  
-  private static final String DEFAULT_FILE = "dat.txt";
+  private static final String DEFAULT_FILE = "reservations.dat";
   private static final String DEFAULT_DISEGNO = "disegno.dat";
   
   private Application(){    

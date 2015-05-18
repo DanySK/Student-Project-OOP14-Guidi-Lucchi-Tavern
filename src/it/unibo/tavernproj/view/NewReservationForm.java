@@ -2,12 +2,14 @@ package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.IReservation;
+import it.unibo.tavernproj.model.Reservation;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -38,11 +40,10 @@ public class NewReservationForm extends ReservationForm{
    * @param map
    *      the map containing all the tables and reservations
    */
-  public NewReservationForm(final String date, final Map<Integer, IReservation> map,
-      IController controller) {
+  public NewReservationForm(final String date, IController controller) {
     super();
     this.date = new JLabel(date);
-    this.map = map;
+    this.map = controller.getReservation(date);
     this.controller = controller;
     this.loadReservation();
     this.buildLayout();
@@ -78,8 +79,15 @@ public class NewReservationForm extends ReservationForm{
             controller.displayException("Il nome inserito e' gia' stato utilizzato");
             NewReservationForm.this.setVisible(true);
           } else {
-            controller.add(getTable(), getName(), controller.getDate(), getH(),
-                getTel(), getNum(), getMenu());
+            IReservation res;
+            if (getMenu().equals("")) {
+              res = new Reservation(getTable(), getName(), controller.getDate(), getH(),
+                  getTel(), getNum(), Optional.empty());
+            } else {
+              res = new Reservation(getTable(), getName(), controller.getDate(), getH(),
+                  getTel(), getNum(), Optional.of(getMenu()));
+            }
+            controller.add(res, controller.getDate());
             if (controller.getDate().equals(util.getCurrentDate())) {
               controller.addTable(getTable());
             }
