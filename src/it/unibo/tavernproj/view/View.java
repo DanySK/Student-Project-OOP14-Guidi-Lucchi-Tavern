@@ -11,10 +11,10 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.MouseAdapter;
 import java.io.IOException;
 import java.util.Map;
 
@@ -41,7 +41,6 @@ public class View extends JFrame implements IView{
   private final JButton buttonDelete = util.getDefaultButton("Elimina Prenotazione");
   private final JButton cancelAll = util.getDefaultButton("Cancella Tutto", 12);
   private final JButton cancelTable = util.getDefaultButton("Cancella Tavolo", 12);
- // private final JButton drawTable = util.getDefaultButton("Disegna Tavolo", 12);
   private final JPanel tablesButtons = util.getDefaultPanel(new FlowLayout());  
   private final JLabel map = util.getDefaultMap("map.png");
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap(); 
@@ -76,7 +75,7 @@ public class View extends JFrame implements IView{
 
     final GridBagConstraints gap = new GridBagConstraints();
     final JPanel datePanel = util.getDefaultPanel(new GridBagLayout());    
-    datePanel.add(util.getDateLabel(), gap);   
+    datePanel.add(util.getDateLabel(), gap);    
     
     JLabel label = new JLabel();
     label.setText("Clicca sulla mappa per disegnare i tavoli");
@@ -95,9 +94,7 @@ public class View extends JFrame implements IView{
     center.add(map, BorderLayout.CENTER);
     center.add(tablesButtons, BorderLayout.SOUTH);
     center.add(north, BorderLayout.NORTH);
-       
-//    final DrawButton bDrawTable = new DrawButton(this.drawTable, map);
-//    bDrawTable.setting();
+    
     final DrawButton bCancelTable = new DrawButton(this.cancelTable, map);
     bCancelTable.setting();
     final DrawButton bCancelAll = new DrawButton(this.cancelAll, map);
@@ -119,7 +116,7 @@ public class View extends JFrame implements IView{
         }
         if (!calendar.getPickedDate().equals("Error")) {
           controller.setDate(calendar.getPickedDate());
-          new NewReservationForm(calendar.getPickedDate(), controller);
+          new NewReservationForm();
         }
       });    
   
@@ -132,20 +129,19 @@ public class View extends JFrame implements IView{
         quitHandler();
       }
     });
-  
+
     map.addMouseListener(new MouseAdapter(){
-      @Override
-      public void mouseClicked(MouseEvent e1){
-        if (tablesButtons.getComponents().length <= pos.size()){
-          controller.displayException("Non ci sono altri tavoli prenotati.");
+        @Override
+        public void mouseClicked(MouseEvent e1) {
+          if (tablesButtons.getComponents().length <= pos.size()) {
+            controller.displayException("Non ci sono altri tavoli prenotati.");
+          } else {
+            pos.paint(map.getGraphics(), e1.getX(), e1.getY());
+            cancelAll.setEnabled(true);
+            cancelTable.setEnabled(true);
+          }
         }
-        else {
-          pos.paint(map.getGraphics(), e1.getX(), e1.getY());
-          cancelAll.setEnabled(true);
-          cancelTable.setEnabled(true);
-        }
-      }
-  });
+    });
   
     this.cancelTable.addActionListener(e-> {
         pos.cancel(map.getGraphics());
@@ -161,7 +157,7 @@ public class View extends JFrame implements IView{
         cancelTable.setEnabled(false);
       });
   }
-
+  
   @Override
   public void addDraw(final Pair<Integer, Integer> pt) {
     pos.paint(map.getGraphics(),pt.getX(),pt.getY());
@@ -193,8 +189,7 @@ public class View extends JFrame implements IView{
     button.addActionListener(e -> {
         try { 
           controller.setDate(util.getCurrentDate());
-          new TableReservationForm(util.getCurrentDate(), 
-              controller.getReservation(table, util.getCurrentDate()), controller);         
+          new TableReservationForm(controller.getReservation(table, controller.getDate()));         
         } catch (NumberFormatException e1) {
           controller.displayException("Prenotazione non disponibile!");
         }      
@@ -211,7 +206,7 @@ public class View extends JFrame implements IView{
         tablesButtons.remove(c);
         tablesButtons.repaint();
       }
-      if (tablesButtons.getComponents().length == 0){
+      if (tablesButtons.getComponents().length == 0) {
         pos.cancelAll(map.getGraphics());
         mapButtons.setVisible(false);
       }

@@ -77,7 +77,7 @@ public class Chooser extends BasicFrame{
             controller.displayException("Nessuna prenotazione per la data selezionata.");
             calendar = new Calendar(frame);
           } else {
-            loadReservation(date);
+            res.add(util.loadReservation(date));
             enableTable();
           }
         }
@@ -85,7 +85,7 @@ public class Chooser extends BasicFrame{
 
     personButton.addActionListener(e -> {
         dateButton.setEnabled(false);
-        loadReservations();
+        res.add(util.loadReservations());
         enableNameDate();
       });
   
@@ -113,19 +113,6 @@ public class Chooser extends BasicFrame{
           }
         } 
       });
-  }
-  
-  private void loadReservation(final String date) {
-    for (final Integer i: controller.getReservation(date).keySet()) {
-      util.add(new JLabel(controller.getReservation(date).get(i).toString()));  
-    }
-    res.add(util.buildGridPanel(util.getList(), 10));
-  }
-
-  private void loadReservations() {
-    for (final String s: controller.getDates()) {
-      this.loadReservation(s);
-    }
   } 
   
   private void disableAll() {

@@ -1,6 +1,10 @@
 package it.unibo.tavernproj.view;
 
+import it.unibo.tavernproj.controller.Controller;
+import it.unibo.tavernproj.controller.IController;
+
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,7 +23,10 @@ import javax.swing.JPanel;
  * @author Eleonora Guidi
  *
  */
-public class GUIutilities extends BasicGUIutilities implements IGUIutilities {
+public class GUIutilities extends BasicGUIutilities implements IGUIutilities {  
+
+  private IController controller = Controller.getController();
+  private JPanel res = super.getDefaultPanel(new FlowLayout());
 
   @Override
   public JLabel getDateLabel() {
@@ -72,5 +79,27 @@ public class GUIutilities extends BasicGUIutilities implements IGUIutilities {
       gap.gridx++;
     }    
     return panel;
+  }
+  
+  private void loadReserv(final String date){
+    for (final Integer i: controller.getReservation(date).keySet()) {
+      this.add(new JLabel(controller.getReservation(date).get(i).toString()));       
+    }
+  }
+  
+  @Override
+  public JPanel loadReservation(final String date) {
+    this.loadReserv(date);
+    res.add(this.buildGridPanel(this.getList(), 10));
+    return res;
+  }
+
+  @Override
+  public JPanel loadReservations(){
+    for (final String s: controller.getDates()) {
+      this.loadReserv(s);
+    }
+    res.add(this.buildGridPanel(this.getList(), 10));
+    return res;
   }
 }

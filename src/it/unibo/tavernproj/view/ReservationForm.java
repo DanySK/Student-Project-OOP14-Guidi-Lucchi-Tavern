@@ -40,7 +40,7 @@ public abstract class ReservationForm extends BasicFrame implements IReservation
       new ProgressiveAcceptorImpl<>();
   private final Map<String, JComponent> map = new HashMap<>(); 
   
-  private final transient IGUIutilities util = new GUIutilities();
+  protected final IGUIutilities util = new GUIutilities();
   
   /**
    * Builds a new form.

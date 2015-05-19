@@ -1,15 +1,12 @@
 package it.unibo.tavernproj.view;
 
+import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Reservation;
 
 import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.util.Map;
-import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,42 +22,20 @@ import javax.swing.JPanel;
 public class NewReservationForm extends ReservationForm{
 
   private static final long serialVersionUID = 1L;
-  private final transient IGUIutilities util = new GUIutilities();
   private final JPanel res = util.getDefaultPanel(new GridBagLayout());
   private final JButton okButton = util.getDefaultButton("OK", 12);
-  private final transient Map<Integer, IReservation> map;
-  private final JLabel date;  
-  private final IController controller;
+  private final IController controller = Controller.getController();
+  private final JLabel date = new JLabel(controller.getDate());
 
   /**
    * It builds a new Reservation Form whenever we need to add a new Reservation.
-   * 
-   * @param date
-   *      the reservation date.
-   * @param map
-   *      the map containing all the tables and reservations
    */
-  public NewReservationForm(final String date, IController controller) {
+  public NewReservationForm() {
     super();
-    this.date = new JLabel(date);
-    this.map = controller.getReservation(date);
-    this.controller = controller;
-    this.loadReservation();
+    res.add(util.loadReservation(controller.getDate()));
     this.buildLayout();
     this.setHandlers();
     this.setVisible(true);
-  }
-  
-  private void loadReservation() {
-    final GridBagConstraints gap = new GridBagConstraints();
-    gap.gridy = 0;
-    gap.insets = new Insets(5, 5, 5, 5);
-    gap.fill = GridBagConstraints.HORIZONTAL;
-    for (final Integer i: map.keySet()) {
-      res.add(new JLabel(map.get(i).toString(date.getText())), gap);
-      gap.gridy++;
-    }
-    this.validate();
   }
 
   private void buildLayout() {
