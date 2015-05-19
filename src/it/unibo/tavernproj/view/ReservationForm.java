@@ -34,7 +34,7 @@ public abstract class ReservationForm extends BasicFrame implements IReservation
   private static final String ORA = "Orario";
   private static final String TEL = "Telefono";
   private static final String MENU = "Menu";
-  private static final String MENUFISSO = "Menu Fisso";
+  private static final String MENUFISSO = "Menu a Richiesta";
 
   private final transient ProgressiveAcceptor<JPanel> panelAggregator = 
       new ProgressiveAcceptorImpl<>();
