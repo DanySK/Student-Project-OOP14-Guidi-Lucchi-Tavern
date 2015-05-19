@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 * @author Seahawks
 * @version 1.0
 */
-public class Calendar {
+public class Calendar implements ICalendar{
   
   /*http://javarevisited.blogspot.it/2012/12/how-to-get-current-date-month-year-dayoweek-dayofmonth-java-example.html*/
   private final java.util.Calendar localCalendar = 
@@ -127,10 +127,7 @@ public class Calendar {
     jdg.setTitle("Calendar");
   }
   
-  /**
-   * @return
-   *      the date picked from the calendar.
-   */
+  @Override
   public String getPickedDate() {
     if (this.day.equals("")) {
       return "Error";
@@ -140,11 +137,8 @@ public class Calendar {
     cal.set(year, month, Integer.parseInt(day));
     return sdf.format(cal.getTime());
   }
-  
-  /**
-   * @return
-   *      a boolean explaining if the date picked can be correct
-   */
+
+  @Override
   public boolean isRight() {
     if (!this.day.equals("") && currentMonth == this.month) {
       return Integer.parseInt(this.day) >= this.currentDay; 

@@ -36,7 +36,7 @@ public final class Controller implements IController {
   @SuppressWarnings("unused")
   private static final long serialVersionUID = 1L;
 
-  private static final Controller SINGLETON = new Controller();  
+  private static final IController SINGLETON = new Controller();  
 
   private final Set<IView> view = new HashSet<>();
   private final IGUIutilities util = new GUIutilities();
@@ -49,7 +49,7 @@ public final class Controller implements IController {
 
   private Controller(){};
   
-  public static Controller getController() {
+  public static IController getController() {
     return SINGLETON;
   }
   

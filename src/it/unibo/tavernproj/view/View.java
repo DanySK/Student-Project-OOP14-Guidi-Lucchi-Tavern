@@ -116,7 +116,7 @@ public class View extends JFrame implements IView{
         }
         if (!calendar.getPickedDate().equals("Error")) {
           controller.setDate(calendar.getPickedDate());
-          new NewReservationForm(calendar.getPickedDate(), controller);
+          new NewReservationForm();
         }
       });    
   
@@ -193,8 +193,7 @@ public class View extends JFrame implements IView{
     button.addActionListener(e -> {
         try { 
           controller.setDate(util.getCurrentDate());
-          new TableReservationForm(util.getCurrentDate(), 
-              controller.getReservation(table, util.getCurrentDate()), controller);         
+          new TableReservationForm(controller.getReservation(table, controller.getDate()));         
         } catch (NumberFormatException e1) {
           controller.displayException("Prenotazione non disponibile!");
         }      

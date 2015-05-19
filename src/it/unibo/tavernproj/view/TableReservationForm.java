@@ -1,5 +1,6 @@
 package it.unibo.tavernproj.view;
 
+import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Reservation;
@@ -23,25 +24,19 @@ public class TableReservationForm extends ReservationForm{
   private final JButton modifyButton = util.getDefaultButton("Modifica", 12);
   private final JButton deleteButton = util.getDefaultButton("Elimina", 12); 
   private final JButton okButton = util.getDefaultButton("OK", 12);
-  private final JLabel date;
-  private final IController controller;
+  private final IController controller = Controller.getController();  
+  private final JLabel date = new JLabel(controller.getDate());
   private boolean modified;
 
   /**
    * It builds a new Table Reservation Form whenever we need to see the reservation
    * from the table button.
-   * 
-   * @param date
-   *      the reservation date.
    * @param res
    *      the reservation.
    */
-  public TableReservationForm(final String date, final IReservation res, 
-      final IController controller) {
+  public TableReservationForm(final IReservation res) {
     super();
-    this.date = new JLabel(date);
     this.res = res;
-    this.controller = controller;
     buildLayout();
     setHandlers();
     writeForm();
@@ -91,9 +86,14 @@ public class TableReservationForm extends ReservationForm{
              */
           }  
           try {
-            IReservation res = new Reservation(getTable(), getName(), 
-                controller.getDate(), getH(), getTel(), getNum(), getMenu());
-            controller.add(res, controller.getDate());
+            if (controller.isPresent(getName(), controller.getDate())) {
+              controller.displayException("Il nome inserito e' gia' stato utilizzato");
+              TableReservationForm.this.setVisible(true);
+            } else {
+              IReservation res = new Reservation(getTable(), getName(), 
+                  controller.getDate(), getH(), getTel(), getNum(), getMenu());
+              controller.add(res, controller.getDate());
+            }
           } catch (NullPointerException e1) {
             controller.displayException("Riempire la form!");
             TableReservationForm.this.setVisible(true);

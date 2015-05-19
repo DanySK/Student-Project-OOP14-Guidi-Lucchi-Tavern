@@ -62,4 +62,20 @@ public interface IGUIutilities extends IBasicGUIutilities {
    *      the panel.
    */
   JPanel buildOrizzontalGridPanel(final List<JComponent> list, final int ins);
+  
+  /**
+   * @return
+   *      a panel containing all the reservations added.
+   */
+  JPanel loadReservations();
+  
+  /**
+   * Loads all the reservation added for the date choosed.
+   * 
+   * @param date
+   *      the date choosed.
+   * @return
+   *      the pael containig all the reservation on that date.
+   */
+  JPanel loadReservation(final String date);
 }
