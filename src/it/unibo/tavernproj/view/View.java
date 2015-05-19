@@ -81,6 +81,13 @@ public class View extends JFrame implements IView{
     JLabel label = new JLabel();
     label.setText("Clicca sulla mappa per disegnare i tavoli");
  
+    if (!draw.isEmpty()){
+      this.setButtons(false);
+    } else {
+      this.setButtons(true);
+    }
+    
+    
     util.add(label);
     util.add(cancelTable);
     util.add(cancelAll);
@@ -141,8 +148,7 @@ public class View extends JFrame implements IView{
         }
         else {
           pos.paint(map.getGraphics(), e1.getX(), e1.getY());
-          cancelAll.setEnabled(true);
-          cancelTable.setEnabled(true);
+         setButtons(true);
         }
       }
   });
@@ -150,15 +156,13 @@ public class View extends JFrame implements IView{
     this.cancelTable.addActionListener(e-> {
         pos.cancel(map.getGraphics());
         if (draw.isEmpty()) {
-          cancelTable.setEnabled(false); 
-          cancelAll.setEnabled(false);
+          this.setButtons(false);
         }
       });
 
     this.cancelAll.addActionListener(e-> {
         pos.cancelAll(map.getGraphics());
-        cancelAll.setEnabled(false); 
-        cancelTable.setEnabled(false);
+        this.setButtons(false);
       });
   }
 
@@ -221,6 +225,13 @@ public class View extends JFrame implements IView{
   @Override
   public void commandFailed(final String message) {
     JOptionPane.showMessageDialog(this, message, "Errore", JOptionPane.ERROR_MESSAGE);
+  }
+  
+  @Override
+  public void setButtons(boolean bool){
+    cancelTable.setEnabled(bool);
+    cancelAll.setEnabled(bool);
+    
   }
 
 }

@@ -54,4 +54,12 @@ public interface IView {
    */
   void addDraw(final Pair<Integer, Integer> pair);
 
+  /**
+   * It sets the removing's buttons.
+   * 
+   * @param bool
+   *         a boolean
+   */
+  void setButtons(boolean bool);
+
 }
