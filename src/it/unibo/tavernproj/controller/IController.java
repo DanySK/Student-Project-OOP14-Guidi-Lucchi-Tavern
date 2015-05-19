@@ -1,12 +1,11 @@
 package it.unibo.tavernproj.controller;
 
-import java.util.Map;
-import java.util.Set;
-
-import it.unibo.tavernproj.view.IView;
 import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
+import it.unibo.tavernproj.view.IView;
 
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eleonora Guidi
@@ -81,9 +80,9 @@ public interface IController {
    * Adds a new table button.
    *
    * @param table
-   * 		the table number
+   *      the table number
    */
-  void addTable(Integer table);
+  void addTable(final Integer table);
 
   /**
    * Removes the table reservation from the model
@@ -116,16 +115,16 @@ public interface IController {
 
   /**
    * @param table
-   * 		table number
+   *      table number
    * @param date
-   * 		reservation date
+   *      reservation date
    * @return IReservation 
-   * 		the reservation we want
+   *      the reservation we want
    * 
    * @throws NumberFormatException 
-   * 		if the table number is incorrect
+   *      if the table number is incorrect
    */	
-  IReservation getReservation(int table, String date) throws NumberFormatException;
+  IReservation getReservation(final int table, final String date) throws NumberFormatException;
 
   /**
    * @param date
@@ -137,7 +136,7 @@ public interface IController {
    * @throws IllegalArgumentException 
    *       if the date or the name are wrong.
    */
-  int getReservation(String date, String name) throws IllegalArgumentException;
+  int getReservation(final String date, final String name) throws IllegalArgumentException;
 
   /**
    * Ordinately shuts down the program.
@@ -176,7 +175,7 @@ public interface IController {
    * @param model
    *      the IModel passed.
    */
-  void setModel(IModel model);
+  void setModel(final IModel model);
 
   /**
    * Saves the map of the painted tables.
@@ -196,5 +195,5 @@ public interface IController {
    * @return
    *      true if the reservation for that day and that costumer is present.
    */
-  boolean isPresent(String name, String date);
+  boolean isPresent(final String name, final String date);
 }

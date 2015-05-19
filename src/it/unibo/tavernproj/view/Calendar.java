@@ -83,7 +83,7 @@ public class Calendar implements ICalendar{
     previous.addActionListener(new ActionListener(){      
 
         @Override
-        public void actionPerformed(ActionEvent e) {         
+        public void actionPerformed(ActionEvent e) {
           month--;
           displayDate();
         }
@@ -206,6 +206,4 @@ public class Calendar implements ICalendar{
       return false;
     return true;
   }
-  
-  
 }

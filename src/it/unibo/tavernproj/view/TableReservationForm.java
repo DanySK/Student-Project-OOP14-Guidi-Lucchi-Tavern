@@ -6,7 +6,6 @@ import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Reservation;
 
 import java.awt.BorderLayout;
-import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
