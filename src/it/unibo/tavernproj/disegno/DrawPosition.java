@@ -52,7 +52,6 @@ public class DrawPosition implements Serializable,IDrawPosition {
       this.paintCancel(label.getGraphics(), pt.getX(),pt.getY());
     }
     draw.clear();
-    System.out.println(draw.size());
   }
 
   /**

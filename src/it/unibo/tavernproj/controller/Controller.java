@@ -225,7 +225,6 @@ public final class Controller implements IController {
       final ObjectOutput outMap = new ObjectOutputStream(new FileOutputStream(fileDisegno));
       outMap.writeObject(util.getCurrentDate());
       outMap.writeObject(draw);
-      System.out.print(draw);
       outMap.close();
     } catch (IOException e) {
       //System.out.print("non salva  sul file nel disegno");
@@ -245,12 +244,7 @@ public final class Controller implements IController {
           final Pair<Integer,Integer> p = map.get(i);
           for (final IView v: view) {
             v.addDraw(p);
-            /*try {
-              Thread.sleep(10);
-            } catch (InterruptedException e) {
-              //e.printStackTrace();
-            }*/
-          }
+        }
         }
       }
     } catch (ClassNotFoundException e) {
