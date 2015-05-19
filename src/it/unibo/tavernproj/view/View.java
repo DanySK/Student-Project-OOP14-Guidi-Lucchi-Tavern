@@ -46,7 +46,7 @@ public class View extends JFrame implements IView{
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap(); 
   private JPanel mapButtons;
   private transient IController controller;
-  
+
   private final DrawPosition pos = new DrawPosition(map);
 
   /**
@@ -76,27 +76,26 @@ public class View extends JFrame implements IView{
     final GridBagConstraints gap = new GridBagConstraints();
     final JPanel datePanel = util.getDefaultPanel(new GridBagLayout());    
     datePanel.add(util.getDateLabel(), gap);    
-    
+
     JLabel label = new JLabel();
     label.setText("Clicca sulla mappa per disegnare i tavoli");
- 
+
     if (!draw.isEmpty()){
       this.setButtons(false);
     } else {
       this.setButtons(true);
     }
-    
-    
+
     util.add(label);
     util.add(cancelTable);
     util.add(cancelAll);
     mapButtons = util.buildOrizzontalGridPanel(util.getList(), 10);
     mapButtons.setVisible(false);
-    
+
     final JPanel north = util.getDefaultPanel(new BorderLayout());
     north.add(datePanel, BorderLayout.NORTH);
     north.add(mapButtons, BorderLayout.CENTER);
-    
+
     final JPanel center = util.getDefaultPanel(new BorderLayout());
     center.add(map, BorderLayout.CENTER);
     center.add(tablesButtons, BorderLayout.SOUTH);
@@ -106,13 +105,13 @@ public class View extends JFrame implements IView{
     bCancelTable.setting();
     final DrawButton bCancelAll = new DrawButton(this.cancelAll, map);
     bCancelAll.setting();
-    
+
     final JPanel main = util.getDefaultPanel(new BorderLayout(5, 5));
     main.add(center, BorderLayout.CENTER);
     main.add(east, BorderLayout.EAST);
     this.getContentPane().add(main);
   }
-  
+
   private void setHandlers() {
     this.buttonNew.addActionListener(e -> {      
         final JFrame frame = new JFrame("Calendar");
@@ -128,9 +127,9 @@ public class View extends JFrame implements IView{
       });    
   
     this.buttonDelete.addActionListener(e -> {      
-        new Chooser(controller);
-      });
-    
+      new Chooser(controller);
+    });
+
     this.addWindowListener(new WindowAdapter() {
       public void windowClosing(final WindowEvent event) {
         quitHandler();
@@ -148,19 +147,20 @@ public class View extends JFrame implements IView{
             cancelTable.setEnabled(true);
           }
         }
+
     });
   
     this.cancelTable.addActionListener(e-> {
-        pos.cancel(map.getGraphics());
-        if (draw.isEmpty()) {
-          this.setButtons(false);
-        }
-      });
+      pos.cancel(map.getGraphics());
+      if (draw.isEmpty()) {
+        this.setButtons(false);
+      }
+    });
 
     this.cancelAll.addActionListener(e-> {
-        pos.cancelAll(map.getGraphics());
-        this.setButtons(false);
-      });
+      pos.cancelAll(map.getGraphics());
+      this.setButtons(false);
+    });
   }
   
   @Override
@@ -168,7 +168,7 @@ public class View extends JFrame implements IView{
     pos.paint(map.getGraphics(),pt.getX(),pt.getY());
     this.validate();
   }   
-  
+
   private void quitHandler() {
     final int n = JOptionPane.showConfirmDialog(this, "Vuoi davvero uscire?", 
         "Chiusura...", JOptionPane.YES_NO_OPTION);
@@ -192,18 +192,18 @@ public class View extends JFrame implements IView{
     }
     button.setName(table.toString());
     button.addActionListener(e -> {
-        try { 
-          controller.setDate(util.getCurrentDate());
-          new TableReservationForm(controller.getReservation(table, controller.getDate()));         
-        } catch (NumberFormatException e1) {
-          controller.displayException("Prenotazione non disponibile!");
-        }      
-      });
+      try { 
+        controller.setDate(util.getCurrentDate());
+        new TableReservationForm(controller.getReservation(table, util.getCurrentDate()));         
+      } catch (NumberFormatException e1) {
+        controller.displayException("Prenotazione non disponibile!");
+      }      
+    });
     tablesButtons.add(button);
     mapButtons.setVisible(true);
     View.this.validate();
   }
-  
+
   @Override
   public void removeTable(final Integer table) {
     for (final Component c: tablesButtons.getComponents()) {
@@ -217,16 +217,16 @@ public class View extends JFrame implements IView{
       }
     }
   }
-  
+
   @Override
   public void commandFailed(final String message) {
     JOptionPane.showMessageDialog(this, message, "Errore", JOptionPane.ERROR_MESSAGE);
   }
-  
+
   @Override
   public void setButtons(boolean bool){
     cancelTable.setEnabled(bool);
     cancelAll.setEnabled(bool);
-    
+
   }
 }
