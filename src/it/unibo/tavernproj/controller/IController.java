@@ -112,46 +112,46 @@ public interface IController {
    * @return
    *      a map containing the table number and the linked reservation.
    */
-	Map<Integer,IReservation> getReservation(final String date); 
-	
+  Map<Integer,IReservation> getReservation(final String date); 
+
   /**
-	 * @param table
-	 * 		table number
-	 * @param date
-	 * 		reservation date
-	 * @return IReservation 
-	 * 		the reservation we want
-	 * 
-	 * @throws NumberFormatException 
-	 * 		if the table number is incorrect
-	 */	
-	IReservation getReservation(int table, String date) throws NumberFormatException;
-	
-	/**
-	 * @param date
-	 *       the reservation date.
-	 * @param name
-	 *       the costumer name.
-	 * @return
-	 *       the table linked to that reservation.
-	 * @throws IllegalArgumentException 
-	 *       if the date or the name are wrong.
-	 */
-	int getReservation(String date, String name) throws IllegalArgumentException;
-	
-	/**
+   * @param table
+   * 		table number
+   * @param date
+   * 		reservation date
+   * @return IReservation 
+   * 		the reservation we want
+   * 
+   * @throws NumberFormatException 
+   * 		if the table number is incorrect
+   */	
+  IReservation getReservation(int table, String date) throws NumberFormatException;
+
+  /**
+   * @param date
+   *       the reservation date.
+   * @param name
+   *       the costumer name.
+   * @return
+   *       the table linked to that reservation.
+   * @throws IllegalArgumentException 
+   *       if the date or the name are wrong.
+   */
+  int getReservation(String date, String name) throws IllegalArgumentException;
+
+  /**
    * Ordinately shuts down the program.
    */
-	void commandQuit();
-	
-	/**
-	 * Opens a new window displaying the exception
-	 * 
-	 * @param e
-	 *       the exception message.
-	 */
-  void displayException(final String e);
-  
+  void commandQuit();
+
+  /**
+   * Opens a new window displaying the exception
+   * 
+   * @param srt
+   *       the exception message.
+   */
+  void displayException(final String srt);
+
   /**
    * Loads the current day reservations.
    * 
@@ -159,17 +159,17 @@ public interface IController {
    *      the current day.
    */
   void load(final String date);
-  
+
   /**
-	 * Saves the reservations map from the model in the local file system.
-	 */
-	void saveModel();  
-  
+   * Saves the reservations map from the model in the local file system.
+   */
+  void saveModel();  
+
   /**
    * Loads the map of reservations from the local file system and puts it as model.
    */
   void setModel(); 
-  
+
   /**
    * Sets the model with an IModel passed.
    * 

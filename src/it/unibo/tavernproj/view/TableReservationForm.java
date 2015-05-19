@@ -24,7 +24,7 @@ public class TableReservationForm extends ReservationForm{
   private final JButton modifyButton = util.getDefaultButton("Modifica", 12);
   private final JButton deleteButton = util.getDefaultButton("Elimina", 12); 
   private final JButton okButton = util.getDefaultButton("OK", 12);
-  private final IController controller = Controller.getController();  
+  private final transient IController controller = Controller.getController();  
   private final JLabel date = new JLabel(controller.getDate());
   private boolean modified;
 

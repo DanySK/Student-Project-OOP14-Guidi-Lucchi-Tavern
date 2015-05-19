@@ -134,11 +134,10 @@ public class View extends JFrame implements IView{
         //map.addMouseListener(pos);
         map.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e1){
-              if (tablesButtons.getComponents().length <= pos.size()){
+            public void mouseClicked(MouseEvent e1) {
+              if (tablesButtons.getComponents().length <= pos.size()) {
                 controller.displayException("Non ci sono altri tavoli prenotati.");
-              }
-              else {
+              } else {
                 pos.paint(map.getGraphics(), e1.getX(), e1.getY());
               }
             }

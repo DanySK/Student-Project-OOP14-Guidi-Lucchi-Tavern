@@ -47,7 +47,7 @@ public final class Controller implements IController {
 
   private Optional<String> date = Optional.empty();
 
-  private Controller(){};
+  private Controller() {};
   
   public static IController getController() {
     return SINGLETON;
@@ -71,7 +71,7 @@ public final class Controller implements IController {
   
   @Override
   public void setFileDisegno(final String string) {
-     this.fileDisegno = string;
+    this.fileDisegno = string;
   }
   
   @Override
@@ -190,12 +190,12 @@ public final class Controller implements IController {
   @Override
   public void saveModel() {
     try {
-        final ObjectOutput out = new ObjectOutputStream(new FileOutputStream(fileName));
-        out.writeObject(model.getModel());
-        out.close();
-      } catch (IOException e) {
-        //System.out.print("non salva sul file");
-      }
+      final ObjectOutput out = new ObjectOutputStream(new FileOutputStream(fileName));
+      out.writeObject(model.getModel());
+      out.close();
+    } catch (IOException e) {
+      //System.out.print("non salva sul file");
+    }
   }
 
   /*per caricare il modello da file system all'accensione*/
@@ -204,8 +204,8 @@ public final class Controller implements IController {
   public void setModel() {
     try {
       final ObjectInput in = new ObjectInputStream(new FileInputStream(fileName));      
-       this.model.setModel((Map<String, Map<Integer, IReservation>>)in.readObject());
-       in.close();
+      this.model.setModel((Map<String, Map<Integer, IReservation>>)in.readObject());
+      in.close();
     } catch (IOException e) {
       //System.out.print("non prende il file");
     } catch (ClassNotFoundException e) {
