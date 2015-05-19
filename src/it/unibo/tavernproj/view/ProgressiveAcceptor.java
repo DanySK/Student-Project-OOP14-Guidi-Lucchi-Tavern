@@ -11,10 +11,10 @@ package it.unibo.tavernproj.view;
  * e di re-inserire la sequenza da un punto 
  * precedente (ad esempio dall'inizio, o da metà).
  * 
- * Questa interfaccia dipende da altre due interfacce, 
+ * <p>Questa interfaccia dipende da altre due interfacce, 
  * ProgressiveFilter and Aggregator (che realizzano strategie funzionali).
  * 
- * Un filtro, un aggregatore e la size sono necessarie, 
+ * <p>Un filtro, un aggregatore e la size sono necessarie, 
  * altrimenti un IllegalStateException sarà lanciata dagli altri metodi.
  */
 

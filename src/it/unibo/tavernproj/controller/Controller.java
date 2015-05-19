@@ -36,7 +36,7 @@ public final class Controller implements IController {
   @SuppressWarnings("unused")
   private static final long serialVersionUID = 1L;
 
-  private static final Controller SINGLETON = new Controller();  
+  private static final IController SINGLETON = new Controller();  
 
   private final Set<IView> view = new HashSet<>();
   private final IGUIutilities util = new GUIutilities();
@@ -47,9 +47,9 @@ public final class Controller implements IController {
 
   private Optional<String> date = Optional.empty();
 
-  private Controller(){};
+  private Controller() {};
   
-  public static Controller getController() {
+  public static IController getController() {
     return SINGLETON;
   }
   
@@ -71,7 +71,7 @@ public final class Controller implements IController {
   
   @Override
   public void setFileDisegno(final String string) {
-     this.fileDisegno = string;
+    this.fileDisegno = string;
   }
   
   @Override
@@ -146,7 +146,7 @@ public final class Controller implements IController {
         if (this.getReservation(i, date).getName().equals(name)) {
           return i;
         }
-      } catch (NumberFormatException e){
+      } catch (NumberFormatException e) {
         //blocco l'eccezione tirata dal metodo soprastante
       }
     }
@@ -190,12 +190,12 @@ public final class Controller implements IController {
   @Override
   public void saveModel() {
     try {
-        final ObjectOutput out = new ObjectOutputStream(new FileOutputStream(fileName));
-        out.writeObject(model.getModel());
-        out.close();
-      } catch (IOException e) {
-        //System.out.print("non salva sul file");
-      }
+      final ObjectOutput out = new ObjectOutputStream(new FileOutputStream(fileName));
+      out.writeObject(model.getModel());
+      out.close();
+    } catch (IOException e) {
+      //System.out.print("non salva sul file");
+    }
   }
 
   /*per caricare il modello da file system all'accensione*/
@@ -204,8 +204,8 @@ public final class Controller implements IController {
   public void setModel() {
     try {
       final ObjectInput in = new ObjectInputStream(new FileInputStream(fileName));      
-       this.model.setModel((Map<String, Map<Integer, IReservation>>)in.readObject());
-       in.close();
+      this.model.setModel((Map<String, Map<Integer, IReservation>>)in.readObject());
+      in.close();
     } catch (IOException e) {
       //System.out.print("non prende il file");
     } catch (ClassNotFoundException e) {
@@ -238,15 +238,15 @@ public final class Controller implements IController {
       final ObjectInput inMap = new ObjectInputStream(new FileInputStream(fileDisegno));
       if (util.getCurrentDate().equals(inMap.readObject())) {
         final Map<Integer,Pair<Integer,Integer>> map = 
-            (Map<Integer,Pair<Integer,Integer>>) inMap.readObject();
-        inMap.close();
+            (Map<Integer,Pair<Integer,Integer>>) inMap.readObject();        
         for (final Integer i : map.keySet()) {
           final Pair<Integer,Integer> p = map.get(i);
           for (final IView v: view) {
             v.addDraw(p);
-        }
+          }
         }
       }
+      inMap.close();
     } catch (ClassNotFoundException e) {
       //System.out.println("non trova la classe");
     } catch (IOException e) {
