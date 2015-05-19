@@ -146,7 +146,7 @@ public final class Controller implements IController {
         if (this.getReservation(i, date).getName().equals(name)) {
           return i;
         }
-      } catch (NumberFormatException e){
+      } catch (NumberFormatException e) {
         //blocco l'eccezione tirata dal metodo soprastante
       }
     }
@@ -239,20 +239,15 @@ public final class Controller implements IController {
       final ObjectInput inMap = new ObjectInputStream(new FileInputStream(fileDisegno));
       if (util.getCurrentDate().equals(inMap.readObject())) {
         final Map<Integer,Pair<Integer,Integer>> map = 
-            (Map<Integer,Pair<Integer,Integer>>) inMap.readObject();
-        inMap.close();
+            (Map<Integer,Pair<Integer,Integer>>) inMap.readObject();        
         for (final Integer i : map.keySet()) {
           final Pair<Integer,Integer> p = map.get(i);
           for (final IView v: view) {
             v.addDraw(p);
-            /*try {
-              Thread.sleep(10);
-            } catch (InterruptedException e) {
-              //e.printStackTrace();
-            }*/
           }
         }
       }
+      inMap.close();
     } catch (ClassNotFoundException e) {
       //System.out.println("non trova la classe");
     } catch (IOException e) {
