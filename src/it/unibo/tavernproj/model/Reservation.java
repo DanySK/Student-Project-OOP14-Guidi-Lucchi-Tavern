@@ -24,9 +24,9 @@ public class Reservation implements Serializable, IReservation{
   private final int table;
   private final String name;
   private final String date;
-  private final String hour;
+  private final Double hour;
   private final String tel;
-  private final String numPers;
+  private final int numPers;
   private final String menu;
 
   /**
@@ -49,7 +49,7 @@ public class Reservation implements Serializable, IReservation{
    *            Else an empty Optional.
    */
   public Reservation(final Integer table, final String name, final String date,
-                               final String hour, final String tel, final String numPers, 
+                               final Double hour, final String tel, final Integer numPers, 
                                                  final String menu) {
     Objects.requireNonNull(table);
     this.table = table;
@@ -82,7 +82,7 @@ public class Reservation implements Serializable, IReservation{
   }
 
   @Override
-  public String getHours() {
+  public Double getHour() {
     return hour;
   }
 
@@ -92,7 +92,7 @@ public class Reservation implements Serializable, IReservation{
   }
 
   @Override
-  public String getNumPers() {
+  public int getNumPers() {
     return numPers;
   }
 
@@ -107,8 +107,9 @@ public class Reservation implements Serializable, IReservation{
     int result = 1;
     result = prime * result + ((date == null) ? 0 : date.hashCode());
     result = prime * result + ((hour == null) ? 0 : hour.hashCode());
+    result = prime * result + ((menu == null) ? 0 : menu.hashCode());
     result = prime * result + ((name == null) ? 0 : name.hashCode());
-    result = prime * result + ((numPers == null) ? 0 : numPers.hashCode());
+    result = prime * result + numPers;
     result = prime * result + table;
     result = prime * result + ((tel == null) ? 0 : tel.hashCode());
     return result;
@@ -133,15 +134,17 @@ public class Reservation implements Serializable, IReservation{
         return false;
     } else if (!hour.equals(other.hour))
       return false;
+    if (menu == null) {
+      if (other.menu != null)
+        return false;
+    } else if (!menu.equals(other.menu))
+      return false;
     if (name == null) {
       if (other.name != null)
         return false;
     } else if (!name.equals(other.name))
       return false;
-    if (numPers == null) {
-      if (other.numPers != null)
-        return false;
-    } else if (!numPers.equals(other.numPers))
+    if (numPers != other.numPers)
       return false;
     if (table != other.table)
       return false;
@@ -152,5 +155,4 @@ public class Reservation implements Serializable, IReservation{
       return false;
     return true;
   }
-
 }

@@ -156,12 +156,12 @@ public abstract class ReservationForm extends BasicFrame implements IReservation
   }
 
   @Override
-  public String getH() throws NullPointerException, NumberFormatException {
+  public Double getH() throws NullPointerException, NumberFormatException {
     if (Double.parseDouble(((JTextField) map.get(ORA)).getText()) <= 0
         || Double.parseDouble(((JTextField) map.get(ORA)).getText()) > 24) {
       throw new NumberFormatException();
     }
-    return ((JTextField) map.get(ORA)).getText();
+    return Double.parseDouble(((JTextField) map.get(ORA)).getText());
   }
 
   /*vedere se sostituirlo con un optional*/
@@ -171,12 +171,13 @@ public abstract class ReservationForm extends BasicFrame implements IReservation
   }
 
   @Override
-  public String getNum() throws NumberFormatException {
+  public Integer getNum() throws NumberFormatException {
     if (((JTextField) map.get(NUM)).getText().isEmpty()
-        || Double.parseDouble(((JTextField) map.get(NUM)).getText()) > 300) {
+        || Integer.parseInt(((JTextField) map.get(NUM)).getText()) < 0
+        || Integer.parseInt(((JTextField) map.get(NUM)).getText()) > 300) {
       throw new NumberFormatException();
     }
-    return ((JTextField) map.get(NUM)).getText();
+    return Integer.parseInt(((JTextField) map.get(NUM)).getText());
   }
 
   @Override
@@ -206,8 +207,8 @@ public abstract class ReservationForm extends BasicFrame implements IReservation
   }
 
   @Override
-  public void setH(final String srt) {
-    ((JTextField) map.get(ORA)).setText(srt);
+  public void setH(final Double srt) {
+    ((JTextField) map.get(ORA)).setText("" + srt);
   }
 
   @Override

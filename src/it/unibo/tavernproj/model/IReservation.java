@@ -29,7 +29,7 @@ public interface IReservation {
    * @return
    *       hour of reservation
    */
-  String getHours();
+  Double getHour();
 
   /**
    * @return 
@@ -41,7 +41,7 @@ public interface IReservation {
    * @return
    *      the number of people
    */
-  String getNumPers();
+  int getNumPers();
 
   /**
    * @return

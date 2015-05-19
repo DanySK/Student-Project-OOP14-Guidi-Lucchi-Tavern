@@ -31,7 +31,7 @@ public interface IReservationForm {
    * @throws NullPointerException
    *      if the form field is empty.
    */
-  String getH() throws NullPointerException;
+  Double getH() throws NullPointerException;
 
   /**
    * @return
@@ -49,7 +49,7 @@ public interface IReservationForm {
    * @throws NumberFormatException
    *      if the number text box is filled with a string.
    */
-  String getNum()throws NumberFormatException;
+  Integer getNum() throws NumberFormatException;
 
   /**
    * @return
@@ -89,7 +89,7 @@ public interface IReservationForm {
    * @param srt
    *      the hour of the reservation.
    */
-  void setH(final String srt);
+  void setH(final Double srt);
 
   /**
    * It sets the text in the phone text box in the form with the string passed.

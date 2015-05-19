@@ -20,23 +20,23 @@ public class TestModel {
     ctr.setModel(model);
 
     final IReservation r1 = new Reservation(1, "Giulia", "30-04-2015",
-        "21.30","054751083" , "2", "Bruschette");
+        21.30,"054751083", 2, "Bruschette");
     final IReservation r2 = new Reservation(3, "Andrea", "30-04-2015",
-        "21.30","054751042" , "8", null);
+        21.30, "054751042", 8, null);
     final IReservation r3 = new Reservation(2, "Pirlo", "14-06-2015",
-        "21.30","054751267" , "12", null);
+        21.30, "054751267", 12, null);
     final IReservation r4 = new Reservation(1, "Eleonora", "1-05-2015",
-        "21.30","054751323" , "1", null);
+        21.30, "054751323", 1, null);
     final IReservation r5 = new Reservation(1, "Federico", "14-06-2015",
-        "21.30","054751876" , "4", null);
+        21.30, "054751876", 4, null);
     final IReservation r6 = new Reservation(1, "Enrico", "3-07-2015",
-        "21.30","054751376" , "4", null);
+        21.30, "054751376", 4, null);
     final IReservation r7 = new Reservation(6, "Alessandro", "3-07-2015",
-        "21.30","054751000" , "2", "grigliata");
+        21.30, "054751000", 2, "grigliata");
     final IReservation r8 = new Reservation(2, "Lorenzo", "3-07-2015",
-        "21.30","054751222" , "6", null);
+        21.30, "054751222", 6, null);
     final IReservation r9 = new Reservation(1, "Federico", "8-07-2015",
-        "21.30","054751333" , "2", null);
+        21.30, "054751333", 2, null);
     
     /* 
      * Add the reservations.

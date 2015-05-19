@@ -44,9 +44,9 @@ public class TableReservationForm extends NewReservationForm{
   private void writeForm() {
     super.setTable(res.getTable());
     super.setName(res.getName());
-    super.setH(res.getHours());
+    super.setH(res.getHour());
     super.setTel(res.getTel());
-    super.setNum(Integer.parseInt(res.getNumPers()));
+    super.setNum(res.getNumPers());
     super.setMenu(res.getMenu());
   }
   
