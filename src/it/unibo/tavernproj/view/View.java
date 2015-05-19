@@ -41,7 +41,7 @@ public class View extends JFrame implements IView{
   private final JButton buttonDelete = util.getDefaultButton("Elimina Prenotazione");
   private final JButton cancelAll = util.getDefaultButton("Cancella Tutto", 12);
   private final JButton cancelTable = util.getDefaultButton("Cancella Tavolo", 12);
-  private final JButton drawTable = util.getDefaultButton("Disegna Tavolo", 12);
+ // private final JButton drawTable = util.getDefaultButton("Disegna Tavolo", 12);
   private final JPanel tablesButtons = util.getDefaultPanel(new FlowLayout());  
   private final JLabel map = util.getDefaultMap("map.png");
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap(); 
@@ -76,9 +76,12 @@ public class View extends JFrame implements IView{
 
     final GridBagConstraints gap = new GridBagConstraints();
     final JPanel datePanel = util.getDefaultPanel(new GridBagLayout());    
-    datePanel.add(util.getDateLabel(), gap);    
+    datePanel.add(util.getDateLabel(), gap);   
     
-    util.add(drawTable);
+    JLabel label = new JLabel();
+    label.setText("Clicca sulla mappa per disegnare i tavoli");
+ 
+    util.add(label);
     util.add(cancelTable);
     util.add(cancelAll);
     mapButtons = util.buildOrizzontalGridPanel(util.getList(), 10);
@@ -93,8 +96,8 @@ public class View extends JFrame implements IView{
     center.add(tablesButtons, BorderLayout.SOUTH);
     center.add(north, BorderLayout.NORTH);
        
-    final DrawButton bDrawTable = new DrawButton(this.drawTable, map);
-    bDrawTable.setting();
+//    final DrawButton bDrawTable = new DrawButton(this.drawTable, map);
+//    bDrawTable.setting();
     final DrawButton bCancelTable = new DrawButton(this.cancelTable, map);
     bCancelTable.setting();
     final DrawButton bCancelAll = new DrawButton(this.cancelAll, map);
@@ -129,24 +132,21 @@ public class View extends JFrame implements IView{
         quitHandler();
       }
     });
-
-    this.drawTable.addActionListener(e-> {
-        //map.addMouseListener(pos);
-        map.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e1){
-              if (tablesButtons.getComponents().length <= pos.size()){
-                controller.displayException("Non ci sono altri tavoli prenotati.");
-              }
-              else {
-                pos.paint(map.getGraphics(), e1.getX(), e1.getY());
-              }
-            }
-        });
-        cancelAll.setEnabled(true);
-        cancelTable.setEnabled(true);
-      });
-
+  
+    map.addMouseListener(new MouseAdapter(){
+      @Override
+      public void mouseClicked(MouseEvent e1){
+        if (tablesButtons.getComponents().length <= pos.size()){
+          controller.displayException("Non ci sono altri tavoli prenotati.");
+        }
+        else {
+          pos.paint(map.getGraphics(), e1.getX(), e1.getY());
+          cancelAll.setEnabled(true);
+          cancelTable.setEnabled(true);
+        }
+      }
+  });
+  
     this.cancelTable.addActionListener(e-> {
         pos.cancel(map.getGraphics());
         if (draw.isEmpty()) {
@@ -161,7 +161,7 @@ public class View extends JFrame implements IView{
         cancelTable.setEnabled(false);
       });
   }
-  
+
   @Override
   public void addDraw(final Pair<Integer, Integer> pt) {
     pos.paint(map.getGraphics(),pt.getX(),pt.getY());

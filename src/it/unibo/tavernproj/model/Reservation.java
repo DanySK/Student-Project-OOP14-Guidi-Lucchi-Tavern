@@ -1,9 +1,7 @@
 package it.unibo.tavernproj.model;
 
 import java.io.Serializable;
-import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * 

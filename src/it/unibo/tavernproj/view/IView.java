@@ -1,5 +1,7 @@
 package it.unibo.tavernproj.view;
 
+import java.awt.event.MouseEvent;
+
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.disegno.Pair;
 

@@ -31,7 +31,7 @@ public class DrawButton {
   public void setting() {
     this.button.setFont(new Font("Arial", Font.BOLD, 12));
     this.button.setBackground(Color.white);
-    this.button.setBorderPainted(false);
+    this.button.setBorderPainted(true);
     this.button.setSize(10, 40);
 
   }
