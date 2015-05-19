@@ -18,7 +18,7 @@ public interface IController {
    * Adds a view to this controller
    * 
    * @param v
-   * 		the view to add
+   *      the view to add
    */
   void addView(final IView v);
 

@@ -128,10 +128,7 @@ public class Calendar implements ICalendar{
   }
   
   @Override
-  public String getPickedDate() {
-    if (this.day.equals("")) {
-      return "Error";
-    }
+  public String getPickedDate() throws NumberFormatException {
     final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
     final java.util.Calendar cal = java.util.Calendar.getInstance();
     cal.set(year, month, Integer.parseInt(day));

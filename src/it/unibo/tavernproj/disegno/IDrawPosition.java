@@ -19,7 +19,7 @@ public interface IDrawPosition {
    * @param y0
    *      the coordinate y
    */
-  void paint(Graphics gr, int x0, int y0);
+  void paint(final Graphics gr, final int x0, final int y0);
 
   /**
    * It removes a rectangle from drawing.
@@ -31,7 +31,7 @@ public interface IDrawPosition {
    * @param y0
    *      the coordinate y
    */
-  void paintCancel(Graphics gr, int x0, int y0);
+  void paintCancel(final Graphics gr, final int x0, final int y0);
   
   /**
    * It removes the last rectangle.
@@ -39,7 +39,7 @@ public interface IDrawPosition {
    * @param g1
    *      the graphic context
    */
-  void cancel(Graphics g1);
+  void cancel(final Graphics g1);
   
   /**
    * It removes all rectangles. 
@@ -47,6 +47,6 @@ public interface IDrawPosition {
    * @param g1
    *      the graphic context
    */
-  void cancelAll(Graphics g1);
+  void cancelAll(final Graphics g1);
 
 }

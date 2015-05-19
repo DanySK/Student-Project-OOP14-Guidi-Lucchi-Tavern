@@ -21,11 +21,7 @@ public class BasicFrame extends JFrame{
     this.setSize(util.getDefaultWidth() * 5 / 8, util.getDefaultHeight() * 3 / 4);
     this.setResizable(true);
     this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    buildLayout();
-    this.setVisible(true);
-  }
-
-  private void buildLayout() {
     this.getContentPane().setLayout(new BorderLayout());
+    this.setVisible(true);
   }
 }

@@ -38,7 +38,7 @@ public interface IUtilities {
    * @param comp
    *      the component to add.
    */
-  void add(JComponent comp);
+  void add(final JComponent comp);
 
 
 

@@ -14,7 +14,7 @@ public class DrawMap implements Map<Integer, Pair<Integer, Integer>>,java.io.Ser
 
   private DrawMap(){}
 
-  public static Map<Integer,Pair<Integer,Integer>> getMap() {
+  public static Map<Integer, Pair<Integer,Integer>> getMap() {
     return SINGLETON;
   }
 
@@ -36,37 +36,37 @@ public class DrawMap implements Map<Integer, Pair<Integer, Integer>>,java.io.Ser
 
 
   @Override
-  public boolean containsKey(Object key) {
+  public boolean containsKey(final Object key) {
     return disegno.containsKey(key);
   }
 
 
   @Override
-  public boolean containsValue(Object value) {
+  public boolean containsValue(final Object value) {
     return disegno.containsValue(value);
   }
 
 
   @Override
-  public Pair<Integer, Integer> get(Object key) {
+  public Pair<Integer, Integer> get(final Object key) {
     return disegno.get(key);
   }
 
 
   @Override
-  public Pair<Integer, Integer> put(Integer key, Pair<Integer, Integer> value) {
+  public Pair<Integer, Integer> put(final Integer key, final Pair<Integer, Integer> value) {
     return disegno.put(key, value);
   }
 
 
   @Override
-  public Pair<Integer, Integer> remove(Object key) {
+  public Pair<Integer, Integer> remove(final Object key) {
     return disegno.remove(key);
   }
 
 
   @Override
-  public void putAll(Map<? extends Integer, ? extends Pair<Integer, Integer>> map) {
+  public void putAll(final Map<? extends Integer, ? extends Pair<Integer, Integer>> map) {
     disegno.putAll(map);
   }
 

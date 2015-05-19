@@ -33,7 +33,7 @@ public class Model implements IModel, Serializable {
 
   /*usato nel test junit*/
   @Override
-  public void setModel(Map<String, Map<Integer, IReservation>> map) {
+  public void setModel(final Map<String, Map<Integer, IReservation>> map) {
     this.map = map;
   }
 
@@ -71,7 +71,7 @@ public class Model implements IModel, Serializable {
   }
   
   @Override
-  public void remove(String date, Integer table) {
+  public void remove(final String date, final Integer table) {
     if (map.containsKey(date)) {
       Map<Integer,IReservation> temp = map.get(date);
       if (temp.containsKey(table)) {
@@ -97,7 +97,7 @@ public class Model implements IModel, Serializable {
   }
 
   @Override
-  public Map<Integer,IReservation> getTableRes(String date) {
+  public Map<Integer,IReservation> getTableRes(final String date) {
     return map.get(date);
   }
 

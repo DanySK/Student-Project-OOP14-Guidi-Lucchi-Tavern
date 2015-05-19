@@ -21,7 +21,7 @@ import javax.swing.JTextField;
  */
 
 /*Usato l'esame 01b del 2015 per fare la form!*/
-public abstract class ReservationForm extends BasicFrame implements IReservationForm {
+public class ReservationForm extends BasicFrame implements IReservationForm{
   
   private static final long serialVersionUID = 1L;
   //numero massimo di campi per il form
@@ -40,7 +40,7 @@ public abstract class ReservationForm extends BasicFrame implements IReservation
       new ProgressiveAcceptorImpl<>();
   private final Map<String, JComponent> map = new HashMap<>(); 
   
-  protected final IGUIutilities util = new GUIutilities();
+  protected final transient IGUIutilities util = new GUIutilities();
   
   /**
    * Builds a new form.

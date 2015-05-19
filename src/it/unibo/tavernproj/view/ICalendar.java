@@ -5,8 +5,10 @@ public interface ICalendar {
   /**
    * @return
    *      the date picked from the calendar.
+   * @throws NumberFormatException
+   *      if the day picked isn't right.
    */
-  String getPickedDate();
+  String getPickedDate() throws NumberFormatException;
   
   /**
    * @return

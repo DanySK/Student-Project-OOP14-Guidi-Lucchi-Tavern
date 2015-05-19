@@ -66,20 +66,23 @@ public class Chooser extends BasicFrame{
         choosedByDate = true;
         personButton.setEnabled(false);
         final JFrame frame = new JFrame("Calendar");
-        Calendar calendar = new Calendar(frame);
-        while (!calendar.getPickedDate().equals("Error") && !calendar.isRight()) {
+        ICalendar calendar = new Calendar(frame);
+        try {
+          while (!calendar.isRight()) {
+            controller.displayException("Selezionare una data utile");
+            calendar = new Calendar(frame);
+          }
+          date = calendar.getPickedDate();
+        } catch (NumberFormatException e1) {
           controller.displayException("Selezionare una data utile");
           calendar = new Calendar(frame);
         }
-        if (!calendar.getPickedDate().equals("Error")) {
-          date = calendar.getPickedDate();
-          if (controller.getReservation(date).size() == 0) {
-            controller.displayException("Nessuna prenotazione per la data selezionata.");
-            calendar = new Calendar(frame);
-          } else {
-            res.add(util.loadReservation(date));
-            enableTable();
-          }
+        if (controller.getReservation(date).size() == 0) {
+          controller.displayException("Nessuna prenotazione per la data selezionata.");
+          calendar = new Calendar(frame);
+        } else {
+          res.add(util.loadReservation(date));
+          enableTable();
         }
       });
 

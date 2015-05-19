@@ -6,7 +6,6 @@ import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Reservation;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

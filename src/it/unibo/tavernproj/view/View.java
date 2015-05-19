@@ -33,6 +33,14 @@ import javax.swing.WindowConstants;
 
 //per adattare l'immagine allo sfondo! http://www.hwupgrade.it/forum/archive/index.php/t-2060553.html
 
+/*
+ * Si potrebbero aggiungere altri due pulsanti:
+ *    - viisualizza prenotazioni (in cui stampa tutte le prenotazioni presenti ome nel chooser)
+ *    - modifica prenotazione (in cui apre il calendario e una TableReservationForm facendo 
+ *    modificare una prenotazione anche se non è del giorno corrente)
+ * 
+ */
+
 public class View extends JFrame implements IView{
 
   private static final long serialVersionUID = 1L;
@@ -80,7 +88,7 @@ public class View extends JFrame implements IView{
     JLabel label = new JLabel();
     label.setText("Clicca sulla mappa per disegnare i tavoli");
 
-    if (!draw.isEmpty()){
+    if (!draw.isEmpty()) {
       this.setButtons(false);
     } else {
       this.setButtons(true);
@@ -115,20 +123,23 @@ public class View extends JFrame implements IView{
   private void setHandlers() {
     this.buttonNew.addActionListener(e -> {      
         final JFrame frame = new JFrame("Calendar");
-        Calendar calendar = new Calendar(frame);
-        while (!calendar.getPickedDate().equals("Error") && !calendar.isRight()) {
+        ICalendar calendar = new Calendar(frame);
+        try {
+          while (!calendar.isRight()) {
+            controller.displayException("Selezionare una data utile");
+            calendar = new Calendar(frame);
+          }
+          controller.setDate(calendar.getPickedDate());
+        } catch (NumberFormatException e1) {
           controller.displayException("Selezionare una data utile");
           calendar = new Calendar(frame);
-        }
-        if (!calendar.getPickedDate().equals("Error")) {
-          controller.setDate(calendar.getPickedDate());
-          new NewReservationForm();
-        }
+        }          
+        new NewReservationForm();
       });    
   
     this.buttonDelete.addActionListener(e -> {      
-      new Chooser(controller);
-    });
+        new Chooser(controller);
+      });
 
     this.addWindowListener(new WindowAdapter() {
       public void windowClosing(final WindowEvent event) {
@@ -151,16 +162,16 @@ public class View extends JFrame implements IView{
     });
   
     this.cancelTable.addActionListener(e-> {
-      pos.cancel(map.getGraphics());
-      if (draw.isEmpty()) {
-        this.setButtons(false);
-      }
-    });
+        pos.cancel(map.getGraphics());
+        if (draw.isEmpty()) {
+          this.setButtons(false);
+        }
+      });
 
     this.cancelAll.addActionListener(e-> {
-      pos.cancelAll(map.getGraphics());
-      this.setButtons(false);
-    });
+        pos.cancelAll(map.getGraphics());
+        this.setButtons(false);
+      });
   }
   
   @Override
@@ -192,13 +203,13 @@ public class View extends JFrame implements IView{
     }
     button.setName(table.toString());
     button.addActionListener(e -> {
-      try { 
-        controller.setDate(util.getCurrentDate());
-        new TableReservationForm(controller.getReservation(table, util.getCurrentDate()));         
-      } catch (NumberFormatException e1) {
-        controller.displayException("Prenotazione non disponibile!");
-      }      
-    });
+        try { 
+          controller.setDate(util.getCurrentDate());
+          new TableReservationForm(controller.getReservation(table, util.getCurrentDate()));
+        } catch (NumberFormatException e1) {
+          controller.displayException("Prenotazione non disponibile!");
+        }      
+      });
     tablesButtons.add(button);
     mapButtons.setVisible(true);
     View.this.validate();

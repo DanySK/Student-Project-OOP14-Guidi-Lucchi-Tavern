@@ -17,7 +17,7 @@ public interface IModel{
    *      the map of reservation
    */
 
-  void setModel(Map<String, Map<Integer, IReservation>> map);
+  void setModel(final Map<String, Map<Integer, IReservation>> map);
 
   /**
    * It adds a new reservation.

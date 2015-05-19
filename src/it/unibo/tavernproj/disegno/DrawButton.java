@@ -10,10 +10,11 @@ import javax.swing.JLabel;
  *
  */
 
-public class DrawButton {
+public class DrawButton implements IDrawButton{
   
   private final JButton button;
   private final JLabel label;
+  
 /**
  * In the constructor initialize the label and the button
  * 
@@ -22,17 +23,17 @@ public class DrawButton {
  * @param label
  *      the label 
  */
-  public DrawButton(final JButton button, JLabel label) {
+  public DrawButton(final JButton button, final JLabel label) {
     this.button = button;
     this.label = label;
     this.label.setBackground(Color.white);
   }
 
+  @Override
   public void setting() {
     this.button.setFont(new Font("Arial", Font.BOLD, 12));
     this.button.setBackground(Color.white);
     this.button.setBorderPainted(true);
     this.button.setSize(10, 40);
-
   }
 }
