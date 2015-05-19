@@ -23,7 +23,7 @@ public interface IUtilities {
   List<JComponent> getList();  
 
   /**
-   * @param one.
+   * @param one
    *      the first component to add in the list.
    * @param two
    *      the second component to add in the list.
