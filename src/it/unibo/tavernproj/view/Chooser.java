@@ -4,6 +4,9 @@ import it.unibo.tavernproj.controller.IController;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -107,17 +110,26 @@ public class Chooser extends BasicFrame{
           }
         } else {
           try {
-            date = dat.getText();
+            this.checkDate();
+            date = dat.getText();           
             table = controller.getReservation(date, name.getText());  
             controller.remove(table, date);
           } catch (IllegalArgumentException e1) {
-            controller.displayException("Il nome o la data inseriti sono sbagliati");
+            controller.displayException("Nessuna prenotazione disponibile con quel nome e data");
+            Chooser.this.setVisible(true);
+          } catch (ParseException e2) {
+            controller.displayException("La data inserita e' errata");
             Chooser.this.setVisible(true);
           }
         } 
       });
   } 
   
+  private void checkDate() throws ParseException{
+    DateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+    sdf.parse(dat.getText());
+  }
+
   private void disableAll() {
     dateLabel.setVisible(false);
     dat.setVisible(false);
