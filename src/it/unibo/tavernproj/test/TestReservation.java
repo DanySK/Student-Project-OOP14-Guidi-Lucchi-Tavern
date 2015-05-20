@@ -4,7 +4,10 @@ package it.unibo.tavernproj.test;
  * @author Giulia Lucchi
  */
 
-import static org.junit.Assert.*;
+
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
