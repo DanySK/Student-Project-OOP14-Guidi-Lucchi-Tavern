@@ -19,11 +19,6 @@ public class DrawMap implements Map<Integer, Pair<Integer, Integer>>,java.io.Ser
   }
 
   @Override
-  public String toString() {
-    return "DrawMap [disegno=" + disegno + "]";
-  }
-
-  @Override
   public int size() {
     return disegno.size();
   }

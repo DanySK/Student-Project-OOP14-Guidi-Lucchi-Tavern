@@ -106,4 +106,8 @@ public interface IBasicGUIutilities extends IUtilities {
    *      the default screen height for the program.
    */
   int getDefaultHeight();
+
+  int width();
+
+  int height();
 }

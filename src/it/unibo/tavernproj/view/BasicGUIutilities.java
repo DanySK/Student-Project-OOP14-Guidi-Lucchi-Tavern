@@ -66,6 +66,16 @@ public class BasicGUIutilities extends Utilities implements IBasicGUIutilities {
     return new JLabel(img);
   }
   
+  @Override
+  public int width(){
+    return WIDTH * 25 / 40;
+  }
+  
+  @Override
+  public int height(){
+    return  HEIGHT * 25 / 40;
+  }
+  
   protected ImageIcon getImage(final String  srt) throws IOException {
     final BufferedImage myPicture = ImageIO.read(getClass().getResourceAsStream("/" + srt));
     return new ImageIcon(myPicture);
