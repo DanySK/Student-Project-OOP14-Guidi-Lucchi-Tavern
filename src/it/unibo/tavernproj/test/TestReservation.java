@@ -1,4 +1,4 @@
-package it.unibo.tavernproj.model;
+package it.unibo.tavernproj.test;
 
 /**
  * @author Giulia Lucchi
@@ -8,6 +8,10 @@ import static org.junit.Assert.*;
 
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
+import it.unibo.tavernproj.model.IModel;
+import it.unibo.tavernproj.model.IReservation;
+import it.unibo.tavernproj.model.Model;
+import it.unibo.tavernproj.model.Reservation;
 
 public class TestReservation {
 

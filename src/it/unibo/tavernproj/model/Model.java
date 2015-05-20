@@ -23,7 +23,8 @@ public class Model implements IModel, Serializable {
     this.map = new HashMap<>();
   }
   
-  public Map<String, Map<Integer, IReservation>> getModel(){
+  @Override
+  public Map<String, Map<Integer, IReservation>> getModel() {
     return this.map;
   }
 

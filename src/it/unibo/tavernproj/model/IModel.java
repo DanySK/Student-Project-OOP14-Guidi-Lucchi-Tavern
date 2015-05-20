@@ -103,9 +103,11 @@ public interface IModel{
    *      the date's Set
    */
   Set<String> getDates();
-
-  Object getModel();
-
-
+  
+  /**
+   * @return
+   *      the map of model
+   */
+  Map<String, Map<Integer, IReservation>> getModel();
 
 }
