@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.charset.IllegalCharsetNameException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -58,8 +59,7 @@ public class NewReservationForm extends ReservationForm implements INewReservati
       @Override
       public void actionPerformed(final ActionEvent arg0) {
         NewReservationForm.this.setVisible(false); 
-        checkForm();
-        if (controller.getDate().equals(util.getCurrentDate())) {
+        if (checkForm() && controller.getDate().equals(util.getCurrentDate())) {
           controller.addTable(getTable());
         }
       }      
@@ -67,25 +67,42 @@ public class NewReservationForm extends ReservationForm implements INewReservati
   }
   
   @Override
-  public void checkForm() {
+  public boolean checkForm() {
+    boolean res = true;    
     try {
       if (controller.isPresent(getName(), controller.getDate())) {
-        controller.displayException("Il nome inserito e' gia' stato utilizzato");
-        NewReservationForm.this.setVisible(true);
+        res = showMessage("Il nome inserito e' gia' stato utilizzato");
       } else {
-        IReservation res = new Reservation(getTable(), getName(), 
+        IReservation reserv = new Reservation(getTable(), getName(), 
             controller.getDate(), getH(), getTel(), getNum(), getMenu());
-        controller.add(res, controller.getDate());            
+        controller.add(reserv, controller.getDate());     
+        res = true;
       }
     } catch (NullPointerException e1) {
-      controller.displayException("Riempire la form!");
-      NewReservationForm.this.setVisible(true);
+      res = showMessage("Riempire la form!");      
     } catch (NumberFormatException e2) {
-      controller.displayException("Riempire la form con dei numeri utili!");
-      NewReservationForm.this.setVisible(true);
+      res = showMessage("Riempire la form con dei numeri utili");
+    } catch (IllegalCharsetNameException e4) {
+      res = showMessage("Riempire la form con stringhe accettabili");
     } catch (IllegalArgumentException e3) {
-      controller.displayException("Il tavolo inserito e' gia' stato utilizzato");
-      NewReservationForm.this.setVisible(true);
-    }
+      res = showMessage("Il tavolo inserito e' gia' stato utilizzato");
+    }    
+    return res;
+  }
+
+  private boolean showMessage(String srt) {
+    controller.displayException(srt);
+    NewReservationForm.this.setVisible(true);
+    return false;
+  }
+  
+  @Override
+  public void writeForm(IReservation res) {
+    super.setTable(res.getTable());
+    super.setName(res.getName());
+    super.setH(res.getHour());
+    super.setTel(res.getTel());
+    super.setNum(res.getNumPers());
+    super.setMenu(res.getMenu());    
   }
 }

@@ -1,5 +1,7 @@
 package it.unibo.tavernproj.view;
 
+import java.nio.charset.IllegalCharsetNameException;
+
 /**
  * @author Eleonora Guidi
  *
@@ -12,6 +14,9 @@ public interface IReservationForm {
    * 
    * @throws NumberFormatException
    *      if the table text box is filled with a string.
+   *      
+   * @throws NullPointerException
+   *      if the form field is empty.
    */
   Integer getTable() throws NumberFormatException;
 
@@ -21,8 +26,11 @@ public interface IReservationForm {
    *      
    * @throws NullPointerException
    *      if the form field is empty.
+   *      
+   * @throws IllegalCharsetNameExcepion
+   *      if an illegal name format was choosed.
    */
-  String getName() throws NullPointerException; 
+  String getName() throws NullPointerException, IllegalCharsetNameException; 
 
   /**
    * @return
@@ -30,6 +38,9 @@ public interface IReservationForm {
    *      
    * @throws NullPointerException
    *      if the form field is empty.
+   *      
+   * @throws NumberFormatException
+   *      if the time set isn't right.
    */
   Double getH() throws NullPointerException;
 
@@ -48,12 +59,21 @@ public interface IReservationForm {
    *
    * @throws NumberFormatException
    *      if the number text box is filled with a string.
+   * 
+   * @throws NullPointerException
+   *      if the field form is empty.
    */
   Integer getNum() throws NumberFormatException;
 
   /**
    * @return
    *      the menu added from the form.
+   *      
+   * @throws NullPointerException
+   *      if the form field is empty.
+   *      
+   * @throws IllegalCharsetNameExcepion
+   *      if an illegal name format was choosed.
    */
   String getMenu();
 

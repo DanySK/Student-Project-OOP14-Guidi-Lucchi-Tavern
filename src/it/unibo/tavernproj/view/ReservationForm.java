@@ -6,7 +6,9 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.nio.charset.IllegalCharsetNameException;
 import java.util.HashMap;
+import java.util.IllegalFormatException;
 import java.util.Map;
 
 import javax.swing.JComponent;
@@ -137,51 +139,56 @@ public class ReservationForm extends BasicFrame implements IReservationForm{
   }
 
   @Override
-  public Integer getTable() throws NumberFormatException {
-    if (((JTextField) map.get(TAV)).getText().isEmpty()
-        || (Integer.parseInt(((JTextField)map.get(TAV)).getText())) > 20
-        || (Integer.parseInt(((JTextField)map.get(TAV)).getText())) <= 0) {
-      throw new NumberFormatException();
+  public Integer getTable() throws NumberFormatException, NullPointerException {   
+    if (this.checkNull(TAV)) {
+      if ((Integer.parseInt(((JTextField)map.get(TAV)).getText())) > 20
+          || (Integer.parseInt(((JTextField)map.get(TAV)).getText())) <= 0) {
+        throw new NumberFormatException();
+      }
     }
     return Integer.parseInt(((JTextField) map.get(TAV)).getText());
   }
 
   @Override
-  public String getName() throws NullPointerException {
-    if (((JTextField) map.get(NOME)).getText().equals(" ") 
-        || ((JTextField) map.get(NOME)).getText().isEmpty()) {
-      throw new NullPointerException();
-    }
+  public String getName() throws NullPointerException, IllegalCharsetNameException {    
+    this.checkNull(NOME);
+    this.checkString(NOME);
     return ((JTextField)map.get(NOME)).getText();
   }
 
   @Override
   public Double getH() throws NullPointerException, NumberFormatException {
-    if (Double.parseDouble(((JTextField) map.get(ORA)).getText()) <= 0
-        || Double.parseDouble(((JTextField) map.get(ORA)).getText()) > 24) {
-      throw new NumberFormatException();
+    if (this.checkNull(ORA)) {
+      if (Double.parseDouble(((JTextField) map.get(ORA)).getText()) <= 0
+          || Double.parseDouble(((JTextField) map.get(ORA)).getText()) > 24) {
+        throw new NumberFormatException();
+      }
     }
     return Double.parseDouble(((JTextField) map.get(ORA)).getText());
   }
 
-  /*vedere se sostituirlo con un optional*/
   @Override
   public String getTel() throws NullPointerException {
     return ((JTextField)map.get(TEL)).getText();
   }
 
   @Override
-  public Integer getNum() throws NumberFormatException {
-    if (((JTextField) map.get(NUM)).getText().isEmpty()
-        || Integer.parseInt(((JTextField) map.get(NUM)).getText()) < 0
-        || Integer.parseInt(((JTextField) map.get(NUM)).getText()) > 300) {
-      throw new NumberFormatException();
+  public Integer getNum() throws NumberFormatException, NullPointerException {
+    if (this.checkNull(NUM)){
+      if (Integer.parseInt(((JTextField) map.get(NUM)).getText()) < 0
+          || Integer.parseInt(((JTextField) map.get(NUM)).getText()) > 300) {
+        throw new NumberFormatException();
+      }
     }
     return Integer.parseInt(((JTextField) map.get(NUM)).getText());
   }
 
   @Override
-  public String getMenu() {
+  public String getMenu() throws NullPointerException, IllegalCharsetNameException {
+    if (((JTextField)map.get(MENUFISSO)).isVisible()) {
+      this.checkNull(MENUFISSO);
+      this.checkString(MENUFISSO);
+    }
     return ((JTextField)map.get(MENUFISSO)).getText();
   }
 
@@ -194,6 +201,23 @@ public class ReservationForm extends BasicFrame implements IReservationForm{
   public void enableAll() {
     map.keySet().forEach(e -> map.get(e).setEnabled(true));
     map.get(TAV).setEnabled(false);
+  }  
+  
+  private boolean checkNull(String srt) {
+    if (((JTextField) map.get(srt)).getText().isEmpty() 
+        || ((JTextField) map.get(srt)).getText().equals(" ")) {
+      throw new NullPointerException();
+    }   
+    return true;
+  }
+  
+  private void checkString(String srt) {
+    if ((int)((JTextField) map.get(srt)).getText().charAt(0) < 65
+        || (int)((JTextField) map.get(srt)).getText().charAt(0) > 90
+        && (int)((JTextField) map.get(srt)).getText().charAt(0) < 97
+        || (int)((JTextField) map.get(srt)).getText().charAt(0) > 122) {
+      throw new IllegalCharsetNameException(((JTextField) map.get(srt)).getText());
+    }    
   }
 
   @Override
