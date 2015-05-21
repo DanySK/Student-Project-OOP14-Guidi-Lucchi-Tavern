@@ -1,6 +1,4 @@
-package it.unibo.tavernproj.view;
-
-import it.unibo.tavernproj.model.Utilities;
+package it.unibo.tavernproj.view.utilities;
 
 import java.awt.Color;
 import java.awt.Dimension;

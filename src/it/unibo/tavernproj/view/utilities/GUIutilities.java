@@ -1,4 +1,4 @@
-package it.unibo.tavernproj.view;
+package it.unibo.tavernproj.view.utilities;
 
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
@@ -96,7 +96,11 @@ public class GUIutilities extends BasicGUIutilities implements IGUIutilities {
     res.add(this.buildGridPanel(this.getList(), 10));
     return res;
   }
-
+  
+  /* per ora stampa disordinatamente: 
+   * sarebbe da sistemare stampando in base alla data
+   * da oggi in avanti.
+   */
   @Override
   public JPanel loadReservations() {
     for (final String s: controller.getDates()) {

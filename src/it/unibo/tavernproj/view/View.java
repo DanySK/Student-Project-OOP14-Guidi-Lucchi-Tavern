@@ -8,7 +8,10 @@ import it.unibo.tavernproj.view.calendar.ICalendar;
 import it.unibo.tavernproj.view.disegno.DrawPosition;
 import it.unibo.tavernproj.view.form.Chooser;
 import it.unibo.tavernproj.view.form.NewReservationForm;
-import it.unibo.tavernproj.view.form.TableReservationForm;
+import it.unibo.tavernproj.view.form.DeleteTableForm;
+import it.unibo.tavernproj.view.form.ModifiedTableForm;
+import it.unibo.tavernproj.view.utilities.GUIutilities;
+import it.unibo.tavernproj.view.utilities.IGUIutilities;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -179,7 +182,7 @@ public class View extends JFrame implements IView{
     button.addActionListener(e -> {
         try { 
           controller.setDate(util.getCurrentDate());
-          new TableReservationForm(controller.getReservation(table, util.getCurrentDate()));
+          new DeleteTableForm(controller.getReservation(table, util.getCurrentDate()));
         } catch (NumberFormatException e1) {
           controller.displayException("Prenotazione non disponibile!");
         }      

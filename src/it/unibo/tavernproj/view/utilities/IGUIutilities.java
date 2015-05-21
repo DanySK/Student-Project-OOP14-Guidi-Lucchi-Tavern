@@ -1,4 +1,4 @@
-package it.unibo.tavernproj.view;
+package it.unibo.tavernproj.view.utilities;
 
 import java.io.IOException;
 import java.util.List;

@@ -2,6 +2,8 @@ package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
+import it.unibo.tavernproj.view.utilities.GUIutilities;
+import it.unibo.tavernproj.view.utilities.IGUIutilities;
 
 /**
  * @author Eleonora Guidi

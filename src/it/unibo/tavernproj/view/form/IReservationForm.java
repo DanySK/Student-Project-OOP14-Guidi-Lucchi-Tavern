@@ -28,7 +28,7 @@ public interface IReservationForm {
    *      if the form field is empty.
    *      
    * @throws IllegalCharsetNameExcepion
-   *      if an illegal name format was choosed.
+   *      if an illegal name format was chose.
    */
   String getName() throws NullPointerException, IllegalCharsetNameException; 
 
@@ -73,7 +73,7 @@ public interface IReservationForm {
    *      if the form field is empty.
    *      
    * @throws IllegalCharsetNameExcepion
-   *      if an illegal name format was choosed.
+   *      if an illegal name format was chose.
    */
   String getMenu();
 

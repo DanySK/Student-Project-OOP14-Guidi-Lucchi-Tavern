@@ -5,9 +5,9 @@ import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.model.disegno.DrawMap;
 import it.unibo.tavernproj.model.disegno.Pair;
-import it.unibo.tavernproj.view.GUIutilities;
-import it.unibo.tavernproj.view.IGUIutilities;
 import it.unibo.tavernproj.view.IView;
+import it.unibo.tavernproj.view.utilities.GUIutilities;
+import it.unibo.tavernproj.view.utilities.IGUIutilities;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

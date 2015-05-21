@@ -8,7 +8,10 @@ import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.view.calendar.Calendar;
 import it.unibo.tavernproj.view.calendar.ICalendar;
 import it.unibo.tavernproj.view.form.Chooser;
+import it.unibo.tavernproj.view.form.ModifiedChooser;
 import it.unibo.tavernproj.view.form.NewReservationForm;
+import it.unibo.tavernproj.view.utilities.GUIutilities;
+import it.unibo.tavernproj.view.utilities.IGUIutilities;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,6 +30,7 @@ public class ButtonPanel extends JPanel{
   private final transient IController controller = Controller.getController();
   private final JButton buttonNew = util.getDefaultButton("Nuova Prenotazione");
   private final JButton buttonDelete = util.getDefaultButton("Elimina Prenotazione");
+  private final JButton buttonModify = util.getDefaultButton("Modifica Prenotazione");
  
   /**
    * builds a new button panel for the east side of the view.
@@ -37,6 +41,7 @@ public class ButtonPanel extends JPanel{
     this.setLayout(new BorderLayout());
     setHandlers();
     util.add(buttonNew);
+    util.add(buttonModify);
     util.add(buttonDelete);
     this.add(util.buildGridPanel(util.getList(), 10), BorderLayout.CENTER);
   }
@@ -60,6 +65,10 @@ public class ButtonPanel extends JPanel{
   
     this.buttonDelete.addActionListener(e -> {      
         new Chooser();
+      });
+    
+    this.buttonModify.addActionListener(e -> {
+        new ModifiedChooser();
       });
   }
   

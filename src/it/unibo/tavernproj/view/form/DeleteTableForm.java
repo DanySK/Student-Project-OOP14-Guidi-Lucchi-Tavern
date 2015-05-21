@@ -12,7 +12,7 @@ import javax.swing.JButton;
  * @author Eleonora Guidi
  *
  */
-public class TableReservationForm extends NewReservationForm{
+public class DeleteTableForm extends ModifiedTableForm{
   
   private static final long serialVersionUID = 1L;  
   private final JButton modifyButton = util.getDefaultButton("Modifica", 12);
@@ -25,10 +25,9 @@ public class TableReservationForm extends NewReservationForm{
    * @param res
    *      the reservation.
    */
-  public TableReservationForm(final IReservation res) {
-    super();
+  public DeleteTableForm(final IReservation res) {
+    super(res);
     setHandlers();
-    writeForm(res);
     super.getContentPane().add(util.buildGridPanel(
         util.getList(modifyButton, deleteButton), 5), BorderLayout.EAST);
     this.disableAll();
@@ -39,36 +38,28 @@ public class TableReservationForm extends NewReservationForm{
     return new ActionListener(){
       @Override
       public void actionPerformed(final ActionEvent event) {
-        TableReservationForm.this.setVisible(false); 
-        if (isBeenModified()) {
-          try {
-            controller.removeReservation(getTable(), controller.getDate());
-          } catch (IllegalArgumentException e2) {
-            /* Non segnala nulla perchè viene lanciata quando modifico il 
-             * tavolo più di una volta. In questo caso devo solo intercettare
-             * l'eccezione.
-             */
-          } 
-          checkForm();
+        if (DeleteTableForm.this.modified) {
+          DeleteTableForm.this.isBeenModified();
         }
+        DeleteTableForm.this.setVisible(false);
       }      
     };
   }
 
   private void setHandlers() {
     this.modifyButton.addActionListener(e -> {
-        TableReservationForm.this.enableAll();
-        TableReservationForm.this.modified = true;
+        DeleteTableForm.this.enableAll();
+        DeleteTableForm.this.modified = true;
         deleteButton.setEnabled(false);
       });
 
     this.deleteButton.addActionListener(e -> {
         controller.remove(getTable(), controller.getDate());
-        TableReservationForm.this.setVisible(false);
+        DeleteTableForm.this.setVisible(false);
       });
   }
   
-  private boolean isBeenModified() {
-    return this.modified;
+  private void isBeenModified() {
+    modified();
   }
 }
