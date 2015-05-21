@@ -1,10 +1,10 @@
 package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.controller.IController;
-import it.unibo.tavernproj.disegno.DrawButton;
-import it.unibo.tavernproj.disegno.DrawMap;
-import it.unibo.tavernproj.disegno.DrawPosition;
-import it.unibo.tavernproj.disegno.Pair;
+import it.unibo.tavernproj.model.disegno.DrawMap;
+import it.unibo.tavernproj.model.disegno.Pair;
+import it.unibo.tavernproj.view.disegno.DrawButton;
+import it.unibo.tavernproj.view.disegno.DrawPosition;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

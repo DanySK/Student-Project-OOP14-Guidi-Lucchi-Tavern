@@ -1,4 +1,7 @@
-package it.unibo.tavernproj.disegno;
+package it.unibo.tavernproj.view.disegno;
+
+import it.unibo.tavernproj.model.disegno.DrawMap;
+import it.unibo.tavernproj.model.disegno.Pair;
 
 import java.awt.Color;
 import java.awt.Graphics;

@@ -1,4 +1,4 @@
-package it.unibo.tavernproj.disegno;
+package it.unibo.tavernproj.model.disegno;
 
 import java.util.Collection;
 import java.util.HashMap;

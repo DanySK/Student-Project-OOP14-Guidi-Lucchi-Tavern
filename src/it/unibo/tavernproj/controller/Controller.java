@@ -1,10 +1,10 @@
 package it.unibo.tavernproj.controller;
 
-import it.unibo.tavernproj.disegno.DrawMap;
-import it.unibo.tavernproj.disegno.Pair;
 import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
+import it.unibo.tavernproj.model.disegno.DrawMap;
+import it.unibo.tavernproj.model.disegno.Pair;
 import it.unibo.tavernproj.view.GUIutilities;
 import it.unibo.tavernproj.view.IGUIutilities;
 import it.unibo.tavernproj.view.IView;

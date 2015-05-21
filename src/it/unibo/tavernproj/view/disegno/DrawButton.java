@@ -1,4 +1,4 @@
-package it.unibo.tavernproj.disegno;
+package it.unibo.tavernproj.view.disegno;
 
 import java.awt.Color;
 import java.awt.Font;
