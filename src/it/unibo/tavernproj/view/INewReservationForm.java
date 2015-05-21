@@ -1,5 +1,7 @@
 package it.unibo.tavernproj.view;
 
+import it.unibo.tavernproj.model.IReservation;
+
 import java.awt.event.ActionListener;
 
 public interface INewReservationForm {
@@ -11,8 +13,17 @@ public interface INewReservationForm {
   ActionListener setOkListener();
   
   /**
-   * Checks if the Form is been filled correctly.
+   * @return
+   *      true if the Form is been filled correctly.
    */
-  void checkForm();
+  boolean checkForm();
+  
+  /**
+   * Fills the form with the reservation passed.
+   * 
+   * @param res
+   *      the reservation.
+   */
+  void writeForm(IReservation res);
 
 }
