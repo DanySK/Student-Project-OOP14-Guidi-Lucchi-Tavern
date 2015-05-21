@@ -1,5 +1,6 @@
 package it.unibo.tavernproj.view.form;
 
+import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.view.GUIutilities;
 import it.unibo.tavernproj.view.IGUIutilities;
@@ -8,6 +9,8 @@ import it.unibo.tavernproj.view.calendar.ICalendar;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +25,7 @@ import javax.swing.JTextField;
  * @author Eleonora Guidi
  *
  */
-public class Chooser extends BasicFrame{
+public class Chooser extends BasicFrame implements IChooser{
 
   private static final long serialVersionUID = 1L;
   private final transient IGUIutilities util = new GUIutilities(); 
@@ -36,7 +39,7 @@ public class Chooser extends BasicFrame{
   private final JTextField name = new JTextField(20);
   private final JLabel tableLabel = new JLabel("Tavolo: ");
   private final JTextField tab = new JTextField(20);
-  private final transient IController controller;
+  private final transient IController controller = Controller.getController();
   private boolean choosedByDate;
   private int table;  
   private String date;   
@@ -47,9 +50,8 @@ public class Chooser extends BasicFrame{
    * @param controller
    *      the controller to use.
    */
-  public Chooser(final IController controller) {
-    super();
-    this.controller = controller;   
+  public Chooser() {
+    super(); 
     buildLayout();
     setHandlers();
     this.setVisible(true);
@@ -69,69 +71,80 @@ public class Chooser extends BasicFrame{
   }
   
   private void setHandlers() {
-    dateButton.addActionListener(e -> {
+    this.dateButton.addActionListener(e -> {
         choosedByDate = true;
         personButton.setEnabled(false);
         final JFrame frame = new JFrame("Calendar");
         ICalendar calendar = new Calendar(frame);
         try {
           while (!calendar.isRight()) {
-            controller.displayException("Selezionare una data utile");
-            calendar = new Calendar(frame);
+            checkCalendar("Selezionare una data utile", frame);
           }
           date = calendar.getPickedDate();
         } catch (NumberFormatException e1) {
-          controller.displayException("Selezionare una data utile");
-          calendar = new Calendar(frame);
+          checkCalendar("Selezionare una data utile", frame);
         }
         if (controller.getReservation(date).size() == 0) {
-          controller.displayException("Nessuna prenotazione per la data selezionata.");
-          calendar = new Calendar(frame);
+          checkCalendar("Nessuna prenotazione per la data selezionata.", frame);
         } else {
           res.add(util.loadReservation(date));
           enableTable();
         }
       });
 
-    personButton.addActionListener(e -> {
+    this.personButton.addActionListener(e -> {
         dateButton.setEnabled(false);
         res.add(util.loadReservations());
         enableNameDate();
       });
+    
+    this.ok.addActionListener(setOkListener());
+  } 
   
-    ok.addActionListener(e -> {
+  public ActionListener setOkListener() {
+    return new ActionListener(){
+      @Override
+      public void actionPerformed(ActionEvent e) {
         Chooser.this.setVisible(false);
         if (choosedByDate) {          
           try {
             table = Integer.parseInt(tab.getText());
             controller.remove(table, date);
           } catch (NumberFormatException e1) {
-            controller.displayException("Il numero del tavolo è sbagliato");
-            Chooser.this.setVisible(true);
+            showMessage("Il numero del tavolo è sbagliato");
           } catch (IllegalArgumentException e2) {
-            controller.displayException("Il numero e' sbagliato");
-            Chooser.this.setVisible(true);
+            showMessage("Il numero e' sbagliato");
           }
         } else {
           try {
-            this.checkDate();
+            checkDate();
             date = dat.getText();           
             table = controller.getReservation(date, name.getText());  
             controller.remove(table, date);
           } catch (IllegalArgumentException e1) {
-            controller.displayException("Nessuna prenotazione disponibile con quel nome e data");
-            Chooser.this.setVisible(true);
+            showMessage("Nessuna prenotazione disponibile con quel nome e data");
           } catch (ParseException e2) {
-            controller.displayException("La data inserita e' errata");
-            Chooser.this.setVisible(true);
+            showMessage("La data inserita e' errata");
           }
-        } 
-      });
-  } 
+        }
+
+      }
+    };
+  }
+
+  private void showMessage(final String srt) {
+    controller.displayException(srt);
+    Chooser.this.setVisible(true);
+  }
   
   private void checkDate() throws ParseException {
     final DateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
     sdf.parse(dat.getText());
+  }
+  
+  private void checkCalendar(final String srt, final JFrame f) {
+    controller.displayException(srt);
+    new Calendar(f);
   }
 
   private void disableAll() {

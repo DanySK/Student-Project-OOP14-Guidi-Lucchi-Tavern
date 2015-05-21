@@ -49,8 +49,6 @@ public class View extends JFrame implements IView{
 
   private static final long serialVersionUID = 1L;
   private final transient IGUIutilities util = new GUIutilities();
-  //private final JButton buttonNew = util.getDefaultButton("Nuova Prenotazione");
-  //private final JButton buttonDelete = util.getDefaultButton("Elimina Prenotazione");
   private final JButton cancelAll = util.getDefaultButton("Cancella Tutto", 12);
   private final JButton cancelTable = util.getDefaultButton("Cancella Tavolo", 12);
   private final JPanel tablesButtons = util.getDefaultPanel(new FlowLayout());  
@@ -117,26 +115,6 @@ public class View extends JFrame implements IView{
   }
 
   private void setHandlers() {
-//    this.buttonNew.addActionListener(e -> {      
-//        final JFrame frame = new JFrame("Calendar");
-//        ICalendar calendar = new Calendar(frame);
-//        try {
-//          while (!calendar.isRight()) {
-//            controller.displayException("Selezionare una data utile");
-//            calendar = new Calendar(frame);
-//          }
-//          controller.setDate(calendar.getPickedDate());
-//        } catch (NumberFormatException e1) {
-//          controller.displayException("Selezionare una data utile");
-//          calendar = new Calendar(frame);
-//        }          
-//        new NewReservationForm();
-//      });    
-//  
-//    this.buttonDelete.addActionListener(e -> {      
-//        new Chooser(controller);
-//      });
-
     this.addWindowListener(new WindowAdapter() {
       public void windowClosing(final WindowEvent event) {
         quitHandler();

@@ -44,7 +44,7 @@ public final class Controller implements IController {
 
   private Optional<String> date = Optional.empty();
 
-  private Controller() {};
+  private Controller() {} ;
   
   public static IController getController() {
     return SINGLETON;

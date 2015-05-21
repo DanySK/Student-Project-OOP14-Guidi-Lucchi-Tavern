@@ -31,7 +31,8 @@ public class ButtonPanel extends JPanel{
   /**
    * builds a new button panel for the east side of the view.
    */
-  public ButtonPanel() {    
+  public ButtonPanel() {
+    super();
     this.setBackground(Color.WHITE);
     this.setLayout(new BorderLayout());
     setHandlers();
@@ -58,7 +59,7 @@ public class ButtonPanel extends JPanel{
       });    
   
     this.buttonDelete.addActionListener(e -> {      
-        new Chooser(controller);
+        new Chooser();
       });
   }
   
