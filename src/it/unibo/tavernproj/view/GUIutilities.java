@@ -11,6 +11,9 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -81,7 +84,7 @@ public class GUIutilities extends BasicGUIutilities implements IGUIutilities {
     return panel;
   }
   
-  private void loadReserv(final String date){
+  private void loadReserv(final String date) {
     for (final Integer i: controller.getReservation(date).keySet()) {
       this.add(new JLabel(controller.getReservation(date).get(i).toString()));       
     }
@@ -95,9 +98,17 @@ public class GUIutilities extends BasicGUIutilities implements IGUIutilities {
   }
 
   @Override
-  public JPanel loadReservations(){
+  public JPanel loadReservations() {
     for (final String s: controller.getDates()) {
-      this.loadReserv(s);
+      DateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+      try {
+        if (s.equals(getCurrentDate()) 
+            || sdf.parse(s).after(sdf.parse(getCurrentDate()))) {
+          this.loadReserv(s);
+        }
+      } catch (ParseException e) {
+        
+      }      
     }
     res.add(this.buildGridPanel(this.getList(), 10));
     return res;
