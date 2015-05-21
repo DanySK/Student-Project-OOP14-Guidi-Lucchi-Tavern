@@ -33,11 +33,8 @@ import java.util.Set;
 
 public final class Controller implements IController {
   
-  @SuppressWarnings("unused")
   private static final long serialVersionUID = 1L;
-
   private static final IController SINGLETON = new Controller();  
-
   private final Set<IView> view = new HashSet<>();
   private final IGUIutilities util = new GUIutilities();
   private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();

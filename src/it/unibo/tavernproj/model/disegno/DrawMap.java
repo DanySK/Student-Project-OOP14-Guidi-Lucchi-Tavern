@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class DrawMap implements Map<Integer, Pair<Integer, Integer>>,java.io.Serializable {
+public final class DrawMap implements Map<Integer, Pair<Integer, Integer>>,java.io.Serializable {
 
   private static final long serialVersionUID = 1L;
   private final Map<Integer,Pair<Integer,Integer>> disegno = new HashMap<>();

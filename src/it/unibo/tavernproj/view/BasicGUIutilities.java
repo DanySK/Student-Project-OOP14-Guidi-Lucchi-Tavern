@@ -67,12 +67,12 @@ public class BasicGUIutilities extends Utilities implements IBasicGUIutilities {
   }
   
   @Override
-  public int width() {
+  public int getMapWidth() {
     return WIDTH * 25 / 40;
   }
   
   @Override
-  public int height() {
+  public int getMapHeight() {
     return  HEIGHT * 25 / 40;
   }
   

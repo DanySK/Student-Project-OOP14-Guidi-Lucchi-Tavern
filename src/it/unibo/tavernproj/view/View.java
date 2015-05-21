@@ -85,8 +85,7 @@ public class View extends JFrame implements IView{
     final JPanel datePanel = util.getDefaultPanel(new GridBagLayout());    
     datePanel.add(util.getDateLabel(), gap);    
 
-    JLabel label = new JLabel();
-    label.setText("Clicca sulla mappa per disegnare i tavoli");
+    final JLabel label = new JLabel("Clicca sulla mappa per disegnare i tavoli");
 
     if (!draw.isEmpty()) {
       this.setButtons(false);
@@ -149,7 +148,7 @@ public class View extends JFrame implements IView{
 
     map.addMouseListener(new MouseAdapter(){
         @Override
-        public void mouseClicked(MouseEvent e1) {
+        public void mouseClicked(final MouseEvent e1) {
           if (tablesButtons.getComponents().length <= pos.size()) {
             controller.displayException("Non ci sono altri tavoli prenotati.");
           } else {
@@ -235,7 +234,7 @@ public class View extends JFrame implements IView{
   }
 
   @Override
-  public void setButtons(boolean bool){
+  public void setButtons(final boolean bool) {
     cancelTable.setEnabled(bool);
     cancelAll.setEnabled(bool);
 

@@ -73,7 +73,7 @@ public class NewReservationForm extends ReservationForm implements INewReservati
       if (controller.isPresent(getName(), controller.getDate())) {
         res = showMessage("Il nome inserito e' gia' stato utilizzato");
       } else {
-        IReservation reserv = new Reservation(getTable(), getName(), 
+        final IReservation reserv = new Reservation(getTable(), getName(), 
             controller.getDate(), getH(), getTel(), getNum(), getMenu());
         controller.add(reserv, controller.getDate());     
         res = true;
@@ -90,14 +90,14 @@ public class NewReservationForm extends ReservationForm implements INewReservati
     return res;
   }
 
-  private boolean showMessage(String srt) {
+  private boolean showMessage(final String srt) {
     controller.displayException(srt);
     NewReservationForm.this.setVisible(true);
     return false;
   }
   
   @Override
-  public void writeForm(IReservation res) {
+  public void writeForm(final IReservation res) {
     super.setTable(res.getTable());
     super.setName(res.getName());
     super.setH(res.getHour());

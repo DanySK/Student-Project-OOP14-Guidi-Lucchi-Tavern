@@ -28,8 +28,8 @@ import javax.swing.JPanel;
  */
 public class GUIutilities extends BasicGUIutilities implements IGUIutilities {  
 
-  private IController controller = Controller.getController();
-  private JPanel res = super.getDefaultPanel(new FlowLayout());
+  private final IController controller = Controller.getController();
+  private final JPanel res = super.getDefaultPanel(new FlowLayout());
 
   @Override
   public JLabel getDateLabel() {
@@ -71,7 +71,7 @@ public class GUIutilities extends BasicGUIutilities implements IGUIutilities {
   }
 
   @Override
-  public JPanel buildOrizzontalGridPanel(List<JComponent> list, int ins) {
+  public JPanel buildOrizzontalGridPanel(final List<JComponent> list, final int ins) {
     final JPanel panel = this.getDefaultPanel(new GridBagLayout());
     final GridBagConstraints gap = new GridBagConstraints();
     gap.gridx = 0;
@@ -100,7 +100,7 @@ public class GUIutilities extends BasicGUIutilities implements IGUIutilities {
   @Override
   public JPanel loadReservations() {
     for (final String s: controller.getDates()) {
-      DateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+      final DateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
       try {
         if (s.equals(getCurrentDate()) 
             || sdf.parse(s).after(sdf.parse(getCurrentDate()))) {

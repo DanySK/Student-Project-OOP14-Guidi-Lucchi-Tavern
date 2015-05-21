@@ -54,7 +54,7 @@ public class TestModel {
     model.add(r4.getDate(), r4);
     model.add(r5.getDate(), r5);
     model.add(r6.getDate(), r6);
-    model.add(r7.getDate(), r7);;
+    model.add(r7.getDate(), r7);
     model.add(r8.getDate(), r8);
     model.add(r9.getDate(), r9);
     assertEquals(model.getSize(),5);

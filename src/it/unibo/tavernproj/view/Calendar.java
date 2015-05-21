@@ -65,7 +65,7 @@ public class Calendar implements ICalendar{
       if (x > 6) {
         button[x].addActionListener( new ActionListener(){
           @Override
-          public void actionPerformed(ActionEvent arg0) {
+          public void actionPerformed(final ActionEvent arg0) {
             day = button[selection].getActionCommand();
             jdg.dispose();
           }          
@@ -83,7 +83,7 @@ public class Calendar implements ICalendar{
     previous.addActionListener(new ActionListener(){      
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent e) {
           month--;
           displayDate();
         }
@@ -93,7 +93,7 @@ public class Calendar implements ICalendar{
     final JButton next = new JButton("Prossimo >>");
     next.addActionListener(new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent e) {
           month++;
           displayDate();
         }
@@ -140,10 +140,7 @@ public class Calendar implements ICalendar{
     if (!this.day.equals("") && currentMonth == this.month) {
       return Integer.parseInt(this.day) >= this.currentDay; 
     }
-    if (currentMonth < this.month) {
-      return true;
-    }
-    return false;
+    return currentMonth < this.month;
   }
 
   @Override

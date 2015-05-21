@@ -107,7 +107,7 @@ public interface IBasicGUIutilities extends IUtilities {
    */
   int getDefaultHeight();
 
-  int width();
+  int getMapWidth();
 
-  int height();
+  int getMapHeight();
 }

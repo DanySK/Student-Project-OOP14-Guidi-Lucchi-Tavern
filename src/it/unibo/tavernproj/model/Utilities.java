@@ -1,13 +1,9 @@
 package it.unibo.tavernproj.model;
 
-import it.unibo.tavernproj.controller.Controller;
-import it.unibo.tavernproj.controller.IController;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 
 /**
  * @author Eleonora Guidi

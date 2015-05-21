@@ -126,7 +126,7 @@ public class Chooser extends BasicFrame{
   } 
   
   private void checkDate() throws ParseException {
-    DateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+    final DateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
     sdf.parse(dat.getText());
   }
 

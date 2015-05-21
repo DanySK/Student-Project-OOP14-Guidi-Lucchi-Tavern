@@ -8,7 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.nio.charset.IllegalCharsetNameException;
 import java.util.HashMap;
-import java.util.IllegalFormatException;
 import java.util.Map;
 
 import javax.swing.JComponent;
@@ -140,12 +139,11 @@ public class ReservationForm extends BasicFrame implements IReservationForm{
 
   @Override
   public Integer getTable() throws NumberFormatException, NullPointerException {   
-    if (this.checkNull(TAV)) {
-      if ((Integer.parseInt(((JTextField)map.get(TAV)).getText())) > 20
-          || (Integer.parseInt(((JTextField)map.get(TAV)).getText())) <= 0) {
-        throw new NumberFormatException();
-      }
-    }
+    if (this.checkNull(TAV) 
+        && ((Integer.parseInt(((JTextField)map.get(TAV)).getText())) > 20
+        || (Integer.parseInt(((JTextField)map.get(TAV)).getText())) <= 0)) {
+      throw new NumberFormatException();
+    }    
     return Integer.parseInt(((JTextField) map.get(TAV)).getText());
   }
 
@@ -158,11 +156,10 @@ public class ReservationForm extends BasicFrame implements IReservationForm{
 
   @Override
   public Double getH() throws NullPointerException, NumberFormatException {
-    if (this.checkNull(ORA)) {
-      if (Double.parseDouble(((JTextField) map.get(ORA)).getText()) <= 0
-          || Double.parseDouble(((JTextField) map.get(ORA)).getText()) > 24) {
-        throw new NumberFormatException();
-      }
+    if (this.checkNull(ORA) 
+        && (Double.parseDouble(((JTextField) map.get(ORA)).getText()) <= 0
+        || Double.parseDouble(((JTextField) map.get(ORA)).getText()) > 24)) {
+      throw new NumberFormatException();
     }
     return Double.parseDouble(((JTextField) map.get(ORA)).getText());
   }
@@ -174,11 +171,10 @@ public class ReservationForm extends BasicFrame implements IReservationForm{
 
   @Override
   public Integer getNum() throws NumberFormatException, NullPointerException {
-    if (this.checkNull(NUM)){
-      if (Integer.parseInt(((JTextField) map.get(NUM)).getText()) < 0
-          || Integer.parseInt(((JTextField) map.get(NUM)).getText()) > 300) {
-        throw new NumberFormatException();
-      }
+    if (this.checkNull(NUM) 
+        && (Integer.parseInt(((JTextField) map.get(NUM)).getText()) < 0
+        || Integer.parseInt(((JTextField) map.get(NUM)).getText()) > 300)) {
+      throw new NumberFormatException();
     }
     return Integer.parseInt(((JTextField) map.get(NUM)).getText());
   }
@@ -203,7 +199,7 @@ public class ReservationForm extends BasicFrame implements IReservationForm{
     map.get(TAV).setEnabled(false);
   }  
   
-  private boolean checkNull(String srt) {
+  private boolean checkNull(final String srt) {
     if (((JTextField) map.get(srt)).getText().isEmpty() 
         || ((JTextField) map.get(srt)).getText().equals(" ")) {
       throw new NullPointerException();
@@ -211,7 +207,7 @@ public class ReservationForm extends BasicFrame implements IReservationForm{
     return true;
   }
   
-  private void checkString(String srt) {
+  private void checkString(final String srt) {
     if ((int)((JTextField) map.get(srt)).getText().charAt(0) < 65
         || (int)((JTextField) map.get(srt)).getText().charAt(0) > 90
         && (int)((JTextField) map.get(srt)).getText().charAt(0) < 97

@@ -17,7 +17,7 @@ public class Pair<X, Y> implements Serializable {
    * @param y0
    *      value y
    */
-  public Pair(X x0, Y y0) {
+  public Pair(final X x0, final Y y0) {
     super();
     this.x0 = x0;
     this.y0 = y0;
@@ -39,5 +39,28 @@ public class Pair<X, Y> implements Serializable {
     result = prime * result + ((y0 == null) ? 0 : y0.hashCode());
     return result;
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Pair other = (Pair) obj;
+    if (x0 == null) {
+      if (other.x0 != null)
+        return false;
+    } else if (!x0.equals(other.x0))
+      return false;
+    if (y0 == null) {
+      if (other.y0 != null)
+        return false;
+    } else if (!y0.equals(other.y0))
+      return false;
+    return true;
+  }
+  
 }
 

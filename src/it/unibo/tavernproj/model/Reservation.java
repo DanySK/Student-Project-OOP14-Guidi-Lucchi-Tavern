@@ -11,15 +11,6 @@ import java.util.Objects;
 
 public class Reservation implements Serializable, IReservation{
 
-  @Override
-  public String toString() {
-    return "Tavolo:" + table + ", Nome:" + name + ", Data:" + date + ", Ora:" + hour;
-  }
-  
-  public String toString(String date) {
-    return "Tavolo:" + table + ", Nome:" + name + ", Ora:" + hour;
-  }
-
   private static final long serialVersionUID = -5126256178520079481L;
   private final int table;
   private final String name;
@@ -100,7 +91,16 @@ public class Reservation implements Serializable, IReservation{
   public String getMenu() {
     return menu;
   }
-
+  
+  @Override
+  public String toString() {
+    return "Tavolo:" + table + ", Nome:" + name + ", Data:" + date + ", Ora:" + hour;
+  }
+  
+  public String toString(final String date) {
+    return "Tavolo:" + table + ", Nome:" + name + ", Ora:" + hour;
+  }
+  
   @Override
   public int hashCode() {
     final int prime = 31;
