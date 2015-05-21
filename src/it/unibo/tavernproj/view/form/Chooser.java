@@ -1,6 +1,10 @@
-package it.unibo.tavernproj.view;
+package it.unibo.tavernproj.view.form;
 
 import it.unibo.tavernproj.controller.IController;
+import it.unibo.tavernproj.view.GUIutilities;
+import it.unibo.tavernproj.view.IGUIutilities;
+import it.unibo.tavernproj.view.calendar.Calendar;
+import it.unibo.tavernproj.view.calendar.ICalendar;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

@@ -1,4 +1,4 @@
-package it.unibo.tavernproj.view;
+package it.unibo.tavernproj.view.form;
 
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;

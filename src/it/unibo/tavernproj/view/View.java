@@ -3,8 +3,12 @@ package it.unibo.tavernproj.view;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.disegno.DrawMap;
 import it.unibo.tavernproj.model.disegno.Pair;
-import it.unibo.tavernproj.view.disegno.DrawButton;
+import it.unibo.tavernproj.view.calendar.Calendar;
+import it.unibo.tavernproj.view.calendar.ICalendar;
 import it.unibo.tavernproj.view.disegno.DrawPosition;
+import it.unibo.tavernproj.view.form.Chooser;
+import it.unibo.tavernproj.view.form.NewReservationForm;
+import it.unibo.tavernproj.view.form.TableReservationForm;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -45,8 +49,8 @@ public class View extends JFrame implements IView{
 
   private static final long serialVersionUID = 1L;
   private final transient IGUIutilities util = new GUIutilities();
-  private final JButton buttonNew = util.getDefaultButton("Nuova Prenotazione");
-  private final JButton buttonDelete = util.getDefaultButton("Elimina Prenotazione");
+  //private final JButton buttonNew = util.getDefaultButton("Nuova Prenotazione");
+  //private final JButton buttonDelete = util.getDefaultButton("Elimina Prenotazione");
   private final JButton cancelAll = util.getDefaultButton("Cancella Tutto", 12);
   private final JButton cancelTable = util.getDefaultButton("Cancella Tavolo", 12);
   private final JPanel tablesButtons = util.getDefaultPanel(new FlowLayout());  
@@ -72,9 +76,7 @@ public class View extends JFrame implements IView{
   }
 
   private void buildLayout() {
-    final JPanel reservPanel = util.buildGridPanel(util.getList(buttonNew, buttonDelete), 10);
-    final JPanel east = util.getDefaultPanel(new BorderLayout());
-    east.add(reservPanel, BorderLayout.CENTER);    
+    final JPanel east = new ButtonPanel();   
     try {      
       east.add(util.getDefaultLogo("logo.jpg"), BorderLayout.NORTH);  
     } catch (IOException e) {
@@ -107,11 +109,6 @@ public class View extends JFrame implements IView{
     center.add(map, BorderLayout.CENTER);
     center.add(tablesButtons, BorderLayout.SOUTH);
     center.add(north, BorderLayout.NORTH);
-    
-    final DrawButton bCancelTable = new DrawButton(this.cancelTable, map);
-    bCancelTable.setting();
-    final DrawButton bCancelAll = new DrawButton(this.cancelAll, map);
-    bCancelAll.setting();
 
     final JPanel main = util.getDefaultPanel(new BorderLayout(5, 5));
     main.add(center, BorderLayout.CENTER);
@@ -120,25 +117,25 @@ public class View extends JFrame implements IView{
   }
 
   private void setHandlers() {
-    this.buttonNew.addActionListener(e -> {      
-        final JFrame frame = new JFrame("Calendar");
-        ICalendar calendar = new Calendar(frame);
-        try {
-          while (!calendar.isRight()) {
-            controller.displayException("Selezionare una data utile");
-            calendar = new Calendar(frame);
-          }
-          controller.setDate(calendar.getPickedDate());
-        } catch (NumberFormatException e1) {
-          controller.displayException("Selezionare una data utile");
-          calendar = new Calendar(frame);
-        }          
-        new NewReservationForm();
-      });    
-  
-    this.buttonDelete.addActionListener(e -> {      
-        new Chooser(controller);
-      });
+//    this.buttonNew.addActionListener(e -> {      
+//        final JFrame frame = new JFrame("Calendar");
+//        ICalendar calendar = new Calendar(frame);
+//        try {
+//          while (!calendar.isRight()) {
+//            controller.displayException("Selezionare una data utile");
+//            calendar = new Calendar(frame);
+//          }
+//          controller.setDate(calendar.getPickedDate());
+//        } catch (NumberFormatException e1) {
+//          controller.displayException("Selezionare una data utile");
+//          calendar = new Calendar(frame);
+//        }          
+//        new NewReservationForm();
+//      });    
+//  
+//    this.buttonDelete.addActionListener(e -> {      
+//        new Chooser(controller);
+//      });
 
     this.addWindowListener(new WindowAdapter() {
       public void windowClosing(final WindowEvent event) {

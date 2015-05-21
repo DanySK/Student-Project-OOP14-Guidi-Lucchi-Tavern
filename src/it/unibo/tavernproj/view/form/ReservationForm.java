@@ -1,4 +1,7 @@
-package it.unibo.tavernproj.view;
+package it.unibo.tavernproj.view.form;
+
+import it.unibo.tavernproj.view.GUIutilities;
+import it.unibo.tavernproj.view.IGUIutilities;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

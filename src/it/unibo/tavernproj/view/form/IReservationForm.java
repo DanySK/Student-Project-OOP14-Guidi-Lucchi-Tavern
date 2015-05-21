@@ -1,4 +1,4 @@
-package it.unibo.tavernproj.view;
+package it.unibo.tavernproj.view.form;
 
 import java.nio.charset.IllegalCharsetNameException;
 
