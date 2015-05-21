@@ -175,6 +175,12 @@ public final class Controller implements IController {
       } catch (NullPointerException e) {
         //System.out.print("non ci sono tavoli quel giorno");
       }
+      try {
+        Thread.sleep(100);
+      } catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
       this.loadDisegno();
     }
   } 
