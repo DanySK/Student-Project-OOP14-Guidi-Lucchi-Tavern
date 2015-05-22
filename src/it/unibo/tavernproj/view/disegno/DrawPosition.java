@@ -1,6 +1,7 @@
 package it.unibo.tavernproj.view.disegno;
 
 import it.unibo.tavernproj.model.disegno.DrawMap;
+import it.unibo.tavernproj.model.disegno.IPair;
 import it.unibo.tavernproj.model.disegno.Pair;
 
 import java.awt.Color;
@@ -19,7 +20,7 @@ public class DrawPosition implements Serializable,IDrawPosition {
 
   private static final long serialVersionUID = -2547031979468896800L;
 
-  private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();
+  private final Map<Integer, IPair<Integer, Integer>> draw = DrawMap.getMap();
   private final JLabel label;
   
   
@@ -43,7 +44,7 @@ public class DrawPosition implements Serializable,IDrawPosition {
   @Override
   public void cancel(final Graphics g1) {
     if (!draw.isEmpty()) {
-      final Pair<Integer, Integer> pt = draw.get(draw.size() - 1);
+      final IPair<Integer, Integer> pt = draw.get(draw.size() - 1);
       this.paintCancel(label.getGraphics(), pt.getX(),pt.getY());
       draw.remove(draw.size() - 1);
     }
@@ -52,7 +53,7 @@ public class DrawPosition implements Serializable,IDrawPosition {
   @Override
   public void cancelAll(final Graphics g1) {
     for (final int i : draw.keySet()) {
-      final Pair<Integer, Integer> pt = draw.get(i);
+      final IPair<Integer, Integer> pt = draw.get(i);
       this.paintCancel(label.getGraphics(), pt.getX(),pt.getY());
     }
     draw.clear();

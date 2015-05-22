@@ -2,6 +2,7 @@ package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.disegno.DrawMap;
+import it.unibo.tavernproj.model.disegno.IPair;
 import it.unibo.tavernproj.model.disegno.Pair;
 import it.unibo.tavernproj.view.disegno.DrawPosition;
 import it.unibo.tavernproj.view.form.DeleteTableForm;
@@ -51,7 +52,7 @@ public class View extends JFrame implements IView{
   private final JButton cancelTable = util.getDefaultButton("Cancella Tavolo", 12);
   private final JPanel tablesButtons = util.getDefaultPanel(new FlowLayout());  
   private final JLabel map = util.getDefaultMap("map.png");
-  private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap(); 
+  private final Map<Integer, IPair<Integer, Integer>> draw = DrawMap.getMap(); 
   private JPanel mapButtons;
   private transient IController controller;
 
@@ -147,7 +148,7 @@ public class View extends JFrame implements IView{
   }
   
   @Override
-  public void addDraw(final Pair<Integer, Integer> pt) {
+  public void addDraw(final IPair<Integer, Integer> pt) {
     pos.paint(map.getGraphics(),pt.getX(),pt.getY());
     this.validate();
   }   

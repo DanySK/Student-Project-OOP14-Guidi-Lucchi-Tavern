@@ -2,7 +2,7 @@ package it.unibo.tavernproj.model.disegno;
 
 import java.io.Serializable;
 
-public class Pair<X, Y> implements Serializable {
+public class Pair<X, Y> implements Serializable, IPair {
 //esami vecchi viroli
   private static final long serialVersionUID = 4195385612271660319L;
   

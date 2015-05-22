@@ -4,6 +4,7 @@ import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.model.disegno.DrawMap;
+import it.unibo.tavernproj.model.disegno.IPair;
 import it.unibo.tavernproj.model.disegno.Pair;
 import it.unibo.tavernproj.view.IView;
 import it.unibo.tavernproj.view.utilities.GUIutilities;
@@ -38,7 +39,7 @@ public final class Controller implements IController {
   private static final IController SINGLETON = new Controller();  
   private final Set<IView> view = new HashSet<>();
   private final IGUIutilities util = new GUIutilities();
-  private final Map<Integer, Pair<Integer, Integer>> draw = DrawMap.getMap();
+  private final Map<Integer, IPair<Integer, Integer>> draw = DrawMap.getMap();
   private IModel model = new Model();
   private String fileName = "file.dat";
   private String fileDisegno = "disegno.dat";
@@ -240,10 +241,10 @@ public final class Controller implements IController {
     try {
       final ObjectInput inMap = new ObjectInputStream(new FileInputStream(fileDisegno));
       if (util.getCurrentDate().equals(inMap.readObject())) {
-        final Map<Integer,Pair<Integer,Integer>> map = 
-            (Map<Integer,Pair<Integer,Integer>>) inMap.readObject();        
+        final Map<Integer, IPair<Integer,Integer>> map = 
+            (Map<Integer, IPair<Integer,Integer>>) inMap.readObject();        
         for (final Integer i : map.keySet()) {
-          final Pair<Integer,Integer> p = map.get(i);
+          final IPair<Integer,Integer> p = map.get(i);
           for (final IView v: view) {
             v.addDraw(p);
           }

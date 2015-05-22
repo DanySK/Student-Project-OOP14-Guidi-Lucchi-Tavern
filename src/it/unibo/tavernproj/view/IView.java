@@ -1,6 +1,7 @@
 package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.controller.IController;
+import it.unibo.tavernproj.model.disegno.IPair;
 import it.unibo.tavernproj.model.disegno.Pair;
 
 /**
@@ -50,7 +51,7 @@ public interface IView {
    * @param pair
    *      the coordinates of pair
    */
-  void addDraw(final Pair<Integer, Integer> pair);
+  void addDraw(final IPair<Integer, Integer> pair);
 
   /**
    * It sets the removing's buttons.

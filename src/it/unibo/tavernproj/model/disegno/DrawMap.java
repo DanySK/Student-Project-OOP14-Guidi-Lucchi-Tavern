@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public final class DrawMap implements Map<Integer, Pair<Integer, Integer>>,java.io.Serializable {
+public final class DrawMap implements Map<Integer, IPair<Integer, Integer>>,java.io.Serializable {
 
   private static final long serialVersionUID = 1L;
-  private final Map<Integer,Pair<Integer,Integer>> disegno = new HashMap<>();
+  private final Map<Integer, IPair<Integer,Integer>> disegno = new HashMap<>();
   
   private static DrawMap SINGLETON = new DrawMap();
 
   private DrawMap(){}
 
-  public static Map<Integer, Pair<Integer,Integer>> getMap() {
+  public static Map<Integer, IPair<Integer,Integer>> getMap() {
     return SINGLETON;
   }
 
@@ -43,25 +43,25 @@ public final class DrawMap implements Map<Integer, Pair<Integer, Integer>>,java.
 
 
   @Override
-  public Pair<Integer, Integer> get(final Object key) {
+  public IPair<Integer, Integer> get(final Object key) {
     return disegno.get(key);
   }
 
 
   @Override
-  public Pair<Integer, Integer> put(final Integer key, final Pair<Integer, Integer> value) {
+  public IPair<Integer, Integer> put(final Integer key, final IPair<Integer, Integer> value) {
     return disegno.put(key, value);
   }
 
 
   @Override
-  public Pair<Integer, Integer> remove(final Object key) {
+  public IPair<Integer, Integer> remove(final Object key) {
     return disegno.remove(key);
   }
 
 
   @Override
-  public void putAll(final Map<? extends Integer, ? extends Pair<Integer, Integer>> map) {
+  public void putAll(final Map<? extends Integer, ? extends IPair<Integer, Integer>> map) {
     disegno.putAll(map);
   }
 
@@ -79,13 +79,13 @@ public final class DrawMap implements Map<Integer, Pair<Integer, Integer>>,java.
 
 
   @Override
-  public Collection<Pair<Integer, Integer>> values() {
+  public Collection<IPair<Integer, Integer>> values() {
     return null;
   }
 
 
   @Override
-  public Set<java.util.Map.Entry<Integer, Pair<Integer, Integer>>> entrySet() {
+  public Set<java.util.Map.Entry<Integer, IPair<Integer, Integer>>> entrySet() {
     return null;
   }
 
