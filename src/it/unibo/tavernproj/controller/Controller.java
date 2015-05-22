@@ -33,6 +33,7 @@ import java.util.Set;
 
 public final class Controller implements IController {
   
+  @SuppressWarnings("unused")
   private static final long serialVersionUID = 1L;
   private static final IController SINGLETON = new Controller();  
   private final Set<IView> view = new HashSet<>();

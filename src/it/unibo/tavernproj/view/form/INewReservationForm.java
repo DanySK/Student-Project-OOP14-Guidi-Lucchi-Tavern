@@ -1,7 +1,5 @@
 package it.unibo.tavernproj.view.form;
 
-import it.unibo.tavernproj.model.IReservation;
-
 import java.awt.event.ActionListener;
 
 public interface INewReservationForm {

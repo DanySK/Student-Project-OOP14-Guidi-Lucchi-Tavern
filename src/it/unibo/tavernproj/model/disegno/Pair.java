@@ -40,6 +40,7 @@ public class Pair<X, Y> implements Serializable {
     return result;
   }
 
+  @SuppressWarnings("rawtypes")
   @Override
   public boolean equals(Object obj) {
     if (this == obj)

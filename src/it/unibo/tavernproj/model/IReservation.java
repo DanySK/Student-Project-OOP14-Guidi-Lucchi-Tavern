@@ -5,7 +5,7 @@ package it.unibo.tavernproj.model;
  *
  */
 
-public interface IReservation {
+public interface IReservation{
 
   /**
    * @return

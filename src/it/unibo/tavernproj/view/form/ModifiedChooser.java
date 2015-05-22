@@ -2,7 +2,6 @@ package it.unibo.tavernproj.view.form;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 
 /**
  * @author Eleonora Guidi
