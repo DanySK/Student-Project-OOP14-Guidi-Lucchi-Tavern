@@ -74,8 +74,15 @@ public class NewReservationForm extends ReservationForm implements INewReservati
       if (controller.isPresent(getName(), controller.getDate())) {
         res = showMessage("Il nome inserito e' gia' stato utilizzato");
       } else {
-        final IReservation reserv = new Reservation(getTable(), getName(), 
-            controller.getDate(), getH(), getTel(), getNum(), getMenu());
+        final IReservation reserv = new Reservation.Builder()
+                                                   .table(getTable())
+                                                   .name(getName())
+                                                   .date(controller.getDate())
+                                                   .hour(getH())
+                                                   .tel(getTel())
+                                                   .numPers(getNum())
+                                                   .menu(getMenu())
+                                                   .build();
         controller.add(reserv, controller.getDate());     
         res = true;
       }
@@ -87,7 +94,12 @@ public class NewReservationForm extends ReservationForm implements INewReservati
       res = showMessage("Riempire la form con stringhe accettabili");
     } catch (IllegalArgumentException e3) {
       res = showMessage("Il tavolo inserito e' gia' stato utilizzato");
-    }    
+    } catch (IllegalStateException e5) {
+      /* non dovremmo mai arrivare a tirare questa eccezione perchè i controlli
+       * li faccio già nella ReservationForm
+       */
+      res = showMessage("Errore creazione prenotazione");
+    }
     return res;
   }
 

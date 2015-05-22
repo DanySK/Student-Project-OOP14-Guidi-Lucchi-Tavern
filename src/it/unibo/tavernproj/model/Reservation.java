@@ -6,9 +6,11 @@ import java.util.Objects;
 /**
  * 
  * @author Giulia Lucchi
+ * @author Eleonora Guidi
  *
  */
 
+//BUILDER
 public class Reservation implements Serializable, IReservation{
 
   private static final long serialVersionUID = -5126256178520079481L;
@@ -20,39 +22,14 @@ public class Reservation implements Serializable, IReservation{
   private final int numPers;
   private final String menu;
 
-  /**
-   * Build the constructor.
-   * 
-   * @param table
-   *            the table
-   * @param name
-   *            the name
-   * @param date
-   *            the date
-   * @param hour
-   *            the hours
-   * @param tel
-   *            the number of telephone
-   * @param numPers
-   *            the number of people
-   * @param menu
-   *            an Optional containing the selected menu, if added.
-   *            Else an empty Optional.
-   */
-  public Reservation(final Integer table, final String name, final String date,
-                               final Double hour, final String tel, final Integer numPers, 
-                                                 final String menu) {
-    Objects.requireNonNull(table);
+  private Reservation(final Integer table, final String name, final String date,
+                      final Double hour, final String tel, final Integer numPers, final String menu) {
+    super();
     this.table = table;
-    Objects.requireNonNull(name);
     this.name = name;
-    Objects.requireNonNull(date);
     this.date = date;
-    Objects.requireNonNull(hour);
     this.hour = hour;
-    Objects.requireNonNull(tel);
     this.tel = tel;
-    Objects.requireNonNull(numPers);
     this.numPers = numPers;
     this.menu = menu;    
   }
@@ -154,5 +131,65 @@ public class Reservation implements Serializable, IReservation{
     } else if (!tel.equals(other.tel))
       return false;
     return true;
+  }
+  
+  public static class Builder{
+    
+    private int table;
+    private String name;
+    private String date;
+    private Double hour;
+    private String tel;
+    private int numPers;
+    private String menu;
+    
+    public Builder table(final int i) {
+      this.table = i;
+      return this;
+    }
+    
+    public Builder name(final String s) {
+      this.name = s;
+      return this;
+    }
+    
+    public Builder date(final String s) {
+      this.date = s;
+      return this;
+    }
+    
+    public Builder hour(final Double d) {
+      this.hour = d;
+      return this;
+    }
+    
+    public Builder tel(String s){
+      this.tel = s;
+      return this;
+    }
+    
+    public Builder numPers(int i){
+      this.numPers = i;
+      return this;
+    }
+    
+    public Builder menu(final String s) {
+      this.menu = s;
+      return this;
+    }
+    
+    /**
+     * @return
+     *      a new Reservation.
+     * @throws IllegalStateException
+     *      if the added fields are wrong.
+     */
+    public Reservation build() throws IllegalStateException {
+      if (this.table < 0 || this.name == null || this.date == null || this.hour < 0
+          || this.numPers < 0) {
+        throw new IllegalStateException();
+      }
+      return new Reservation(this.table, this.name, this.date, this.hour, this.tel, this.numPers, this.menu);
+    }
   }
 }

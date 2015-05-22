@@ -25,24 +25,87 @@ public class TestModel {
 
     ctr.setModel(model);
 
-    final IReservation r1 = new Reservation(1, "Giulia", "30-04-2015",
-        21.30,"054751083", 2, "Bruschette");
-    final IReservation r2 = new Reservation(3, "Andrea", "30-04-2015",
-        21.30, "054751042", 8, null);
-    final IReservation r3 = new Reservation(2, "Pirlo", "14-06-2015",
-        21.30, "054751267", 12, null);
-    final IReservation r4 = new Reservation(1, "Eleonora", "1-05-2015",
-        21.30, "054751323", 1, null);
-    final IReservation r5 = new Reservation(1, "Federico", "14-06-2015",
-        21.30, "054751876", 4, null);
-    final IReservation r6 = new Reservation(1, "Enrico", "3-07-2015",
-        21.30, "054751376", 4, null);
-    final IReservation r7 = new Reservation(6, "Alessandro", "3-07-2015",
-        21.30, "054751000", 2, "grigliata");
-    final IReservation r8 = new Reservation(2, "Lorenzo", "3-07-2015",
-        21.30, "054751222", 6, null);
-    final IReservation r9 = new Reservation(1, "Federico", "8-07-2015",
-        21.30, "054751333", 2, null);
+    final IReservation r1 = new Reservation.Builder()
+                                           .table(1)
+                                           .name("Giulia")
+                                           .date("30-04-2015")
+                                           .hour(21.30)
+                                           .tel("054751083")
+                                           .numPers(2)
+                                           .menu("Bruschette")
+                                           .build();
+    final IReservation r2 = new Reservation.Builder()
+                                           .table(3)
+                                           .name("Andrea")
+                                           .date("30-04-2015")
+                                           .hour(21.30)
+                                           .tel("054751042")
+                                           .numPers(8)
+                                           .menu(null)
+                                           .build();
+    final IReservation r3 = new Reservation.Builder()
+                                           .table(2)
+                                           .name("Pirlo")
+                                           .date("14-06-2015")
+                                           .hour(21.30)
+                                           .tel("054751042")
+                                           .numPers(12)
+                                           .menu(null)
+                                           .build();
+    final IReservation r4 = new Reservation.Builder()
+                                           .table(1)
+                                           .name("Eleonora")
+                                           .date("01-05-2015")
+                                           .hour(21.30)
+                                           .tel("054751042")
+                                           .numPers(1)
+                                           .menu(null)
+                                           .build();
+    final IReservation r5 = new Reservation.Builder()
+                                           .table(1)
+                                           .name("Federico")
+                                           .date("14-06-2015")
+                                           .hour(21.30)
+                                           .tel("054751042")
+                                           .numPers(4)
+                                           .menu(null)
+                                           .build();
+    final IReservation r6 = new Reservation.Builder()
+                                           .table(1)
+                                           .name("Enrico")
+                                           .date("03-07-2015")
+                                           .hour(21.30)
+                                           .tel("054751042")
+                                           .numPers(4)
+                                           .menu(null)
+                                           .build();
+    final IReservation r7 = new Reservation.Builder()
+                                           .table(6)
+                                           .name("Alessandro")
+                                           .date("03-07-2015")
+                                           .hour(21.30)
+                                           .tel("054751042")
+                                           .numPers(2)
+                                           .menu("grigliata")
+                                           .build();
+    final IReservation r8 = new Reservation.Builder()
+                                           .table(2)
+                                           .name("Lorenzo")
+                                           .date("03-07-2015")
+                                           .hour(21.30)
+                                           .tel("054751042")
+                                           .numPers(6)
+                                           .menu(null)
+                                           .build();
+    final IReservation r9 = new Reservation.Builder()
+                                           .table(1)
+                                           .name("Federico")
+                                           .date("08-07-2015")
+                                           .hour(21.30)
+                                           .tel("054751042")
+                                           .numPers(2)
+                                           .menu(null)
+                                           .build();
     
     /* 
      * Add the reservations.
