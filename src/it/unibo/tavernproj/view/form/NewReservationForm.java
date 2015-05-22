@@ -22,6 +22,7 @@ import javax.swing.JPanel;
  *
  */
 
+//DECORATOR su queste classi per il metodo setOKListener
 public class NewReservationForm extends ReservationForm implements INewReservationForm{
 
   private static final long serialVersionUID = 1L;
@@ -94,15 +95,5 @@ public class NewReservationForm extends ReservationForm implements INewReservati
     controller.displayException(srt);
     NewReservationForm.this.setVisible(true);
     return false;
-  }
-  
-  @Override
-  public void writeForm(final IReservation res) {
-    super.setTable(res.getTable());
-    super.setName(res.getName());
-    super.setH(res.getHour());
-    super.setTel(res.getTel());
-    super.setNum(res.getNumPers());
-    super.setMenu(res.getMenu());    
   }
 }

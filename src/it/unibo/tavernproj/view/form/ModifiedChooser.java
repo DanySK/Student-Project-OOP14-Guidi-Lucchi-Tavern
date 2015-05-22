@@ -4,7 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 
+/**
+ * @author Eleonora Guidi
+ *
+ */
 
+//DECORATOR su setOkListener
 public class ModifiedChooser extends Chooser{
 
   private static final long serialVersionUID = 1L;
@@ -16,7 +21,7 @@ public class ModifiedChooser extends Chooser{
       public void actionPerformed(final ActionEvent e) {
         ModifiedChooser.this.setVisible(false);
         ModifiedChooser.this.showForm();     
-      } ;
+      };
     };    
   }
     

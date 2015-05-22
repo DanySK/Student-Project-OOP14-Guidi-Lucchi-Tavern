@@ -26,6 +26,7 @@ import javax.swing.JTextField;
  * @author Eleonora Guidi
  *
  */
+
 public class Chooser extends BasicFrame implements IChooser{
 
   private static final long serialVersionUID = 1L;

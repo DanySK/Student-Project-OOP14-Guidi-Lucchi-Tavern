@@ -60,6 +60,6 @@ public class DeleteTableForm extends ModifiedTableForm{
   }
   
   private void isBeenModified() {
-    modified();
+    super.modified();
   }
 }

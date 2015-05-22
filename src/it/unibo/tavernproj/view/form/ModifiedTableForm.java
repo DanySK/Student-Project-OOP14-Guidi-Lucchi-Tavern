@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import it.unibo.tavernproj.model.IReservation;
 
-public class ModifiedTableForm extends NewReservationForm{
+public class ModifiedTableForm extends NewReservationForm implements IModifiedTableForm{
 
   private static final long serialVersionUID = 1L;
 
@@ -35,6 +35,16 @@ public class ModifiedTableForm extends NewReservationForm{
        */
     } 
     checkForm();
+  }
+  
+  @Override
+  public void writeForm(final IReservation res) {
+    super.setTable(res.getTable());
+    super.setName(res.getName());
+    super.setH(res.getHour());
+    super.setTel(res.getTel());
+    super.setNum(res.getNumPers());
+    super.setMenu(res.getMenu());    
   }
 
 }
