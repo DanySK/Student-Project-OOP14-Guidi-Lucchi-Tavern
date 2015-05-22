@@ -49,15 +49,4 @@ public interface IReservation {
    */
   String getMenu();
 
-  /**
-   * 
-   * @param text
-   *      the String to print
-   *      
-   * @return
-   *      the String of the string passed for parameter
-   */
-  String toString(String text);
-
-
 }

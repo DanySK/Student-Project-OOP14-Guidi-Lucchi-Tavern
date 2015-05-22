@@ -23,7 +23,8 @@ public class Reservation implements Serializable, IReservation{
   private final String menu;
 
   private Reservation(final Integer table, final String name, final String date,
-                      final Double hour, final String tel, final Integer numPers, final String menu) {
+                      final Double hour, final String tel, final Integer numPers, 
+                      final String menu) {
     super();
     this.table = table;
     this.name = name;
@@ -72,10 +73,6 @@ public class Reservation implements Serializable, IReservation{
   @Override
   public String toString() {
     return "Tavolo:" + table + ", Nome:" + name + ", Data:" + date + ", Ora:" + hour;
-  }
-  
-  public String toString(final String date) {
-    return "Tavolo:" + table + ", Nome:" + name + ", Ora:" + hour;
   }
   
   @Override
@@ -189,7 +186,8 @@ public class Reservation implements Serializable, IReservation{
           || this.numPers < 0) {
         throw new IllegalStateException();
       }
-      return new Reservation(this.table, this.name, this.date, this.hour, this.tel, this.numPers, this.menu);
+      return new Reservation(this.table, this.name, this.date, 
+          this.hour, this.tel, this.numPers, this.menu);
     }
   }
 }
