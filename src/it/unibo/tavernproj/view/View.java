@@ -37,9 +37,7 @@ import javax.swing.WindowConstants;
 
 /*
  * Si potrebbero aggiungere altri due pulsanti:
- *    - viisualizza prenotazioni (in cui stampa tutte le prenotazioni presenti ome nel chooser)
- *    - modifica prenotazione (in cui apre il calendario e una TableReservationForm facendo 
- *    modificare una prenotazione anche se non è del giorno corrente)
+ *    - visualizza prenotazioni (in cui stampa tutte le prenotazioni presenti come nel chooser)
  * 
  */
 
