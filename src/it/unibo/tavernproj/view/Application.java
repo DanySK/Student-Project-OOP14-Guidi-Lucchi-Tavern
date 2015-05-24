@@ -26,8 +26,7 @@ public final class Application {
   public static void main(final String[] args) {
     final IGUIutilities util = new GUIutilities();
     final IController c = Controller.getController();  
-    c.setFileName(HOME + SEPARATOR + DEFAULT_FILE);   
-    c.setFileDisegno(HOME + SEPARATOR + DEFAULT_DISEGNO);  
+    c.setFileName(HOME + SEPARATOR + DEFAULT_FILE, HOME + SEPARATOR + DEFAULT_DISEGNO);    
     final View v = new View();
     c.addView(v);    
     c.load(util.getCurrentDate());    

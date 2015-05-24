@@ -31,20 +31,14 @@ public interface IController {
   void removeView(final IView v);
 
   /**
-   * Sets the file to save to or load from.
+   * Sets the files to save to or load from.
    * 
    * @param string
-   *       the file name.
-   */
-  void setFileName(final String string);
-  
-  /**
-   * Sets the file to save to or load from.
-   * 
+   *       the file name to save the model to.
    * @param string
-   *       the file name.
+   *       the file name to save the map to.
    */
-  void setFileDisegno(String string);
+  void setFileName(final String file, final String disegno);
   
   /**
    * Sets the date the user picked

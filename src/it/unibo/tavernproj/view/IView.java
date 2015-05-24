@@ -2,7 +2,6 @@ package it.unibo.tavernproj.view;
 
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.disegno.IPair;
-import it.unibo.tavernproj.model.disegno.Pair;
 
 /**
  * @author Eleonora Guidi

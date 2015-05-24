@@ -3,7 +3,6 @@ package it.unibo.tavernproj.view;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.disegno.DrawMap;
 import it.unibo.tavernproj.model.disegno.IPair;
-import it.unibo.tavernproj.model.disegno.Pair;
 import it.unibo.tavernproj.view.disegno.DrawPosition;
 import it.unibo.tavernproj.view.form.DeleteTableForm;
 import it.unibo.tavernproj.view.utilities.GUIutilities;

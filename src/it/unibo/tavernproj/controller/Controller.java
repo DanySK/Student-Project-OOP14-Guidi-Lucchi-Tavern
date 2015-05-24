@@ -5,7 +5,6 @@ import it.unibo.tavernproj.model.IReservation;
 import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.model.disegno.DrawMap;
 import it.unibo.tavernproj.model.disegno.IPair;
-import it.unibo.tavernproj.model.disegno.Pair;
 import it.unibo.tavernproj.view.IView;
 import it.unibo.tavernproj.view.utilities.GUIutilities;
 import it.unibo.tavernproj.view.utilities.IGUIutilities;
@@ -64,13 +63,9 @@ public final class Controller implements IController {
   }
   
   @Override
-  public void setFileName(final String string) {
-    this.fileName = string;
-  }
-  
-  @Override
-  public void setFileDisegno(final String string) {
-    this.fileDisegno = string;
+  public void setFileName(final String file, final String disegno) {
+    this.fileName = file;
+    this.fileDisegno = disegno;
   }
   
   @Override
