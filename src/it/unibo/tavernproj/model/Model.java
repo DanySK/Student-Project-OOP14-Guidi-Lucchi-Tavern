@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * @author Giulia Lucchi
@@ -27,7 +28,7 @@ public class Model implements IModel, Serializable {
   public Map<String, Map<Integer, IReservation>> getModel() {
     return this.map;
   }
-
+  
   public boolean isEmpty() {
     return this.map.size() == 0;
   }

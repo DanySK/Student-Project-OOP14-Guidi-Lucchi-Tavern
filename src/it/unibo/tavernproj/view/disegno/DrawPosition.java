@@ -37,7 +37,7 @@ public class DrawPosition implements Serializable,IDrawPosition {
   
   @Override
   public void paintCancel(final Graphics gr, final int x0, final int y0) {
-    gr.setColor(label.getBackground());
+    gr.setColor(Color.white);
     gr.drawRect(x0,y0, 50, 50);
   }
   

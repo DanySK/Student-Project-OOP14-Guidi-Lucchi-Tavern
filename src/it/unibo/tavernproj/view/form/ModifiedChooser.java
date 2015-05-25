@@ -18,13 +18,14 @@ public class ModifiedChooser extends Chooser{
   public ActionListener setOkListener() {
     return new ActionListener(){
       @Override
-      public void actionPerformed(final ActionEvent e) {
+      public void actionPerformed(final ActionEvent ev) {
         ModifiedChooser.this.setVisible(false);
-        ModifiedChooser.this.showForm();     
+        ModifiedChooser.this.showForm();
+        
       };
     };    
   }
-    
+
   protected void showForm() {
     try {
       new ModifiedTableForm(getReservation());

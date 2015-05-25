@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -84,7 +87,7 @@ public class GUIutilities extends BasicGUIutilities implements IGUIutilities {
   
   private void loadReserv(final String date) {
     for (final Integer i: controller.getReservation(date).keySet()) {
-      this.add(new JLabel(controller.getReservation(date).get(i).toString()));       
+      this.add(new JLabel(controller.getReservation(date).get(i).toString())); 
     }
   }
   

@@ -29,7 +29,7 @@ public final class Application {
     c.setFileName(HOME + SEPARATOR + DEFAULT_FILE, HOME + SEPARATOR + DEFAULT_DISEGNO);    
     final View v = new View();
     c.addView(v);    
-    c.load(util.getCurrentDate());    
+    c.load(util.getCurrentDate());  
   }
 
 }

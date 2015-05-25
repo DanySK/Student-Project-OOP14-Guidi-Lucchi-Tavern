@@ -190,4 +190,9 @@ public interface IController {
    *      true if the reservation for that day and that costumer is present.
    */
   boolean isPresent(final String name, final String date);
+//
+//  Map<String, Map<Integer, IReservation>> sortMap();
+//
+//  Map<Integer, IReservation> getTreeRes(String date);
+
 }
