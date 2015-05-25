@@ -2,6 +2,7 @@ package it.unibo.tavernproj.view.form;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 /**
  * @author Eleonora Guidi
@@ -25,6 +26,17 @@ public class ModifiedChooser extends Chooser{
   }
     
   protected void showForm() {
-    new ModifiedTableForm(getReservation(super.getTable(), super.getDate()));
+    try {
+      new ModifiedTableForm(getReservation());
+    } catch (NumberFormatException e){
+      controller.displayException("Inserisci un numero utile");
+      ModifiedChooser.this.setVisible(true);
+    } catch (ParseException e1){
+      controller.displayException("Inserisci una data utile");
+      ModifiedChooser.this.setVisible(true);
+    } catch (IllegalArgumentException e2) {
+      showMessage("Nessuna prenotazione disponibile con quel nome e data");
+      ModifiedChooser.this.setVisible(true);
+    }
   }    
 }

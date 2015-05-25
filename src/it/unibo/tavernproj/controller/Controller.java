@@ -75,9 +75,9 @@ public final class Controller implements IController {
 
   @Override
   public String getDate() throws IllegalArgumentException {
-    if (!date.isPresent()) {
+    /*if (!date.isPresent()) {
       throw new IllegalArgumentException();
-    }
+    }*/
     return this.date.get();
   }
 

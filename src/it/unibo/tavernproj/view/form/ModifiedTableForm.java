@@ -18,7 +18,7 @@ public class ModifiedTableForm extends NewReservationForm implements IModifiedTa
   public ActionListener setOkListener() {
     return new ActionListener(){
       @Override
-      public void actionPerformed(final ActionEvent event) {
+      public void actionPerformed(final ActionEvent event){
         ModifiedTableForm.this.modified();
       }     
     };    
@@ -39,7 +39,8 @@ public class ModifiedTableForm extends NewReservationForm implements IModifiedTa
   
   @Override
   public void writeForm(final IReservation res) {
-    super.setTable(res.getTable());
+    super.enableAll();
+    super.setTable(res.getTable());     
     super.setName(res.getName());
     super.setH(res.getHour());
     super.setTel(res.getTel());

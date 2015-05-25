@@ -36,15 +36,15 @@ public class Chooser extends BasicFrame implements IChooser{
   private final JButton personButton = util.getDefaultButton("Scegli per nome");
   private final JButton ok = util.getDefaultButton("OK", 12);   
   private final JLabel dateLabel = new JLabel("Data (formato gg-mm-aaa): ");
-  protected final JTextField dat = new JTextField(20);
+  private final JTextField dat = new JTextField(20);
   private final JLabel nameLabel = new JLabel("Nome: ");
-  protected final JTextField name = new JTextField(20);
+  private final JTextField name = new JTextField(20);
   private final JLabel tableLabel = new JLabel("Tavolo: ");
-  protected final JTextField tab = new JTextField(20);
+  private final JTextField tab = new JTextField(20);
   protected final transient IController controller = Controller.getController();
-  protected boolean choosedByDate;
-  protected int table;  
-  protected String date;   
+  private boolean choosedByDate;
+  private int table;  
+  private String date;   
   
   /**
    * build a new chooser view
@@ -112,7 +112,7 @@ public class Chooser extends BasicFrame implements IChooser{
       @Override
       public void actionPerformed(final ActionEvent arg0) {
         Chooser.this.setVisible(false);
-        if (choosedByDate) {          
+        if (choosedByDate){          
           try {
             table = Integer.parseInt(tab.getText());
             controller.remove(table, date);
@@ -138,8 +138,11 @@ public class Chooser extends BasicFrame implements IChooser{
   }
   
   @Override
-  public IReservation getReservation(int table, String date) throws NumberFormatException {
-    return controller.getReservation(table, date);
+  public IReservation getReservation() throws NumberFormatException, IllegalArgumentException, ParseException{
+    if (getTable() < 0){
+      throw new NumberFormatException();
+    }
+    return controller.getReservation(this.getTable(), this.getDate());
   }
   
   protected void showMessage(final String srt) {
@@ -176,17 +179,20 @@ public class Chooser extends BasicFrame implements IChooser{
     ok.setVisible(true);
   }
 
-  public int getTable() {
+  private int getTable() throws NumberFormatException, IllegalArgumentException, ParseException{
     if (choosedByDate) {
       return Integer.parseInt(tab.getText());
     }
     return controller.getReservation(getDate(), name.getText());
   }
 
-  public String getDate() {
+  private String getDate() throws ParseException {
     if (!choosedByDate) {
+      checkDate();
+      controller.setDate(dat.getText());
       return dat.getText();
     }
+    controller.setDate(this.date);
     return this.date;
   }
 
