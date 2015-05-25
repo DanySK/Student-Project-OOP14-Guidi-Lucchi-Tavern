@@ -2,7 +2,6 @@ package it.unibo.tavernproj.controller;
 
 import it.unibo.tavernproj.model.IModel;
 import it.unibo.tavernproj.model.IReservation;
-import it.unibo.tavernproj.model.MapSort;
 import it.unibo.tavernproj.model.Model;
 import it.unibo.tavernproj.model.disegno.DrawMap;
 import it.unibo.tavernproj.model.disegno.IPair;
