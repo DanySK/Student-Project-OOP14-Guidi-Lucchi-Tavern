@@ -27,7 +27,7 @@ public class Model implements IModel, Serializable {
   public Map<String, Map<Integer, IReservation>> getModel() {
     return this.map;
   }
-
+  
   public boolean isEmpty() {
     return this.map.size() == 0;
   }
