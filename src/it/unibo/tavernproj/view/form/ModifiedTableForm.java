@@ -5,10 +5,21 @@ import java.awt.event.ActionListener;
 
 import it.unibo.tavernproj.model.IReservation;
 
+/**
+ * @author Eleonora Guidi
+ *
+ */
 public class ModifiedTableForm extends NewReservationForm implements IModifiedTableForm{
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Builds a new reservation form with the reservation 
+   * passed as base to fill the fields, ready to be modified.
+   * 
+   * @param res
+   *      the reservation passed.
+   */
   public ModifiedTableForm(final IReservation res) {
     super();
     writeForm(res);
@@ -24,6 +35,10 @@ public class ModifiedTableForm extends NewReservationForm implements IModifiedTa
     };    
   }
 
+  /**
+   * If the form is been modified, activate this method which 
+   * saves the new reservation.
+   */
   protected void modified() {
     ModifiedTableForm.this.setVisible(false); 
     try {

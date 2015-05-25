@@ -145,11 +145,23 @@ public class Chooser extends BasicFrame implements IChooser{
     return controller.getReservation(this.getTable(), this.getDate());
   }
   
+  /**
+   * Shows an error message with the string passed as text.
+   * 
+   * @param srt
+   *      the string passed as message.
+   */
   protected void showMessage(final String srt) {
     controller.displayException(srt);
     Chooser.this.setVisible(true);
   }
   
+  /**
+   * Checks if the rightness of the date written in the text field.
+   * 
+   * @throws ParseException
+   *      if the date format is wrong.
+   */
   protected void checkDate() throws ParseException {
     final DateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
     sdf.parse(dat.getText());

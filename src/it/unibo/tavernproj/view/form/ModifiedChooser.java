@@ -26,7 +26,7 @@ public class ModifiedChooser extends Chooser{
     };    
   }
 
-  protected void showForm() {
+  private void showForm() {
     try {
       new ModifiedTableForm(getReservation());
     } catch (NumberFormatException e){
