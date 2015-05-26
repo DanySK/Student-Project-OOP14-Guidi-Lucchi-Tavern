@@ -17,8 +17,6 @@ import javax.swing.JPanel;
 
 
 /**
-* @see
-* @author
 * @author Seahawks
 * @version 1.0
 */

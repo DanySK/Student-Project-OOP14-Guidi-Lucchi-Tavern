@@ -23,8 +23,11 @@ public interface IModel{
   /**
    * It adds a new reservation.
    *
+   * @param date
+   *            the date of reservation to adding
    * @param pren
    *            the reservation
+   * 
    */
   void add(final String date, final IReservation pren) ;
 

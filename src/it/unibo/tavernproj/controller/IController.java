@@ -33,9 +33,9 @@ public interface IController {
   /**
    * Sets the files to save to or load from.
    * 
-   * @param string
+   * @param file
    *       the file name to save the model to.
-   * @param string
+   * @param disegno
    *       the file name to save the map to.
    */
   void setFileName(final String file, final String disegno);
@@ -65,8 +65,10 @@ public interface IController {
   /**
    * Adds a new reservation to the model.
    * 
+   * @param date
+   *     the date of reservation to adding
    * @param res
-   *      the reservation.
+   *      the reservation to adding
    */
   void add(final IReservation res, String date);
   

@@ -49,8 +49,6 @@ public class Chooser extends BasicFrame implements IChooser{
   /**
    * build a new chooser view
    * 
-   * @param controller
-   *      the controller to use.
    */
   public Chooser() {
     super(); 
