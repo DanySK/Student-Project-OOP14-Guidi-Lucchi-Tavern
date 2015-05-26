@@ -58,10 +58,7 @@ public class DrawPosition implements Serializable,IDrawPosition {
     draw.clear();
   }
 
-  /**
-   * @return
-   *      the number of tables on the map.
-   */
+  @Override
   public int size() {
     return draw.keySet().size();
   }

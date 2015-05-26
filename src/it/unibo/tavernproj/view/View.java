@@ -4,6 +4,7 @@ import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.model.disegno.DrawMap;
 import it.unibo.tavernproj.model.disegno.IPair;
 import it.unibo.tavernproj.view.disegno.DrawPosition;
+import it.unibo.tavernproj.view.disegno.IDrawPosition;
 import it.unibo.tavernproj.view.form.DeleteTableForm;
 import it.unibo.tavernproj.view.utilities.GUIutilities;
 import it.unibo.tavernproj.view.utilities.IGUIutilities;
@@ -53,7 +54,7 @@ public class View extends JFrame implements IView{
   private JPanel mapButtons;
   private transient IController controller;
 
-  private final DrawPosition pos = new DrawPosition(map);
+  private final IDrawPosition pos = new DrawPosition(map);
 
   /**
    * Builds the main view

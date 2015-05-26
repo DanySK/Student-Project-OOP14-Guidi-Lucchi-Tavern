@@ -49,4 +49,10 @@ public interface IDrawPosition {
    */
   void cancelAll(final Graphics g1);
 
+  /**
+   * @return
+   *      the number of tables on the map.
+   */
+  int size();
+
 }

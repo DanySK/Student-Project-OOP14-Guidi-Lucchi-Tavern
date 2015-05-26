@@ -3,68 +3,55 @@
   generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <interface id="1" language="java" name="it.unibo.tavernproj.model.IModel" project="oop14-tavernproj" 
     file="/oop14-tavernproj/src/it/unibo/tavernproj/model/IModel.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="499" y="187"/>    
+    <position height="-1" width="-1" x="188" y="197"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="2" language="java" name="it.unibo.tavernproj.model.Model" project="oop14-tavernproj" 
-    file="/oop14-tavernproj/src/it/unibo/tavernproj/model/Model.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="500" y="623"/>    
+  <interface id="2" language="java" name="it.unibo.tavernproj.controller.IController" project="oop14-tavernproj" 
+    file="/oop14-tavernproj/src/it/unibo/tavernproj/controller/IController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="608" y="260"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
-  </class>  
-  <interface id="3" language="java" name="it.unibo.tavernproj.model.IReservation" project="oop14-tavernproj" 
+  </interface>  
+  <interface id="3" language="java" name="it.unibo.tavernproj.view.IView" project="oop14-tavernproj" 
+    file="/oop14-tavernproj/src/it/unibo/tavernproj/view/IView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="959" y="168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="4" language="java" name="it.unibo.tavernproj.model.IReservation" project="oop14-tavernproj" 
     file="/oop14-tavernproj/src/it/unibo/tavernproj/model/IReservation.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="877" y="396"/>    
+    <position height="-1" width="-1" x="252" y="500"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="4" language="java" name="it.unibo.tavernproj.model.Reservation" project="oop14-tavernproj" 
-    file="/oop14-tavernproj/src/it/unibo/tavernproj/model/Reservation.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1209" y="231"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="5" language="java" name="it.unibo.tavernproj.model.Reservation.Builder" project="oop14-tavernproj" 
-    file="/oop14-tavernproj/src/it/unibo/tavernproj/model/Reservation.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1205" y="699"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <nesting id="6">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="5"/>  
-  </nesting>  
-  <realization id="7">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="3"/>  
-  </realization>  
-  <realization id="8">    
+  <dependency id="5">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="6">    
     <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="1"/>  
-  </realization>  
-  <dependency id="9">    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="7">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="3"/>  
   </dependency>  
-  <dependency id="10">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="3"/>  
+  <dependency id="8">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
