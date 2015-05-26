@@ -23,7 +23,6 @@ public class DrawPosition implements Serializable,IDrawPosition {
   private final Map<Integer, IPair<Integer, Integer>> draw = DrawMap.getMap();
   private final JLabel label;
   
-  
   public DrawPosition(final JLabel label) {
     this.label = label;
   }
