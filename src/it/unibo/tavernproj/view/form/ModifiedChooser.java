@@ -29,10 +29,10 @@ public class ModifiedChooser extends Chooser{
   private void showForm() {
     try {
       new ModifiedTableForm(getReservation());
-    } catch (NumberFormatException e){
+    } catch (NumberFormatException e) {
       controller.displayException("Inserisci un numero utile");
       ModifiedChooser.this.setVisible(true);
-    } catch (ParseException e1){
+    } catch (ParseException e1) {
       controller.displayException("Inserisci una data utile");
       ModifiedChooser.this.setVisible(true);
     } catch (IllegalArgumentException e2) {

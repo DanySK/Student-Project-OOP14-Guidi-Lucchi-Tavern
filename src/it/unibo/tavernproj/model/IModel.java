@@ -1,6 +1,5 @@
 package it.unibo.tavernproj.model;
 
-import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 
@@ -63,7 +62,6 @@ public interface IModel{
   Set<IReservation> getRes(final String date);
 
   /**
-   *  
    * @return
    *      the main Map 
    */

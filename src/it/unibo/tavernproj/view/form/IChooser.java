@@ -29,7 +29,8 @@ public interface IChooser {
    * @throws IllegalArgumentException 
    *      if there is no reservation linked to that date and table.
    */
-  IReservation getReservation() throws IllegalArgumentException, ParseException, NumberFormatException;
+  IReservation getReservation() 
+      throws IllegalArgumentException, ParseException, NumberFormatException;
 
 
 }

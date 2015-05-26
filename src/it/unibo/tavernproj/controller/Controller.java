@@ -16,16 +16,11 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeMap;
 
 /**
  * @author Eleonora Guidi
@@ -266,33 +261,6 @@ public final class Controller implements IController {
     } catch (IllegalArgumentException e) {
       return false;
     }
-  }
-  
-//  @Override
-//  public Map<String,Map<Integer,IReservation>> sortMap() {
-//
-//    Map<String, Map<Integer, IReservation>> sortMap = new TreeMap<>(new MapSort());;
-//    for (final String s: this.getDates()) {
-//      final DateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
-//      try {
-//        if (s.equals(util.getCurrentDate()) 
-//            || sdf.parse(s).after(sdf.parse(util.getCurrentDate()))) {
-//          sortMap.put(s, this.model.getMap().get(s));
-//        }
-//      } catch (ParseException e) {
-//
-//      }      
-//    }
-//    return sortMap;
-//  }
-  
-//  @Override
-//  public Map<Integer,IReservation> getTreeRes(String date) {
-//    if(this.sortMap().isEmpty()) {
-//      new TreeMap<Integer, IReservation>();
-//    }
-//    return this.sortMap().get(date);
-//  }
-// 
+  } 
 }
 

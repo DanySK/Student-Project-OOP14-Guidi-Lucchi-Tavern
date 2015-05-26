@@ -48,7 +48,6 @@ public class Chooser extends BasicFrame implements IChooser{
   
   /**
    * build a new chooser view
-   * 
    */
   public Chooser() {
     super(); 
@@ -110,7 +109,7 @@ public class Chooser extends BasicFrame implements IChooser{
       @Override
       public void actionPerformed(final ActionEvent arg0) {
         Chooser.this.setVisible(false);
-        if (choosedByDate){          
+        if (choosedByDate) {
           try {
             table = Integer.parseInt(tab.getText());
             controller.remove(table, date);
@@ -136,8 +135,9 @@ public class Chooser extends BasicFrame implements IChooser{
   }
   
   @Override
-  public IReservation getReservation() throws NumberFormatException, IllegalArgumentException, ParseException{
-    if (getTable() < 0){
+  public IReservation getReservation() 
+      throws NumberFormatException, IllegalArgumentException, ParseException {
+    if (getTable() < 0) {
       throw new NumberFormatException();
     }
     return controller.getReservation(this.getTable(), this.getDate());
@@ -189,7 +189,7 @@ public class Chooser extends BasicFrame implements IChooser{
     ok.setVisible(true);
   }
 
-  private int getTable() throws NumberFormatException, IllegalArgumentException, ParseException{
+  private int getTable() throws NumberFormatException, IllegalArgumentException, ParseException {
     if (choosedByDate) {
       return Integer.parseInt(tab.getText());
     }

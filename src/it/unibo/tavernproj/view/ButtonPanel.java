@@ -3,6 +3,10 @@ package it.unibo.tavernproj.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
 import it.unibo.tavernproj.view.calendar.Calendar;
@@ -12,11 +16,6 @@ import it.unibo.tavernproj.view.form.ModifiedChooser;
 import it.unibo.tavernproj.view.form.NewReservationForm;
 import it.unibo.tavernproj.view.utilities.GUIutilities;
 import it.unibo.tavernproj.view.utilities.IGUIutilities;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 
 /**
  * 

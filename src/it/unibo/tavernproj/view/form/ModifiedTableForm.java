@@ -29,7 +29,7 @@ public class ModifiedTableForm extends NewReservationForm implements IModifiedTa
   public ActionListener setOkListener() {
     return new ActionListener(){
       @Override
-      public void actionPerformed(final ActionEvent event){
+      public void actionPerformed(final ActionEvent event) {
         ModifiedTableForm.this.modified();
       }     
     };    
