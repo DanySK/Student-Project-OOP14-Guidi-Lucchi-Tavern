@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.8" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
-  associations="true" dependencies="false" nesting-relationships="true">  
+<class-diagram version="1.1.8" icons="true" automaticImage="JPEG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" language="java" name="it.unibo.tavernproj.view.Application" project="oop14-tavernproj" 
     file="/oop14-tavernproj/src/it/unibo/tavernproj/view/Application.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="567" y="310"/>    
@@ -31,7 +31,7 @@
   </interface>  
   <interface id="4" language="java" name="it.unibo.tavernproj.view.IView" project="oop14-tavernproj" 
     file="/oop14-tavernproj/src/it/unibo/tavernproj/view/IView.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="802" y="61"/>    
+    <position height="-1" width="-1" x="807" y="67"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
