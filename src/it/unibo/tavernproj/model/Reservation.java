@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 
 //BUILDER
-public class Reservation implements Serializable, IReservation{
+public class Reservation implements Serializable, IReservation {
 
   private static final long serialVersionUID = -5126256178520079481L;
   private final int table;
@@ -159,12 +159,12 @@ public class Reservation implements Serializable, IReservation{
       return this;
     }
     
-    public Builder tel(String s){
+    public Builder tel(final String s) {
       this.tel = s;
       return this;
     }
     
-    public Builder numPers(int i){
+    public Builder numPers(final int i) {
       this.numPers = i;
       return this;
     }

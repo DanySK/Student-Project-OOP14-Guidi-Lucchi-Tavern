@@ -10,7 +10,7 @@ public final class DrawMap implements Map<Integer, IPair<Integer, Integer>>,java
   private static final long serialVersionUID = 1L;
   private final Map<Integer, IPair<Integer,Integer>> disegno = new HashMap<>();
   
-  private static DrawMap SINGLETON = new DrawMap();
+  private static final DrawMap SINGLETON = new DrawMap();
 
   private DrawMap(){}
 
@@ -85,7 +85,7 @@ public final class DrawMap implements Map<Integer, IPair<Integer, Integer>>,java
 
 
   @Override
-  public Set<java.util.Map.Entry<Integer, IPair<Integer, Integer>>> entrySet() {
+  public Set<Entry<Integer, IPair<Integer, Integer>>> entrySet() {
     return null;
   }
 

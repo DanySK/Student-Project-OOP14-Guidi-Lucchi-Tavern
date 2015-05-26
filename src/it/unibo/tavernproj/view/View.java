@@ -83,11 +83,10 @@ public class View extends JFrame implements IView{
 
     final JLabel label = new JLabel("Clicca sulla mappa per disegnare i tavoli");
 
+    this.setButtons(true);
     if (!draw.isEmpty()) {
       this.setButtons(false);
-    } else {
-      this.setButtons(true);
-    }
+    }    
 
     util.add(label);
     util.add(cancelTable);

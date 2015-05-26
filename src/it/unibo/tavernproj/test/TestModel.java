@@ -7,6 +7,7 @@ package it.unibo.tavernproj.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import org.junit.Test;
 
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
@@ -20,7 +21,7 @@ public class TestModel {
   private final IModel model = new Model();
   private final IController ctr = Controller.getController();
 
-  @org.junit.Test
+  @Test
   public void test() {
 
     ctr.setModel(model);
@@ -48,7 +49,7 @@ public class TestModel {
                                            .name("Pirlo")
                                            .date("14-06-2015")
                                            .hour(21.30)
-                                           .tel("054751042")
+                                           .tel("054753152")
                                            .numPers(12)
                                            .menu(null)
                                            .build();
@@ -57,7 +58,7 @@ public class TestModel {
                                            .name("Eleonora")
                                            .date("01-05-2015")
                                            .hour(21.30)
-                                           .tel("054751042")
+                                           .tel("351564242")
                                            .numPers(1)
                                            .menu(null)
                                            .build();
@@ -66,7 +67,7 @@ public class TestModel {
                                            .name("Federico")
                                            .date("14-06-2015")
                                            .hour(21.30)
-                                           .tel("054751042")
+                                           .tel("05431524242")
                                            .numPers(4)
                                            .menu(null)
                                            .build();
@@ -75,7 +76,7 @@ public class TestModel {
                                            .name("Enrico")
                                            .date("03-07-2015")
                                            .hour(21.30)
-                                           .tel("054751042")
+                                           .tel("05425262")
                                            .numPers(4)
                                            .menu(null)
                                            .build();
@@ -84,7 +85,7 @@ public class TestModel {
                                            .name("Alessandro")
                                            .date("03-07-2015")
                                            .hour(21.30)
-                                           .tel("054751042")
+                                           .tel("05542624642")
                                            .numPers(2)
                                            .menu("grigliata")
                                            .build();
@@ -93,7 +94,7 @@ public class TestModel {
                                            .name("Lorenzo")
                                            .date("03-07-2015")
                                            .hour(21.30)
-                                           .tel("054751042")
+                                           .tel("052642642")
                                            .numPers(6)
                                            .menu(null)
                                            .build();
@@ -102,7 +103,7 @@ public class TestModel {
                                            .name("Federico")
                                            .date("08-07-2015")
                                            .hour(21.30)
-                                           .tel("054751042")
+                                           .tel("054264242")
                                            .numPers(2)
                                            .menu(null)
                                            .build();

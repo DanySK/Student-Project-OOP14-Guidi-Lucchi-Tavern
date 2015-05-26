@@ -8,6 +8,7 @@ package it.unibo.tavernproj.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 import it.unibo.tavernproj.controller.Controller;
 import it.unibo.tavernproj.controller.IController;
@@ -21,7 +22,7 @@ public class TestReservation {
   private final IModel model = new Model();
   private final IController ctr = Controller.getController();
 
-  @org.junit.Test
+  @Test
   public void test() {
 
     ctr.setModel(model);
@@ -40,7 +41,7 @@ public class TestReservation {
                                            .name("Andrea")
                                            .date("30-04-2015")
                                            .hour(21.30)
-                                           .tel("054751042")
+                                           .tel("054245422")
                                            .numPers(8)
                                            .menu(null)
                                            .build();
@@ -49,7 +50,7 @@ public class TestReservation {
                                            .name("Pirlo")
                                            .date("14-06-2015")
                                            .hour(21.30)
-                                           .tel("054751042")
+                                           .tel("0542544642")
                                            .numPers(12)
                                            .menu(null)
                                            .build();
@@ -58,7 +59,7 @@ public class TestReservation {
                                            .name("Eleonora")
                                            .date("01-05-2015")
                                            .hour(21.30)
-                                           .tel("054751042")
+                                           .tel("0544266422")
                                            .numPers(1)
                                            .menu(null)
                                            .build();
@@ -67,7 +68,7 @@ public class TestReservation {
                                            .name("Federico")
                                            .date("14-06-2015")
                                            .hour(21.30)
-                                           .tel("054751042")
+                                           .tel("05475422")
                                            .numPers(4)
                                            .menu(null)
                                            .build();
@@ -76,7 +77,7 @@ public class TestReservation {
                                            .name("Enrico")
                                            .date("03-07-2015")
                                            .hour(21.30)
-                                           .tel("054751042")
+                                           .tel("054723242")
                                            .numPers(4)
                                            .menu(null)
                                            .build();
